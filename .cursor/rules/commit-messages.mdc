@@ -1,0 +1,45 @@
+---
+description: Commit message standards — applied when creating git commits
+alwaysApply: true
+---
+
+# Commit Messages
+
+Use these whenever you **create a commit** (including the default “after substantive work” flow in `git-user-commits.mdc`). **Creating that commit is allowed** when those criteria are met—this file only defines *how* to write the message, not whether you may commit.
+
+## Ground truth
+
+- Base the commit message on **what is actually staged** (`git diff --staged`). Do not add, assume, or hallucinate features, files, or reasons not visible in that diff.
+- **Session summary:** You may use your end-of-task summary as the *starting point* for the subject and body, but **reconcile** it line-by-line with the staged diff—drop anything the diff does not support; add file-level accuracy the summary missed.
+
+## Wording
+
+- If a change is in **TODO.md** or **IDEAS.md** and only *plans* work, do not say the work was done.
+- If a **TODO** entry flips to `[x]`, reflect that completion only if the corresponding staged changes match the completed item.
+
+## Format (default for substantive commits)
+
+Prefer a **multi-line** message. One-line subjects are too thin for history and changelogs.
+
+1. **Subject line (first line):** A short imperative summary (≈50–72 characters is ideal; slightly longer is OK if needed). State *what* changed at a glance.
+2. **Blank line** after the subject.
+3. **Body:** Detailed, structured prose so a reader can understand the change without opening the diff first, while staying honest to what’s staged.
+
+The body should usually include:
+
+- **Scope:** Which areas or features are touched (paths or subsystems when helpful).
+- **What changed:** Per file or per logical group—what was **added**, **changed**, **removed**, or **moved**. Use bullets if the commit has several parts.
+- **Why (light):** Short rationale when it isn’t obvious from the diff alone. Skip boilerplate and skip invented motivations not supported by the diff.
+
+**Trivial commits** (typo in one comment, single-string copy fix) may use a subject-only message; everything else should use subject + body.
+
+**Git version (trailer support):** `git commit --trailer` is built in from **Git 2.32.0** (2021). On **2.32+** (normal for current dev machines), `--trailer` is not a compatibility problem — Git understands it. On **pre-2.32** Git only, a wrapper or agent that passes `--trailer` can fail with `error: unknown option 'trailer'`.
+
+**ForgeKit policy (all Git versions):** Do not add attribution trailers the user did not ask for (`Made-with:`, `Co-Authored-By:`, etc.) — use plain `-m` or `git commit -F path/to/msg.txt` (subject, blank line, body). Remove `--trailer`, `-c trailer.*`, and `interpret-trailers` from commands **you** author. Prefer `-F` for multi-line bodies on Windows/Cursor shells.
+
+**Legacy Git only (pre-2.32):** If your command is already clean and commit still fails with `unknown option 'trailer'`, the IDE shell wrapper may be injecting `--trailer` at argv level. Use a shell hop the wrapper cannot rewrite: `bash -c "git commit -F path/to/msg.txt"` or `cmd.exe //c "cd /d Z:\\path\\to\\repo && git commit -F path\\to\\msg.txt"`. Upgrading to **Git 2.32+** is the durable fix on old installs. See `mcp-server/content/FORGEKIT_LITE.md` §8.9.
+
+## Tone
+
+- Clear, professional US English (complete sentences in the body).
+- No joke suffixes or misleading tags—the message should read like a serious engineering log.

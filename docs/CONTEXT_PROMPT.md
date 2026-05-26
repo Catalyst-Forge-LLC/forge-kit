@@ -1,0 +1,323 @@
+# [App Name] - Project Context Prompt
+
+_Copy and paste this into a new chat to pick up where you left off. This is the single most important document for session continuity. Update it at the end of every session._
+
+_Instructions: Replace all [BRACKETED] placeholders as your project evolves. The "Key Architectural Decisions" section is critical: every decision must include WHY it was made. The "why" is what gets lost between sessions and causes Claude to undo intentional choices._
+
+---
+
+## Handoff from Phase 1 (`PHASE_1_BRIEF.md`)
+
+_If the project used ForgeKit Phase 1 properly, **`docs/PHASE_1_BRIEF.md`** exists and was **locked** before scaffolding. When you **first** create or populate this file in Phase 2, **merge** the brief into the sections below — do not re-derive architecture from chat alone._
+
+| `PHASE_1_BRIEF.md` section | Merge into this document |
+| -------------------------- | ------------------------ |
+| §1 Problem / outcome | Summarize at top of **Recent Changes** (first entry) or in a one-line app description under **Tech Stack** context |
+| §2 Users / hero flow | Narrative before **Data Model** or bullet list under **Data Model** intro |
+| §3 Constraints | **Tech Stack** notes + **Key Architectural Decisions** |
+| §4 Stack table | **Tech Stack** (full list) |
+| §5 Data sketch | **Data Model** tables + relationships |
+| §6 Integrations | **Tech Stack** (Key Dependencies) + **Key Architectural Decisions** |
+| §7 Risks / hardest problems | **Critical Patterns for This Stack** or **Key Architectural Decisions** |
+| §8 Decisions (D1…) | **Key Architectural Decisions** (preserve WHY; mark DECIDED: Phase 1) |
+| §9 Open questions | **Recent Changes** or link items into **`TODO.md`** |
+| §10 Out of scope v1 | **Key Architectural Decisions** or short note under **Recent Changes** |
+| §11 First feature batch | Seed **`TODO.md`** |
+
+**After merge:** Keep **`PHASE_1_BRIEF.md`** in `docs/` as a dated audit trail **or** replace its body with one line: `Merged into CONTEXT_PROMPT.md on [date]. Source preserved in git history.` Do **not** delete corresponding entries in **`.forgekit/workflow_tracking.json` → `decisions[]`.**
+
+---
+
+## Tech Stack
+
+- **Framework:** SvelteKit (Svelte 5) _[or note deviation and why]_
+- **Language:** TypeScript (strict, no implicit any)
+- **Package Manager:** pnpm
+- **Styling:** Tailwind CSS + [note any additions, e.g., CSS custom properties for theming]
+- **Icons:** Iconify (@iconify/svelte) with Lucide icon set. No emoji in UI.
+- **Database/Storage:** PocketBase _[or note deviation and why]_
+- **AI/LLM:** _[pick one or combine — e.g. Anthropic via @anthropic-ai/sdk; OpenAI API; **local Ollama** (`OLLAMA_BASE_URL`, `OLLAMA_MODEL`, Granite 4.1 / Gemma 3); build-time seed only; BYO-LLM paste; or "none"]_
+- **Deployment:** DigitalOcean + GitHub Actions + Caddy _[or note deviation]_
+- **Key Dependencies:** [List project-specific ones beyond the defaults]
+
+## Project Structure
+
+_Abbreviated folder tree. Focus on where code lives, not every file. Update as the structure evolves._
+
+```
+[project-root]/
+  src/
+    lib/
+      components/     [UI components]
+      server/         [Backend services, data layer, API helpers]
+      types/          [TypeScript interfaces/types]
+    routes/
+      api/            [API endpoints]
+      (app)/          [App pages]
+  static/             [Static assets]
+  [other relevant dirs]
+```
+
+## Data Model
+
+_Core types and their relationships. Include field names and types, not full schemas. Update when the model changes._
+
+| Collection/Table | Purpose          | Key Fields                   |
+| ---------------- | ---------------- | ---------------------------- |
+| [name]           | [what it stores] | [important field: type, ...] |
+
+_Relationships:_
+
+- [Collection A] has many [Collection B] via [field]
+- [Collection C] belongs to [Collection D] via [field]
+
+## Key Architectural Decisions
+
+_Every entry must include WHY. This prevents Claude from re-making mistakes or undoing intentional choices. When a decision is superseded, don't delete it; mark it as superseded and explain what replaced it._
+
+> 📝 **Example:** Format:
+> - **[What was decided]**
+>   WHY: [The reasoning. Include what you tried that didn't work.]
+>   DECIDED: [Session N, Date]
+>
+> 📝 **Example:**
+> - **DOCX tailoring uses programmatic placeholder replacement, not LLM find/replace.**
+>   WHY: Word XML splits text across <w:r> runs unpredictably. LLM can't reliably generate
+>   find strings that match. Code knows template structure; LLM provides content only.
+>   Took 8 turns and 3 failed approaches to learn this.
+>   DECIDED: Session 1
+>
+> - **Auto-save on blur for all editable fields. No explicit Save buttons.**
+>   WHY: Eliminated UX inconsistency after Session 2 found some fields had Save buttons
+>   and others didn't. Simpler mental model.
+>   DECIDED: Session 2
+>
+> - **Display prices fetched from Stripe, not hardcoded in components.**
+>   WHY: Hardcoded prices required a redeploy to change. Server-side Stripe price
+>   fetch with 1-hour cache means price changes propagate from Stripe Dashboard
+>   automatically. Components use fallback values if Stripe is unreachable.
+>   DECIDED: Session 8
+>
+> - **PostHog Cloud for product analytics, not roll-your-own.**
+>   WHY: Event capture is trivial to build; funnel visualization, cohort charts, and
+>   retention analysis are weeks of dashboard work. PostHog free tier (1M events/mo)
+>   covers early stage. Thin wrapper ($lib/posthog.ts) silently no-ops when API key
+>   is unset, so it's safe for local dev. Umami/Plausible are web analytics (pageviews),
+>   not product analytics (funnels, custom events).
+>   DECIDED: Session 8
+
+## Critical Patterns for This Stack
+
+_Hard-won debugging knowledge specific to your tech stack. These are the things that cost hours to figure out and will cost hours again if forgotten._
+
+> 📝 **Example:**
+>
+> Database quirks:
+> - **PocketBase — local port in `.env`:** On a dev machine, more than one PocketBase may run (other projects, old processes). The default **8090** is a frequent collision. **Declare the public API URL+port in `.env`** and use the same value for `pocketbase serve` / your setup script, the JS client, and schema scripts — otherwise the app won’t connect or will talk to the **wrong** instance.
+> - **PocketBase → app model mappers:** Pass `RecordModel` (or the client’s record type) into mapper functions — avoid `record as any` at route boundaries. The cast should name the framework type you actually have so schema drift is visible in type-aware refactors and code search.
+> - PocketBase getOne() is restrictive (returns error if no match); getList() with filter is permissive (returns empty list)
+> - PocketBase autodate fields are opt-in in v0.23+, not automatic
+> - PocketBase getFullList() fails silently; always use paginated getList()
+> - **PocketBase JS SDK (and similar clients): parallel `getList` / reads on the *same* client instance auto-cancel each other** when they target the same collection. The SDK deduplicates in-flight requests so only the latest survives; earlier calls reject with an abort / cancellation error. On the server, a single `PocketBase` instance per request that fans out `Promise.all(jobs.map(() => pb.collection('…').getList(...)))` for a related collection looks fine but yields **empty related data** in catch/fallback paths while writes still succeed — classic “saved but vanishes on reload.” **Why:** one client, many concurrent same-collection reads. **Fix:** pass an option that opts out of auto-cancellation for those calls (e.g. `requestKey: null` in the PocketBase JS SDK), use a **unique request key per fan-out item**, run related reads **sequentially**, or use **separate client instances** per parallel branch.
+> - Filter string interpolation without escaping = injection vulnerability
+> - **PocketBase DELETE handlers:** SvelteKit's `request.json()` throws on DELETE requests with no body. Read the record ID from `url.searchParams.get('id')` instead.
+> - **PocketBase cascade delete ordering:** When deleting a user, child records with required relations must be deleted depth-first before the parent. Map all collections that reference `users` (directly or transitively), then delete in leaf-to-root order. Pay attention to field names — relation fields may not be named `user` (e.g., `delegates` may use `owner`/`delegate` fields). A 500 "record is part of a required relation" error means a referencing record still exists.
+> - **PocketBase deleteRule: null means SUPERUSERS ONLY, not public.** This is unintuitive. Setting `deleteRule: null` in a collection definition does NOT mean "no rule" — it means only superadmins can delete. If users need to delete their own records via the API, set `deleteRule: '@request.auth.id != ""'` (any authenticated user) or `'user = @request.auth.id'` (owner only). The correct delete pattern for user-owned records: (1) in your setup script, set the explicit deleteRule; (2) in your server route, verify ownership with the user's PB client (returns 404 if not owner), then do the actual delete with an admin PB client to avoid fighting the collection rule. This gives defense-in-depth without brittle rule duplication.
+>
+> Framework gotchas:
+> - **`catch (e: any)` hides the real error shape.** Use `catch (e: unknown)` and narrow with small shared helpers (e.g. `errorMessage(e)` for user-facing copy, optional extractors for HTTP status or provider-specific payloads). That keeps Svelte components and API routes consistent and makes lint rules like `@typescript-eslint/no-explicit-any` sustainable during refactors.
+> - SvelteKit .env doesn't populate process.env; use $env/dynamic/private
+> - Svelte 5 $effect that reads AND writes the same reactive variable creates infinite loop; use untrack()
+> - $derived(() => {...}) creates a function requiring () to invoke; use $derived.by() instead
+> - **Svelte `{#key}` is required to force transitions on conditional blocks.** If you wrap content in `{#if mode === 'signup'}...{:else if mode === 'signin'}...{/if}` and add `transition:slide`, Svelte may reuse the DOM node and skip the transition entirely. Wrap the conditional block in `{#key mode}` so Svelte destroys and recreates the element on every mode change, which triggers the transition. Without `{#key}`, auth form mode switches (signup/signin/forgot/reset) appear instant with no animation.
+> - **`{#key}` + `transition:fade` causes scroll-bounce on long pages.** When `{#key}` destroys and recreates a block with `transition:fade`, the outgoing and incoming elements briefly coexist in the DOM, temporarily doubling the section height. If a script calls `scrollTo` during this window, the measured offset is inflated; once the outgoing element is removed the layout shrinks and the viewport snaps to the wrong position. If the transitioning section is near the bottom of a long page, prefer CSS `opacity` transitions (no layout inflation) or remove `{#key}` entirely and let Svelte reuse the DOM node. Only use `{#key}` + Svelte transitions when layout-height stability during the crossfade is acceptable.
+> - **SSR vs browser `Date` for “which content for today / this week”.** If the UI picks tips, rotations, or labels from local calendar fields (`getDate`, `getMonth`) while the server often runs in UTC, HTML from SSR and the first client render can disagree → hydration mismatch. Define **timezone-stable** keys (e.g. UTC date parts or ISO week from UTC) for anything that must match between server and client.
+> - **Stores that mirror server `load` / layout data:** Hydrating only in `onMount` leaves SSR using default store values while the template expects hydrated state. Sync from **`$page.data` (or equivalent) in a top-level `$effect`** so server render and initial client render agree for plan-gated or entitlement-dependent UI.
+> - **`backdrop-filter` (e.g. `backdrop-blur-sm`) on a container makes it a containing block for fixed-position descendants.** A `fixed inset-0` backdrop inside that container only covers the container's bounds, not the viewport. This silently breaks click-outside overlays. Never rely on a `fixed` backdrop for click-outside detection if any ancestor has `backdrop-filter`. Use a document `pointerdown` listener instead (see Patterns to Follow).
+> - **`onDestroy` runs during SSR teardown, not only in the browser.** Cleanup that touches `document` / `window`, removes listeners registered on `document`, or calls DOM-only helpers must guard with `browser` from `$app/environment` (or your project's single standardized guard). **Why:** The server has no DOM; unguarded cleanup throws and can break rendering or leave inconsistent state.
+>
+> Integration patterns:
+> - When integrating LLM output with structured formats (DOCX, HTML), code owns the structure, LLM provides content only
+> - **Markdown-lite → simple DOCX:** Parse **outer** `_italic_` / single-asterisk emphasis **before** splitting on `**bold**`, or bold nested inside italic leaves literal delimiters in Word. See **`docs/TECHNICAL_REFERENCE.md` → File/Document Pipeline**.
+> - **Git-derived product journal:** If you offer `journal:update` vs `journal:build:llm`, pick **one default for incremental appends** (e.g. always LLM-consolidated) so weekly runs don’t accidentally ship noisy heuristic-only bullets; document `ANTHROPIC_API_KEY` (or equivalent) and a **manual** `node …/journal-build.mjs --append` without `--llm` for offline escape hatches.
+> - **Same-day journal appends must merge, not overwrite.** An append script that re-generates an existing day's section will silently destroy hand edits and earlier LLM summaries. Use a commit-hash fingerprint marker (e.g. `<!-- journal:sha:abc1234,def5678 -->`) embedded in each section to record which commits are already reflected. On subsequent runs: extract all commits for the latest day from Git, diff hashes against the marker, generate bullets for *only new commits*, and **append** them to the existing prose. Seed the marker on first encounter without altering visible content. This makes incremental updates idempotent for already-processed commits and additive for new ones.
+> - Always validate LLM JSON responses at runtime; missing fields propagate as incomplete objects
+> - **Importing records from third-party URLs (e.g. job postings):** Server-side fetch and headless browsers often receive **login walls**, **cookie/consent interstitials**, or **anti-bot pages** instead of the body the user sees in a logged-in session. Detect low-signal HTML (known markers, missing structured fields, body below a sanity length) and return a **clear user path** — paste full text, try another URL, or manual entry — instead of persisting junk as the record. See **`docs/TECHNICAL_REFERENCE.md` → URL import: paywalls and bot interstitials**.
+> - **Stub → finalize / two-phase URL import:** When a second step **LLM-extracts** fields from scraped text, pass **listing hints** (title, employer, canonical URL metadata) into the extraction prompt — many aggregators omit the hiring entity in the free-text body. When merging model output into the database, **do not** let empty strings or placeholder values **overwrite** required fields already satisfied by the stub or hints; resolve server-side with explicit fallbacks. See **`docs/TECHNICAL_REFERENCE.md` → URL import: extraction hints and required-field merge**.
+> - **Scrape pipeline: markup drift vs bad URLs:** Domain-specific HTML parsers and selectors **rot** when boards redesign. If HTTP or headless fetch returns **substantial HTML** but **structured extraction** yields an empty or tiny body, classify the failure for UX as **extraction / layout**, not **“paste the correct link again”** unless the URL is demonstrably wrong. Prefer **selector fixes** first; optional **one** small-model **verbatim recover** pass from **stripped plain text** may run **only** when the pipeline would otherwise fail — gated, validated, and opt-out capable. See **`docs/TECHNICAL_REFERENCE.md` → URL import: deterministic extractors vs markup drift**.
+> - **Progressive import: client vs server terminal state:** If the browser calls **stub** and **finalize** as separate requests, the finalize call can **fail** (network, HTML error page, partial response) while the server has already finished the job. Reconcile with a **GET-by-id** (or status read) before leaving the user on a stub-only snapshot; run the same **success/failure merge and toasts** you would on a clean finalize payload. Parse JSON defensively on both steps. Wire **failure handlers** on **every** entry surface that uses the pipeline (main modal, recommendations, onboarding, bulk), not only the primary path — otherwise progress UI and follow-up polling never attach. See **`docs/TECHNICAL_REFERENCE.md` → URL import: client reconciliation after multi-step finalize**.
+> - **Multi-step UI that depends on server flags:** When a later step (e.g. alignment, summarization) is triggered after import **completes**, do not rely on a **single** response from the create/finalize handler alone — the client may have missed it. **Poll** or subscribe until the record reaches a **terminal import state** (or explicit failure) before assuming the next phase can start. **Why:** Closing a modal or navigating away after stub can skip one-shot callbacks; the server may still finish and set flags the UI must react to.
+> - **HTTPS API / database base URL from environment:** If you concatenate host and port from separate variables, **do not** blindly append a non-default port when the base URL is already `https://` and the origin uses the implicit HTTPS port. Appending the wrong port breaks TLS with opaque client errors. Parse the configured URL; if it already includes an origin with an explicit or default port, use that; only append a port when the deployment model requires it (e.g. local HTTP with a custom port). See **`docs/TECHNICAL_REFERENCE.md` → Configuration → Service base URLs (HTTPS and ports)**.
+> - **Transactional email:** Keep **auth/BaaS-delivered mail** (e.g. password reset from the database admin SMTP) separate from **app-composed mail** (welcome, billing, security alerts). Implement app mail as **one outbound module** from API routes or webhooks only — shared layout, typed template functions, optional plain text, failures routed through your **observability** pattern (structured log / analytics category). Use **idempotency keys** on webhook-triggered sends. Do not log full bodies with PII in production; log **message type** and a stable user correlation. See **`docs/TECHNICAL_REFERENCE.md` → Configuration** and **Data Model → Deletion and data lifecycle** for env and lifecycle docs patterns.
+> - **User-visible failures that need support follow-up:** When a multi-step pipeline fails after the user has waited (upload, AI extract, payment edge cases), return a **short, stable correlation id** in the API JSON and surface it in the UI with plain-language copy (“Support ID” or similar). Log the **same** id server-side with request context. **Why:** One pasteable string beats back-and-forth over screenshots; support can grep logs or analytics without guessing time windows.
+> - **Long-running synthesis / research over HTTP:** Routes that generate dossiers, briefs, or multi-section reports (polling, SSE, or long POST) can return **non-JSON** bodies on failure — HTML error pages, upstream plain text, empty bodies, or HTML-wrapped gateway errors. Do not assume every response is JSON: branch on **`res.ok`** and **`Content-Type`**, use safe parse helpers (`text()` then conditional JSON), and have your API return **consistent JSON error shapes** on failure when the client sends **`Accept: application/json`**. **Why:** Blind `.json()` causes the same state corruption as broken finalize payloads — uncaught parse exceptions or wrong-shaped objects assigned to typed UI state.
+>
+> Third-party library preloading:
+> - When a page uses many instances of a lazily-imported library (e.g., Tippy.js for tooltips), the first interaction triggers the dynamic import, causing a visible flash or delay. Fix: add an eager `import('[library]')` inside `onMount` on the page component. This fetches the chunk during page load (non-blocking) so it's ready by the time the user interacts. Don't use `<link rel="modulepreload">` for bundled dependencies — the chunk URL is hashed by Vite/Rollup and not predictable at authoring time.
+>
+> NPS / user feedback patterns:
+> - Trigger NPS at moments of realized value, not random intervals (e.g., after 3rd use of core feature, after a success outcome)
+> - In-app toast > email survey — captures users in context with much higher response rates
+> - Use window CustomEvents to decouple NPS triggers from feature components
+> - One survey per trigger per user; check server-side before displaying
+> - **NPS numeric scores:** treat as **append-only** (no edits) for integrity.
+> - **Free-text feedback / tickets:** allow **admin replies** and **soft-delete or archive** for triage while retaining the original submission for audit — avoid hard-delete of customer text
+>
+> Client-side fetch and polling resilience:
+> - **Guard every `fetch` with `res.ok` before parsing the body.** Calling `.json()` on a non-OK response (429, 500, HTML error page) and assigning the result to typed state (arrays, config objects) corrupts the UI — e.g., an error JSON object assigned to an array state causes `.find is not a function` crashes downstream. Check `res.ok`; on failure, either `return` silently (background polling) or surface an error to the user (interactive operations).
+> - **Polling loops need 429-specific exponential backoff.** A `setInterval` that retries on the next tick when the server responds 429 creates a **request storm** — one heavy operation (bulk import, batch alignment) can spawn dozens of independent intervals, all hammering the API simultaneously. Use a **skip-tick counter** that doubles on each 429 (e.g., `skipTicks = Math.min((skipTicks || 1) * 2, maxSkip)`) within the existing interval rather than replacing `setInterval` with `setTimeout` chains.
+> - **Bulk operations must suppress per-item polling.** If single-item import spawns a progress-polling interval and a follow-up alignment poll, importing N items creates 2N concurrent intervals. Pass a `{ bulk: true }` (or similar) flag through import callbacks and conditionally **skip** per-item polling; refresh data once when the batch completes.
+> - **Clean up timer maps on component destroy.** If a component stores `setInterval` handles in a `Map` or `Set` (e.g., per-record polling timers), iterate and `clearInterval` every handle in `onDestroy`. Orphaned intervals keep fetching after the page/component is gone — wasted traffic, stale store mutations, and potential crashes.
+> - **Guard async callbacks against stale context.** When a long-running `fetch` or `POST` completes, the component's current context (which record is selected, which panel is open) may have changed. Capture the entity ID at call start; after `await`, bail out if `currentId !== capturedId` before writing local state or calling `onUpdate`. Without this, job A's AI-generated prep content can be written onto job B when the user navigates mid-request.
+> - **Optimistic updates need HTTP-aware rollback.** If you patch local state before the server round-trip (e.g., toggling a star, changing a status), revert on **both** network errors (`catch`) **and** non-OK HTTP responses (`!res.ok`). Only catching thrown errors leaves the UI in the wrong state on 403/500 responses (which `fetch` resolves normally).
+> - **Success indicators must gate on `res.ok`.** A "Saved" flash, a "Deleted" toast, or closing a confirmation dialog should only fire when the server confirms success. Showing success unconditionally (e.g., in `finally`) means users believe their data is saved when the server silently rejected the PATCH.
+
+## Design Philosophy
+
+_User experience principles that guide feature decisions. These should align with your BRAND_AND_PRODUCT.md._
+
+- [Principle]: [How it manifests in the UI/UX]
+
+> 📝 **Example:**
+> - Human-in-the-loop: Every AI feature prepares, drafts, and suggests, then returns control to the user. No auto-submission.
+> - Preparation before materials: Intersections → Selling Points → Resume/Cover Letter. This sequence builds from analysis to positioning to output.
+> - **User-facing verbs, not generic "Generate":** Buttons, tooltips, and progress labels should use specific verbs (Map, Build, Draft, Create, Refresh, Tailor) so users know what artifact or step they get. See **ForgeKit `docs/BRAND_AND_PRODUCT.md` → Copy & Messaging Lessons → Action verbs over generic "Generate"**. For terminology that is product-specific, maintain a **`specs/UI_UX_COPY_CONSISTENCY_SPEC.md`** (or equivalent) in the customer repo and propagate generalizable lessons back to ForgeKit docs after each pass.
+> - **Landing and in-app story copy stay in sync:** When you have both a public marketing page and an About/Help story surface, align hero framing, section titles, timing claims, and feature marketing names after each landing copy pass. See **`docs/BRAND_AND_PRODUCT.md` → Copy & Messaging Lessons → Keep in-app marketing surfaces aligned with the public landing**.
+> - **Ship a quick UX win alongside a future-phase spec.** When a feature needs a full spec (AI-powered discovery, smart recommendations, etc.), don't let the current UX stagnate while the spec waits. Ship an immediate, low-effort improvement to the existing surface — better search links, smarter defaults, restructured information — then write the spec for the ambitious version. This gives users visible progress now and prevents "we'll get to it" drift.
+
+## Writing/Voice Rules
+
+_If your app generates text (LLM-powered or otherwise), define the voice rules here. These get injected into prompts._
+
+> 📝 **Example:**
+> - No em dashes, Oxford comma always, active voice
+> - No weak intensifiers ("very", "really", "extremely")
+> - No agency-minimizing verbs ("helped to", "assisted in")
+> - Specific impact metrics over vague superlatives
+> - Resume: third-person, no target company mentions
+> - Cover letter: first-person, company-specific
+
+## My Preferences
+
+_Communication and working style for Claude to follow._
+
+- **Thinking style:** [e.g., First principles, direct, skip pleasantries, verifiable facts over platitudes]
+- **Grammar/style:** [e.g., Oxford comma, no em dashes, active voice]
+- **Code conventions:** [e.g., Prefer smaller focused files, meaningful variable names]
+- **Working mode:** [e.g., Plan before building for multi-file changes, execute directly for single-file changes]
+
+## Current Feature State
+
+_Updated each session. Be specific enough that Claude can resume without re-reading code._
+
+### Complete
+
+- [Feature]: [brief note on approach taken, any gotchas]
+
+### In Progress
+
+- [Feature]: [what's done, what's left, any blockers]
+
+### Not Started
+
+- [Feature]: [any known complexity or dependencies]
+
+## Patterns to Follow
+
+_Proven patterns from this project that Claude should replicate when building new features._
+
+> 📝 **Example:**
+> - Two-tier features: basic by default, advanced when user provides extra input (e.g., shallow tailoring default, deep tailoring when tweaks field is non-empty)
+> - onUpdate() callback from child components to parent for state propagation
+> - Versioned file writes: if file is locked (open in Word), create filename-v2, v3, etc.
+> - Hold/pause state UI: When an account is paused/dormant, the UI should reframe "blocked" as "safe-keeping." Use warm colors (amber), show a banner explaining data is preserved, and relabel upgrade CTAs from "Upgrade" to "Resume" to signal continuity, not a new purchase. The upgrade prompt modal should detect the hold state and show different copy ("Account on Hold" + "Resume Subscription" vs. "Limit Reached" + "Upgrade Plan").
+> - Expired state UI: When an account has expired (post-trial, no subscription), use red banners with clear messaging ("Trial ended"). Show subscribe and hold options side by side. The upgrade prompt should detect expired vs. hold vs. standard limit-reached and show different copy for each.
+> - Inline usage badges (UsageBadge pattern): Show remaining usage counts (X/Y) inline near each feature's trigger button or section header — not buried in billing settings. Color-code: muted (normal), amber (≥70% used), red (at limit). When max=0 (expired/hold), show "Subscribe to unlock" link. When at limit, show "X/Y — Upgrade" link. Hide entirely when unlimited (≥999). Use a single reusable component that takes a counter name and derives everything from the reactive entitlements store.
+> - **Click-outside for menus/dropdowns:** Never use a passive `fixed inset-0` backdrop div when any ancestor has `backdrop-filter` (e.g. `backdrop-blur`) — it won't cover the viewport. Instead, use a Svelte 5 `$effect` that adds a `pointerdown` listener to `document` when the menu opens, checks `menuEl.contains(e.target)`, and removes itself on cleanup: `$effect(() => { if (!open) return; function handle(e) { if (!el.contains(e.target)) open = false; } document.addEventListener('pointerdown', handle); return () => document.removeEventListener('pointerdown', handle); })`. Bind the container with `bind:this={el}` on the `relative` wrapper that contains both the trigger and dropdown.
+> - **Nested hover flyouts (menu → side panel):** Give each flyout a **stable id**. When the pointer enters a trigger, if that id is **already** the active flyout, only **cancel pending close timers**—do not wipe all visibility flags (the pointer often crosses empty pixels between the row and the panel, re-firing `mouseenter`). When switching to a **different** id, close other flyouts synchronously, then apply your open delay. Reset **all** flyout-related state when the **parent menu** closes (reactive effect on `!menuOpen`), not only on outside click—otherwise a fast close/reopen leaves stale panels. **Why:** Bulk-reset on every hover open fights the physical gap between trigger and panel; shell-close reset fixes stale state without breaking hover.
+> - **Main content height below a fixed/sticky nav:** Prefer an outer **flex column** (`h-screen`, main `flex-1 min-h-0`, overflow where content scrolls) over `calc(100vh − [guess])` for the main region—nav height often differs by breakpoint and a few pixels of error creates a permanent body scrollbar.
+> - **Cross-entity fuzzy matching (name normalization + URL hostname):** When two entity types need to be linked without a foreign key (e.g., jobs and watched companies), use a two-pass match: (1) normalize names by lowercasing, stripping legal suffixes (Inc, LLC, Corp, Ltd, etc.), and collapsing whitespace; (2) if names don't match, compare URL hostnames by parsing with `new URL()` and stripping `www.`. This handles cases where "Wing" (company name) and "jobs.wing.com" (job listing URL) refer to the same entity. Implement as a pure function `matchedEntry(entity, candidates)` that returns the candidate or undefined — it's pure so it can be used in derived state and `$derived.by()`.
+> - **Ghost icon → labeled badge UX for membership actions:** When a list item may or may not be a member of a secondary collection (e.g., a job may or may not be in a watchlist), use: (a) a faint ghost icon (e.g. `text-text-muted/30 hover:text-accent`) as a quick-add affordance when NOT a member; (b) a small labeled pill badge (e.g. `bg-indigo-500/15 text-indigo-500`) when IS a member. Both are placed inline next to the entity name, not in a separate actions column. This keeps the scan-state visible at a glance without cluttering the row.
+> - **CSS entrance animations:** Define named `@keyframes` in `app.css` and expose them as utility classes (e.g. `.animate-panel-in`, `.animate-backdrop-in`, `.animate-modal-in`). Apply to any element that mounts conditionally with `{#if}`. Three common patterns: slide-in-right for side panels (260ms spring easing), fade-in for backdrops (200ms ease), scale-up for modals (200ms spring). Using CSS-only means zero JS overhead and no per-component imports.
+> - **Gradient polish on surfaces (modal-gradient / panel-gradient):** Define CSS classes that layer subtle accent-tinted `radial-gradient()` over `var(--color-surface)`. Apply to all modals and panels for an upscale "felt, not seen" finish. Use the app's accent color at 3-5% opacity in light mode, 5-7% in dark mode. Define both light and dark variants via `[data-theme="dark"] .className`. Modals get a top-left glow (accent radiates from where the eye enters); panels get a left-edge glow (accent radiates from the panel border). Keep `bg-surface` as a Tailwind fallback class alongside the gradient class.
+> - **Heuristic reminder/nudge system:** Compute follow-up reminders server-side from existing data (dates, statuses, flags) rather than storing separate reminder records. Sort by priority. Surface in a collapsible banner with count + preview. Each reminder type routes to the most actionable view/tab via a `reminderTab()` mapping function. Quick actions are either "resolve" (one-click data mutation that clears the reminder) or "navigate" (open the item in context). Use per-reminder dismiss with localStorage expiry (7 days, keyed by user).
+> - **Highlight pulse for navigation context:** When a reminder or cross-reference navigates the user to a specific item inside a list, pass a `highlightId` prop down through the component tree. The target card uses `bind:this` + `$effect` for `scrollIntoView({ behavior: 'smooth', block: 'nearest' })` and applies a CSS `@keyframes` glow animation (e.g., 2s amber pulse via `box-shadow` + `background-color`). Auto-clear the highlight state after 2.5s. This gives the user a visual anchor after navigation.
+> - **Responsive two-column modals:** For modals with many inputs, use `flex-col md:grid md:grid-cols-2 gap-4` to split into equal-width columns at the `md:` breakpoint. Put primary/required inputs in the left column, secondary/optional context in the right. Merge the mode toggle into the header row as compact segmented pills to save ~44px of vertical space. Mobile falls back to single-column with `max-w-lg`; desktop uses `max-w-4xl` (~896px). Overflow safety: `max-h-[calc(100vh-2rem)] flex flex-col` on the container, `overflow-y-auto` on the form body.
+> - **Centralize product and policy numbers:** Trial length, billing-period length (for usage counters), per-tier caps, rate-limit windows, trial-specific export/download caps, and UI urgency thresholds should live in small named modules (e.g. a client-safe `[productLimits].ts`, `[planLimitValues].ts`, `[rateLimits].ts`). Export **one** milliseconds-per-day constant and derive all calendar windows from it. Drive user-facing copy (landing CTAs, tooltips, terms) from the same trial/period constants so enforcement and marketing cannot drift. WHY: Duplicated literals diverge silently (signup sets `[N]` days while a fallback path still hardcodes an old value; ZIP export caps match job download in one path but not another).
+> - **Separate internal keys from display labels:** For status values, category names, or any enum with user-facing text, keep the internal key stable (for DB, localStorage, URL params, API compatibility) and map to a display label via a `LABELS` constant. This lets you change terminology (e.g., "Rejected" → "Not Selected") without migration, and lets you pair colors and icons with statuses in one place. Components render via `LABELS[status]` — automatic propagation.
+> - **Session keepalive for SPAs:** SvelteKit SPAs don't make page-load requests to refresh auth cookies. Add a periodic keepalive fetch (e.g., `setInterval(() => fetch('/api/keepalive'), 25 * 60 * 1000)`) in the root layout's `onMount` to prevent auth token expiry. The endpoint can be a trivial 200 response or double as a session-refresh mechanism.
+> - **Credential change vs in-memory SPA state:** Password changes, forced re-login, or session refresh can **reset** client auth context while **in-flight** list loads abort or return **401**. After re-auth, **invalidate and refetch** list-shaped stores (or use `invalidateAll` / full navigation) so primary boards and pipelines are not stuck **empty** until a hard refresh. **Why:** Clearing local state on auth events races parallel loaders; an empty view reads as data loss.
+> - **Guided product tours (e.g. Shepherd.js):** Put stable `data-tour="…"` anchors on key UI regions. Persist **per-user completion** server-side (e.g. JSON map `tourId → ISO date` on the user record) so tours don’t re-fire after dismissal; separate a **welcome/onboarding** tour from **feature** tours. Optional: a Help/Nav entry lists available tours and respects completion state. WHY: Client-only “seen” flags reset on new devices; server truth supports analytics and coach/delegate scenarios.
+> - **Tour completion vs skip/cancel:** Auto-start logic must not treat **“not completed”** the same as **“never started.”** If users **skip**, **cancel**, or **close** the welcome tour, persist a terminal state (same bucket as completed for auto-run purposes, or a dedicated `declinedAt` / `skippedAt`) so cold load, new device, or long idle **wake** does not relaunch the tour. WHY: Dismissed users otherwise see the same intro repeatedly and assume state failed to save.
+> - **Optional entity-level context for LLM:** A short, user-editable field on a record (e.g. “Role context” on a job/card) merged into prompts for that record’s AI flows. WHY: Lets buyers steer tone and framing (level, industry, constraints) without rewriting their global profile for every edge case.
+> - **Multi-panel SPA + URL state:** When several slide-out panels can open, sync meaningful query params (`?item=`, `tab=`, `panel=`) with `history.replaceState` for shareable/bookmarkable state. Define **overlap rules** (e.g. opening the companies panel closes job detail, or stacks predictably). Lock `body` scroll while a full-height panel is open. WHY: Avoids desync between URL, back button, and visible UI.
+> - **Persistent AI / copilot dock:** If an assistant stays open in a **rail** or **side panel**, bind its context to **one selected record** (or explicit “no context”) and mirror the same **LLM metering, observability, and prompt-injection** rules as standalone AI routes. **Streaming** UX should not steal focus every token; loading and error surfaces must match modal flows. WHY: Operators and users confuse “chat” scope when the shell does not reflect what record AI is reasoning about.
+> - **Companion “lenses” on one entity:** Multiple tabs or sub-panels that each run **distinct** analysis or generation on the **same primary row** need **separate persistence keys** (or documents) — do not overwrite “Lens A” when regenerating “Lens B”. Export bundles should opt in each lens explicitly. WHY: Mixed narratives in one blob create inconsistent UX and support confusion.
+> - **External profile / identity URLs:** Fields like professional network or portfolio URLs should use **one normalizer** for paste-from-browser and typed entry; enforce **HTTPS** policy if relevant; exclude or redact from **shared exports** where PII rules require. WHY: Duplicate URL variants bypass dedupe; HTTP mistakes break deep links silently.
+> - **Native HTML5 drag across a horizontal scroll region:** Browsers do not auto-scroll horizontally the way many Kanban UIs need. Hold a ref to the scroll container and, on **`document` `dragover`** (throttled), nudge `scrollLeft` when the pointer is near the left/right edges; remove listeners on **`dragend`** / cleanup. Guard any `document` listener setup/teardown with **`browser`** so SSR never touches the DOM. WHY: Users can reach off-screen columns without canceling the drag.
+> - **Client search/list cache hygiene:** If you cache third-party search results in memory or `sessionStorage`, **do not** persist entries when the upstream call failed, timed out, or returned partial/errors — otherwise users see stale junk. Expose an explicit **Refresh** / **Try again** that bypasses cache for bot-heavy sources.
+> - **Duplicate URL / link detection before create:** When users paste a canonical URL for an importable record (job posting, bookmark, feed item), **normalize** first (strip tracking query params, consistent host casing, trailing slash policy) and **query for an existing row** before insert. If a match exists, block with a clear explanation or offer “open existing” — duplicate rows pollute pipelines, reminders, and exports. WHY: Same listing added twice reads as two opportunities; normalization prevents `?utm_*` variants from bypassing naive checks.
+> - **Discovery or search → same import contract:** When boards, recommendations, or internal search surface candidate URLs, add them through the **same** progressive import pipeline and entitlements as manual paste so limits, telemetry, and duplicate behavior stay consistent.
+> - **Discovery bulk actions vs active filters:** When users **add multiple** discovery results at once, the batch must honor the **same narrowed selection** visible in the list (quick filters, direction subset, URL-state selection) — not silently snap back to “all results.” Wire the batch request body from **current filter state** or explicitly reset filters with consent.
+> - **Two URLs per imported listing (apply vs found-here):** If the schema stores both an **apply/source listing** URL and a **discovery** URL, drive **duplicate checks** from the normalized canonical apply URL; expose **both** in detail UI and **exports** (`CSV`/ZIP column parity). **Why:** Users confuse “where I apply” with “where I found it”; losing either link breaks workflows and support.
+> - **Workflow columns and stored status:** Keep **board columns**, **search filters**, and **dedupe keys** aligned with a **single normalized status (or stage) model** at the mapper. **Why:** Legacy or empty values often match no column — the record disappears from the main board but still blocks duplicates and skews counts.
+> - **Multi-record URL import:** Offer **parse → preview → confirm**; **dedupe** using the **same normalization** as the server; **cap** rows per batch; enforce **per-row** plan limits and scrape quotas (no “bulk bypass”). Reuse the **same progressive pipeline** as single import (e.g. stub record + finalize) where possible. If you export **CSV**, keep **header and cell order aligned** for re-import. See **`docs/TECHNICAL_REFERENCE.md` → Multi-record URL import**.
+> - **Onboarding with background imports:** Let users **advance** the wizard while long-running adds continue; show progress on the owning step or a lightweight status line instead of blocking the whole flow on N round-trips.
+> - **Guided tours and spotlight steps:** Before highlighting **nav or shell** targets, **close** overlays, drawers, and full-screen panels that sit above the chrome — otherwise the highlighted region is invisible. Prefer a single **Done** action on the last step when **Skip** adds no value.
+> - **Capability flags (admin, billing, support) vs. “active” account:** APIs and session payloads that drive **privileged UI** (admin menus, destructive actions) must describe the **authenticated** user, not the row currently being viewed or edited (delegation, impersonation, “act as customer”). If the client overwrites `isAdmin` (or similar) with the active account’s record, gates and server checks disagree. **Impersonation** should be detectable with an **explicit** server-side signal (dedicated cookie or header contract), not by inferring from fields that also apply to non-admin delegation.
+
+> - **Centralize user-facing display labels for internal enums.** When the database stores terse values (`viewer`, `full`, `backlog`, `on_deck`) but users need friendly labels ("View only", "Full access", "Backlog", "On Deck"), keep the mapping in **one shared utility** (e.g., `delegationLabels.ts`, `statusLabels.ts`). Grep for raw enum strings in templates to catch stale hardcoded labels after a rename. WHY: Inconsistent labels across dropdowns, badges, and help text erode trust and create support tickets.
+> - **Admin accounts: neutral UI for plan/trial gates.** When the product enforces trial expirations, usage caps, or paywall gates, **exempt admin accounts** in the UI display (show a neutral placeholder like "—" instead of "Expired") and in triage filters (exclude admins from "trial ending soon" lists). The backend entitlement layer already treats admins as unlimited; the UI should reflect the same reality. WHY: Admin users who see "Trial expired" panic or file bugs against their own product.
+> - **Gated administrative proxies for private services:** When integrating backend services or scraping edge nodes protected behind private networks (such as Tailscale or firewall boundaries), do not expose unauthenticated health checks or credentials to the browser. Proxy these endpoints through gated server routes (e.g. `GET /api/admin/node-health`) that verify admin sessions, use a strict timeout (e.g. 10s), inject secret tokens entirely server-side, and resolve connection topography before responding.
+> - **Micro-icon button helper wrapping:** Instead of copy-pasting typescript props, Svelte Snippet children, and Tooltip placements across individual button components (such as `AddRowIconButton.svelte`, `EditIconButton.svelte`), unify them under a core `IconButton.svelte` primitive with pass-through prop bindings. Specific wrappers simply invoke `<IconButton icon="[icon-string]" {...$props} />`.
+> - **Modal-form architectural delegation:** When a creation form needs to be rendered both inside an inline tab and as a popup modal, do not clone state variables, input bindings, clipboard paste handlers, or validation logic. Extract the entire form controller and view into a dedicated component (`[Entity]Form.svelte`) and have the modal act as a pure layout wrapper that mounts it.
+> - **Standardized UTC timestamp formatters:** To convert dates or ISO strings to a clean log-style UTC representation (`YYYY-MM-DD HH:MM:SS UTC`), define a central pure helper (`formatUtcTimestamp(iso)`) in a format library. Use this everywhere in panels, file-archiving name generators, and activity logs instead of repeating ad-hoc string manipulations like `.replace('T', ' ').slice(0, 19) + ' UTC'`.
+
+## Anti-Patterns to Avoid
+
+_Things we tried that failed. Claude should NOT repeat these._
+
+> 📝 **Example:**
+> - Don't drive naive string find/replace on rich document XML from raw LLM output (e.g. DOCX `<w:r>` run splitting breaks matches). Own structure in code; use the LLM for content at defined slots only.
+> - Don't swallow errors in catch blocks; always surface to user
+> - Don't let reactive side effects read and write the same dependency in one turn (infinite loop). Use framework escape hatches for the write path (e.g. Svelte 5: `untrack()`).
+> - Don't assume PocketBase field defaults; always set explicit maxSize for text fields storing LLM output
+> - Don't zero out list or plan quotas to block **new** creation if that also hides existing records or breaks list/detail views. Preserve read/list headroom for legacy data; block creation with an explicit plan flag, feature gate, or server check instead.
+> - Don't maintain a persistent free tier with non-zero limits. It creates a leaky bucket where trial users settle into free usage and never convert. Instead, expire accounts to zero limits after trial and offer a low-cost Hold tier for data preservation. The "expired" state with a retention window (e.g., 30 days) creates urgency without being punitive.
+> - Don't bury usage counts only in billing/settings pages. Users hit limit errors with no warning. Place inline usage indicators adjacent to each feature's trigger so remaining capacity is visible before they act.
+> - **Don't use a `fixed inset-0` backdrop div for click-outside detection when any ancestor has `backdrop-filter`.** The backdrop becomes scoped to the ancestor's bounds, not the viewport. Discovered when `<nav class="backdrop-blur-sm">` caused the menu backdrop to only cover the navbar, letting all page-content clicks pass through. Use the document `pointerdown` pattern instead (see Patterns to Follow).
+> - **Don't delete parents before dependents when relations are required.** A 500 "record is part of a required relation" (common in BaaS like PocketBase) means a child still referenced a removed parent. Map referencing collections and delete leaf records first.
+> - **Don't assume `deleteRule: null` means "everyone" in PocketBase.** It means superusers only. Set explicit delete rules in migrations/setup; otherwise production 403s masquerade as auth bugs.
+> - **Don't place cost anchors below your price on pricing pages.** Contrast only works if the expensive reference (list price, typical agency or consulting cost, etc.) appears **before** your number. If visitors see your price first, a later anchor reads as trivia, not relief.
+> - **Don't use developer, ops, or in-group jargon in user-facing labels, empty states, or tours** unless the product is explicitly for that audience. Prefer plain verbs and nouns the buyer already uses (e.g. **Duplicate**, **Start from…**, **Carry forward**) over tool-native terms (Git **fork**/rebase, infra **shard**/pipeline) that read as insider talk.
+> - **Don't use aggressive language for negative outcomes.** Labels like "Rejected" carry strong negative connotations and demoralize users. Use neutral, factual alternatives ("Not Selected") that describe the outcome without implying personal failure. Keep the internal enum key unchanged for backward compatibility — only change the display label.
+> - **Don't expose backend service names in user-facing error messages.** "Is PocketBase running?" or "Supabase connection failed" means nothing to users and leaks implementation details. Catch blocks in auth flows are the most visible — they're the first thing new users see when something goes wrong. Use plain-language alternatives: "Something went wrong. Check your connection and try again."
+> - **Don't parallelize many SDK list/read calls to the same collection through one client instance** without addressing library auto-cancellation (see Critical Patterns → PocketBase JS SDK). Symptom: aborted requests, empty nested arrays on list endpoints, data “missing” after refresh while single-record fetches still work.
+> - **Don't apply page-load–era rate limits to SPAs without retuning.** Navigations fire parallel data fetches; limits that suit one-document-per-request stacks may starve a SPA. Raise general API caps and reserve tight limits for genuinely expensive endpoints (LLM, scraping, bulk export), tuned from real session traces.
+> - **Don't duplicate policy numbers** (trial days, usage-period days, per-tier caps, trial download limits) across auth hooks, entitlements, export routes, and setup scripts. Extract named constants and one shared day-length helper; mirror literals in non-TS scripts only with an explicit sync comment pointing at the canonical module.
+> - **Don't show trial-expired or paywall UI from a client guess** that can race **server entitlement initialization** during the first request after signup, hydration, or a burst of parallel loads. **Coalesce** plan/trial fields in one authoritative server path per session (e.g. layout load + hooks) before the client gates modals. WHY: Racey reads produce **false “trial ended”** or zero-limit flashes while the user is still in trial.
+> - **Don't treat multi-import as exempt from limits.** One paste must not skip scrape metering, duplicate checks, or plan gates — users will bring thousand-row spreadsheets; the product should degrade safely (caps, clear errors, partial success summaries).
+> - **Don't assume the finalize HTTP response is the only signal of success** for progressive URL import. Without a **reconcile read** and shared failure callbacks, users get stuck partial cards and inconsistent pipelines across surfaces.
+> - **Don't skip optional-key provider steps in multi-phase server work** when the key is absent: complete the import with a **clear terminal state** and user-visible note instead of leaving a perpetual “generating” placeholder that blocks downstream UX.
+> - **Don't combine Svelte `{#key}` + `transition:fade` on long-page sections that need programmatic scroll.** The destroy/recreate cycle briefly doubles the section height while outgoing and incoming elements coexist in the DOM. Any `scrollTo` call during that window measures an inflated offset; once the outgoing element is removed, the layout snaps shorter and the viewport jumps. Use CSS `opacity`/`transform` transitions or remove `{#key}` and let Svelte reuse the DOM node for stable scroll targeting.
+> - **Don't register `document`-level drag/scroll listeners without a `browser` guard and a symmetric teardown.** Unguarded cleanup in `onDestroy` throws on the server; missing teardown leaks listeners across navigations.
+> - **Don't reset every nested flyout flag on every `mouseenter`** of a sub-trigger. That collapses the panel while the user moves from the trigger toward the panel across a gap. Use per-flyout identity + cancel timers when re-entering the same flyout; full reset when the parent menu closes.
+> - **Don't fix vertical positioning of a large side flyout by switching to `position: fixed` with hand-tuned horizontal `right`/`left` in viewport units** if sibling flyouts use `absolute` from the same menu column—the horizontal gap will drift from padding and borders. Adjust vertical placement (center/clamp + `max-height`) while keeping the same horizontal rules as other flyouts.
+> - **Don't call `.json()` on a `fetch` response without first checking `res.ok`.** Non-OK responses (429, 500, HTML error pages) often return valid JSON that doesn't match the expected shape — assigning it to typed state (an array, a config object) produces downstream crashes (`TypeError: .find is not a function`, `Cannot read properties of null`). Check `res.ok` first; branch to error handling or silent `return` before parsing.
+> - **Don't run `setInterval` polling without 429-specific backoff.** A fixed-interval poll that ignores 429 and retries immediately creates a **request storm** — dozens of concurrent polling loops all hitting the same rate limit simultaneously. Implement a **skip-tick** counter that grows exponentially on 429 so the existing interval naturally backs off without needing to be replaced.
+> - **Don't show "Saved" or close a confirmation dialog in `finally` or unconditionally after a mutation `fetch`.** Gate success indicators on `res.ok`; otherwise users believe data is persisted when the server rejected the request. For destructive operations (delete), keep the confirmation dialog open on failure so the user can retry or cancel.
+> - **Don't apply optimistic UI updates without reverting on `!res.ok`.** `fetch` resolves normally on 403/500 — only network failures throw. If you patch state optimistically (e.g., toggle a star before the round-trip), the `catch` block alone won't revert on HTTP failures. Check `res.ok` in the `try` block and revert there too.
+> - **Don't spawn per-item polling during bulk operations.** If single-item creation spawns one or more follow-up polling intervals (import progress, alignment check, secondary AI generation), bulk-importing N items creates N × (number of polls) concurrent intervals — easily 30+ requests/second against a rate limiter. Suppress per-item follow-ups for bulk paths; poll or refresh once when the batch completes.
+> - **Don't assume `.json()` on responses from long-running generation or research routes.** Failure paths often return HTML or plain text; parsing blindly corrupts state or throws uncaught exceptions. Branch on status and content type first — same discipline as progressive-import finalize.
+> - **Don't clone script blocks, state variables, and event handlers between modal wrappers and inline forms.** Doing so duplicates input validation, API request logic, clipboard listeners, and focus-management hooks. Delegate modal forms to an underlying form component instead.
+> - **Don't create specialized Svelte components for visual-only button variations with duplicated typescript structures.** Do not clone props, tooltips, and padding layouts just to hardcode a different icon name. Unify buttons under a dynamic `IconButton.svelte` primitive, and have specific semantic icons wrap it.
+> - **Don't import third-party file parsing engines (such as `pdf-parse` or `mammoth`) directly inside route files.** This leaks third-party package dependencies into individual routes, duplicating error/exception handlers and complicating library updates. Keep them isolated inside a dedicated server-side file utility boundary.
+> - **Don't repeat ad-hoc string formatting operations like `.replace('T', ' ').slice(0, 19)` to generate log-style dates.** This duplicates formatting trivia across multiple UI views and endpoints, risking silent drift. Centralize date formats inside a format library.
+
+## Recent Changes
+
+_Updated each session. Keep the last 3-5 sessions. Older entries can be archived or deleted._
+
+### Session [N] - [Date]
+
+- [What changed, decisions made, issues hit]

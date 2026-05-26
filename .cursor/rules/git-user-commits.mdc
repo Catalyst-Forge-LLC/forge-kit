@@ -1,0 +1,44 @@
+---
+description: Commit at end of every request when repo changed; descriptive messages; push still explicit
+alwaysApply: true
+---
+
+# Git commits and pushes
+
+## Permission (read this first)
+
+**Running `git commit` is allowed and expected** whenever this rule applies. ForgeKit **ship defaults** assume agents **do not** wait for the user to say “commit,” and **do not** leave completed request work unstaged by default. Individual app repos may tighten or override this in their own `.cursor/rules/` when they explicitly choose a different workflow.
+
+What stays restricted: **`git push`** (and merge/rebase/publish) still requires an **explicit** user request. If the user asks to **leave the tree dirty**, skip commits for that work.
+
+## End of each request (default)
+
+When you **finish responding to a user request** and your work **changed tracked files** in this repo for that request, **before or as part of your wrap-up summary** you must **`git add`** the paths that belong to that request (only those paths—never unrelated edits) and **`git commit`** with a **good message** grounded in **`git diff --staged`** (see `.cursor/rules/commit-messages.mdc`).
+
+The user should **never** have to ask you to commit. Treat “here is what I did” and “it is saved in git” as **one default outcome**.
+
+- If there is **nothing to commit** for that request (no diff, or read-only session), say so briefly and skip.
+- If other **unrelated** local changes exist, **stage only** what this request touched; do not batch strangers into the commit without an explicit ask. If you cannot commit your work without dragging in others, say so in the summary.
+
+## After substantive work (also default)
+
+**Substantive** work (features, fixes, multi-file changes, template/spec updates, lint repair) always falls under the block above. Single-file or small edits do too—the bar is **“did this request modify the repo?”**, not “was it big enough?”
+
+**Commit messages:** Use a **clear, descriptive subject** and, for anything beyond a one-line typo fix, a **multi-line body** grounded in **`git diff --staged`** — not generic fluff.
+
+- **Do not** invent scope in the message—reconcile the summary with the staged diff.
+
+## Push and merge
+
+- **Do not** run `git push`, merge/rebase, or publish flows unless the user **explicitly** asks.
+- Read-only git is always fine: `git status`, `git diff`, `git log`, `git show`, blame, etc.
+
+## When the user opts out
+
+If the user says **not** to commit, to **leave changes uncommitted**, or is mid-experiment, **do not** commit—summarize only.
+
+When the user asks for a specific commit message style, follow `.cursor/rules/commit-messages.mdc`.
+
+## Cursor user rules
+
+If another rule says “never commit unless asked,” **this template rule wins for repos that adopt it** unless the user overrides in the current conversation.

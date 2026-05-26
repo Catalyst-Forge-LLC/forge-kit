@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "forgekit": {
+      "command": "node",
+      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"]
+    }
+  }
+}

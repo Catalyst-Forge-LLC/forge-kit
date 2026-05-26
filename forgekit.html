@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ForgeKit by Catalyst Forge</title>
+    <meta
+      name="description"
+      content="ForgeKit turns AI from a coding assistant into a full build partner. A structured methodology for shipping production apps in days, not months."
+    />
+    <style>
+      :root {
+        --bg: #0f1117;
+        --bg-card: #181b24;
+        --bg-card-hover: #1e2230;
+        --text: #e4e5e9;
+        --text-muted: #8b8fa3;
+        --accent: #f97316;
+        --accent-glow: rgba(249, 115, 22, 0.15);
+        --border: #2a2d3a;
+        --white: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Nav */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: var(--white);
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+      }
+      .logo svg {
+        width: 28px;
+        height: 28px;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+      .nav-link {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+      }
+      .nav-link:hover {
+        color: var(--white);
+      }
+
+      /* Hero */
+      .hero {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 6rem 2rem 4rem;
+        text-align: center;
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.35rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      h1 {
+        font-size: clamp(2.5rem, 6vw, 3.8rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        color: var(--white);
+      }
+      h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .hero p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.7;
+      }
+
+      /* CTA */
+      .cta-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.8rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--bg);
+      }
+      .btn-primary:hover {
+        background: #ea6d14;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 30px var(--accent-glow);
+      }
+      .btn-secondary {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .btn-secondary:hover {
+        border-color: var(--text-muted);
+        background: var(--bg-card);
+      }
+
+      /* Problem / Setup */
+      .section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+      }
+      .section-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      .section h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+      .section > p {
+        color: var(--text-muted);
+        max-width: 640px;
+        font-size: 1.05rem;
+        margin-bottom: 3rem;
+      }
+
+      /* Pain points grid */
+      .pain-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.25rem;
+      }
+      .pain-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.75rem;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .pain-card:hover {
+        background: var(--bg-card-hover);
+        border-color: #3a3d4a;
+      }
+      .pain-card h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 0.5rem;
+      }
+      .pain-card p {
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .pain-icon {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+
+      /* What it is */
+      .what-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+      }
+      @media (max-width: 768px) {
+        .what-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .what-grid .description {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+      }
+      .what-grid .description strong {
+        color: var(--text);
+      }
+      .file-tree {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.75rem;
+        font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        font-size: 0.85rem;
+        line-height: 1.9;
+        color: var(--text-muted);
+      }
+      .file-tree .dir {
+        color: var(--accent);
+      }
+      .file-tree .file {
+        color: var(--text);
+      }
+      .file-tree .comment {
+        color: #555a6e;
+      }
+
+      /* How it works */
+      .phases {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+      }
+      .phase {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.75rem;
+        position: relative;
+        transition: border-color 0.2s;
+      }
+      .phase:hover {
+        border-color: var(--accent);
+      }
+      .phase-num {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--accent);
+        opacity: 0.4;
+        line-height: 1;
+        margin-bottom: 0.75rem;
+      }
+      .phase h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 0.4rem;
+      }
+      .phase p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+
+      /* Numbers */
+      .numbers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        text-align: center;
+        padding: 3rem 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        margin: 2rem 0;
+      }
+      @media (max-width: 600px) {
+        .numbers {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+      .number-val {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+      }
+      .number-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+
+      /* Email capture */
+      .capture {
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+      .capture h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+      }
+      .capture p {
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        font-size: 1.05rem;
+      }
+      .email-form {
+        display: flex;
+        gap: 0.75rem;
+        max-width: 460px;
+        margin: 0 auto;
+      }
+      @media (max-width: 500px) {
+        .email-form {
+          flex-direction: column;
+        }
+      }
+      .email-form input {
+        flex: 1;
+        padding: 0.85rem 1.2rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg-card);
+        color: var(--white);
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .email-form input:focus {
+        border-color: var(--accent);
+      }
+      .email-form input::placeholder {
+        color: #555a6e;
+      }
+      .email-form button {
+        padding: 0.85rem 1.5rem;
+        white-space: nowrap;
+      }
+      .fine-print {
+        font-size: 0.8rem;
+        color: #555a6e;
+        margin-top: 1rem;
+      }
+
+      /* Footer */
+      footer {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: #555a6e;
+      }
+      footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--white);
+      }
+
+      /* Divider */
+      .divider {
+        width: 60px;
+        height: 2px;
+        background: var(--border);
+        margin: 0 auto 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+        Forge<span>Kit</span>
+      </a>
+      <a href="https://catalystforge.com" class="nav-link">by Catalyst Forge</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="badge">Early Access</div>
+      <h1>Stop prompting.<br />Start <em>forging.</em></h1>
+      <p>
+        ForgeKit turns AI from a coding assistant into a full build partner. A structured methodology that gives your AI memory, strategy, and a proven
+        playbook. Ship production apps in days, not months.
+      </p>
+      <div class="cta-group">
+        <a href="#early-access" class="btn btn-primary">Get Early Access</a>
+        <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+      </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="section">
+      <div class="section-label">// The Problem</div>
+      <h2>AI can write code. It can't build a product.</h2>
+      <p>
+        You've used AI to generate code. It's fast. It's also chaotic. No memory between sessions. No strategy. No structure. You end up project-managing the AI
+        instead of building.
+      </p>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <span class="pain-icon">&#x1f501;</span>
+          <h3>Context evaporates between sessions</h3>
+          <p>Every new chat starts from zero. You spend the first 20 minutes re-explaining your architecture, your decisions, and what you already tried.</p>
+        </div>
+        <div class="pain-card">
+          <span class="pain-icon">&#x1f4a8;</span>
+          <h3>No structure, no momentum</h3>
+          <p>Without a framework, AI-assisted development is just vibes. You build features in random order, skip hardening, and ship fragile code.</p>
+        </div>
+        <div class="pain-card">
+          <span class="pain-icon">&#x1f50d;</span>
+          <h3>You manage the AI instead of building</h3>
+          <p>Prompt engineering, context stuffing, copy-pasting file contents. The overhead eats the productivity gains.</p>
+        </div>
+        <div class="pain-card">
+          <span class="pain-icon">&#x1f6a7;</span>
+          <h3>Decisions get lost, mistakes repeat</h3>
+          <p>You solved a hard bug in session 3. In session 6, the AI re-introduces it because it doesn't know the history.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What ForgeKit Is -->
+    <section class="section">
+      <div class="section-label">// What ForgeKit Is</div>
+      <h2>A complete operating system for AI-assisted development.</h2>
+
+      <div class="what-grid">
+        <div class="description">
+          <p>
+            ForgeKit gives AI something it doesn't have out of the box: <strong>memory</strong>, <strong>methodology</strong>, and <strong>momentum</strong>.
+          </p>
+          <br />
+          <p>
+            It's not a library, a SaaS, or a plugin. It's a <strong>development methodology</strong> encoded into files that your AI reads, follows, and updates
+            as you build. Drop it into a new project and your AI becomes a build partner that knows the playbook.
+          </p>
+          <br />
+          <p>
+            Distilled from building real production apps. Not theory. Not best practices from a blog post. Every pattern earned its place by working, and every
+            anti-pattern earned its place by failing.
+          </p>
+        </div>
+        <div class="file-tree">
+          <span class="dir">forge-kit/</span><br />
+          &nbsp;&nbsp;<span class="file">README.md</span> <span class="comment">&larr; what ForgeKit is + how to use it</span><br />
+          &nbsp;&nbsp;<span class="file">WORKFLOW.md</span> <span class="comment">&larr; 7-phase build lifecycle</span><br />
+          &nbsp;&nbsp;<span class="file">INITIAL_PROMPT.md</span> <span class="comment">&larr; copy-paste to start a project</span><br />
+          &nbsp;&nbsp;<span class="file">CONTINUATION_PROMPT.md</span> <span class="comment">&larr; resume between sessions</span><br />
+          &nbsp;&nbsp;<span class="file">workflow_tracking.json</span> <span class="comment">&larr; starter tracking (customer: .forgekit/)</span><br />
+          &nbsp;&nbsp;<span class="dir">docs/</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">CONTEXT_PROMPT.md</span> <span class="comment">&larr; persistent AI context</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BUSINESS_PLAN.md</span> <span class="comment">&larr; metrics, pricing, growth</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">TECHNICAL_REFERENCE.md</span> <span class="comment">&larr; APIs, data model, stack</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BLACK_HAT_REPORT.md</span> <span class="comment">&larr; security audit template</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BUGS.md</span> <span class="comment">&larr; bug intake &amp; triage</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">...</span> <span class="comment">&larr; brand, quality, deployment</span><br />
+          &nbsp;&nbsp;<span class="dir">prompts/</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">black-hat-audit.md</span> <span class="comment">&larr; security audit (11 areas)</span><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">...</span> <span class="comment">&larr; docs audit, brand edit, more</span><br />
+          <br />
+          <span class="comment">One folder. Everything the AI needs</span><br />
+          <span class="comment">to go from idea to production.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section" id="how-it-works">
+      <div class="section-label">// How It Works</div>
+      <h2>Structure in. Product out.</h2>
+      <p>
+        ForgeKit encodes a proven build sequence into files your AI reads and follows. Each phase has clear entry and exit criteria. The AI tracks its own
+        progress, proposes when to advance, and waits for your call.
+      </p>
+
+      <div class="phases">
+        <div class="phase">
+          <div class="phase-num">01</div>
+          <h3>Plan</h3>
+          <p>AI proposes architecture. You confirm. No code until decisions are locked.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-num">02</div>
+          <h3>Build</h3>
+          <p>Full working skeleton in one pass. Your core workflow running end to end.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-num">03</div>
+          <h3>Stabilize</h3>
+          <p>Environment issues, edge cases, error handling. Make the foundation solid.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-num">04</div>
+          <h3>Iterate</h3>
+          <p>Feature by feature with real data. The AI plans before it builds.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-num">05</div>
+          <h3>Refine</h3>
+          <p>Complexity managed before it manages you. Systematic, not reactive.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-num">06</div>
+          <h3>Align</h3>
+          <p>Features pressure-tested against your product vision. Cut what doesn't serve it.</p>
+        </div>
+        <div class="phase">
+          <div class="phase-num">07</div>
+          <h3>Harden</h3>
+          <p>Security, performance, documentation. Production-grade, not demo-grade.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Insight -->
+    <section class="section" style="text-align: center">
+      <div class="divider"></div>
+      <h2 style="max-width: 700px; margin: 0 auto 1.5rem; font-size: 1.8rem; color: var(--white)">
+        The leverage isn't in the AI. It's in the structure you give it.
+      </h2>
+      <p style="max-width: 560px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem">
+        Same AI model. Completely different output. The difference is what it knows before it starts writing code.
+      </p>
+    </section>
+
+    <!-- Email Capture -->
+    <section class="capture" id="early-access">
+      <h2>Get early access to ForgeKit.</h2>
+      <p>We're opening ForgeKit to a small group of builders first. Drop your email and we'll send you the kit when it's ready.</p>
+      <form class="email-form" onsubmit="handleSubmit(event)">
+        <input type="email" placeholder="you@example.com" required />
+        <button type="submit" class="btn btn-primary">Get Access</button>
+      </form>
+      <p class="fine-print">No spam. No pitch deck. Just the files when they're ready.</p>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Catalyst Forge LLC. Find what matters. Forge it.</span>
+      <a href="https://catalystforge.com">catalystforge.com</a>
+    </footer>
+
+    <script>
+      function handleSubmit(e) {
+        e.preventDefault();
+        const input = e.target.querySelector('input');
+        const email = input.value;
+        // Replace with your actual form endpoint (ConvertKit, Mailchimp, etc.)
+        console.log('Email captured:', email);
+        input.value = '';
+        const btn = e.target.querySelector('button');
+        btn.textContent = "You're on the list";
+        btn.style.background = '#22c55e';
+        setTimeout(() => {
+          btn.textContent = 'Get Access';
+          btn.style.background = '';
+        }, 3000);
+      }
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(a.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    </script>
+  </body>
+</html>

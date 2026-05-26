@@ -1,0 +1,110 @@
+{
+  "$comment": "Defaults for scripted PocketBase local install (Phase 2). Agents: call getScaffoldInstallParams; keep app scripts aligned. Do NOT hardcode a single semver as the only source of truth.",
+  "pocketBase": {
+    "versionPolicy": "Resolve at install time — never bake one old semver into app scripts or ForgeKit docs alone.",
+    "versionEnvVar": "POCKETBASE_VERSION",
+    "versionDefault": "latest",
+    "versionPinnedExample": "0.26.2",
+    "resolveLatestFrom": "https://api.github.com/repos/pocketbase/pocketbase/releases/latest",
+    "defaultPort": 8096,
+    "bindHost": "127.0.0.1",
+    "projectSubdir": "pocketbase",
+    "dataSubdir": "pb_data",
+    "versionStampFile": "pocketbase/.pocketbase-version",
+    "executableNames": {
+      "win32": "pocketbase.exe",
+      "default": "pocketbase"
+    }
+  },
+  "oneClickDev": {
+    "purpose": "Non-technical operators double-click setup/run/status; agents create these in Phase 2.",
+    "forgeKitGuide": "mcp-server/content/ONE_CLICK_DEV_SETUP.md",
+    "referenceScripts": [
+      "mcp-server/content/scripts/forgekit-dev-launcher.mjs",
+      "mcp-server/content/scripts/setup-pocketbase.mjs",
+      "mcp-server/content/scripts/forgekit-env.mjs",
+      "mcp-server/content/scripts/test-pocketbase.mjs",
+      "mcp-server/content/scripts/setup-ollama.mjs",
+      "mcp-server/content/scripts/test-ollama.mjs"
+    ],
+    "repoRootFiles": [
+      "setup.bat",
+      "run.bat",
+      "status.bat",
+      "test-pocketbase.bat",
+      "setup-ollama.bat",
+      "test-ollama.bat",
+      "setup.sh",
+      "run.sh",
+      "status.sh",
+      "test-pocketbase.sh",
+      "setup-ollama.sh",
+      "test-ollama.sh"
+    ],
+    "humanProgressDoc": "docs/FORGEKIT_PROGRESS.md"
+  },
+  "pnpmScripts": {
+    "installPocketBase": "pnpm run setup:pocketbase",
+    "runPocketBase": "pnpm run pocketbase",
+    "bootstrapAfterClone": "pnpm install && pnpm run setup:pocketbase",
+    "schemaFromEnvExample": "pnpm run pocketbase:schema",
+    "forgekitStatus": "pnpm run forgekit:status",
+    "testPocketBase": "pnpm run test:pocketbase",
+    "setupOllama": "pnpm run setup:ollama",
+    "testOllama": "pnpm run test:ollama"
+  },
+  "systemHealthChecks": {
+    "purpose": "Isolated pass/fail scripts per dependency — not full app start.",
+    "forgeKitGuide": "mcp-server/content/SYSTEM_HEALTH_CHECKS.md",
+    "pocketBase": {
+      "script": "scripts/test-pocketbase.mjs",
+      "launcherBat": "test-pocketbase.bat"
+    },
+    "ollama": {
+      "setupScript": "scripts/setup-ollama.mjs",
+      "testScript": "scripts/test-ollama.mjs",
+      "modelStamp": ".forgekit/ollama-model.txt",
+      "defaultModels": ["ibm/granite4.1:8b", "ibm/granite4.1:3b", "gemma3:4b", "gemma3:12b"],
+      "avoidUnlessExplicit": ["deepseek-r1", "qwq", "reasoning", "thinking"],
+      "envVars": ["OLLAMA_BASE_URL", "OLLAMA_MODEL", "OLLAMA_PREFER_GEMMA", "OLLAMA_USE_THINKING", "SKIP_OLLAMA_INSTALL"]
+    }
+  },
+  "devAutomation": {
+    "purpose": "Optional scripts in the app repo so setup is repeatable (env check, codegen, seed, E2E browsers, git hooks). Not part of the PocketBase binary install.",
+    "forgeKitGuide": "mcp-server/content/DEV_AUTOMATION_SCRIPTS.md (in ForgeKit repo)",
+    "examples": {
+      "envCheck": "pnpm run env:check",
+      "codegen": "pnpm run gen:types",
+      "seed": "pnpm run db:seed",
+      "e2eBrowsers": "pnpm run test:e2e:install",
+      "gitHooks": "pnpm prepare (e.g. Husky)"
+    }
+  },
+  "schemaAutomation": {
+    "purpose": "After PocketBase runs and .env has admin credentials, an idempotent script creates/updates collections (avoid manual Admin UI for each collection).",
+    "envVars": [
+      "PUBLIC_POCKETBASE_URL or app-specific base URL for the PocketBase API",
+      "POCKETBASE_ADMIN_EMAIL",
+      "POCKETBASE_ADMIN_PASSWORD"
+    ],
+    "appRepoArtifacts": [
+      "docs/pocketbase-setup.md (human-readable collection spec)",
+      "scripts/ensure-pocketbase-schema.ts (or .mjs) — admin auth + upsert collections",
+      "package.json script e.g. pocketbase:schema"
+    ],
+    "forgeKitGuide": "mcp-server/content/POCKETBASE_SCHEMA_SCRIPT.md (in ForgeKit repo)"
+  },
+  "notes": [
+    "Prefer one-click setup.bat / setup.sh for humans; pnpm scripts for agents.",
+    "bootstrap / setup:pocketbase must be idempotent: second run skips download when version stamp matches (unless --force).",
+    "POCKETBASE_VERSION=latest or unset → install script queries GitHub latest; pin semver in .env only after user confirms a good boot.",
+    "Default port 8096 avoids clashing with other PocketBase instances on 8090.",
+    "Data lives under pocketbase/pb_data; executable under pocketbase/ (gitignored).",
+    "Collection/schema setup: prefer a script wired to POCKETBASE_ADMIN_* in .env (see schemaAutomation + POCKETBASE_SCHEMA_SCRIPT.md) instead of manual admin wizards for every collection.",
+    "Phase progress for humans: status.bat / status.sh → docs/FORGEKIT_PROGRESS.md; Cursor: forgekit-phase-status.mdc.",
+    "Isolated checks: test-pocketbase.bat, test-ollama.bat (see systemHealthChecks + SYSTEM_HEALTH_CHECKS.md).",
+    "Ollama: non-thinking Granite 4.1 / Gemma 3 by VRAM; OLLAMA_USE_THINKING=1 only when brief requires reasoning models.",
+    "General dev ergonomics: see devAutomation + DEV_AUTOMATION_SCRIPTS.md (env:check, gen:types, db:seed, Playwright install, git hooks).",
+    "Phase 2 entry: FORGEKIT_LITE.md section 4.1.2 stack-conditional checklist (not part of universal 4.1 preflight)."
+  ]
+}

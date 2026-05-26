@@ -1,0 +1,114 @@
+# workflow_tracking.json Schema Reference
+
+This file documents how to read and update **`.forgekit/workflow_tracking.json`** in customer project repos. (This ForgeKit repo keeps a starter copy at **`workflow_tracking.json`** at the repo root for MCP `getInitialWorkflowTracking` — agents write the output to **`.forgekit/workflow_tracking.json`** in the app repo.)
+
+Claude should reference this when updating the tracking file.
+
+## Top-Level Fields
+
+### `project`
+
+Static metadata. Set once at project creation.
+
+```json
+{
+  "name": "My App",
+  "created": "2026-03-12",
+  "description": "One-sentence description"
+}
+```
+
+### `currentPhase`
+
+String. One of: `1-architecture`, `2-scaffolding`, `3-stabilization`, `4-feature-iteration`, `5-refactoring`, `6-strategic-review`, `7-hardening`.
+
+Note: Phases 4 and 5 can alternate. A project might go 4 -> 5 -> 4 -> 6 -> 4 -> 7. The tracking file reflects reality, not a strict linear path.
+
+### `phases`
+
+Each phase has:
+
+- `status`: `not_started` | `in_progress` | `completed` | `revisiting` (for phases you return to)
+- `startedAt` / `completedAt`: ISO timestamps
+- `exitCriteriaMet`: Array of strings (criteria that have been satisfied)
+- `exitCriteriaRemaining`: Array of strings (criteria not yet met)
+- `notes`: Array of `{ timestamp, text }` objects for anything worth recording during this phase
+
+When Claude believes exit criteria are met, it moves items from `exitCriteriaRemaining` to `exitCriteriaMet` and proposes the phase transition.
+
+### `decisions`
+
+Architectural and design decisions with rationale. **Start logging in Phase 1** alongside **`docs/PHASE_1_BRIEF.md`** so Phase 2 can begin without the Phase 1 chat. After Phase 2, this array stays aligned with **Key Architectural Decisions** in `CONTEXT_PROMPT.md` (which should be populated by merging the brief).
+
+```json
+{
+  "id": "d1",
+  "timestamp": "2026-03-12T10:30:00",
+  "phase": "1-architecture",
+  "session": 1,
+  "decision": "Use PocketBase instead of filesystem storage",
+  "rationale": "Need multi-user support and real-time sync. Filesystem won't scale.",
+  "alternatives_considered": ["SQLite", "Supabase", "No database"],
+  "status": "active"
+}
+```
+
+`status` can be `active`, `superseded` (replaced by a later decision), or `revisit` (flagged for reconsideration). If superseded, add `superseded_by` field with the ID of the replacement decision.
+
+### `gotchas`
+
+Issues, surprises, or traps encountered during development. These persist across sessions so the same mistake isn't repeated.
+
+```json
+{
+  "timestamp": "2026-03-12T14:00:00",
+  "phase": "3-stabilization",
+  "session": 1,
+  "issue": "SvelteKit .env doesn't populate process.env",
+  "resolution": "Use $env/dynamic/private instead",
+  "category": "environment"
+}
+```
+
+Categories: `environment`, `integration`, `data-model`, `ui`, `performance`, `ai-output`, `security`, `tooling`, `other`.
+
+### `sessions`
+
+Log of each session with what was accomplished and where it left off.
+
+```json
+{
+  "session": 1,
+  "date": "2026-03-12",
+  "phasesWorked": ["1-architecture", "2-scaffolding"],
+  "accomplished": ["Confirmed tech stack", "Built full skeleton", "Imported 44 existing jobs"],
+  "leftOff": "App runs but env vars need fixing. Phase 3 next.",
+  "contextLimitHit": false,
+  "approximateLines": 3500
+}
+```
+
+## Update Rules for Claude
+
+1. **After completing a task:** Update the relevant phase's `notes` and move any satisfied exit criteria.
+2. **After making a decision:** Add to `decisions` array with full rationale.
+3. **After hitting a gotcha:** Add to `gotchas` array immediately so it's captured.
+4. **At session end:** Add a session entry to `sessions` array.
+5. **At phase transition:** Update `currentPhase`, set `completedAt` on the old phase, `startedAt` on the new one.
+6. **When revisiting a phase:** Set status to `revisiting`, don't overwrite the original `completedAt`.
+
+## Custom Extensions
+
+Projects may add custom fields to phases as needed. For example, `4-feature-iteration` has an `iterations` array for tracking feature-by-feature progress:
+
+```json
+{
+  "feature": "DOCX tailoring",
+  "status": "complete",
+  "turnsSpent": 8,
+  "approach": "Programmatic placeholder replacement",
+  "notes": "LLM find/replace failed due to Word XML run splitting. Pivoted in turn 6."
+}
+```
+
+Add whatever fields make sense for your project. The schema is a starting point, not a cage.
