@@ -262,6 +262,8 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 
 > 💡 **Lesson learned:** **Treat critique and structure as first-class persisted state**, not ephemeral chat. Results should survive **tab switches** and reloads; approvals should bind to the **specific artifact + target pair**. If **optional AI providers or keys** are missing, finish in a **terminal state** with clear UX — not an infinite “still working” placeholder.
 >
+> 💡 **Lesson learned:** **Base cover-letter templates** for emailed or attached DOCX should omit legacy mailed-letter headers (`[City, State]`, employer street address blocks unless the product truly mails letters). Those lines are often marked “fixed” in find/replace tailoring and leak through as untailored placeholders. Audit the stored base doc and any “protected template spans” list when users report leftover bracket text.
+>
 > 🔧 **Guidance:** Document collections/fields for critique output, versioning or timestamps, `/api/` routes, and where the same **quality rules** apply across surfaces (e.g. base doc editor vs role-specific tab) so signals stay aligned.
 
 ### Persistent contextual assistant (dock, rail, or side panel)

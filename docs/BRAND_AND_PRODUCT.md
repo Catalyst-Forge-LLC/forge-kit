@@ -191,6 +191,8 @@ If your database doesn't encrypt documents at rest (e.g., default PocketBase, SQ
 
 When the product produces **cover letters**, **outreach**, or other **persuasive prose** for a specific opportunity, prompt and post-process for **human register** — especially for senior buyers: avoid **self-important** openings, **density packing** (keyword stuffing that reads as AI), and **redundant** motifs across opening, body, and closing. **Why:** Recruiters and hiring managers pattern-match “LLM voice” quickly; repetition across paragraphs reads as broken, not thorough.
 
+> 💡 **Lesson learned:** **Email and attachment cover letters** usually do not need a **city/state line** or mailed-letter dateline block (`[City, State]` above the date, employer address block, etc.). Drop those placeholders from the **base template** and from LLM “do not change” blocks — they survive tailoring as obvious non-personalized cruft. Start with name, contact line (email/phone/LinkedIn), date if needed, then salutation and body.
+>
 > 💡 **Lesson learned:** Encode **deduplication and register** rules in **shared prompt fragments** or server-side passes so every surface that generates the same artifact class (tailoring tab, assistant, batch flows) stays aligned — not three different ad-hoc prompts that drift.
 
 ### Name Competitors in Differentiator Copy

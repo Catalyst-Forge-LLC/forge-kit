@@ -10,6 +10,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-05-26 | **Cover letter templates:** drop mailed-letter `[City, State]` guidance — **BRAND_AND_PRODUCT**, **TECHNICAL_REFERENCE** (tailoring), **CONTEXT_PROMPT** voice rules. |
 | 2026-05-26 | **Public repo polish:** `forgekit.html` OSS CTAs (GitHub/MCP); archived `specs/forgekit-as-product.md`; removed internal product `.docx`; update-log intro for pre-OSS entries. |
 | 2026-05-26 | **Open source (Apache 2.0):** `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`; README license/support; reframe closed-distribution wording in **FORGEKIT_LITE v1.3.0**, **NEW_PROJECT_BOOTSTRAP**, **WORKFLOW**, **INITIAL_PROMPT**, **forgekit-workspace-README**; `mcp-server/package.json` license field; public repo published with clean history. |
 | 2026-05-21 | **FORGEKIT_LITE §4.1.2:** Phase 2 stack-conditional deps table (PocketBase, Ollama, LLM keys, Playwright, native addons, ports); README + NEW_PROJECT_BOOTSTRAP + SCAFFOLD_INSTALL cross-refs. |

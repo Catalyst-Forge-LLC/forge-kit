@@ -195,7 +195,7 @@ _If your app generates text (LLM-powered or otherwise), define the voice rules h
 > - No agency-minimizing verbs ("helped to", "assisted in")
 > - Specific impact metrics over vague superlatives
 > - Resume: third-person, no target company mentions
-> - Cover letter: first-person, company-specific
+> - Cover letter: first-person, company-specific; no mailed-letter city/state line for email attachments (see BRAND_AND_PRODUCT → Generated letters)
 
 ## My Preferences
 
