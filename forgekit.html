@@ -418,14 +418,14 @@
 
     <!-- Hero -->
     <section class="hero">
-      <div class="badge">Early Access</div>
+      <div class="badge">Open source · Apache 2.0</div>
       <h1>Stop prompting.<br />Start <em>forging.</em></h1>
       <p>
         ForgeKit turns AI from a coding assistant into a full build partner. A structured methodology that gives your AI memory, strategy, and a proven
         playbook. Ship production apps in days, not months.
       </p>
       <div class="cta-group">
-        <a href="#early-access" class="btn btn-primary">Get Early Access</a>
+        <a href="https://github.com/Catalyst-Forge-LLC/forge-kit" class="btn btn-primary" rel="noopener">View on GitHub</a>
         <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
       </div>
     </section>
@@ -567,15 +567,18 @@
       </p>
     </section>
 
-    <!-- Email Capture -->
-    <section class="capture" id="early-access">
-      <h2>Get early access to ForgeKit.</h2>
-      <p>We're opening ForgeKit to a small group of builders first. Drop your email and we'll send you the kit when it's ready.</p>
-      <form class="email-form" onsubmit="handleSubmit(event)">
-        <input type="email" placeholder="you@example.com" required />
-        <button type="submit" class="btn btn-primary">Get Access</button>
-      </form>
-      <p class="fine-print">No spam. No pitch deck. Just the files when they're ready.</p>
+    <!-- Get started -->
+    <section class="capture" id="get-started">
+      <h2>Get started</h2>
+      <p>
+        Clone the repo, enable the <strong>MCP server</strong> (recommended), or copy templates into your project. Community support via GitHub issues;
+        best-effort, no SLA.
+      </p>
+      <div class="cta-group" style="margin-top: 1.5rem">
+        <a href="https://github.com/Catalyst-Forge-LLC/forge-kit" class="btn btn-primary" rel="noopener">github.com/Catalyst-Forge-LLC/forge-kit</a>
+        <a href="https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/mcp-server/README.md" class="btn btn-secondary" rel="noopener">MCP setup</a>
+      </div>
+      <p class="fine-print">Licensed under Apache 2.0. Commercial help: <a href="https://catalystforge.com" style="color: var(--text-muted)">catalystforge.com</a></p>
     </section>
 
     <footer>
@@ -584,22 +587,6 @@
     </footer>
 
     <script>
-      function handleSubmit(e) {
-        e.preventDefault();
-        const input = e.target.querySelector('input');
-        const email = input.value;
-        // Replace with your actual form endpoint (ConvertKit, Mailchimp, etc.)
-        console.log('Email captured:', email);
-        input.value = '';
-        const btn = e.target.querySelector('button');
-        btn.textContent = "You're on the list";
-        btn.style.background = '#22c55e';
-        setTimeout(() => {
-          btn.textContent = 'Get Access';
-          btn.style.background = '';
-        }, 3000);
-      }
-
       // Smooth scroll for anchor links
       document.querySelectorAll('a[href^="#"]').forEach((a) => {
         a.addEventListener('click', (e) => {

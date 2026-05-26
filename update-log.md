@@ -2,13 +2,16 @@
 
 Chronological record of meaningful changes to **this** ForgeKit repository: propagation passes from live apps, new prompt templates, methodology edits, and doc inventory updates.
 
+**Public repo note:** Entries before **2026-05-26** describe private development and template propagation from real apps (including codenames like ChronoVault and Exec Foundry). They are kept for **maintainer context**, not as a public product roadmap. For the first open-source release, see the git tag or initial commit on [GitHub](https://github.com/Catalyst-Forge-LLC/forge-kit).
+
 After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the table and a short detail section below.
 
 **What belongs in the summary column:** The *generalized* outcome (e.g. “propagate prompt: principle-first lessons, examples secondary”), not a dump of app-specific literals. Use the Detail section for file-level bullets; frame those bullets as *what template behavior changed*, not as a copy-paste of example numbers or strings from the source app.
 
 | Date (ISO) | Summary |
 |------------|---------|
-| 2026-05-26 | **Open source (Apache 2.0):** `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`; README license/support; reframe proprietary language in **FORGEKIT_LITE v1.3.0**, **NEW_PROJECT_BOOTSTRAP**, **WORKFLOW**, **INITIAL_PROMPT**, **forgekit-workspace-README**; `mcp-server/package.json` license field. |
+| 2026-05-26 | **Public repo polish:** `forgekit.html` OSS CTAs (GitHub/MCP); archived `specs/forgekit-as-product.md`; removed internal product `.docx`; update-log intro for pre-OSS entries. |
+| 2026-05-26 | **Open source (Apache 2.0):** `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`; README license/support; reframe closed-distribution wording in **FORGEKIT_LITE v1.3.0**, **NEW_PROJECT_BOOTSTRAP**, **WORKFLOW**, **INITIAL_PROMPT**, **forgekit-workspace-README**; `mcp-server/package.json` license field; public repo published with clean history. |
 | 2026-05-21 | **FORGEKIT_LITE §4.1.2:** Phase 2 stack-conditional deps table (PocketBase, Ollama, LLM keys, Playwright, native addons, ports); README + NEW_PROJECT_BOOTSTRAP + SCAFFOLD_INSTALL cross-refs. |
 | 2026-05-21 | **FORGEKIT_LITE §4.1 preflight:** explicit **Node.js** + **npm** before **pnpm** (install order, LTS paths, npm as bootstrap only). ONE_CLICK_DEV_SETUP + README prerequisites. |
 | 2026-05-21 | **Git trailers — Git 2.32+ baseline:** `--trailer` native from 2.32.0 (2021); ForgeKit policy = no unrequested attribution on all versions; shell-hop / `unknown option` guidance **pre-2.32 only**. Updated FORGEKIT_LITE §8.9, commit-messages.mdc, forgekit-no-trailer.mdc, bootstrap/INITIAL_PROMPT. |
