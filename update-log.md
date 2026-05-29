@@ -10,6 +10,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-05-29 | **New prompt: UX Cohesion Audit** — whole-app, cross-cutting read of where a product confuses, blocks, distracts, or fails to delight; two-lens method (cross-cutting "feels like N apps" themes + surface-by-surface), Step 0 corpus read to point at owned specs instead of re-speccing, Critical/High/Medium/Low + effort with delight first-class. Complements `panel-usability-audit.md` (single surface) and `pre-launch-audit.md` (launch readiness). README prompt tree updated (also added previously-missing `panel-usability-audit.md`). |
 | 2026-05-26 | **Cover letter templates:** drop mailed-letter `[City, State]` guidance — **BRAND_AND_PRODUCT**, **TECHNICAL_REFERENCE** (tailoring), **CONTEXT_PROMPT** voice rules. |
 | 2026-05-26 | **Public repo polish:** `forgekit.html` OSS CTAs (GitHub/MCP); archived `specs/forgekit-as-product.md`; removed internal product `.docx`; update-log intro for pre-OSS entries. |
 | 2026-05-26 | **Open source (Apache 2.0):** `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`; README license/support; reframe closed-distribution wording in **FORGEKIT_LITE v1.3.0**, **NEW_PROJECT_BOOTSTRAP**, **WORKFLOW**, **INITIAL_PROMPT**, **forgekit-workspace-README**; `mcp-server/package.json` license field; public repo published with clean history. |
@@ -73,7 +74,14 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 ## Detail
 
-### 2026-05-21 — FORGEKIT_LITE v1.1.8 (unified `.forgekit/` workspace)
+### 2026-05-29 — New prompt: UX Cohesion Audit
+
+Reusable whole-app UX audit, generalized from an Exec Foundry pass that produced a cohesion-audit spec. Distinct from the existing single-surface and launch-readiness audits.
+
+- **`prompts/ux-cohesion-audit.md`** (new) — app-agnostic prompt for a fresh-eyes, cross-cutting read of where a product confuses, blocks, distracts, or fails to delight. Codifies: a **two-lens method** (Lens A cross-cutting "feels like N apps" themes — inconsistent interaction/save/confirm models, silent feedback, opt-in-only discoverability, missing global keyboard model, fragmented system legibility, vocabulary/state drift; Lens B surface-by-surface findings); a **Step 0** that reads the existing spec/doc corpus so the audit *points at* owned specs instead of re-speccing them (mandatory "relationship to existing specs" table); a **Critical/High/Medium/Low + XS–L effort** model with **delight as a first-class tier**; and a three-tier prioritized plan (trust → cohesion → loved). All placeholders bracketed and stack-neutral.
+- **`README.md`** — prompt file tree gains `ux-cohesion-audit.md` (and the previously-missing `panel-usability-audit.md`).
+
+
 
 Single agent workspace folder for **Lite file bootstrap** and **MCP greenfield**:
 

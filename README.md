@@ -154,6 +154,8 @@ forge-kit/
   prompts/
     black-hat-audit.md           ← Security audit (11 areas)
     pre-launch-audit.md          ← Production readiness checklist
+    panel-usability-audit.md     ← Deep UX audit of a single panel/surface
+    ux-cohesion-audit.md         ← Whole-app cross-cutting UX read (confuse/block/distract/delight)
     docs-alignment-audit.md      ← Cross-doc consistency checker
     brand-copy-edit-pass.md      ← Editorial pass for brand copy
     cialdini-marketing-audit.md  ← Conversion optimization via influence principles
