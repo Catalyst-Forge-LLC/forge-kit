@@ -10,6 +10,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-05-29 | **Cohesion-tier UX patterns:** minimal global keyboard set + **safe-Esc layering** + help overlay; **first-load skeletons** (shape over spinner); **canonical empty-state component** with `wrapper`/`centered`/`hero` variants; **unified three-phase save acknowledgement** (`Saving…`/`Saved`/`error`) bubbled from child components to one indicator; **dismissible per-user first-run hints**. DESIGN_SYSTEM sections + CONTEXT_PROMPT pattern/anti-patterns + TEST_PLAN checks. |
 | 2026-05-29 | **New prompt: UX Cohesion Audit** — whole-app, cross-cutting read of where a product confuses, blocks, distracts, or fails to delight; two-lens method (cross-cutting "feels like N apps" themes + surface-by-surface), Step 0 corpus read to point at owned specs instead of re-speccing, Critical/High/Medium/Low + effort with delight first-class. Complements `panel-usability-audit.md` (single surface) and `pre-launch-audit.md` (launch readiness). README prompt tree updated (also added previously-missing `panel-usability-audit.md`). |
 | 2026-05-26 | **Cover letter templates:** drop mailed-letter `[City, State]` guidance — **BRAND_AND_PRODUCT**, **TECHNICAL_REFERENCE** (tailoring), **CONTEXT_PROMPT** voice rules. |
 | 2026-05-26 | **Public repo polish:** `forgekit.html` OSS CTAs (GitHub/MCP); archived `specs/forgekit-as-product.md`; removed internal product `.docx`; update-log intro for pre-OSS entries. |
@@ -73,6 +74,23 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-05-29 — Cohesion-tier UX patterns (keyboard, skeletons, empty states, save ack, first-run hints)
+
+Propagated from an Exec Foundry "early-beta cohesion" implementation pass that built a minimal global keyboard layer, a board load skeleton, an `EmptyState` hero variant, a unified save acknowledgement, and a first-open wayfinding hint. Generalized into reusable, stack-neutral guidance.
+
+- **`docs/DESIGN_SYSTEM.md`**
+  - **Global keyboard shortcuts** — two new lessons: ship the *smallest credible set first* (`/` search, create-new, `?` help, disciplined `Esc`) with `isTypingContext` + IME guards and "bare primary surface only" gating; and a **minimal-safe `Esc`** that defers to layers already owning Escape (record drawers, modals) instead of stacking a second `window` listener — full topmost-layer precedence deferred.
+  - **First-load skeletons (shape over spinner)** (new) — skeleton mirroring the destination layout for data-heavy primary surfaces; spinners reserved for small bounded waits.
+  - **Canonical empty-state component** (new) — one component with `wrapper`/`centered`/`hero` variants; first-run copy driven by onboarding/search stage so the empty screen teaches the next step.
+  - **Save acknowledgement (auto-save feedback)** (new) — one shared three-phase ack (`Saving…`/`✓ Saved`/`Couldn't save`) for blur-save surfaces; no per-field spinners, no success-only ack.
+  - **First-run hints (dismissible coach marks)** (new) — one-time inline "start here" cue on dense surfaces, dismissal persisted per user.
+- **`docs/CONTEXT_PROMPT.md`**
+  - **Patterns to Follow** — unified save acknowledgement fed by parent + child components via an `onSaveStatus(phase, label?)` bubbling callback into one `setSaveAck` machine.
+  - **Anti-Patterns to Avoid** — partial/success-only save acks; and registering an app-level `Esc` handler without deferring to layers that already own the key.
+- **`docs/TEST_PLAN.md`**
+  - §10 — save-ack lifecycle (`Saving…` → `Saved`), error phase on simulated failure, and ack ubiquity across parent + child fields.
+  - §7.4 — skeleton-shaped-like-destination check; new **§7.4a** global keyboard shortcuts and **§7.4b** first-run hints checklists.
 
 ### 2026-05-29 — New prompt: UX Cohesion Audit
 

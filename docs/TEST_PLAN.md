@@ -228,7 +228,21 @@ _Use when users run a **quality review** (heuristics, LLM audit, or checklist) o
 ### 7.4 Loading States
 
 - [ ] App loads with proper skeletons/spinners (no flash of empty state)
+- [ ] Data-heavy primary surface uses a **skeleton shaped like the destination** (not a centered spinner); layout does not jump when data lands
 - [ ] Failed data loads show retry/refresh indication
+
+### 7.4a Global keyboard shortcuts (if applicable)
+
+- [ ] Minimal set works on the bare primary surface: focus search, create-new, open help (`?`)
+- [ ] Shortcuts **do not** fire while typing in an input/textarea/select/contenteditable, or during IME composition
+- [ ] `?` opens a help overlay listing global **and** context (record-detail) shortcuts
+- [ ] `Esc` closes an open flyout/menu, but **defers** to a record drawer or modal that owns Escape (no double-close)
+- [ ] Create-new shortcut respects gating (read-only/viewer/expired) the same way the button does
+
+### 7.4b First-run hints (if applicable)
+
+- [ ] A one-time "start here" hint appears on first open of a dense surface and is dismissible
+- [ ] Dismissal persists per user across reloads (and does not leak across delegate/coach accounts)
 
 ### 7.5 Persistent assistant or copilot shell (if applicable)
 
@@ -331,7 +345,9 @@ _Use when the UI renders **long structured reports** (AI dossiers, markdown bodi
 - [ ] Navigate away from a page while polling is active: no orphaned fetch requests continue in the background
 - [ ] Open a detail panel, switch to a different record while an async operation is running: no stale data from the previous record appears on the new one
 - [ ] Toggle a star/favorite while offline or with simulated server error: star reverts to original state
-- [ ] Save notes or tweaks with a simulated server failure: saved indicator does not appear
+- [ ] Save notes or tweaks with a simulated server failure: the shared indicator shows the **error** phase ("Couldn't save…"), not a false "Saved"
+- [ ] Blur-save fields show the full ack lifecycle: `Saving…` while the request is in flight, then `✓ Saved` (auto-clears) on success
+- [ ] Every Tier-A blur-save field (parent **and** child tabs) feeds the **same** shared indicator — no field persists silently with no acknowledgement
 - [ ] Delete a record with a simulated server failure: confirmation dialog stays open (does not close as if succeeded)
 - [ ] `res.ok` is checked before `.json()` on all interactive `fetch` calls (code review)
 - [ ] Long-running **generation or research** routes: simulate HTML/plain-text error responses — UI shows a clear message without crashing; server returns JSON errors when `Accept: application/json` (when applicable)

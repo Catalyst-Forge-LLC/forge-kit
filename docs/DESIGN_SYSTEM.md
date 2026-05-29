@@ -289,6 +289,10 @@ Every password input should have a show/hide toggle button positioned inside the
 
 > 💡 **Lesson learned:** **App-wide shortcuts** (jump to board, open panel, command palette): Centralize registration (e.g. root layout) and **ignore** the shortcut when focus is inside an editable control (`input`, `textarea`, `select`, `[contenteditable]`) unless the action is explicitly for composing text — otherwise you steal keys from data entry. Prefer combos that don’t fight the browser (`Cmd+L`, `Cmd+K` unless you intentionally mirror omnibar behavior). Surface shortcuts in **tooltips** or a **Help → Shortcuts** sheet so power users discover them without guessing.
 
+> 💡 **Lesson learned:** Ship the **smallest credible set first** — focus search, create-new, open help (`?`), and a disciplined Escape — rather than a full power-user system. For an audience used to Gmail/Linear/Superhuman, the *absence* of these reads as "not a serious tool"; the minimal set is a **cohesion win**, not a luxury. Implementation guardrails that keep it safe: (1) a shared `isTypingContext(target)` + IME-composition guard so printable keys never fire mid-entry; (2) fire single-letter shortcuts **only on the bare primary surface** (no record drawer, modal, menu, or tour open) so they cannot clash with scoped shortcuts elsewhere; (3) a discoverable **help overlay** that lists both global and context (record-detail) keys.
+
+> 💡 **Lesson learned:** A **global `Esc` handler must defer to whatever layer already owns Escape.** Record drawers, confirm dialogs, and connectivity modals each register their own `keydown` listener; if a new app-level handler also acts on `Esc`, you get double-handling (two layers close at once) or stolen intent. Safe layering: the global handler returns early when a record panel or any modal/overlay is open (`if (selectedRecord || blockingOverlayOpen) return`), and otherwise closes the open slide-over/menu. **Full stacking precedence** (a single "close the topmost layer" stack) is a larger build — defer it and ship the minimal-safe version that only acts when nothing else owns the key.
+
 ---
 
 ## Long-Running Operations (progress)
@@ -296,6 +300,30 @@ Every password input should have a show/hide toggle button positioned inside the
 > 💡 **Lesson learned:** Any user-triggered flow that often exceeds **~3 seconds** (bundled export, multi-step document build, external search, batch LLM) should show **staged progress**: short phase labels that advance (**Gathering…** → **Building…** → **Compressing…**) plus a **determinate or indeterminate** bar. Reuse one small progress helper/component so copy and timing cues stay consistent. WHY: Prevents “frozen app” anxiety and reduces support pings; pairs well with entitlements messaging when exports are gated.
 
 > 💡 **Lesson learned:** **Align visible milestones with real backend phases**, not only decorative labels. When generation spans distinct server steps (retrieval, structuring, persistence), expose **phase keys or statuses** from the API (or poll a job record) and map each to copy users recognize. Generic rotating messages while the server sits in one slow step feel dishonest and erode trust; jumping straight to “Done” without an intermediate milestone hides real latency spikes. WHY: Users tolerate longer waits when progress honestly reflects work underway.
+
+---
+
+## First-load skeletons (shape over spinner)
+
+> 💡 **Lesson learned:** For a **data-heavy primary surface** (board, list, dashboard), a **skeleton shaped like the destination** beats a centered spinner: it reads as "your content is arriving," anchors layout so nothing jumps when data lands, and *feels* faster. Build a small placeholder component that mirrors the real structure (e.g. a few columns of pulsing card outlines for a kanban; rows for a table) and mark it `aria-hidden`. Reserve plain spinners for **small, bounded** inline waits. WHY: A spinner over a large empty region implies "stuck"; a skeleton implies "loading the thing you expect."
+
+---
+
+## Canonical empty-state component
+
+> 💡 **Lesson learned:** Route **every** empty state through **one component** with a few variants rather than bespoke markup per surface — otherwise icon size, heading scale, body width, and CTA placement drift into "25 apps" inconsistency. A workable variant set: `wrapper` (dashed inline card inside a panel section), `centered` (no box, for "no results" inside an already-decorated surface), and `hero` (large first-run state for the most-seen empty screens — bigger icon, `<h2>` headline, free-form body, plus `actions` and `footnote` slots). Drive first-run copy from the user's onboarding/search stage so the empty screen *teaches the next step* instead of just stating absence. WHY: One component makes consistency the default and a redesign a single edit.
+
+---
+
+## Save acknowledgement (auto-save feedback)
+
+> 💡 **Lesson learned:** Wherever fields **save on blur** (Tier-A scratchpad inputs), give the surface **one shared, three-phase acknowledgement** — `Saving…` → `✓ Saved` → `Couldn't save — try again` — with a ~2s fade on success and a longer hold on error. Two failure modes to avoid: a **success-only** ack (no in-flight or error state) lets a rejected save look saved; and an ack on **some** fields but not others reads as flaky. Prefer a single indicator in the panel chrome that **every** field feeds, over a separate spinner per input. Do **not** invent a second spinner style for the same job. (Architecture for bubbling child saves into one indicator lives in `CONTEXT_PROMPT.md` → Patterns to Follow.) WHY: Predictable, ubiquitous "Saved" feedback does more for trust than almost any single feature.
+
+---
+
+## First-run hints (dismissible coach marks)
+
+> 💡 **Lesson learned:** When a dense surface (a multi-tab record detail, a complex panel) has **no obvious "start here,"** a **one-time, dismissible inline hint** on first open ("New here? Start with X, then Y") cuts the wayfinding tax without the weight of a full tour. Keep it subtle (a thin accent-tinted strip, not a modal), make it explicitly dismissible, and persist dismissal **per user** (e.g. `localStorage` keyed by user id) so it never re-nags and so coach/delegate accounts don't inherit each other's state. WHY: Discoverability that relies on the user *choosing* a tour leaves most users lost; a calm inline cue teaches in place.
 
 ---
 
