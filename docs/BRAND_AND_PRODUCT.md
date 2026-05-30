@@ -193,6 +193,8 @@ When the product produces **cover letters**, **outreach**, or other **persuasive
 
 > 💡 **Lesson learned:** **Email and attachment cover letters** usually do not need a **city/state line** or mailed-letter dateline block (`[City, State]` above the date, employer address block, etc.). Drop those placeholders from the **base template** and from LLM “do not change” blocks — they survive tailoring as obvious non-personalized cruft. Start with name, contact line (email/phone/LinkedIn), date if needed, then salutation and body.
 >
+> 💡 **Lesson learned:** **Application / screening prompts** that ask for **specific past work** (especially “how did AI improve your output?”) must use **grounded-or-ask** behavior: answer only from resume, uploads, and saved profile examples; if evidence is missing, return **short intake questions** for the user and persist answers on the profile — **never** fabricate employers, architectures, or toolchains that “sound right.”
+>
 > 💡 **Lesson learned:** Encode **deduplication and register** rules in **shared prompt fragments** or server-side passes so every surface that generates the same artifact class (tailoring tab, assistant, batch flows) stays aligned — not three different ad-hoc prompts that drift.
 
 ### Name Competitors in Differentiator Copy
