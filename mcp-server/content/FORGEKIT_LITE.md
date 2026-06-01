@@ -50,18 +50,21 @@ ForgeKit agent artifacts (protocol, tracking, platform rules) live in **`.forgek
   AGENTS.md                 ← §12 snippet
   CLAUDE.md                 ← §12.5 snippet (Claude Code)
   IDEAS.md                  ← backlog parking lot
-  .forgekit/workflow_tracking.json    ← §11 starter / live tracking
+  workflow_tracking.json    ← §11 starter / live tracking
   cursor/rules/             ← §12.5 Cursor rule snippets
     forgekit-no-trailer.mdc
     forgekit-updates-log.mdc
   README.md                 ← local setup notes (optional; upstream: forgekit-workspace-README.md)
 ```
 
-**`.gitignore` must include:**
+**`.forgekit/` in git — decide once (§4.2 steps 2–5):**
 
-```
-.forgekit/
-```
+| Choice | When | `.gitignore` | Bootstrap commit includes |
+|--------|------|--------------|---------------------------|
+| **A — Commit `.forgekit/`** (Lite default) | Self-contained history; tracking and rules travel with the repo | Do **not** list `.forgekit/` | `.forgekit/` artifacts from steps 3–4 (tracking, `AGENTS.md`, rules, optional Lite copy) |
+| **B — Gitignore `.forgekit/`** | Cleaner public app repo; MCP serves methodology; avoid vendoring a large Lite file on GitHub | Add `.forgekit/` | `.gitignore` only (+ any `.cursor/rules/` copies you symlinked for IDE load) — agent workspace stays local |
+
+Log the choice in **`decisions[]`** (e.g. *"ForgeKit workspace: commit .forgekit/"* or *"… gitignore .forgekit/"*). Never commit **secrets** (`.env`, API keys) inside tracking or rules regardless of branch.
 
 **Cursor / IDE wiring (local only):** tools read `.cursor/rules/` and repo-root `AGENTS.md` by default — not `.forgekit/`. After creating `.forgekit/`, either:
 
@@ -95,7 +98,7 @@ The **human** only needs to do two things: copy ForgeKit Lite into **`.forgekit/
 
 | File / folder | Who creates it | When |
 |---|---|---|
-| `.forgekit/` + `.gitignore` entry | **Human or agent** (first session) | Before first commit on a published repo |
+| `.forgekit/` + git policy (commit or gitignore — §1.5) | **Human or agent** (first session) | Before first commit on a published repo |
 | `.forgekit/FORGEKIT_LITE.md` | **Human** (once, from upstream) | Before the first agent session |
 | Git repo (`.git/`) + initial commit | **Agent** (runs `git init` if missing) | First session, before Phase 1 intake |
 | `.forgekit/AGENTS.md` | **Agent** (from §12 snippet) | First session, right after reading this file |
@@ -229,14 +232,13 @@ If the project will push to GitHub:
 ### 4.2 Ordered first actions
 
 1. **Read** `.forgekit/FORGEKIT_LITE.md` top to bottom. Also read `.forgekit/workflow_tracking.json`, `.forgekit/AGENTS.md`, and `CONTEXT_PROMPT.md` if they already exist.
-2. **Ensure the folder is a git repo.** *(Skip this step if the user opted into no-git mode in §4.1.)* Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run `git init -b main` (or `git init` + `git branch -m main` on older git) at the repo root. Never re-init an existing repo. Immediately write a minimal `.gitignore` containing at least:
+2. **Ensure the folder is a git repo.** *(Skip this step if the user opted into no-git mode in §4.1.)* Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run `git init -b main` (or `git init` + `git branch -m main` on older git) at the repo root. Never re-init an existing repo. **Apply §1.5 git policy** (default: **commit `.forgekit/`** for Lite). Write a minimal `.gitignore` containing at least:
    ```
    node_modules/
    .env
    .DS_Store
-   .forgekit/
    ```
-   (The full `.gitignore` lands in Phase 2 per §14.)
+   Add `.forgekit/` **only** if you chose §1.5 branch **B** (gitignore). Do **not** add it when committing `.forgekit/`. Log the choice in `decisions[]`. (The full `.gitignore` lands in Phase 2 per §14.)
 3. **Create `.forgekit/`** if missing. **Create all platform rule files unconditionally** inside it (see §1.5), even if the current session is only one tool. Users switch between tools between sessions — someone who starts in Cursor today may resume in Claude Code tomorrow, or vice versa. Creating them upfront costs nothing and prevents the same `--trailer` injection bug from recurring under a different tool next week.
    1. **`.forgekit/AGENTS.md`** — use the §12 snippet verbatim. Covers Codex CLI and any other `AGENTS.md`-native tool (cite explicitly or symlink to repo root locally if your tool requires root `AGENTS.md`).
    2. **`.forgekit/cursor/rules/forgekit-no-trailer.mdc`** — use the §12.5 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor loads it.
@@ -244,7 +246,7 @@ If the project will push to GitHub:
    4. **`.forgekit/cursor/rules/forgekit-updates-log.mdc`** — use the §12.6 snippet verbatim. **Symlink or copy** into `.cursor/rules/` so Cursor reminds agents when to update `FORGEKIT_LITE_UPDATES.md` (§1.6). Optional: copy the upstream **`FORGEKIT_LITE_UPDATES.md`** starter into `.forgekit/` when you expect protocol feedback during the project.
    If any of these already exists and its content conflicts with the Lite defaults, **do not overwrite** — flag the conflict to the user and ask how to reconcile. Log the reconciliation decision in `decisions[]`. On **pre-2.32 Git**, rule files cannot stop argv-level `--trailer` injection (§8.9) — use the shell hop or upgrade Git.
 4. **Create `.forgekit/workflow_tracking.json`** if it does not exist, using the starter block in §11. Fill `project.name`, `project.created` (today's date), and a one-line `project.description` from whatever the user has already said.
-5. **If git was initialized in step 2**, make the first commit now so the user has a clean baseline: `git add -A && git commit -m "chore: ForgeKit Lite bootstrap"`. Use a **plain `-m` message only** — do **not** use `--trailer`, `-c trailer.*`, or `git interpret-trailers` (see §8 rule 9). Skip this step if the repo already had history — do not squash or amend what's there. Skip entirely if the user is in no-git mode (§4.1).
+5. **If git was initialized in step 2**, make the first commit now so the user has a clean baseline. **What lands in the commit depends on §1.5:** if **committing `.forgekit/`**, steps 3–4 artifacts are included; if **gitignoring `.forgekit/`**, only `.gitignore` (and any `.cursor/rules/` copies) — the workspace stays local-only and that is expected, not a mistake. Example: `git add -A && git commit -m "chore: ForgeKit Lite bootstrap"`. Use a **plain `-m` message only** — do **not** use `--trailer`, `-c trailer.*`, or `git interpret-trailers` (see §8 rule 9). Skip this step if the repo already had history — do not squash or amend what's there. Skip entirely if the user is in no-git mode (§4.1).
 6. **Ask the §5 intake questions.** Do not write any project code yet. For the first user-facing reply, follow §9 (plain product language, one clear "reply with," no methodology jargon).
 7. **Create `docs/`** (if missing) and **draft `docs/PHASE_1_BRIEF.md`** from the §6 template using the user's answers. Show it to the user, iterate, then **lock it**: set `phases.1.exitCriteria.phase1BriefLocked = true` (and the related exit criteria) in `.forgekit/workflow_tracking.json`, and record major commitments in `decisions[]`.
 8. **Pause for explicit approval** before moving to Phase 2. Do not advance `currentPhase` silently. **Explicit approval** means the user has reviewed the locked brief and given a clear, unambiguous affirmative — examples: *"locked,"* *"approved,"* *"go to phase 2,"* *"ship it,"* *"start building."* Silence, ambiguous nods (*"cool,"* *"interesting,"* *"ok"*), follow-up questions, or a "we'll see" do **not** count — if in doubt, ask: *"Ready to lock the brief and start Phase 2?"* and wait for a yes/no. An eager agent advancing on a "hmm" is a bigger cost than asking once more.
@@ -1046,7 +1048,7 @@ During Phase 2, create these once the spine is running. Keep them short and hone
 
 - **`README.md`** — what the project is, how to run it, required env vars, one screenshot or GIF if applicable. **Lead with a "Quick start (no terminal)" block** when §4.5 launchers exist (setup → run → status). **List which `.env` file each process reads** (repo root vs `frontend/` vs `backend/`) when using a monorepo or split UI/API (§4.2.1). Note that **dev servers must be restarted** after `.env` changes (Vite reads config at startup). **By default** (manual scaffold per §4.2 step 10 A.1) the app lives at the **repo root** — `src/`, `package.json`, `svelte.config.js`, etc. all at top level — so the run command is plain **`pnpm dev`**. **If** you took the `sv create app/` shortcut (A.2) the UI instead lives under `app/`; in that case document **`cd app && pnpm dev`** (or `pnpm -C app dev` from the root) prominently near the top, so the next session is not stuck guessing at the wrong directory. Update the README command block whenever the run command changes.
 - **`TODO.md`** — ordered list of next work, seeded from brief §11. Check off items as you ship. Move deferred ideas to `.forgekit/IDEAS.md`.
-- **`.forgekit/IDEAS.md`** — unstructured capture of future features, pivots, questions. Never blocks shipping. (Gitignored with the rest of `.forgekit/`.)
+- **`.forgekit/IDEAS.md`** — unstructured capture of future features, pivots, questions. Never blocks shipping. (Local-only when §1.5 branch B gitignores `.forgekit/`.)
 - **`.env.example`** — every env var the app reads, with a placeholder value and a one-line comment per var. Never commit `.env`. **Monorepo / split stack:** use a **root** `.env.example` for shared / backend / compose-style vars and a **frontend** `.env.example` for only what Vite reads in `vite.config` (`VITE_*`, proxy target, `FRONTEND_PORT` — name the vars your config actually loads). Common keys to declare here:
   - **Web search** (§4.4): if you chose a provider, add its key here — e.g. `TAVILY_API_KEY=`, `BRAVE_API_KEY=` — so the user knows to sign up and fill `.env` locally.
   - **Runtime / build-time LLM** (§7.1): cloud keys (`OPENAI_API_KEY=`, `ANTHROPIC_API_KEY=`) and/or local **`OLLAMA_BASE_URL=http://127.0.0.1:11434`**, **`OLLAMA_MODEL=ibm/granite4.1:8b`** (after **`test-ollama`** passes). Optional: `OLLAMA_PREFER_GEMMA=1`, `OLLAMA_USE_THINKING=1` only when reasoning models are required. Match names in `docs/PHASE_1_BRIEF.md` content-generation section.

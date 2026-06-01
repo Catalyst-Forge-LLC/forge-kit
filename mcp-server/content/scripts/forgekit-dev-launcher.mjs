@@ -17,6 +17,13 @@ const progressPath = join(repoRoot, "docs", "FORGEKIT_PROGRESS.md");
 const isWin = process.platform === "win32";
 
 const PHASE_LABELS = {
+  "1": "Plan",
+  "2": "Build",
+  "3": "Stabilize",
+  "4": "Iterate",
+  "5": "Refine",
+  "6": "Align",
+  "7": "Harden",
   "1-architecture": "Plan",
   "2-scaffolding": "Build",
   "3-stabilization": "Stabilize",
@@ -25,6 +32,31 @@ const PHASE_LABELS = {
   "6-strategic-review": "Align",
   "7-hardening": "Harden",
 };
+
+/** Lite schema: exitCriteria { key: boolean }. MCP schema: exitCriteriaMet / exitCriteriaRemaining arrays. */
+function getExitCriteriaStatus(phaseBlock) {
+  if (!phaseBlock) return { met: [], remaining: [] };
+
+  if (Array.isArray(phaseBlock.exitCriteriaMet) || Array.isArray(phaseBlock.exitCriteriaRemaining)) {
+    return {
+      met: Array.isArray(phaseBlock.exitCriteriaMet) ? phaseBlock.exitCriteriaMet : [],
+      remaining: Array.isArray(phaseBlock.exitCriteriaRemaining) ? phaseBlock.exitCriteriaRemaining : [],
+    };
+  }
+
+  const criteria = phaseBlock.exitCriteria;
+  if (criteria && typeof criteria === "object" && !Array.isArray(criteria)) {
+    const met = [];
+    const remaining = [];
+    for (const [key, value] of Object.entries(criteria)) {
+      if (value) met.push(key);
+      else remaining.push(key);
+    }
+    return { met, remaining };
+  }
+
+  return { met: [], remaining: [] };
+}
 
 function run(cmd, args, opts = {}) {
   return new Promise((resolve, reject) => {
@@ -118,10 +150,7 @@ function renderProgress() {
   const phaseBlock = t.phases?.[phaseId];
   const label = PHASE_LABELS[phaseId] || phaseBlock?.name || `Phase ${phase}`;
   const status = phaseBlock?.status || "unknown";
-  const remaining = Array.isArray(phaseBlock?.exitCriteriaRemaining)
-    ? phaseBlock.exitCriteriaRemaining
-    : [];
-  const met = Array.isArray(phaseBlock?.exitCriteriaMet) ? phaseBlock.exitCriteriaMet : [];
+  const { met, remaining } = getExitCriteriaStatus(phaseBlock);
   const lines = [
     `ForgeKit phase: ${label} (${phaseId}) — ${status}`,
     "",
