@@ -20,6 +20,8 @@ pnpm run build
 | `kickoffGreenfieldNoCursor` | Same bundle **without** the Cursor `.mdc` section; **no parameters** |
 | `getProgressiveDocSchedule` | WORKFLOW §1a: Phase 1 = PHASE_1_BRIEF + tracking; Phase 2 = merge brief → CONTEXT_PROMPT + README + TODO + IDEAS + spine; rest later |
 | `getNewProjectBootstrap` | **MCP-first onboarding:** same as kickoff bundle’s methodology section alone; maps phases to MCP tools |
+| `getForgeKitLite` | **Portable Lite protocol:** full `FORGEKIT_LITE.md` for drop-in / paste bootstrap (no MCP required in the app repo) |
+| `getForgeKitLiteUpdates` | Starter `.forgekit/FORGEKIT_LITE_UPDATES.md` for local Lite protocol feedback (§1.6) |
 | `getGreenfieldIntakePrompt` | **Phase 1:** exports (PDF/DOCX/PPTX, etc.), tenancy, hybrid vs full spec, compliance, hero flow — complements `getChecklist(before-session-1)` |
 | `getForgeKitCursorPhaseRule` | **Cursor:** optional `.cursor/rules/forgekit-phase-status.mdc` — agents show phase / next actions from `.forgekit/workflow_tracking.json` |
 | `getForgeKitCursorLessonsRules` | **Cursor:** `.cursor/rules/forgekit-lessons-gate.mdc` + `forgekit-lessons-mcp.mdc` — when to call `getAntiPatterns` / `searchLessons` before large work (also bundled in `getNewProjectKickoff`) |

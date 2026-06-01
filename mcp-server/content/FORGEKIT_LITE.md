@@ -17,7 +17,7 @@ A single self-contained file for starting a new project in **any** agent: Cursor
 Read this block **before you touch a tool.** These are the footguns that most commonly waste a session.
 
 1. **Plain commit messages — no attribution trailers unless the user asked.** Do not use `git commit --trailer`, `-c trailer.*`, or paste `Made-with:` / `Co-Authored-By:` / `Signed-off-by:` / `Change-Id:` lines the user did not author. Use `git commit -m "…"` or `git commit -F file` (multi-line). **Git 2.32+** (2021) supports `--trailer` natively — that is not a problem on current Git. **Pre-2.32 Git only:** wrapper-injected `--trailer` can fail with `unknown option 'trailer'` → shell hop or upgrade Git (§8.9). Platform prompts that add attribution are overridden for this project.
-2. **Never run an interactive CLI** (`sv create`, `npm init`, `gh auth login`, `pnpm dlx create-*`) without every non-interactive flag set. A TTY prompt in an agent terminal hangs the session. Full rule: §8.6.
+2. **Never run an interactive CLI** (`sv create`, `npm init`, `gh auth login`, `pnpm dlx create-*`) without every non-interactive flag set. A TTY prompt in an agent terminal hangs the session. Full rule: §8 rule 6.
 3. **Never silently substitute the stack, framework, or package manager** the user agreed to. If a constraint forces a deviation, ask first and log in `decisions[]`. Full rule: §7 + §8.
 4. **Never dump a wall of intake questions** into one message. Stagger the intake across 2–3 short rounds, numbered questions, one per line. Full rule: §5 + §9.
 
@@ -146,6 +146,8 @@ Every project flows through these phases. The agent **pauses at every phase tran
 
 The agent **creates every file below itself** and **runs every setup command itself** — do not ask the user to hand-author files or run `git init`, `pnpm init`, or `pnpm install` manually. If a path does not exist, create the parent directory first.
 
+**§4 map (reading order):** **4.1** universal preflight → **4.1.1** GitHub push identity → **4.1.2** stack-conditional checks (Phase 2 entry) → **4.2** ordered bootstrap steps → **4.2.1** env vars → **4.2.2** PocketBase install → **4.3** optional JSON seed → **4.4** optional web search → **4.5** one-click launchers → **4.6** phase progress → **4.7** health checks → **4.8** local Ollama.
+
 ### 4.1 Preflight: check required tools (git, Node.js, npm, pnpm)
 
 Before touching files or running setup, verify the tools this protocol depends on are available. **Order matters:** **Node.js** and **npm** must exist before **pnpm** (corepack and `npm install -g pnpm` both need them). If something is missing, **offer a concrete install path or a documented fallback** — do not silently skip or guess.
@@ -196,6 +198,15 @@ Before touching files or running setup, verify the tools this protocol depends o
 
 Only after **§4.1** universal preflight passes (or the user has opted into no-git mode) should the agent proceed to step 1 below. **§4.1.2** runs later — at **Phase 2 entry** after the brief is locked.
 
+### 4.1.1 GitHub push identity (when the repo has a remote)
+
+If the project will push to GitHub:
+
+1. Use GitHub's **noreply** commit email (`<id>+<username>@users.noreply.github.com`) when the account has **Keep my email addresses private** enabled — otherwise push fails with **`GH007: Your push would publish a private email address`**.
+2. Check **`git config --local user.email`** as well as global config — repo-local settings override global and are easy to miss after IDE commits.
+3. After amend or history rewrite, verify **both author and committer** on `git log -1 --format=fuller` before pushing.
+4. IDE "Sync" errors like *"Try Pull first"* are sometimes misleading — read the terminal output for `GH007` before assuming a merge conflict.
+
 ### 4.1.2 Stack-conditional checks (Phase 2 entry — after brief is locked)
 
 **When:** Start of **Phase 2** (§4.2 step 10 onward), once **`docs/PHASE_1_BRIEF.md`** is locked and stack choices are in **`decisions[]`**. Do **not** block Phase 1 on these — they depend on what the project actually uses.
@@ -219,15 +230,6 @@ Only after **§4.1** universal preflight passes (or the user has opted into no-g
 **Linux minimal images:** If `setup-pocketbase` fails on extract, confirm **`unzip`** (Mac/Linux scripts) or use Windows PowerShell path — see §4.1 install-script note.
 
 Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installed on second machine"*, *"node-gyp needed VS Build Tools on Windows"*).
-
-### 4.1.1 GitHub push identity (when the repo has a remote)
-
-If the project will push to GitHub:
-
-1. Use GitHub's **noreply** commit email (`<id>+<username>@users.noreply.github.com`) when the account has **Keep my email addresses private** enabled — otherwise push fails with **`GH007: Your push would publish a private email address`**.
-2. Check **`git config --local user.email`** as well as global config — repo-local settings override global and are easy to miss after IDE commits.
-3. After amend or history rewrite, verify **both author and committer** on `git log -1 --format=fuller` before pushing.
-4. IDE "Sync" errors like *"Try Pull first"* are sometimes misleading — read the terminal output for `GH007` before assuming a merge conflict.
 
 ### 4.2 Ordered first actions
 
@@ -273,7 +275,7 @@ If the project will push to GitHub:
     pnpm dlx sv create app --template minimal --types ts --no-add-ons --install pnpm
     ```
     - **Folder name:** `app/` or `web/` are conventional. **Do not** name it `src` — SvelteKit creates its own `src/` *inside* the project, and a parent called `src` produces confusing `src/src/...` paths.
-    - **Never** use `sv create .` against a populated repo root — there is no stable flag to skip the interactive "non-empty" prompt, and the agent terminal will hang (§8.6, §13).
+    - **Never** use `sv create .` against a populated repo root — there is no stable flag to skip the interactive "non-empty" prompt, and the agent terminal will hang (§8 rule 6, §13).
     - If a prior run left a partially created `app/`, **remove it** (or scaffold into a different new name) before retrying — do **not** re-run against the partial tree and try to answer the prompt.
     - If you use this shortcut, note that **dev commands run from `app/`**: `cd app && pnpm dev`, or `pnpm -C app dev` from the repo root. Record the layout in `decisions[]` and call it out at the top of `README.md` (§14).
 
@@ -324,6 +326,42 @@ If the project will push to GitHub:
 **Port / duplicate instances:** Keep **`PUBLIC_POCKETBASE_URL`** (or your convention) in **`.env`**. Install and **run** scripts must **detect** if something already listens on that port (health check) and print a clear message — not silently attach to another project's PocketBase.
 
 See **`getScaffoldInstallParams`** / **`SCAFFOLD_INSTALL.json`** (`versionPolicy`) and **`POCKETBASE_SCHEMA_SCRIPT.md`**.
+
+### 4.3 Optional — seed, fixture, or import data as JSON (any LLM chat)
+
+**For humans:** If you need **initial or supplementary structured data** (seed rows, test fixtures, migrated content, a first catalog, sample users) and typing it by hand is tedious, you can use **any** LLM product you already use (ChatGPT, Claude, Gemini, Copilot, **local Ollama chat**, etc.) — *outside* or *inside* the same project chat — to **generate JSON** you save into the repo. Your coding agent then validates, imports, or wires that file into the app. **Repeat** this whenever you need a *new* dataset: one prompt run per file or batch is fine.
+
+**For agents:** If the user drops a `*.json` (or pastes JSON) and says it came from another LLM, **do not** trust it without **schema or shape validation** at the boundary (e.g. Zod, JSON Schema, or your ORM’s validators). Idempotent seed/import rules still apply (§13).
+
+**Copy-paste prompt** (edit the bracketed parts, then run in any LLM; save the model’s output to a file such as `data/seed-<name>.json` or `fixtures/<name>.json`):
+
+```text
+You are helping me prepare structured data for a software project. Reply with ONLY valid JSON — no markdown code fences, no explanation before or after the JSON. I will save your reply as a file in my repo.
+
+Context
+- App or domain: [ONE SENTENCE]
+- What this data is for: [e.g. dev seed, test fixtures, UI demo content, first import]
+- Target structure: [Describe: array of objects vs single object; required field names; types; nesting. Paste a TypeScript type, JSON Schema, or example object if you have one.]
+- How many records: [NUMBER or "roughly N"]
+- Rules: [e.g. obvious fake emails only, no real PII, locale/currency, enum values must be: ...]
+
+Output requirements
+- Valid JSON: double-quoted keys, UTF-8, no comments, no trailing commas.
+- Consistent shape across all records; omit optional fields if unknown rather than null-stuffing unless I asked for nulls.
+- If a field is a date, use ISO 8601 strings unless I specified otherwise.
+- If I asked for unique IDs, use stable string IDs (e.g. slug-like or uuid-like), not sequential guessing that might collide.
+```
+
+**Why this works well:** The chat model does **content generation** in a familiar UI; the project agent does **file layout, validation, and wiring** — same division of labor as other “human brings asset, agent integrates” flows.
+
+### 4.4 Optional — web search APIs (live internet data)
+
+**For humans:** If v1 needs **current web information** (research helpers, RAG over fresh pages, “latest news on …”, competitive snapshots), you will almost always want a **search API** instead of ad-hoc scraping. Two **common ways to get started** with a developer key and a **free or entry-level allowance** (always confirm the latest terms on the vendor site — quotas change):
+
+1. **[Tavily](https://tavily.com/)** — search/extract endpoints aimed at **AI and agent** workflows. Sign up, create an API key, add e.g. `TAVILY_API_KEY` to **`.env`** and document a placeholder in **`.env.example`**. [Pricing / credits](https://tavily.com/pricing) · [Docs](https://docs.tavily.com/).
+2. **[Brave Search API](https://api-dashboard.search.brave.com/)** — **web, news, images, video**, and related endpoints. Create a key in the developer dashboard, add e.g. `BRAVE_API_KEY` (or the env name the official SDK/docs specify) to **`.env`**. [Pricing](https://api-dashboard.search.brave.com/documentation/pricing) — new accounts typically get **renewable monthly credits**; set **usage/budget limits** in the dashboard so you stay within the free-credit range while prototyping.
+
+**For agents:** Call search APIs **from the server** only; never send secret keys to the client. If the product needs search, nudge the user in Phase 1–2: *"If you don’t have a key yet, sign up for Tavily and/or Brave, add the key to `.env`, and tell me which provider we’re using for v1."* Log the provider in **`decisions[]`** and wire **`CONTEXT_PROMPT.md`**. Pick **one** provider for the spine unless the brief explicitly needs two; avoid shipping both without a product reason (cost and complexity add up). **Cache, rate-limit, and respect robots/ToS** for any URLs you then fetch.
 
 ### 4.5 One-click local dev (non-technical operators)
 
@@ -393,42 +431,6 @@ See **`getScaffoldInstallParams`** / **`SCAFFOLD_INSTALL.json`** (`versionPolicy
 
 **Env:** `OLLAMA_BASE_URL`, `OLLAMA_MODEL`, optional `OLLAMA_PREFER_GEMMA=1`, `SKIP_OLLAMA_INSTALL=1`.
 
-### 4.3 Optional — seed, fixture, or import data as JSON (any LLM chat)
-
-**For humans:** If you need **initial or supplementary structured data** (seed rows, test fixtures, migrated content, a first catalog, sample users) and typing it by hand is tedious, you can use **any** LLM product you already use (ChatGPT, Claude, Gemini, Copilot, **local Ollama chat**, etc.) — *outside* or *inside* the same project chat — to **generate JSON** you save into the repo. Your coding agent then validates, imports, or wires that file into the app. **Repeat** this whenever you need a *new* dataset: one prompt run per file or batch is fine.
-
-**For agents:** If the user drops a `*.json` (or pastes JSON) and says it came from another LLM, **do not** trust it without **schema or shape validation** at the boundary (e.g. Zod, JSON Schema, or your ORM’s validators). Idempotent seed/import rules still apply (§13).
-
-**Copy-paste prompt** (edit the bracketed parts, then run in any LLM; save the model’s output to a file such as `data/seed-<name>.json` or `fixtures/<name>.json`):
-
-```text
-You are helping me prepare structured data for a software project. Reply with ONLY valid JSON — no markdown code fences, no explanation before or after the JSON. I will save your reply as a file in my repo.
-
-Context
-- App or domain: [ONE SENTENCE]
-- What this data is for: [e.g. dev seed, test fixtures, UI demo content, first import]
-- Target structure: [Describe: array of objects vs single object; required field names; types; nesting. Paste a TypeScript type, JSON Schema, or example object if you have one.]
-- How many records: [NUMBER or "roughly N"]
-- Rules: [e.g. obvious fake emails only, no real PII, locale/currency, enum values must be: ...]
-
-Output requirements
-- Valid JSON: double-quoted keys, UTF-8, no comments, no trailing commas.
-- Consistent shape across all records; omit optional fields if unknown rather than null-stuffing unless I asked for nulls.
-- If a field is a date, use ISO 8601 strings unless I specified otherwise.
-- If I asked for unique IDs, use stable string IDs (e.g. slug-like or uuid-like), not sequential guessing that might collide.
-```
-
-**Why this works well:** The chat model does **content generation** in a familiar UI; the project agent does **file layout, validation, and wiring** — same division of labor as other “human brings asset, agent integrates” flows.
-
-### 4.4 Optional — web search APIs (live internet data)
-
-**For humans:** If v1 needs **current web information** (research helpers, RAG over fresh pages, “latest news on …”, competitive snapshots), you will almost always want a **search API** instead of ad-hoc scraping. Two **common ways to get started** with a developer key and a **free or entry-level allowance** (always confirm the latest terms on the vendor site — quotas change):
-
-1. **[Tavily](https://tavily.com/)** — search/extract endpoints aimed at **AI and agent** workflows. Sign up, create an API key, add e.g. `TAVILY_API_KEY` to **`.env`** and document a placeholder in **`.env.example`**. [Pricing / credits](https://tavily.com/pricing) · [Docs](https://docs.tavily.com/).
-2. **[Brave Search API](https://api-dashboard.search.brave.com/)** — **web, news, images, video**, and related endpoints. Create a key in the developer dashboard, add e.g. `BRAVE_API_KEY` (or the env name the official SDK/docs specify) to **`.env`**. [Pricing](https://api-dashboard.search.brave.com/documentation/pricing) — new accounts typically get **renewable monthly credits**; set **usage/budget limits** in the dashboard so you stay within the free-credit range while prototyping.
-
-**For agents:** Call search APIs **from the server** only; never send secret keys to the client. If the product needs search, nudge the user in Phase 1–2: *"If you don’t have a key yet, sign up for Tavily and/or Brave, add the key to `.env`, and tell me which provider we’re using for v1."* Log the provider in **`decisions[]`** and wire **`CONTEXT_PROMPT.md`**. Pick **one** provider for the spine unless the brief explicitly needs two; avoid shipping both without a product reason (cost and complexity add up). **Cache, rate-limit, and respect robots/ToS** for any URLs you then fetch.
-
 ---
 
 ## 5. Intake topics (ask across a short conversation, not all at once)
@@ -461,7 +463,7 @@ These are the **topics the agent needs to cover in Phase 1**, not a checklist to
   2. **Who is it for?** — primary users
   3. **What should we call it?** — project/codename
   ```
-  The user can then reply `1. …` / `2. …` / `3. …` or prose — but they won't miss one. This **overrides the §8.5 "bullets for parallel" convention**: for *questions*, numbered is always clearer because the user can answer by number.
+  The user can then reply `1. …` / `2. …` / `3. …` or prose — but they won't miss one. This **overrides the §8 rule 5 "bullets for parallel" convention**: for *questions*, numbered is always clearer because the user can answer by number.
 - **Max ~3 numbered questions per message.** More than that and quality of answers drops hard.
 - **Reflect before you ask (Round 2+).** Start each round after Round 1 with one sentence summarizing what you heard: *"Okay — so it's an internal tool for project managers to track client deliverables, export status reports as PDF."* Then ask the next round's numbered questions.
 - **No jargon.** Say "the main thing a user does" instead of "hero workflow" in user-facing messages (the term is for internal/doc use). Never write "architecture" unless the user did first.
@@ -576,7 +578,7 @@ Both defaults share the same foundation — **TypeScript + pnpm + ESM** — so t
 2. **Confirm the default in one line** after they pick: e.g. *"Got it — web app, so I'll use the SvelteKit + PocketBase default unless you want to change anything."* Give them an easy "or change X" opening without forcing them to use it.
 3. **Lock the default in `docs/PHASE_1_BRIEF.md` §4** and record in `.forgekit/workflow_tracking.json → decisions[]`:
    ```json
-   { "date": "<YYYY-MM-DD>", "decision": "Stack: default-A (SvelteKit+PB)", "why": "app type = web app; no overrides", "alternatives": [] }
+   { "date": "<YYYY-MM-DD>", "phase": 1, "decision": "Stack: default-A (SvelteKit+PB)", "why": "app type = web app; no overrides", "alternatives": [] }
    ```
 4. **Honor explicit overrides minimally.** If the user says "React, not Svelte," swap the frontend layer only — keep TS/pnpm/ESM/PB/Tailwind. Record the override in `decisions[]` with the user's reason.
 
@@ -912,10 +914,10 @@ Write this to **`.forgekit/workflow_tracking.json`** on first run. Replace the p
 }
 ```
 
-**Entry shapes** (append-only):
+**Entry shapes** (append-only; include **`phase`** when the decision belongs to a specific lifecycle phase):
 
 ```json
-// decisions[]
+// decisions[] — date, phase, decision, why, alternatives (alternatives may be [])
 { "date": "2026-04-22", "phase": 1, "decision": "Stack: SvelteKit + PocketBase", "why": "single-binary DB, fast spine", "alternatives": ["Next+Postgres"] }
 
 // gotchas[]
@@ -953,7 +955,7 @@ This repository uses **ForgeKit Lite** as its project kickoff and operating prot
 - **Plain first reply:** first user-facing message after bootstrap is product language, not methodology jargon. See `.forgekit/FORGEKIT_LITE.md` §9.
 - **Ask questions as numbered lists, one per line.** Never mash multiple questions into a paragraph. See §5.
 - **Git commits:** plain `-m` or `-F` only; no unrequested attribution trailers (§8.9). Git **2.32+** supports `--trailer` natively — focus on message policy, not trailer compatibility. **Pre-2.32 only:** `unknown option 'trailer'` → shell hop or upgrade Git.
-- **Lists:** numbered = ordered steps or questions, bullets = parallel options, letters (A/B/C) = pick-one. See §8.5.
+- **Lists:** numbered = ordered steps or questions, bullets = parallel options, letters (A/B/C) = pick-one. See §8 rule 5.
 - **No interactive CLIs** in scripted commands — pass every flag.
 - **Five-turn rule:** if a problem has not converged in ~5 turns, propose a different approach, not more patches.
 
@@ -1009,7 +1011,7 @@ These are the failures ForgeKit sees most often. The agent should re-read this l
 
 **Engineering**
 - **Interactive CLIs in agent terminals.** `sv create`, `npm init`, `gh auth login`, `pnpm dlx create-*` will hang forever on a TTY prompt. Pass every flag, or skip the CLI and write files directly.
-- **`sv create` against a repo that Lite has already bootstrapped.** By §4.2 step 10 the repo root is **never empty** — the Lite bootstrap (steps 1–9) writes **`.forgekit/`**, `docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `.gitignore`, and `.git/` before any scaffolder runs. Running `pnpm dlx sv create .` at that point triggers an **interactive** `Directory not empty. Continue?` prompt with **no reliable non-interactive bypass** — agent terminals cannot answer it and the session hangs (§8.6). **Prevention:** in Lite, **prefer the manual scaffold** described in §4.2 step 10 (A.1); it is deterministic and never prompts. If you want the `sv create` shortcut, target a **fresh subfolder that does not exist yet** (e.g. `sv create app`, never `sv create .`). **Recovery:** kill the hung process, delete any partial `app/`, and switch to the manual path or retry into a new folder name. Do not try to answer the prompt by piping "Yes" — non-portable and fragile.
+- **`sv create` against a repo that Lite has already bootstrapped.** By §4.2 step 10 the repo root is **never empty** — the Lite bootstrap (steps 1–9) writes **`.forgekit/`**, `docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `.gitignore`, and `.git/` before any scaffolder runs. Running `pnpm dlx sv create .` at that point triggers an **interactive** `Directory not empty. Continue?` prompt with **no reliable non-interactive bypass** — agent terminals cannot answer it and the session hangs (§8 rule 6). **Prevention:** in Lite, **prefer the manual scaffold** described in §4.2 step 10 (A.1); it is deterministic and never prompts. If you want the `sv create` shortcut, target a **fresh subfolder that does not exist yet** (e.g. `sv create app`, never `sv create .`). **Recovery:** kill the hung process, delete any partial `app/`, and switch to the manual path or retry into a new folder name. Do not try to answer the prompt by piping "Yes" — non-portable and fragile.
 - **Committing secrets or the wrong artifacts to a public repo.** Do not put API keys, `.env`, or customer-private notes in **`.forgekit/workflow_tracking.json`** or committed rules. Prefer **`.forgekit/`** (not repo root) for agent files per §1.5. If you **gitignored** `.forgekit/` but later need it on GitHub, that is fine — it was intentional. If you **accidentally committed secrets** or sensitive internal URLs, treat the remote as compromised: rotate credentials and rewrite history (`git filter-repo`) if needed; a follow-up delete commit does **not** remove blobs from history. Vendoring a full Lite copy when **MCP** already serves methodology is clutter, not a license violation — drop the duplicate file and use MCP tools instead.
 - **GitHub GH007 / private email on push.** See §4.1.1 — fix noreply identity and repo-local `user.email` before debugging merge or sync UI errors.
 - **Re-running scaffolders in an initialized app folder.** A second `sv create` on top of an existing SvelteKit tree (root or `app/`) typically errors or corrupts config. Detect the presence of `package.json` plus `svelte.config.js` (or `app/package.json` if using the subfolder shortcut) and refuse.

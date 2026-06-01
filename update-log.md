@@ -8,8 +8,16 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 **What belongs in the summary column:** The *generalized* outcome (e.g. “propagate prompt: principle-first lessons, examples secondary”), not a dump of app-specific literals. Use the Detail section for file-level bullets; frame those bullets as *what template behavior changed*, not as a copy-paste of example numbers or strings from the source app.
 
+**FORGEKIT_LITE release checklist** (when editing `mcp-server/content/FORGEKIT_LITE.md`):
+
+1. **Version strings** — bump every `v#.#.#` in the file: header block (~line 3), `AGENTS.md` snippet in §12, footer. Canonical source is the header; keep all three in sync.
+2. **`schemaVersion`** in §11 starter JSON — bump only when `workflow_tracking.json` shape changes (e.g. `lite-1` → `lite-2`).
+3. **Cross-doc sync** — if §4.3–§4.4 (seed JSON / web search) or §7.1 (LLM content patterns) change materially, mirror in `README.md` and `WORKFLOW.md` (same optional sections).
+4. **Append this log** — table row + Detail when the Lite edit ships.
+
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-06-01 | **Prelaunch review — medium fixes:** FORGEKIT_LITE §4 reading order + map; §8 rule 5/6 notation (vs §8.9 subsection); `.forgekit/` git policy (H1 status launcher + H2 commit/gitignore from prior commit); MCP `getForgeKitLite` + `getForgeKitLiteUpdates`; Lite release checklist in update-log; unified `decisions[]` example shape. |
 | 2026-05-29 | **Cohesion-tier UX patterns:** minimal global keyboard set + **safe-Esc layering** + help overlay; **first-load skeletons** (shape over spinner); **canonical empty-state component** with `wrapper`/`centered`/`hero` variants; **unified three-phase save acknowledgement** (`Saving…`/`Saved`/`error`) bubbled from child components to one indicator; **dismissible per-user first-run hints**. DESIGN_SYSTEM sections + CONTEXT_PROMPT pattern/anti-patterns + TEST_PLAN checks. |
 | 2026-05-29 | **New prompt: UX Cohesion Audit** — whole-app, cross-cutting read of where a product confuses, blocks, distracts, or fails to delight; two-lens method (cross-cutting "feels like N apps" themes + surface-by-surface), Step 0 corpus read to point at owned specs instead of re-speccing, Critical/High/Medium/Low + effort with delight first-class. Complements `panel-usability-audit.md` (single surface) and `pre-launch-audit.md` (launch readiness). README prompt tree updated (also added previously-missing `panel-usability-audit.md`). |
 | 2026-05-26 | **Cover letter templates:** drop mailed-letter `[City, State]` guidance — **BRAND_AND_PRODUCT**, **TECHNICAL_REFERENCE** (tailoring), **CONTEXT_PROMPT** voice rules. |

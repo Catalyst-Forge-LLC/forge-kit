@@ -681,6 +681,67 @@ server.tool(
   }
 );
 
+// -- Tool: getForgeKitLite -------------------------------------------------
+
+server.tool(
+  "getForgeKitLite",
+  "Returns the full FORGEKIT_LITE.md portable kickoff protocol (no MCP required in the target project). " +
+    "Use when the user wants the single-file Lite artifact: save to `.forgekit/FORGEKIT_LITE.md` or paste into chat. " +
+    "Complements getNewProjectKickoff (MCP-first greenfield).",
+  {},
+  async () => {
+    const path = join(MCP_CONTENT_DIR, "FORGEKIT_LITE.md");
+    const content = readFile(path);
+    if (!content) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: "FORGEKIT_LITE.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+        }],
+      };
+    }
+    return {
+      content: [{
+        type: "text" as const,
+        text:
+          "ForgeKit Lite — portable kickoff protocol. Save to `.forgekit/FORGEKIT_LITE.md` in the app repo " +
+          "(or paste into chat). See §1 for drop-in vs paste vs rules options.\n\n" +
+          content,
+      }],
+    };
+  }
+);
+
+// -- Tool: getForgeKitLiteUpdates ------------------------------------------
+
+server.tool(
+  "getForgeKitLiteUpdates",
+  "Returns the FORGEKIT_LITE_UPDATES.md starter for logging Lite protocol gaps in `.forgekit/` (§1.6). " +
+    "Optional local feedback file — merge accepted entries back into upstream FORGEKIT_LITE.md.",
+  {},
+  async () => {
+    const path = join(MCP_CONTENT_DIR, "FORGEKIT_LITE_UPDATES.md");
+    const content = readFile(path);
+    if (!content) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: "FORGEKIT_LITE_UPDATES.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+        }],
+      };
+    }
+    return {
+      content: [{
+        type: "text" as const,
+        text:
+          "Write the following to `.forgekit/FORGEKIT_LITE_UPDATES.md` when bootstrapping a project " +
+          "that may feed protocol feedback upstream (§1.6).\n\n" +
+          content,
+      }],
+    };
+  }
+);
+
 // -- Tool: getForgeKitCursorPhaseRule --------------------------------------
 
 server.tool(
