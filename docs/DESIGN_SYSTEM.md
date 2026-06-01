@@ -257,6 +257,10 @@ Every password input should have a show/hide toggle button positioned inside the
 
 > 💡 **Lesson learned:** **`focus-visible` rings** should clarify **keyboard-linear** navigation (links, primary buttons, standard inputs). **Composite** editors — pill/tag inputs, multi-value chips, nested micro-buttons — often shouldn’t show a heavy ring on every **pointer** click, or the chrome feels noisy. Use **roving `tabindex`**, `aria-*` on the composite, and scope rings to real tab stops; reserve `outline-none` for inner pieces that aren’t meant to be separate focus destinations.
 
+### Modal and dialog focus trap
+
+> 💡 **Lesson learned:** Every modal and centered dialog should **trap focus** while open and **return focus to the trigger** on close. Implement once as a reusable action or hook (`use:focusTrap`): on mount, remember `document.activeElement`, move focus to the dialog (or a `[data-autofocus]` target inside it), cycle Tab / Shift+Tab within focusable descendants, and on teardown call `.focus()` on the remembered element if it is still in the document. **Do not** have the trap action also handle Escape — each layer keeps its own Escape handler (see *Global keyboard shortcuts* → minimal-safe `Esc`). WHY: Without trap + return, keyboard users tab into the page behind the overlay; without deferring Escape, global and modal handlers fight.
+
 ---
 
 ## Tooltip Usage Guidelines
@@ -324,6 +328,24 @@ Every password input should have a show/hide toggle button positioned inside the
 ## First-run hints (dismissible coach marks)
 
 > 💡 **Lesson learned:** When a dense surface (a multi-tab record detail, a complex panel) has **no obvious "start here,"** a **one-time, dismissible inline hint** on first open ("New here? Start with X, then Y") cuts the wayfinding tax without the weight of a full tour. Keep it subtle (a thin accent-tinted strip, not a modal), make it explicitly dismissible, and persist dismissal **per user** (e.g. `localStorage` keyed by user id) so it never re-nags and so coach/delegate accounts don't inherit each other's state. WHY: Discoverability that relies on the user *choosing* a tour leaves most users lost; a calm inline cue teaches in place.
+
+---
+
+## Board-level "next best move" (recommendation strip)
+
+> 💡 **Lesson learned:** Distinct from the **inline first-run hint** on a dense panel: when you already compute **prioritized follow-ups or reminders** server-side, elevate the **single highest-leverage item** into a calm board-level **"Start here"** strip — one click opens the target in context, with an "{N} more" affordance that expands the full list unchanged. Frame it as a **recommendation**, not a notification count; use the same priority sort you already trust. WHY: Overwhelmed users on a data-heavy primary surface need one obvious next move at the *board* level, not only per-card nudges or a collapsed "3 follow-ups" toggle.
+
+---
+
+## First successful artifact moment
+
+> 💡 **Lesson learned:** The first time a user completes your core **generated output** (tailored documents, compiled report, assembled bundle — whatever is the product's "wow"), don't let it silently appear. Show a **one-time, dismissible orientation overlay**: what was built, where each piece lives in the UI, and a primary action to view it. Calm and senior in tone — orientation, not confetti. Persist dismissal **per user**; trigger off a stable completion signal (e.g. a running total from the server, or a domain event with `count === 1`). WHY: The wow converts to understanding only when the user knows where to find the output next time.
+
+---
+
+## AI-generated section lifecycle (empty / generating / ready / stale)
+
+> 💡 **Lesson learned:** Multiple AI surfaces on one record (alignment map, research dossier, personalized brief, document transformation) often express the **same four concepts** with different copy and chrome: **empty** (never run — invite first generation), **generating** (in flight — spinner or staged progress), **ready** (content exists), **stale** (inputs changed since last run — non-blocking refresh, never auto-regen). Centralize a **shared vocabulary module** (sentence structure + refresh labels) and a **canonical stale banner** (amber strip + "Refresh now" / "Refreshing…"). Each surface keeps its own generate-verb ("draft", "map", "build") for voice; the *structure* stays one product behavior. Stale requires **server-side input-hash** (or equivalent) — don't show a stale banner until you can detect drift honestly.
 
 ---
 

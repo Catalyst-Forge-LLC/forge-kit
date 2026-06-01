@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-06-01 | **Loved-tier UX patterns:** modal focus trap + return focus; board "Start here" recommendation strip; first-artifact orientation overlay; AI section lifecycle vocabulary + stale banner. DESIGN_SYSTEM, CONTEXT_PROMPT, TECHNICAL_REFERENCE (AI lifecycle stub), TEST_PLAN §7.4c–f. |
 | 2026-06-01 | **Prelaunch review — low polish:** TRACKING_SCHEMA phase ID map (Lite vs MCP); WORKFLOW agent-agnostic intro; Lite maintainer triplicate-sync note; propagate prompt + update-log cross-doc anchors; §15 decisions[] shape. Completes prelaunch review spec. |
 | 2026-06-01 | **Prelaunch review — medium fixes:** FORGEKIT_LITE §4 reading order + map; §8 rule 5/6 notation (vs §8.9 subsection); `.forgekit/` git policy (H1 status launcher + H2 commit/gitignore from prior commit); MCP `getForgeKitLite` + `getForgeKitLiteUpdates`; Lite release checklist in update-log; unified `decisions[]` example shape. |
 | 2026-05-29 | **Cohesion-tier UX patterns:** minimal global keyboard set + **safe-Esc layering** + help overlay; **first-load skeletons** (shape over spinner); **canonical empty-state component** with `wrapper`/`centered`/`hero` variants; **unified three-phase save acknowledgement** (`Saving…`/`Saved`/`error`) bubbled from child components to one indicator; **dismissible per-user first-run hints**. DESIGN_SYSTEM sections + CONTEXT_PROMPT pattern/anti-patterns + TEST_PLAN checks. |
@@ -87,6 +88,23 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-06-01 — Loved-tier UX patterns (focus trap, board recommendation, first artifact, AI lifecycle)
+
+Propagated from Exec Foundry's beta-iteration ("loved") cohesion first pass. Generalized delight and cross-cutting primitives beyond the early-beta tier.
+
+- **`docs/DESIGN_SYSTEM.md`**
+  - **Accessibility Patterns → Modal and dialog focus trap** (new) — shared trap action: Tab cycle, `[data-autofocus]`, return focus on teardown; Escape stays per-layer.
+  - **Board-level "next best move"** (new) — elevate top priority follow-up into a calm "Start here" strip; distinct from inline first-run panel hints.
+  - **First successful artifact moment** (new) — one-time orientation overlay after first core generated bundle; per-user dismissal.
+  - **AI-generated section lifecycle** (new) — empty / generating / ready / stale vocabulary + canonical stale banner; input-hash prerequisite for stale.
+- **`docs/CONTEXT_PROMPT.md`**
+  - **Patterns to Follow** — focusTrap adoption; AI lifecycle vocabulary; board Start here from reminders; first-artifact overlay.
+  - **Anti-Patterns** — modals without trap/return; per-surface AI status copy drift.
+- **`docs/TECHNICAL_REFERENCE.md`**
+  - **AI/LLM Integration → AI-generated section lifecycle** — feature stub (routes, persistence, staleness hash, vocabulary module).
+- **`docs/TEST_PLAN.md`**
+  - New **§7.4c** focus trap, **§7.4d** first-artifact orientation, **§7.4e** board recommendation, **§7.4f** AI section lifecycle checks.
 
 ### 2026-05-29 — Cohesion-tier UX patterns (keyboard, skeletons, empty states, save ack, first-run hints)
 

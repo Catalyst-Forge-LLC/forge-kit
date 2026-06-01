@@ -150,6 +150,17 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 
 > 💡 **Lesson learned:** **Treat HTTP responses from long-running generation routes as untyped until validated.** Clients polling or awaiting dossiers, multi-section briefs, or chained LLM pipelines must handle **`application/json` failures**, **`text/html` error pages**, and empty bodies from gateways — parse safely (`Content-Type` check or read-as-text then `JSON.parse` inside try/catch) before assigning to UI models. Prefer **`Accept: application/json`** on clients and return structured `{ message, code?, correlationId? }` from your routes when upstream failures occur so UX stays consistent with progressive-import reconcile paths.
 
+### AI-generated section lifecycle (multi-surface records)
+
+> 🔧 **Guidance:** When one primary entity has **several distinct LLM outputs** (e.g. alignment brief, company dossier, personalized resonance, document transformation), document:
+>
+> - **Routes and persistence** per output type (separate fields or documents — do not overwrite Lens A when regenerating Lens B).
+> - **Phase UI** shared across surfaces: empty CTA, generating (button spinner and/or staged progress), ready, stale-with-refresh.
+> - **Staleness detection:** server-side input hash (or explicit version) compared at read time; client shows a non-blocking stale banner — **no auto-regen** on input change.
+> - **Vocabulary module** for shared refresh labels and stale message structure; per-surface generate-verbs only where voice differs.
+>
+> See **`DESIGN_SYSTEM.md` → AI-generated section lifecycle** and **`TEST_PLAN.md` §7.4f** for manual checks.
+
 ### LLM Usage Tracking
 
 [How do you track and audit LLM usage? Two concerns: cost visibility (admin) and limit enforcement (user).]

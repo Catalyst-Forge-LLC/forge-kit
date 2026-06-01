@@ -244,6 +244,30 @@ _Use when users run a **quality review** (heuristics, LLM audit, or checklist) o
 - [ ] A one-time "start here" hint appears on first open of a dense surface and is dismissible
 - [ ] Dismissal persists per user across reloads (and does not leak across delegate/coach accounts)
 
+### 7.4c Modal focus trap (if applicable)
+
+- [ ] Opening a modal moves focus inside the dialog (or `[data-autofocus]` target)
+- [ ] Tab / Shift+Tab cycle within the dialog only; focus does not reach the page behind
+- [ ] Closing the modal returns focus to the element that opened it
+- [ ] Escape is handled by the modal layer; global Escape defers when a modal is open
+
+### 7.4d First-artifact orientation (if applicable)
+
+- [ ] First successful completion of the core generated bundle shows a one-time orientation overlay
+- [ ] Overlay lists what was built and where each piece lives; primary action opens the output surface
+- [ ] Dismissal persists per user; overlay does not re-fire after dismissal
+
+### 7.4e Board "Start here" recommendation (if applicable)
+
+- [ ] When prioritized follow-ups exist, the collapsed bar highlights the single top item as "Start here" (one click opens in context)
+- [ ] Expanded view still shows the full list and quick actions unchanged
+
+### 7.4f AI section lifecycle states (if applicable)
+
+- [ ] Empty, generating, ready, and stale (when input-hash exists) use consistent refresh labels across AI sections on one record
+- [ ] Stale state shows a non-blocking banner with user-initiated refresh only — no silent auto-regen on input change
+- [ ] Generating state does not leave a perpetual placeholder if the server returns a terminal error
+
 ### 7.5 Persistent assistant or copilot shell (if applicable)
 
 _Use when a **dock, rail, or side panel** hosts ongoing AI conversation scoped to optional **record context**._
