@@ -17,6 +17,7 @@ const progressPath = join(repoRoot, "docs", "FORGEKIT_PROGRESS.md");
 const isWin = process.platform === "win32";
 
 const PHASE_LABELS = {
+  // Display names — see TRACKING_SCHEMA.md "Phase ID vocabulary (Lite vs MCP)"
   "1": "Plan",
   "2": "Build",
   "3": "Stabilize",

@@ -1,6 +1,6 @@
 # ForgeKit
 
-A structured development workflow for solo developers building non-trivial full-stack apps with Claude. Derived from 7 sessions and ~78,000 lines of real-world app development.
+A structured development workflow for solo developers building non-trivial full-stack apps with AI coding agents. Derived from 7 sessions and ~78,000 lines of real-world app development.
 
 ---
 

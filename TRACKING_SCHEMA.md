@@ -2,7 +2,25 @@
 
 This file documents how to read and update **`.forgekit/workflow_tracking.json`** in customer project repos. (This ForgeKit repo keeps a starter copy at **`workflow_tracking.json`** at the repo root for MCP `getInitialWorkflowTracking` — agents write the output to **`.forgekit/workflow_tracking.json`** in the app repo.)
 
-Claude should reference this when updating the tracking file.
+Agents should reference this when updating the tracking file.
+
+## Phase ID vocabulary (Lite vs MCP)
+
+Both schemas describe the same seven lifecycle phases. **`scripts/forgekit-dev-launcher.mjs`** maps either shape to the display names below.
+
+| # | Lite `currentPhase` | MCP `currentPhase` | Display name |
+|---|---------------------|--------------------|--------------|
+| 1 | `1` | `1-architecture` | Plan |
+| 2 | `2` | `2-scaffolding` | Build |
+| 3 | `3` | `3-stabilization` | Stabilize |
+| 4 | `4` | `4-feature-iteration` | Iterate |
+| 5 | `5` | `5-refactoring` | Refine |
+| 6 | `6` | `6-strategic-review` | Align |
+| 7 | `7` | `7-hardening` | Harden |
+
+**Lite (`schemaVersion: "lite-1"`):** numeric `currentPhase`; each phase has **`exitCriteria`** as `{ "flagName": true/false }`. Starter: **`FORGEKIT_LITE.md`** §11.
+
+**MCP / full starter:** string `currentPhase`; each phase has **`exitCriteriaMet`** and **`exitCriteriaRemaining`** string arrays. Starter: repo-root **`workflow_tracking.json`** via `getInitialWorkflowTracking`.
 
 ## Top-Level Fields
 

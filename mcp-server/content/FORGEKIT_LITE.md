@@ -8,6 +8,8 @@
 
 A single self-contained file for starting a new project in **any** agent: Cursor, Claude Code, Claude Cowork, OpenAI Codex, Cline, Aider, Continue, Windsurf, etc. **No MCP server, no vendored methodology tree, no external fetches.** Drop this file into the repo (or paste it into chat), and the agent has enough structure to run a real project end to end.
 
+> **Maintainers:** Optional onboarding blocks in **§4.3**, **§4.4**, and **§7.1** are intentionally duplicated in root **`README.md`** and **`WORKFLOW.md`**. When you edit one, sync the others (see **`update-log.md`** — FORGEKIT_LITE release checklist, item 3).
+
 > **Audience:** agent-first, but skim-friendly for humans. If you are the human, read §1–§3 then hand the rest to your agent. If you are the agent, read it all once, then follow §4 step by step.
 
 ---
@@ -523,6 +525,9 @@ _Status: DRAFT | LOCKED (<date>)_
 -
 
 ## 9. Decision log (headline decisions only)
+
+Mirror material entries in **`.forgekit/workflow_tracking.json → decisions[]`** (`date`, `phase`, `decision`, `why`, `alternatives` — see §11).
+
 - <date> — <decision> — <why> — <alternatives considered>
 
 ## 10. Open questions for the user
@@ -888,6 +893,8 @@ Keep it **short** — this is a map, not a monograph. If it grows past ~200 line
 
 Write this to **`.forgekit/workflow_tracking.json`** on first run. Replace the placeholder fields and update as the project progresses.
 
+**Lite vs MCP tracking:** Lite uses **`schemaVersion: "lite-1"`**, numeric **`currentPhase`** (`1`–`7`), and per-phase **`exitCriteria`** objects (boolean flags). The full MCP starter uses string phase keys (`1-architecture`, …) and **`exitCriteriaMet`** / **`exitCriteriaRemaining`** arrays — see **`TRACKING_SCHEMA.md`** (phase ID map + both shapes). **`scripts/forgekit-dev-launcher.mjs`** `status` understands both.
+
 ```json
 {
   "schemaVersion": "lite-1",
@@ -1116,7 +1123,7 @@ Phases 3–7 add documents as the project grows (test plan, design notes, deploy
 The user wins. This is a default protocol, not a law. When the user overrides a rule:
 
 1. Acknowledge the override briefly.
-2. Record it in `decisions[]` (date, what was overridden, why) so future sessions see the exception.
+2. Record it in `decisions[]` with **`date`**, **`phase`** (current lifecycle number), **`decision`**, **`why`**, and optional **`alternatives`** so future sessions see the exception.
 3. Proceed.
 
 The one exception: **do not** skip logging the override itself — that is how Lite stays coherent across sessions.

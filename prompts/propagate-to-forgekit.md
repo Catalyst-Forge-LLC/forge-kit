@@ -257,6 +257,8 @@ Update any that are out of sync. These docs are the first thing a human or agent
 
 **ForgeKit Lite parity:** When the propagation adds or changes **external URL → structured record** behavior (layered fetch/parse, **empty extract vs bad URL**, optional **last-resort** small-model recover from stripped HTML, env opt-out, diagnostics without full HTML in analytics), update **`mcp-server/content/FORGEKIT_LITE.md`** (**§7.2**; bump **v1.x** if the section changed materially) and cross-check **`README.md`**, **`WORKFLOW.md`**, and **`INITIAL_PROMPT.md`** for citations — Lite-only projects may never open full **`docs/TECHNICAL_REFERENCE.md`**.
 
+**Triplicate optional sections:** When **§4.3**, **§4.4**, or **§7.1** (or **§7.2**) in **`FORGEKIT_LITE.md`** change, sync the matching optional blocks in **`README.md`** and **`WORKFLOW.md`** in the same pass — see **`update-log.md`** (FORGEKIT_LITE release checklist, item 3).
+
 ### Step 6: Second-pass completeness review
 
 After the initial propagation, review the full list of changes one more time. It's common to miss patterns on the first pass — especially:

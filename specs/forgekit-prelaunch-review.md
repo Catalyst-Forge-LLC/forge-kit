@@ -1,6 +1,6 @@
 # ForgeKit pre-use review — findings & next steps
 
-**Status:** Implemented (2026-06-01) — H1/H2 and M1–M4 addressed; L1 partial (`decisions[]` shape); L2–L4 open.
+**Status:** Implemented (2026-06-01) — all findings addressed (H1/H2, M1–M4, L1–L4).
 **Spec kind:** Review / improvement proposal
 **Scope:** Whole-kit pass before adopting ForgeKit on a new project, with extra focus on **`mcp-server/content/FORGEKIT_LITE.md`** (the standalone, no-MCP path the maintainer uses most).
 **Reviewer:** agent pass over `FORGEKIT_LITE.md`, `README.md`, `WORKFLOW.md`, `mcp-server/README.md`, and the reference scripts in `mcp-server/content/scripts/`.
@@ -9,9 +9,7 @@
 
 ## 1. Verdict
 
-ForgeKit is in good shape and **safe to use as-is** for a new project. The Lite file is unusually complete for a single-file protocol: preflight, phase gates, default stacks, content-generation patterns, one-click launchers, and a strong anti-pattern list. Nothing below is a blocker.
-
-However, there is **one real functional bug** (the shared status launcher does not understand the Lite tracking schema) and a cluster of **consistency / navigation issues** that will cause friction the first time you lean on Lite end-to-end. Fixing the items in §2 and §3 before the next project is worthwhile and low-effort.
+ForgeKit is in good shape and **ready for a new project**. The Lite file is unusually complete for a single-file protocol: preflight, phase gates, default stacks, content-generation patterns, one-click launchers, and a strong anti-pattern list. Prelaunch review fixes (2026-06-01) addressed the status-launcher schema bug, `.forgekit/` git policy clarity, §4 navigation, MCP Lite retrieval, and cross-doc maintenance notes.
 
 ---
 
@@ -97,10 +95,10 @@ The object-shape handling is ~6 lines and makes one script correct for both sche
 
 ## 4. Findings — Low / polish
 
-- **L1. `decisions[]` shape inconsistency.** §11 example entry includes a `"phase"` field; the §4.2 step 9 and §7 example entries omit it. Pick one canonical shape and use it in every example.
-- **L2. Restated content between Lite and README/WORKFLOW.** The content-generation patterns (§7.1), web-search (§4.4), and seed-data (§4.3) blocks are duplicated near-verbatim across `FORGEKIT_LITE.md`, `README.md`, and `WORKFLOW.md`. That's fine for Lite's "self-contained" goal, but it's three copies to keep in sync — add a propagation checklist note so a future edit to one updates the others.
-- **L3. Phase-name vocabulary differs by file.** Lite uses Plan/Build/Stabilize/Iterate/Refine/Align/Harden; the launcher `PHASE_LABELS` and full schema use `1-architecture … 7-hardening`. Harmless given the fallback, but documenting the mapping in one place (it lives only in the launcher today) would help.
-- **L4. WORKFLOW.md still opens "built with Claude."** README is already model-agnostic ("AI coding agents"); WORKFLOW.md line 3 still says "with Claude." Minor brand drift for an open-source, agent-agnostic kit.
+- **L1. `decisions[]` shape inconsistency.** **Fixed** — canonical Lite shape: `{ date, phase, decision, why, alternatives }` in §7, §11, §15; brief §9 points at tracking.
+- **L2. Restated content between Lite and README/WORKFLOW.** **Fixed** — maintainer note in Lite header; triplicate checklist in `update-log.md` + `propagate-to-forgekit.md`.
+- **L3. Phase-name vocabulary differs by file.** **Fixed** — phase ID map in `TRACKING_SCHEMA.md`; Lite §11 cross-ref; launcher maps both schemas.
+- **L4. WORKFLOW.md still opens "built with Claude."** **Fixed** — intro now "AI coding agents"; `TRACKING_SCHEMA.md` intro agent-agnostic.
 
 ---
 
@@ -116,10 +114,12 @@ The object-shape handling is ~6 lines and makes one script correct for both sche
 
 ## 6. Suggested next steps (ordered)
 
-1. **Fix H1** — teach `forgekit-dev-launcher.mjs renderProgress()` to read the Lite `exitCriteria` object shape (and stop relying on `1-architecture` keys). Smallest change with the biggest correctness payoff; it's on the operator-facing path.
-2. **Fix H2** — make the `.forgekit/` commit-vs-ignore decision explicit and reconcile §1.5 / §4.2 step 2 / step 5 so the bootstrap commit is honest.
-3. **M1 + M2** — renumber §4 into reading order and standardize §8 rule references. Pure doc edits; improves the read-once-then-execute flow agents rely on.
-4. **M4 + L1** — add a version/shape propagation note and unify the `decisions[]` example shape.
-5. **M3 + L2/L3/L4** — optional: MCP parity for Lite, dedupe-sync notes, phase-name mapping, WORKFLOW model-agnostic wording.
+All items below are **done** as of 2026-06-01. Use this list as a validation checklist for the next greenfield boot:
 
-**Validation after fixes:** bootstrap a throwaway repo from Lite, run `status.bat` in a fresh Phase 1 and confirm it reports open exit criteria (not "looks complete"); confirm the bootstrap commit contains what the chosen `.forgekit/` policy says it should.
+1. ~~**Fix H1**~~ — status launcher reads Lite `exitCriteria` booleans and MCP arrays.
+2. ~~**Fix H2**~~ — `.forgekit/` commit-vs-gitignore policy explicit in §1.5 / §4.2.
+3. ~~**M1 + M2**~~ — §4 reading order + §8 rule notation.
+4. ~~**M4 + L1**~~ — release checklist; unified `decisions[]` shape.
+5. ~~**M3 + L2/L3/L4**~~ — MCP Lite tools; cross-doc sync notes; phase ID map; WORKFLOW wording.
+
+**Validation before next project:** bootstrap a throwaway repo from Lite, run `status.bat` in a fresh Phase 1 and confirm it reports open exit criteria (not "looks complete"); confirm the bootstrap commit contains what the chosen `.forgekit/` policy says it should.
