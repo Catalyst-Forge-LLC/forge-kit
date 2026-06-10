@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-06-10 | **Anti-self-importance and position-of-strength tone controls:** TECHNICAL_REFERENCE (new tone controls subsection); CONTEXT_PROMPT Patterns to Follow (anti-self-importance & posture rules); BRAND_AND_PRODUCT (grandiose & striving register prevention); TEST_PLAN (anti-self-importance & position-of-strength checks). Source: Exec Foundry cover letter anti-self-importance pass. |
 | 2026-06-10 | **Factual grounding and veracity check safety nets:** TECHNICAL_REFERENCE (new veracity pass subsection); CONTEXT_PROMPT Patterns to Follow (grounding text in prompt); BRAND_AND_PRODUCT (veracity pass lesson); DESIGN_SYSTEM (VeracityCard visual spec); TEST_PLAN (grounding & veracity test cases). Source: Exec Foundry cover letter grounding and veracity pass. |
 | 2026-06-04 | **LLM JSON parse hardening (verbatim upload):** TECH_REF Output Validation lesson + guidance (`parseJsonFromLlmOutput`, `sanitizeJsonControlChars`, prompt escape rule, Support ID); CONTEXT_PROMPT integration pattern; CODE_QUALITY audit item #5; TEST_PLAN resume/cover upload checklist. Source: Exec Foundry onboarding upload fix + PostHog `Bad control character in string literal`. |
 | 2026-06-01 | **Loved-tier UX patterns:** modal focus trap + return focus; board "Start here" recommendation strip; first-artifact orientation overlay; AI section lifecycle vocabulary + stale banner. DESIGN_SYSTEM, CONTEXT_PROMPT, TECHNICAL_REFERENCE (AI lifecycle stub), TEST_PLAN §7.4c–f. |
@@ -90,6 +91,19 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-06-10 — Anti-self-importance and position-of-strength tone controls
+
+Propagated from Exec Foundry after implementing and validating the cover letter anti-self-importance and position-of-strength rules. Pattern and feature memory for any application that generates outbound copy representing the user and needs to prevent grandiose, visionary, or striving registers from leaking into the output.
+
+- **`docs/TECHNICAL_REFERENCE.md`**
+  - **Anti-self-importance and position-of-strength tone controls** — New subsection documenting the need for strict tone and posture controls, filtering out rhetorical scaffolding/self-narration, banning clever self-authored aphorisms, and enforcing a "position of strength" posture.
+- **`docs/CONTEXT_PROMPT.md`**
+  - **Patterns to Follow** — Added a pattern on anti-self-importance and position-of-strength posture, outlining specific rules and the "why" behind them.
+- **`docs/BRAND_AND_PRODUCT.md`**
+  - **Generated letters and long-form outbound copy (LLM)** — Added a lesson learned on how anti-self-importance and position-of-strength rules prevent grandiose and striving registers.
+- **`docs/TEST_PLAN.md`**
+  - **AI Features** — Added `### 4.4 Anti-self-importance and position-of-strength tone checks` containing manual test cases for grandiose framing, visionary self-positioning, analytical flattery, name-dropping by negation, performative specificity, modifier stacking, and position-of-strength posture.
 
 ### 2026-06-10 — Factual grounding and veracity check safety nets
 

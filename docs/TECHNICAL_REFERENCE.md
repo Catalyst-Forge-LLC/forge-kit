@@ -291,6 +291,18 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 >
 > 🔧 **Guidance:** Document the veracity check schema, how results are persisted on the target record, `/api/` routes for generation and dismissal, and the UI components used to display grounding gaps to the user.
 
+### Anti-self-importance and position-of-strength tone controls
+
+[When generating outbound documents (cover letters, statements of interest, custom pitches) representing the user, implementing strict tone and posture controls to prevent grandiose, visionary, or striving registers from leaking into the output.]
+
+> 💡 **Lesson learned:** **Filter out rhetorical scaffolding and self-narration.** Avoid letting the model tell the reader how to interpret the user's career or label their experiences as "chapters," "milestones," or "my range." Let the facts of what they built carry the weight directly.
+>
+> 💡 **Lesson learned:** **Ban clever, self-authored aphorisms and insider-coded observations.** Do not include philosophical observations about what the work "really requires" or "depends on" (e.g., "reading across teams as much as on the code," "where the margin for architectural guesswork was low," or "at the pace an enterprise sales cycle sets").
+>
+> 💡 **Lesson learned:** **Enforce a "position of strength" posture.** Ensure the generated text does not mirror the job description as proof of fit, deliver maxims/theses as quotable wisdom, brand ordinary habits as named methods, or use striving/grind vocabulary.
+>
+> 🔧 **Guidance:** Document how tone and posture guidelines are injected into the prompts, the specific anti-patterns banned, and how to validate generated text against these rules (e.g., using a programmatic LLM audit pass during development or as a post-generation safety net).
+
 ### Persistent contextual assistant (dock, rail, or side panel)
 
 [When the product embeds a **long-lived AI or copilot surface** alongside the main workflow — not only one-off modals — scoped to a **selected record** or page context.]

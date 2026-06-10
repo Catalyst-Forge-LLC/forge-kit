@@ -177,6 +177,24 @@ _Use when the product generates tailored materials representing the user (cover 
 - [ ] **Persist:** Switch tabs or reload — veracity results reload with the record.
 - [ ] **Dismissal:** Verify that clicking "Dismiss" or "Clear audit" successfully clears the veracity results from the record.
 
+### 4.4 Anti-self-importance and position-of-strength tone checks (if applicable)
+
+_Use when the product generates tailored materials representing the user (cover letters, statements of interest, custom pitches) and enforces strict tone, register, and posture controls._
+
+- [ ] **No Grandiose Framing:** Verify that routine work is stated at face value without dramatic or grandiose descriptions (e.g., "designed systems" instead of "originating products at the edge of what organizations know how to build").
+- [ ] **No Visionary Self-Positioning:** Verify that there are no priority claims or timing assertions designed to establish priority (e.g., "before X was mainstream").
+- [ ] **No Analytical Flattery:** Verify that the target company is not ranked or called "rare," "unique," or "the rarest environment."
+- [ ] **No Name-Dropping by Negation:** Verify that no tools, frameworks, or competitors are named solely to say the candidate did not use them or built something better (e.g., "rather than using LangGraph").
+- [ ] **No Performative Specificity:** Verify that there are no dense technology inventories used as arguments for fit instead of narrative.
+- [ ] **No Modifier Stacking:** Verify that credential-bearing modifiers are limited to one per noun phrase.
+- [ ] **Position-of-Strength Posture:**
+  - Verify that the text does not mirror the job description as proof of fit ("the work you describe is the loop I have been running").
+  - Verify that there are no aphorisms, maxims, or theses delivered as quotable wisdom.
+  - Verify that ordinary work habits are not branded as named personal methods.
+  - Verify that there is no striving or grind vocabulary (e.g., "the loop I have been running", "hold up in production", "want to keep doing").
+  - Verify that there are no humble-brags that raise a hurdle only to clear it.
+  - Verify that there is no rhetorical scaffolding, self-narration, or instructed interpretation (e.g., calling career periods "chapters" or "milestones").
+
 ---
 
 ## 5. Billing & Entitlements (if applicable)

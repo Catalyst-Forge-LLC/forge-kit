@@ -198,6 +198,8 @@ When the product produces **cover letters**, **outreach**, or other **persuasive
 > 💡 **Lesson learned:** Encode **deduplication and register** rules in **shared prompt fragments** or server-side passes so every surface that generates the same artifact class (tailoring tab, assistant, batch flows) stays aligned — not three different ad-hoc prompts that drift.
 >
 > 💡 **Lesson learned:** **Factual grounding and veracity checks prevent hallucinated credentials.** When generating tailored cover letters, outreach, or other persuasive copy representing the user, the model must be grounded in their full base document of record (passed directly in the prompt) rather than lossy summaries. Running a separate, cheap semantic veracity pass immediately after generation to flag ungrounded claims (technologies, metrics, or misplaced chapters) provides a robust, human-in-the-loop safety net before the user treats the output as final.
+>
+> 💡 **Lesson learned:** **Anti-self-importance and position-of-strength rules prevent grandiose and striving registers.** When generating outbound copy representing the user, explicitly instruct the LLM to write in a plain, confident, and professional tone. Ban grandiose framing of routine work, visionary self-positioning, analytical flattery, name-dropping by negation, performative specificity, and modifier stacking. Enforce a "position of strength" posture: ban mirroring the job description as proof of fit, delivering maxims/theses as quotable wisdom, branding ordinary habits as named methods, using striving/grind vocabulary, and using rhetorical scaffolding, self-narration, or clever self-authored aphorisms. Let the facts of what the user built carry the weight directly.
 
 ### Name Competitors in Differentiator Copy
 
