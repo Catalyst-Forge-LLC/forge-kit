@@ -19,6 +19,8 @@ _Note: This document covers **engineering quality** (type safety, error handling
 > 2. SILENT FAILURES: Grep for catch blocks that return empty results. Functions that catch errors and return [] or null are invisible bugs.
 > 3. ERROR FORMAT CONSISTENCY: All API routes should return errors in the same format. Mixed { error } and { message } formats cause client-side handling bugs.
 > 4. TYPE SAFETY: Count `as any` casts. Each one is a potential silent failure when schemas change. LLM JSON responses need runtime validation. Prefer systematic replacement: **`unknown` at catch boundaries and JSON edges**, **typed mapper inputs** (e.g. PocketBase `RecordModel` instead of `as any`), and **literal unions** for UI state instead of widening to `any` for event handlers.
+>
+> 5. **LLM JSON parse hardening (verbatim-copy prompts):** Do not use bare `JSON.parse` on model output when strings contain user document text. Use a shared **`parseJsonFromLlmOutput`** (fence strip + leading-object extraction + **control-char sanitization inside string literals** as fallback). Strict parse first so valid output is unchanged. Add unit tests for raw-newline-in-string payloads.
 > 5. AUTHORIZATION: Check that auth checks are atomic. A delegation check followed by a separate data fetch can be exploited between the two calls.
 
 ## Summary Table

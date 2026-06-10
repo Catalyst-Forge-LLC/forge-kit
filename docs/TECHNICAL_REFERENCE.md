@@ -144,6 +144,10 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 
 > 💡 **Lesson learned:** LLM JSON parsing with no runtime validation means missing fields propagate as incomplete objects. Always validate the shape of LLM responses before storing or displaying them.
 
+> 💡 **Lesson learned:** **Verbatim-copy JSON** (resume/cover-letter upload, large structured transforms) fails when the model puts **literal newlines or tabs inside quoted strings** — `JSON.parse` throws `Bad control character in string literal` even when the payload is otherwise correct. **Defense in depth:** (1) prompt rule — escape `\\n` / `\\t` / `\\r` inside every string value; (2) shared **`parseJsonFromLlmOutput`** that tries strict parse first, then **`sanitizeJsonControlChars`** (string-aware escape of U+0000–U+001F only inside `"…"`) before retry; (3) route **all** verbatim-text mapping parsers through that helper, not raw `JSON.parse(stripCodeFence(…))`. Preserves candidate text instead of failing onboarding.
+
+> 🔧 **Guidance:** Implement `sanitizeJsonControlChars` + `parseJsonFromLlmOutput` in a shared module (e.g. `lib/format.ts`). Unit-test a minimal broken payload: `{"bullets":["line one\nline two"]}`. Log parse failures with `server_failure_llm_parse` and return a **Support ID** on the upload route.
+
 > 💡 **Lesson learned:** When an LLM assigns a numeric score or rank, always ask for a short textual justification in the same response. A bare number (e.g. "fit rank: 3/5") is opaque to users and useless for debugging prompt quality. A 1-2 sentence explanation ("Direct enterprise SaaS leadership maps to this VP role, but the ML research requirement is a gap") turns the score into actionable insight. Store the justification as a separate field so the UI can show it conditionally (gracefully hidden for older records that predate the field), and include concrete prompt guidance like "reference specific alignment or gaps" so the LLM produces useful text, not generic filler.
 >
 > 📝 **Example:** A job-fit scoring prompt originally asked for `fitRank: 1-5`. Adding `fitJustification: 1-2 sentence explanation referencing specific alignment or gaps` required a full-stack field addition (type definition → database mapping → schema migration → API route → UI display) but immediately made the feature comprehensible to users.
@@ -276,6 +280,16 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 > 💡 **Lesson learned:** **Base cover-letter templates** for emailed or attached DOCX should omit legacy mailed-letter headers (`[City, State]`, employer street address blocks unless the product truly mails letters). Those lines are often marked “fixed” in find/replace tailoring and leak through as untailored placeholders. Audit the stored base doc and any “protected template spans” list when users report leftover bracket text.
 >
 > 🔧 **Guidance:** Document collections/fields for critique output, versioning or timestamps, `/api/` routes, and where the same **quality rules** apply across surfaces (e.g. base doc editor vs role-specific tab) so signals stay aligned.
+
+### Factual grounding and programmatic veracity checks on tailored outputs
+
+[When generating tailored artifacts (cover letters, statements of interest, custom pitches) that must represent the user truthfully, implementing **factual grounding** (passing the full source document in the prompt) and a **programmatic veracity pass** (a post-generation audit) to catch fabrications, hallucinated metrics, or mis-attributed achievements.]
+
+> 💡 **Lesson learned:** **Never tailor in a vacuum.** If the user has a source document of record (e.g. a base resume), always pass its full verbatim text directly in the tailoring prompt as the *only* source of truth for candidate facts. Relying on lossy summaries or profile blocks invites the LLM to invent technologies, metrics, or past roles to match the target description.
+>
+> 💡 **Lesson learned:** **Implement a programmatic veracity pass as an automated safety net.** Run a fast, cheap semantic audit (using a smaller model) immediately after generation. Compare the drafted paragraphs against the source document to flag ungrounded claims. Surfacing these issues in the UI with exact excerpts, clear reasons, and suggested repairs provides a robust, human-in-the-loop safety net before the user treats the output as final.
+>
+> 🔧 **Guidance:** Document the veracity check schema, how results are persisted on the target record, `/api/` routes for generation and dismissal, and the UI components used to display grounding gaps to the user.
 
 ### Persistent contextual assistant (dock, rail, or side panel)
 

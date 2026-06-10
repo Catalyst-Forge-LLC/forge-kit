@@ -21,6 +21,8 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-06-10 | **Factual grounding and veracity check safety nets:** TECHNICAL_REFERENCE (new veracity pass subsection); CONTEXT_PROMPT Patterns to Follow (grounding text in prompt); BRAND_AND_PRODUCT (veracity pass lesson); DESIGN_SYSTEM (VeracityCard visual spec); TEST_PLAN (grounding & veracity test cases). Source: Exec Foundry cover letter grounding and veracity pass. |
+| 2026-06-04 | **LLM JSON parse hardening (verbatim upload):** TECH_REF Output Validation lesson + guidance (`parseJsonFromLlmOutput`, `sanitizeJsonControlChars`, prompt escape rule, Support ID); CONTEXT_PROMPT integration pattern; CODE_QUALITY audit item #5; TEST_PLAN resume/cover upload checklist. Source: Exec Foundry onboarding upload fix + PostHog `Bad control character in string literal`. |
 | 2026-06-01 | **Loved-tier UX patterns:** modal focus trap + return focus; board "Start here" recommendation strip; first-artifact orientation overlay; AI section lifecycle vocabulary + stale banner. DESIGN_SYSTEM, CONTEXT_PROMPT, TECHNICAL_REFERENCE (AI lifecycle stub), TEST_PLAN §7.4c–f. |
 | 2026-06-01 | **Prelaunch review — low polish:** TRACKING_SCHEMA phase ID map (Lite vs MCP); WORKFLOW agent-agnostic intro; Lite maintainer triplicate-sync note; propagate prompt + update-log cross-doc anchors; §15 decisions[] shape. Completes prelaunch review spec. |
 | 2026-06-01 | **Prelaunch review — medium fixes:** FORGEKIT_LITE §4 reading order + map; §8 rule 5/6 notation (vs §8.9 subsection); `.forgekit/` git policy (H1 status launcher + H2 commit/gitignore from prior commit); MCP `getForgeKitLite` + `getForgeKitLiteUpdates`; Lite release checklist in update-log; unified `decisions[]` example shape. |
@@ -88,6 +90,34 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-06-10 — Factual grounding and veracity check safety nets
+
+Propagated from Exec Foundry after implementing cover letter grounding in resume truth and a programmatic veracity pass MVP. Pattern and feature memory for any application that generates tailored materials representing the user and needs to prevent hallucinations and establish user trust.
+
+- **`docs/TECHNICAL_REFERENCE.md`**
+  - **Factual grounding and veracity checks on tailored outputs** — New subsection documenting the feature shape, grounding contract (passing full source document in prompt), and programmatic veracity pass (post-generation semantic audit using a smaller model) as a human-in-the-loop safety net.
+- **`docs/CONTEXT_PROMPT.md`**
+  - **Patterns to Follow** — Added a pattern on factual grounding and veracity checks, emphasizing passing full verbatim text of source documents and running post-generation audits.
+- **`docs/BRAND_AND_PRODUCT.md`**
+  - **Generated letters and long-form outbound copy (LLM)** — Added a lesson learned on how factual grounding and veracity checks prevent hallucinated credentials and establish trust.
+- **`docs/DESIGN_SYSTEM.md`**
+  - **Factual grounding and veracity cards** — New section specifying visual styling, structure, detailed issue cards (severity badges, exact excerpts, reasons, repairs), and outcome-oriented copy for veracity cards.
+- **`docs/TEST_PLAN.md`**
+  - **AI Features** — Added `### 4.3 Factual grounding and programmatic veracity checks` containing manual test cases for grounding checks, automatic veracity passes, flagged issues, success states, persistence, and dismissal.
+
+### 2026-06-04 — LLM JSON parse hardening (verbatim document upload)
+
+Propagated from Exec Foundry after production `server_failure_llm_parse` on resume DOCX upload (`Bad control character in string literal` when the model copied soft line breaks verbatim into JSON strings). Pattern memory for any app that maps uploaded documents to structured JSON via LLM.
+
+- **`docs/TECHNICAL_REFERENCE.md`**
+  - **Output Validation** — lesson + guidance: prompt escape rule (`\n` / `\t` inside strings), shared `parseJsonFromLlmOutput` + `sanitizeJsonControlChars` (strict-first, repair fallback), route all verbatim-copy parsers through the helper, Support ID on upload failures.
+- **`docs/CONTEXT_PROMPT.md`**
+  - Integration pattern — verbatim text in LLM JSON: prompt + server-side sanitization for onboarding-critical uploads.
+- **`docs/CODE_QUALITY.md`**
+  - Audit checklist item **#5** — do not bare-`JSON.parse` verbatim-copy LLM output; unit-test newline-in-string payloads.
+- **`docs/TEST_PLAN.md`**
+  - **Resume / cover-letter upload — LLM JSON resilience** — manual checks for soft-break DOCX, Support ID correlation, content sanity.
 
 ### 2026-06-01 — Loved-tier UX patterns (focus trap, board recommendation, first artifact, AI lifecycle)
 

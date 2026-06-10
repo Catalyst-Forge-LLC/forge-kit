@@ -196,6 +196,8 @@ When the product produces **cover letters**, **outreach**, or other **persuasive
 > 💡 **Lesson learned:** **Application / screening prompts** that ask for **specific past work** (especially “how did AI improve your output?”) must use **grounded-or-ask** behavior: answer only from resume, uploads, and saved profile examples; if evidence is missing, return **short intake questions** for the user and persist answers on the profile — **never** fabricate employers, architectures, or toolchains that “sound right.”
 >
 > 💡 **Lesson learned:** Encode **deduplication and register** rules in **shared prompt fragments** or server-side passes so every surface that generates the same artifact class (tailoring tab, assistant, batch flows) stays aligned — not three different ad-hoc prompts that drift.
+>
+> 💡 **Lesson learned:** **Factual grounding and veracity checks prevent hallucinated credentials.** When generating tailored cover letters, outreach, or other persuasive copy representing the user, the model must be grounded in their full base document of record (passed directly in the prompt) rather than lossy summaries. Running a separate, cheap semantic veracity pass immediately after generation to flag ungrounded claims (technologies, metrics, or misplaced chapters) provides a robust, human-in-the-loop safety net before the user treats the output as final.
 
 ### Name Competitors in Differentiator Copy
 

@@ -166,6 +166,17 @@ _Use when users run a **quality review** (heuristics, LLM audit, or checklist) o
 - [ ] **Persist:** Switch tabs or reload — critique results (and approval/dismiss state) reload with the record.
 - [ ] Optional **structural control** (e.g. reorder for narrative coherence): user can accept, override, or undo; exported documents reflect the chosen structure.
 
+### 4.3 Factual grounding and programmatic veracity checks (if applicable)
+
+_Use when the product generates tailored materials representing the user (cover letters, statements of interest, custom pitches) and programmatically audits them against a source document of record (e.g. base resume) to prevent fabrications._
+
+- [ ] **Grounding Check:** Run document tailoring with a base resume template. Verify that the full resume text is passed to the LLM (no fabrication of technologies, metrics, or roles).
+- [ ] **Automatic Veracity Pass:** Verify that a programmatic veracity check runs automatically after generation.
+- [ ] **Flagged Issues:** If the tailored document contains ungrounded claims, verify that they are flagged in the UI with exact excerpts, reasons, severity levels, and suggested repairs.
+- [ ] **Success State:** If all claims are grounded, verify that a success state is displayed.
+- [ ] **Persist:** Switch tabs or reload — veracity results reload with the record.
+- [ ] **Dismissal:** Verify that clicking "Dismiss" or "Clear audit" successfully clears the veracity results from the record.
+
 ---
 
 ## 5. Billing & Entitlements (if applicable)
@@ -335,6 +346,14 @@ _Use when the UI renders **long structured reports** (AI dossiers, markdown bodi
 - [ ] Submit forms with empty/invalid fields → validation errors shown
 - [ ] Submit malformed input to API → appropriate error returned
 - [ ] File upload accepts only allowed types; rejects oversized files
+
+### Resume / cover-letter upload — LLM JSON resilience (if product maps uploads via structured JSON)
+
+_Use when DOCX or PDF resume import runs an LLM “map to skeleton” step before saving a template._
+
+- [ ] Upload a **.docx** whose bullets or role blurbs contain **soft line breaks** (Shift+Enter) or multi-line table cells — import should **succeed** (not “could not parse structure” with `server_failure_llm_parse` / `Bad control character in string literal`).
+- [ ] If import still fails, confirm UI shows a **Support ID** and PostHog `server_failure_llm_parse` or `server_failure_llm_call` includes matching `debugId` + `errorMessage`.
+- [ ] Re-upload the same file after flattening line breaks in Word — should succeed even without server fix (sanity check for content vs infra).
 
 ### 8.6 List APIs + nested BaaS reads (manual)
 

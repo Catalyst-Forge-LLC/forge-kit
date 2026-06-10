@@ -349,6 +349,20 @@ Every password input should have a show/hide toggle button positioned inside the
 
 ---
 
+## Factual grounding and veracity cards (human-in-the-loop safety net)
+
+> 💡 **Lesson learned:** When displaying programmatic veracity or factual grounding audit results, use a structured card component that balances reassurance and caution.
+> - **Visual Hierarchy:** Use a distinct border and background color depending on the veracity state (e.g., green for fully grounded, amber/red for flagged issues).
+> - **Clear Structure:** Show a header identifying the audit (e.g., "Factual Grounding Audit"), a summary of issues, a toggle to expand/collapse details, and a dismiss button.
+> - **Detailed Issue Cards:** For each flagged issue, render:
+>   - A severity badge (`high` in red, `medium` in amber, `low` in blue).
+>   - The exact excerpt from the generated text in a blockquote with a monospaced font and a distinct left border.
+>   - A plain-language explanation of why it was flagged.
+>   - A suggested repair in a monospaced font inside a subtle dark container.
+> - **Outcome-Oriented Copy:** Keep copy focused on factual correctness and trust. Avoid technical jargon like "LLM hallucination" or "regex parsing" in user-facing text.
+
+---
+
 ## Long-form generated reading (outline & navigation)
 
 > 💡 **Lesson learned:** AI-generated or imported **long reports** (research dossiers, compliance summaries, interview briefs) need **in-document navigation**, not only vertical scroll. A **sticky outline** (heading hierarchy from markdown or structured sections) plus **scroll-spy** or active-section highlighting lets users jump without losing context. Include **subsection headings** in the outline when mid-document anchors matter; support **deep links** (`#section-slug`) from reminders, email, or internal cross-references. Test **keyboard focus** when activating outline links (skip links or move focus to content). Collapse or drawer the outline on narrow viewports so the reading column stays primary.
