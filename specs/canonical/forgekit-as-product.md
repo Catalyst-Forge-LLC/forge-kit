@@ -1,6 +1,6 @@
-# ForgeKit product strategy (archived)
+**Spec kind:** Canonical reference (archived strategy note)
 
-**Status:** Archived — not current.
+**Status:** Archived — not current. OSS distribution is the shipping model.
 
 ForgeKit is distributed as **open source** ([Apache License 2.0](../LICENSE)) from [Catalyst-Forge-LLC/forge-kit](https://github.com/Catalyst-Forge-LLC/forge-kit). Use [README.md](../README.md), [CONTRIBUTING.md](../CONTRIBUTING.md), and [mcp-server/README.md](../mcp-server/README.md) for how to adopt and contribute.
 

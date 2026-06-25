@@ -1,7 +1,8 @@
 # ForgeKit pre-use review — findings & next steps
 
+**Spec kind:** Canonical reference (implemented review record)
+
 **Status:** Implemented (2026-06-01) — all findings addressed (H1/H2, M1–M4, L1–L4).
-**Spec kind:** Review / improvement proposal
 **Scope:** Whole-kit pass before adopting ForgeKit on a new project, with extra focus on **`mcp-server/content/FORGEKIT_LITE.md`** (the standalone, no-MCP path the maintainer uses most).
 **Reviewer:** agent pass over `FORGEKIT_LITE.md`, `README.md`, `WORKFLOW.md`, `mcp-server/README.md`, and the reference scripts in `mcp-server/content/scripts/`.
 

@@ -15,7 +15,7 @@ When your host agent supports a first-class plan mode (Grok Build `/plan` + ente
    - Immediately call `getTemplate({ name: "PHASE_1_BRIEF", mode: "full" })`.
    - Map/synthesize the approved plan content into the brief template (especially sections on architecture, data model, state persistence, content generation, and v1 scope).
    - Log every major decision into `.forgekit/workflow_tracking.json` → `decisions[]` (with id, timestamp, phase: "1-architecture", decision, rationale, alternatives_considered).
-   - Optionally call `ingestPlanArtifact` (if available) to help with the mapping.
+   - Optionally call `ingestPlanArtifact` with the full approved plan text to produce a `PHASE_1_BRIEF.md` draft and `decisions[]` entries (review and lock before Phase 2).
 
 4. The approved `docs/PHASE_1_BRIEF.md` + tracking decisions now become the handoff so Phase 2 can begin "cold" without replaying the entire planning conversation.
 

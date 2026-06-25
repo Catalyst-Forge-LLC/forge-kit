@@ -63,6 +63,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | Keyword search across lesson callouts | `searchLessons` |
 | Consolidated anti-patterns | `getAntiPatterns` |
 | **Native plan mode as Phase 1** | **`getPlanModePatterns`** — use before scaffolding when the host supports plan-before-code |
+| **Approved plan → brief + decisions** | **`ingestPlanArtifact`** — after plan approval, before locking Phase 1 |
 | **Agent-specific integration** (Grok, Cursor, Claude) | **`getAgentIntegrationGuide`** — primitive mappings and session openers |
 | **Installable forgekit skill** (Grok etc.) | **`getForgeKitSkill`** — copy to host skill directory |
 | **Tracking file health check** | **`validateTracking`** — after substantive work or phase transitions |

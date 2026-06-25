@@ -411,7 +411,7 @@ This pattern generalizes across phases.
 - mcp-server/content/skills/forgekit/SKILL.md (new, with directory)
 - mcp-server/content/PLAN_MODE_PATTERNS.md (new)
 - mcp-server/content/AGENT_INTEGRATION_grok.md (new)
-- specs/forgekit-modern-agents-evolution.md (this spec)
+- specs/canonical/forgekit-modern-agents-evolution.md (this spec)
 
 **Notes on what worked:**
 - The implementations stayed lightweight and text-first (matching existing MCP tool style).
@@ -459,3 +459,17 @@ See AGENT_INTEGRATION_grok.md for full registration example.
 6. **Bootstrap + schema** — `NEW_PROJECT_BOOTSTRAP.md` tool map and Phase 1 steps reference new tools; `TRACKING_SCHEMA.md` documents optional `agentContext` and `subagentRuns`.
 
 **Status:** P0 follow-ups complete. P1 items still open: `ingestPlanArtifact`, spec folder canonical reorganization, structured JSON tool outputs.
+
+---
+
+**Date:** 2026-06-25 (P1 completion — Cursor session)
+
+**Completed work:**
+
+1. **`ingestPlanArtifact`** — `mcp-server/src/planIngest.ts` + MCP tool: rule-based plan section → PHASE_1_BRIEF mapping, D# / bullet decision extraction, `decisions[]` JSON, `format=json` support. Cross-refs in PLAN_MODE_PATTERNS, bootstrap, skill, `getPhaseGuidance("1")`.
+
+2. **Spec folder canonical reorganization** — `specs/canonical/` created; `forgekit-modern-agents-evolution.md`, `forgekit-as-product.md`, `forgekit-prelaunch-review.md` moved; canonical headers updated; `specs/README.md` added.
+
+3. **Structured JSON tool outputs** — `mcp-server/src/mcpFormat.ts`; `format=json` on `ping`, `validateTracking`, `suggestSubagentDecomposition`, `ingestPlanArtifact`; `getTemplate` / `runAudit` add `format` + `includeMetadata` (recommendedSubagentPersona on audits). `ping` reports subagent/plan-mode recommendations.
+
+**Status:** P1 sketch complete. Next: dogfooding in live Grok/Cursor sessions, optional `ingestPlanArtifact` LLM-assisted refinement, persona assets (`mcp-server/content/personas/`).

@@ -84,6 +84,7 @@ Call `getResumeSessionInstructions` (or read tracking + CONTEXT_PROMPT) and cont
 - `runAudit`, `searchLessons`, `getAntiPatterns`
 - `suggestSubagentDecomposition` (when subagents available)
 - `validateTracking` (to keep the state file healthy)
+- `ingestPlanArtifact` (after native plan mode approval — map plan → PHASE_1_BRIEF + decisions[])
 - `todo_write` — mirror open exit criteria and next actions.
 
 Always keep the user in the loop on phase progress and major decisions. The tracking file + CONTEXT_PROMPT are the source of truth across sessions, not chat history.

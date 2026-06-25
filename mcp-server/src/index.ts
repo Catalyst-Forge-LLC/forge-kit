@@ -7,6 +7,8 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { stripForgeKitTemplateToShell } from "./templateStrip.js";
 import { validateTrackingData, formatValidationResult } from "./trackingValidate.js";
+import { ingestPlanArtifact } from "./planIngest.js";
+import { toolResult } from "./mcpFormat.js";
 
 // ---------------------------------------------------------------------------
 // Resolve the ForgeKit content root (one level up from mcp-server/)
@@ -282,9 +284,14 @@ const server = new McpServer({
 server.tool(
   "ping",
   "Connectivity check: returns ok, package version, FORGEKIT_ROOT, and whether WORKFLOW.md was found. " +
-    "Use to verify the MCP client can reach ForgeKit and content paths resolve.",
-  {},
-  async () => {
+    "Use format=json for headless pipelines. Lists complementary agent primitives (subagents, plan mode).",
+  {
+    format: z
+      .enum(["text", "json"])
+      .optional()
+      .describe("text (default) or json for structured headless output"),
+  },
+  async ({ format }) => {
     const pkgPath = join(import.meta.dirname, "..", "package.json");
     let pkgVersion = "unknown";
     try {
@@ -299,9 +306,35 @@ server.tool(
       `forgekit-mcp version: ${pkgVersion}`,
       `FORGEKIT_ROOT: ${FORGEKIT_ROOT}`,
       `WORKFLOW.md: ${workflowOk ? "readable" : "missing (check FORGEKIT_ROOT)"}`,
+      "subagentSupportRecommended: true (use suggestSubagentDecomposition when host supports parallel workers)",
+      "planModeRecommended: true for Phase 1 (getPlanModePatterns, ingestPlanArtifact on approval)",
       "Greenfield kickoff (forgekit-mcp ≥0.2.1): tools register as getNewProjectKickoff, kickoffGreenfield, kickoffGreenfieldNoCursor — ping does not enumerate tools; it only confirms this process, version, and paths. If your client does not show those names, reconnect MCP or read mcp-server/content/KICKOFF_WITHOUT_MCP.md.",
     ].join("\n");
-    return { content: [{ type: "text" as const, text }] };
+
+    return toolResult(format, {
+      text,
+      json: {
+        ok: true,
+        version: pkgVersion,
+        forgekitRoot: FORGEKIT_ROOT,
+        workflowReadable: workflowOk,
+        subagentSupportRecommended: true,
+        planModeRecommended: true,
+        complementaryPrimitives: [
+          "spawn_subagent / Task subagents",
+          "native plan mode",
+          "todo_write",
+          "persistent skills",
+        ],
+        recommendedTools: [
+          "getNewProjectKickoff",
+          "getPhaseGuidance",
+          "suggestSubagentDecomposition",
+          "validateTracking",
+          "ingestPlanArtifact",
+        ],
+      },
+    });
   }
 );
 
@@ -348,6 +381,14 @@ server.tool(
     let result = content;
     if (playbookMatch && !content.includes("What to provide")) {
       result += "\n\n---\n\n## Playbook\n\n" + playbookMatch[0].trim();
+    }
+
+    if (num === "1") {
+      result +=
+        "\n\n---\n\n## Native plan mode (when available)\n\n" +
+        "Prefer the host's plan mode for all Phase 1 work. On user approval, call **`ingestPlanArtifact`** with the approved plan text " +
+        "to map into `docs/PHASE_1_BRIEF.md` + `decisions[]`, or call **`getPlanModePatterns`** for the full handoff flow. " +
+        "Do not scaffold until the brief is locked.";
     }
 
     return { content: [{ type: "text" as const, text: result }] };
@@ -406,7 +447,8 @@ server.tool(
   "Get a ForgeKit document template from the single-source docs/*.md files. " +
     "mode 'shell' strips blockquote callouts that start with ForgeKit enrichment markers (💡 📝 🔧) " +
     "so structure and placeholders remain without long lessons/examples; use mode 'full' for the complete file. " +
-    "Default mode follows FORGEKIT_TEMPLATE_DEFAULT_MODE (shell if unset).",
+    "Default mode follows FORGEKIT_TEMPLATE_DEFAULT_MODE (shell if unset). " +
+    "Pass format=json or includeMetadata=true for structured headless output.",
   {
     name: z.string().describe(
       "Template name (e.g. 'PHASE_1_BRIEF', 'CONTEXT_PROMPT', 'CODE_QUALITY', 'BRAND_AND_PRODUCT', 'DEPLOYMENT'). " +
@@ -419,20 +461,31 @@ server.tool(
         "'shell' = structure + instructions, enrichment blockquotes removed. 'full' = entire markdown as authored. " +
           "Omit to use FORGEKIT_TEMPLATE_DEFAULT_MODE env (defaults to shell)."
       ),
+    format: z
+      .enum(["text", "json"])
+      .optional()
+      .describe("text (default) or json — json returns name, mode, path, and content fields"),
+    includeMetadata: z
+      .boolean()
+      .optional()
+      .describe("When true with format=json, include template metadata (path, mode, name)"),
   },
-  async ({ name, mode }) => {
+  async ({ name, mode, format, includeMetadata }) => {
     if (name.toLowerCase() === "list") {
       const templates = docFiles.map((f) => f.replace(".md", ""));
       const def = defaultTemplateMode();
-      return {
-        content: [{
-          type: "text" as const,
-          text:
-            `Available templates (${templates.length}):\n\n${templates.map((t) => `- ${t}`).join("\n")}\n\n` +
-            `Default getTemplate mode: \`${def}\` (set FORGEKIT_TEMPLATE_DEFAULT_MODE=full or shell). ` +
-            `Pass mode explicitly to override.`,
-        }],
-      };
+      const listText =
+        `Available templates (${templates.length}):\n\n${templates.map((t) => `- ${t}`).join("\n")}\n\n` +
+        `Default getTemplate mode: \`${def}\` (set FORGEKIT_TEMPLATE_DEFAULT_MODE=full or shell). ` +
+        `Pass mode explicitly to override.`;
+      return toolResult(format, {
+        text: listText,
+        json: {
+          templates,
+          defaultMode: def,
+          count: templates.length,
+        },
+      });
     }
 
     const filename = name.endsWith(".md") ? name : `${name}.md`;
@@ -440,19 +493,36 @@ server.tool(
     const content = readFile(path);
 
     if (!content) {
-      return {
-        content: [{
-          type: "text" as const,
-          text: `Template "${name}" not found. Use getTemplate({ name: "list" }) to see available templates.`,
-        }],
-      };
+      const miss = `Template "${name}" not found. Use getTemplate({ name: "list" }) to see available templates.`;
+      return toolResult(format, {
+        text: miss,
+        json: { error: miss, name },
+      });
     }
 
     const resolvedMode = mode ?? defaultTemplateMode();
     const out =
       resolvedMode === "shell" ? stripForgeKitTemplateToShell(content) : content;
 
-    return { content: [{ type: "text" as const, text: out }] };
+    const text = out;
+    const json: Record<string, unknown> = {
+      name: name.replace(/\.md$/, ""),
+      mode: resolvedMode,
+      path: `docs/${filename}`,
+      content: out,
+    };
+    if (format === "json") {
+      return toolResult("json", { text, json });
+    }
+    if (includeMetadata) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: `${text}\n\n---\n\nMetadata (includeMetadata):\n${JSON.stringify(json, null, 2)}`,
+        }],
+      };
+    }
+    return { content: [{ type: "text" as const, text }] };
   }
 );
 
@@ -461,7 +531,8 @@ server.tool(
 server.tool(
   "runAudit",
   "Get a ForgeKit audit prompt to run against the current project. " +
-    "Returns the full structured prompt for security, pre-launch, brand copy, or other audits.",
+    "Returns the full structured prompt for security, pre-launch, brand copy, or other audits. " +
+    "Pass format=json or includeMetadata=true for structured headless output.",
   {
     type: z.string().describe(
       "Audit type: 'black-hat' (security), 'pre-launch' (readiness), " +
@@ -469,16 +540,23 @@ server.tool(
       "'docs-alignment' (documentation consistency), 'brand-copy' (copy editing), " +
       "'landing-page' (landing page rewrite). Use 'list' to see all."
     ),
+    format: z
+      .enum(["text", "json"])
+      .optional()
+      .describe("text (default) or json"),
+    includeMetadata: z
+      .boolean()
+      .optional()
+      .describe("When true, response includes audit type, filename, and recommendedSubagentPersona hint"),
   },
-  async ({ type }) => {
+  async ({ type, format, includeMetadata }) => {
     if (type.toLowerCase() === "list") {
       const prompts = promptFiles.map((f) => f.replace(".md", ""));
-      return {
-        content: [{
-          type: "text" as const,
-          text: `Available audit prompts (${prompts.length}):\n\n${prompts.map((p) => `- ${p}`).join("\n")}`,
-        }],
-      };
+      const listText = `Available audit prompts (${prompts.length}):\n\n${prompts.map((p) => `- ${p}`).join("\n")}`;
+      return toolResult(format, {
+        text: listText,
+        json: { audits: prompts, count: prompts.length },
+      });
     }
 
     // Fuzzy match: allow short names like "security" -> "black-hat-audit"
@@ -506,14 +584,43 @@ server.tool(
     const content = readFile(path);
 
     if (!content) {
+      const miss = `Audit "${type}" not found. Use runAudit({ type: "list" }) to see available prompts.`;
+      return toolResult(format, {
+        text: miss,
+        json: { error: miss, type },
+      });
+    }
+
+    const personaHints: Record<string, string> = {
+      "black-hat-audit": "security-auditor (read-only explore subagent)",
+      "pre-launch-audit": "read-only explore subagent",
+      "docs-alignment-audit": "read-only explore subagent",
+      "ux-cohesion-audit": "ux-cohesion-reviewer (read-only)",
+    };
+    const recommendedSubagentPersona =
+      personaHints[filename.replace(/\.md$/, "")] ??
+      "read-only explore subagent for parallel audit hosts";
+
+    const json: Record<string, unknown> = {
+      type: resolved,
+      filename,
+      path: `prompts/${filename}`,
+      content,
+      recommendedSubagentPersona,
+      parallelSubagentRecommended: true,
+    };
+
+    if (format === "json" || includeMetadata) {
+      if (format === "json") {
+        return toolResult("json", { text: content, json });
+      }
       return {
         content: [{
           type: "text" as const,
-          text: `Audit "${type}" not found. Use runAudit({ type: "list" }) to see available prompts.`,
+          text: `${content}\n\n---\n\nMetadata (includeMetadata):\n${JSON.stringify(json, null, 2)}`,
         }],
       };
     }
-
     return { content: [{ type: "text" as const, text: content }] };
   }
 );
@@ -990,12 +1097,13 @@ server.tool(
 
 server.tool(
   "validateTracking",
-  "Validate a .forgekit/workflow_tracking.json file (or supplied JSON) against the schema and ForgeKit phase rules. Returns issues + suggested fixes. Safe to call often.",
+  "Validate a .forgekit/workflow_tracking.json file (or supplied JSON) against the schema and ForgeKit phase rules. Returns issues + suggested fixes. Safe to call often. Pass format=json for structured output.",
   {
     trackingJson: z.string().optional().describe("Raw JSON string of the tracking file (if not supplying path)"),
     path: z.string().optional().describe("Filesystem path to .forgekit/workflow_tracking.json (server will attempt to read)"),
+    format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
-  async ({ trackingJson, path }) => {
+  async ({ trackingJson, path, format }) => {
     let jsonText = trackingJson;
     if (!jsonText && path) {
       try {
@@ -1030,7 +1138,17 @@ server.tool(
     }
 
     const result = validateTrackingData(data);
-    return { content: [{ type: "text" as const, text: formatValidationResult(result) }] };
+    const text = formatValidationResult(result);
+    return toolResult(format, {
+      text,
+      json: {
+        healthy: result.issues.length === 0,
+        issueCount: result.issues.length,
+        warningCount: result.warnings.length,
+        issues: result.issues,
+        warnings: result.warnings,
+      },
+    });
   }
 );
 
@@ -1038,13 +1156,14 @@ server.tool(
 
 server.tool(
   "suggestSubagentDecomposition",
-  "Given a phase and task, returns recommended subagent spawn parameters (type, capability_mode, isolation, persona hints, and prompt seeds) plus a parent synthesis step. Designed for agents like Grok that support spawn_subagent.",
+  "Given a phase and task, returns recommended subagent spawn parameters (type, capability_mode, isolation, persona hints, and prompt seeds) plus a parent synthesis step. Designed for agents like Grok that support spawn_subagent. Pass format=json for structured output.",
   {
     phase: z.string().describe("Current ForgeKit phase (1-7 or name like 'hardening')"),
     taskDescription: z.string().describe("What the subagents should accomplish"),
     maxSubagents: z.number().optional().default(3),
+    format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
-  async ({ phase, taskDescription, maxSubagents }) => {
+  async ({ phase, taskDescription, maxSubagents, format }) => {
     const category = resolveSubagentPhaseCategory(phase, taskDescription);
     const examples: string[] = [];
 
@@ -1067,18 +1186,84 @@ server.tool(
 
     const synthesis = "Parent: Collect all subagent outputs. Update .forgekit/workflow_tracking.json (gotchas, decisions). Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
 
-    return {
-      content: [{
-        type: "text" as const,
-        text:
-          `Recommended decomposition for Phase ${phase} — task: "${taskDescription}"\n\n` +
-          `Max recommended subagents: ${maxSubagents}\n\n` +
-          examples.slice(0, maxSubagents).join("\n\n") +
-          `\n\nSynthesis step (in parent thread):\n${synthesis}\n\n` +
-          "Use spawn_subagent with background:true for long tasks and retrieve results with get_command_or_subagent_output.\n" +
-          "After results return, always update tracking and relevant progressive docs."
-      }]
-    };
+    const text =
+      `Recommended decomposition for Phase ${phase} — task: "${taskDescription}"\n\n` +
+      `Max recommended subagents: ${maxSubagents}\n\n` +
+      examples.slice(0, maxSubagents).join("\n\n") +
+      `\n\nSynthesis step (in parent thread):\n${synthesis}\n\n` +
+      "Use spawn_subagent with background:true for long tasks and retrieve results with get_command_or_subagent_output.\n" +
+      "After results return, always update tracking and relevant progressive docs.";
+
+    return toolResult(format, {
+      text,
+      json: {
+        phase,
+        taskDescription,
+        maxSubagents,
+        category,
+        subagents: examples.slice(0, maxSubagents),
+        synthesis,
+      },
+    });
+  }
+);
+
+// -- Tool: ingestPlanArtifact ----------------------------------------------
+
+server.tool(
+  "ingestPlanArtifact",
+  "Map an approved native plan artifact (plan.md, etc.) into a PHASE_1_BRIEF.md draft plus decisions[] entries for .forgekit/workflow_tracking.json. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
+  {
+    planContent: z.string().describe("Full text of the approved plan.md or equivalent planning artifact"),
+    projectName: z.string().optional().describe("App/project name for the brief title"),
+    existingBrief: z
+      .string()
+      .optional()
+      .describe("Current PHASE_1_BRIEF.md content if merging into an existing draft"),
+    format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
+  },
+  async ({ planContent, projectName, existingBrief, format }) => {
+    const templatePath = join(DOCS_DIR, "PHASE_1_BRIEF.md");
+    const fullTemplate = readFile(templatePath);
+    const briefTemplateShell = fullTemplate
+      ? stripForgeKitTemplateToShell(fullTemplate)
+      : "# Phase 1 architecture brief\n\n## 1. Problem and outcome\n";
+
+    const result = ingestPlanArtifact({
+      planContent,
+      projectName,
+      existingBrief,
+      briefTemplateShell,
+    });
+
+    const text =
+      "# Plan artifact → Phase 1 handoff\n\n" +
+      (result.warnings.length > 0
+        ? `Warnings:\n${result.warnings.map((w) => `- ${w}`).join("\n")}\n\n`
+        : "") +
+      `## Instructions\n\n${result.instructions}\n\n` +
+      `## Section mapping (plan → brief)\n\n${Object.entries(result.sectionMapping)
+        .map(([k, v]) => `- ${k} → ${v}`)
+        .join("\n")}\n\n` +
+      `## decisions[] (merge into .forgekit/workflow_tracking.json)\n\n` +
+      "```json\n" +
+      JSON.stringify(result.trackingDecisions, null, 2) +
+      "\n```\n\n" +
+      `## docs/PHASE_1_BRIEF.md (review, edit, then write)\n\n` +
+      "```markdown\n" +
+      result.briefMarkdown +
+      "\n```";
+
+    return toolResult(format, {
+      text,
+      json: {
+        briefMarkdown: result.briefMarkdown,
+        trackingDecisions: result.trackingDecisions,
+        instructions: result.instructions,
+        sectionMapping: result.sectionMapping,
+        warnings: result.warnings,
+      },
+    });
   }
 );
 
@@ -1204,6 +1389,7 @@ function printStartupHintsToStderr(): void {
     '  searchLessons with a keyword',
     "  validateTracking (check .forgekit/workflow_tracking.json health)",
     "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
+    "  ingestPlanArtifact (approved plan → PHASE_1_BRIEF + decisions[])",
     "  getPlanModePatterns (native plan mode as Phase 1)",
     "  getAgentIntegrationGuide (grok | cursor | claude | generic)",
     "  getForgeKitSkill (installable skill definition)",

@@ -69,7 +69,7 @@ Parse the JSON and continue sessions with `--resume` or named `--session-id`.
 
 ## Dogfooding ForgeKit on ForgeKit
 
-Use this very repo as a test case. Run a full cycle or slices with Grok Build + the local MCP server registered. Capture results back into `specs/forgekit-modern-agents-evolution.md`.
+Use this very repo as a test case. Run a full cycle or slices with Grok Build + the local MCP server registered. Capture results back into `specs/canonical/forgekit-modern-agents-evolution.md`.
 
 ## Registration (local dev)
 
