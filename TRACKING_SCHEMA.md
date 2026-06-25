@@ -130,3 +130,28 @@ Projects may add custom fields to phases as needed. For example, `4-feature-iter
 ```
 
 Add whatever fields make sense for your project. The schema is a starting point, not a cage.
+
+### `agentContext` (optional, top-level)
+
+Record which agent stack drives the project and what native primitives are available:
+
+```json
+{
+  "primaryAgent": "cursor-agent",
+  "supportsSubagents": true,
+  "supportsPlanMode": true,
+  "lastSessionId": "optional-host-session-id"
+}
+```
+
+### `subagentRuns` (optional, per phase)
+
+Optional array under a phase object to log parallel subagent work (especially Phase 4, 5, 7):
+
+```json
+{
+  "id": "sa-7-security",
+  "description": "Black-hat audit via read-only subagent",
+  "outcome": "12 findings; 2 critical — synthesized into BLACK_HAT_REPORT.md"
+}
+```

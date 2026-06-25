@@ -6,6 +6,7 @@ import { z } from "zod";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { stripForgeKitTemplateToShell } from "./templateStrip.js";
+import { validateTrackingData, formatValidationResult } from "./trackingValidate.js";
 
 // ---------------------------------------------------------------------------
 // Resolve the ForgeKit content root (one level up from mcp-server/)
@@ -227,6 +228,25 @@ function extractLessons(
   }
 
   return lessons;
+}
+
+/** Classify phase + task for subagent decomposition recommendations. */
+function resolveSubagentPhaseCategory(
+  phase: string,
+  taskDescription: string
+): "audit" | "iterate" | "general" {
+  const combined = `${phase} ${taskDescription}`.toLowerCase();
+  if (
+    /\b7\b|harden|hardening|production prep|launch|black-hat|security audit|code quality audit/.test(
+      combined
+    )
+  ) {
+    return "audit";
+  }
+  if (/\b4\b|iterate|iteration|feature|refine|\b5\b|refactor|spike|prototype/.test(combined)) {
+    return "iterate";
+  }
+  return "general";
 }
 
 // ---------------------------------------------------------------------------
@@ -986,67 +1006,31 @@ server.tool(
       }
     }
     if (!jsonText) {
-      // Try default location
       try {
-        const defaultPath = join(FORGEKIT_ROOT, "workflow_tracking.json"); // or customer would pass path
+        const defaultPath = join(FORGEKIT_ROOT, "workflow_tracking.json");
         const fs = await import("node:fs");
         jsonText = fs.readFileSync(defaultPath, "utf-8");
       } catch {}
     }
 
     if (!jsonText) {
-      return { content: [{ type: "text" as const, text: "No tracking JSON provided and no default file found. Pass trackingJson or path." }] };
+      return {
+        content: [{
+          type: "text" as const,
+          text: "No tracking JSON provided and no default file found. Pass trackingJson or path.",
+        }],
+      };
     }
 
-    let data: any;
+    let data: Record<string, unknown>;
     try {
-      data = JSON.parse(jsonText);
+      data = JSON.parse(jsonText) as Record<string, unknown>;
     } catch (e) {
       return { content: [{ type: "text" as const, text: `Invalid JSON: ${e}` }] };
     }
 
-    const issues: string[] = [];
-    const fixes: string[] = [];
-
-    if (!data.project || !data.project.name) issues.push("Missing or incomplete top-level project object.");
-    if (!data.currentPhase) issues.push("Missing currentPhase (should be e.g. '1-architecture').");
-    if (!data.phases) issues.push("Missing phases object.");
-
-    // Basic phase checks
-    const phaseKeys = Object.keys(data.phases || {});
-    if (phaseKeys.length === 0) {
-      issues.push("No phases defined in tracking.");
-    }
-
-    if (data.currentPhase && !phaseKeys.includes(data.currentPhase)) {
-      issues.push(`currentPhase "${data.currentPhase}" not present in phases object.`);
-    }
-
-    if (issues.length === 0) {
-      return {
-        content: [{
-          type: "text" as const,
-          text: "Tracking file looks structurally healthy.\n\n" +
-                "Recommended next steps:\n" +
-                "- Confirm exit criteria are being actively moved from Remaining → Met.\n" +
-                "- Ensure major decisions have rationale + alternatives.\n" +
-                "- Add gotchas when surprises occur.\n\n" +
-                "Call getTrackingSchema for the full expected shape."
-        }]
-      };
-    }
-
-    return {
-      content: [{
-        type: "text" as const,
-        text: "Tracking validation issues found:\n\n" +
-              issues.map(i => `- ${i}`).join("\n") +
-              "\n\nSuggested fixes:\n" +
-              "- Use getTrackingSchema() to see the canonical shape.\n" +
-              "- Populate decisions[] with rationale when locking Phase 1.\n" +
-              "- Keep exitCriteriaMet/Remaining in sync with actual progress."
-      }]
-    };
+    const result = validateTrackingData(data);
+    return { content: [{ type: "text" as const, text: formatValidationResult(result) }] };
   }
 );
 
@@ -1061,16 +1045,16 @@ server.tool(
     maxSubagents: z.number().optional().default(3),
   },
   async ({ phase, taskDescription, maxSubagents }) => {
-    const phaseNum = phase.replace(/\D/g, "") || "7";
-    const examples = [];
+    const category = resolveSubagentPhaseCategory(phase, taskDescription);
+    const examples: string[] = [];
 
-    if (["7", "harden", "hardening"].includes(phaseNum.toLowerCase()) || taskDescription.toLowerCase().includes("audit")) {
+    if (category === "audit") {
       examples.push(
         "Subagent 1 (security): subagent_type='explore', capability_mode='read-only', isolation='none', prompt='Call runAudit(\"black-hat\") and searchLessons for security issues. Output structured findings.'",
         "Subagent 2 (ux): subagent_type='explore', capability_mode='read-only', prompt='Run ux-cohesion-audit or panel-usability-audit against the current UI flows.'",
         "Subagent 3 (code-quality): subagent_type='explore', capability_mode='read-only', prompt='Audit against CODE_QUALITY template + known anti-patterns. Flag silent failures and schema drift.'"
       );
-    } else if (["4","5","iterate","refine"].includes(phaseNum.toLowerCase())) {
+    } else if (category === "iterate") {
       examples.push(
         `Subagent 1 (research): subagent_type='explore', capability_mode='read-only', prompt='Deep research on ${taskDescription}. Return options + tradeoffs.'`,
         `Subagent 2 (spike): subagent_type='general-purpose', capability_mode='read-write', isolation='worktree', prompt='Prototype the core of ${taskDescription} in an isolated worktree.'`
@@ -1094,6 +1078,97 @@ server.tool(
           "Use spawn_subagent with background:true for long tasks and retrieve results with get_command_or_subagent_output.\n" +
           "After results return, always update tracking and relevant progressive docs."
       }]
+    };
+  }
+);
+
+// -- Tool: getPlanModePatterns ---------------------------------------------
+
+server.tool(
+  "getPlanModePatterns",
+  "Returns guidance for using native agent plan modes as ForgeKit Phase 1 (architecture). Covers Grok, Cursor, Claude, and generic plan-before-code flows.",
+  {},
+  async () => {
+    const path = join(MCP_CONTENT_DIR, "PLAN_MODE_PATTERNS.md");
+    const content = readFile(path);
+    if (!content) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: "PLAN_MODE_PATTERNS.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+        }],
+      };
+    }
+    return { content: [{ type: "text" as const, text: content }] };
+  }
+);
+
+// -- Tool: getAgentIntegrationGuide ----------------------------------------
+
+server.tool(
+  "getAgentIntegrationGuide",
+  "Returns tailored ForgeKit bootstrap + primitive mappings for a specific agent host (Grok, Cursor, Claude, or generic).",
+  {
+    agent: z
+      .enum(["grok", "claude", "cursor", "generic"])
+      .optional()
+      .default("generic")
+      .describe("Agent host: grok | claude | cursor | generic"),
+  },
+  async ({ agent }) => {
+    const specificPath = join(MCP_CONTENT_DIR, `AGENT_INTEGRATION_${agent}.md`);
+    let content = readFile(specificPath);
+    if (!content && agent !== "generic") {
+      const genericPath = join(MCP_CONTENT_DIR, "AGENT_INTEGRATION_generic.md");
+      content = readFile(genericPath);
+      if (content) {
+        content =
+          `No dedicated guide for "${agent}" — showing generic guide. Call getAgentIntegrationGuide with grok, cursor, or claude when applicable.\n\n---\n\n` +
+          content;
+      }
+    }
+    if (!content) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: `AGENT_INTEGRATION_${agent}.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.`,
+        }],
+      };
+    }
+    return { content: [{ type: "text" as const, text: content }] };
+  }
+);
+
+// -- Tool: getForgeKitSkill ------------------------------------------------
+
+server.tool(
+  "getForgeKitSkill",
+  "Returns the canonical forgekit SKILL.md for skill-capable agents (Grok ~/.grok/skills/, etc.). Copy to the host skill directory for persistent ForgeKit discipline.",
+  {
+    agent: z
+      .string()
+      .optional()
+      .describe("Optional hint (grok | claude | cursor | generic) — currently returns the same canonical skill"),
+  },
+  async () => {
+    const path = join(MCP_CONTENT_DIR, "skills", "forgekit", "SKILL.md");
+    const content = readFile(path);
+    if (!content) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: "skills/forgekit/SKILL.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+        }],
+      };
+    }
+    return {
+      content: [{
+        type: "text" as const,
+        text:
+          "ForgeKit skill — copy to your agent's skill directory (e.g. ~/.grok/skills/forgekit/SKILL.md). " +
+          "For Cursor, prefer getNewProjectKickoff Cursor rules unless you use global skills.\n\n" +
+          content,
+      }],
     };
   }
 );
@@ -1129,6 +1204,9 @@ function printStartupHintsToStderr(): void {
     '  searchLessons with a keyword',
     "  validateTracking (check .forgekit/workflow_tracking.json health)",
     "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
+    "  getPlanModePatterns (native plan mode as Phase 1)",
+    "  getAgentIntegrationGuide (grok | cursor | claude | generic)",
+    "  getForgeKitSkill (installable skill definition)",
     "",
     "Suppress this banner: FORGEKIT_QUIET=1",
     "",

@@ -439,3 +439,23 @@ To exercise the new tools (after registering the MCP):
 - `suggestSubagentDecomposition` with phase="7" and a task like "perform black-hat security + UX review".
 
 See AGENT_INTEGRATION_grok.md for full registration example.
+
+---
+
+**Date:** 2026-06-25 (follow-up — Cursor session)
+
+**Completed work** (P0 follow-ups from prior review):
+
+1. **WORKFLOW.md §1c** — "Using Subagents with Modern Agents" added after §1b (gstack), with phase-by-phase guidance, recommended pattern, Phase 7 example, and key rule. Phase 1 playbook updated with native plan mode + `getPlanModePatterns` cross-ref.
+
+2. **MCP content tools** — `getPlanModePatterns`, `getAgentIntegrationGuide` (grok | claude | cursor | generic), `getForgeKitSkill` registered in `index.ts`; startup hints updated.
+
+3. **Agent integration guides** — `AGENT_INTEGRATION_generic.md`, `AGENT_INTEGRATION_cursor.md`, `AGENT_INTEGRATION_claude.md` (grok guide already present).
+
+4. **`validateTracking` deepened** — `mcp-server/src/trackingValidate.ts`: MCP + Lite phase ids, phase object shape, exit-criteria overlap warnings, decisions/gotchas/sessions checks, optional `agentContext` and `subagentRuns`.
+
+5. **`suggestSubagentDecomposition`** — phase classification uses full phase string + task (fixes text-only phase names defaulting to Phase 7).
+
+6. **Bootstrap + schema** — `NEW_PROJECT_BOOTSTRAP.md` tool map and Phase 1 steps reference new tools; `TRACKING_SCHEMA.md` documents optional `agentContext` and `subagentRuns`.
+
+**Status:** P0 follow-ups complete. P1 items still open: `ingestPlanArtifact`, spec folder canonical reorganization, structured JSON tool outputs.

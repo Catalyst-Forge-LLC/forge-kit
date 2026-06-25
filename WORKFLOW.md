@@ -160,6 +160,66 @@ After every gstack sprint that completes meaningful work, **update `.forgekit/wo
 
 ---
 
+## 1c. Using Subagents with Modern Agents (optional)
+
+When the host agent supports **parallel subagents** (Grok Build `spawn_subagent`, Cursor Task/subagents, Claude agent teams, etc.), ForgeKit and subagents are **complementary layers** — same relationship as ForgeKit + gstack in §1b:
+
+- **ForgeKit** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgekit/workflow_tracking.json`, audits, and lessons.
+- **Subagents** = **parallel, context-isolated execution** within a phase — audits, research, spikes, and deep exploration without bloating the parent thread.
+
+**The integration model:** ForgeKit owns the *what* and *when* (which phase, which docs, which exit criteria). Subagents multiply throughput on the parts of ForgeKit that are most context-heavy and parallelizable. The **parent agent** always synthesizes subagent output into ForgeKit artifacts and updates tracking — subagents have no cross-session memory.
+
+### Phase-by-phase integration
+
+**Phase 1 — Plan:**
+Main agent only (or one **read-only** explore subagent for competitive/market research). **Prefer native plan mode** when available (`getPlanModePatterns` via MCP) — do not spawn implementation subagents before architecture is locked.
+
+**Phase 2 — Build:**
+Main agent builds the full spine in one pass. Optional: one read-only subagent to research integration edge cases — do not split the hero-flow build across subagents unless the host explicitly supports coordinated merge.
+
+**Phase 3 — Stabilize:**
+Optional read-only explore subagent for stubborn root-cause analysis; parent logs every gotcha in `.forgekit/workflow_tracking.json → gotchas[]` and updates `CONTEXT_PROMPT.md`.
+
+**Phase 4 — Iterate:**
+Strong fit. Call **`suggestSubagentDecomposition`** then spawn parallel explore subagents for feature research and tradeoff analysis; optional **worktree-isolated** spike for prototyping. Parent picks the approach and implements (or delegates to a single write-capable subagent).
+
+**Phase 5 — Refine:**
+Worktree-isolated subagents for exploratory refactors; parent reviews, merges, and updates `CONTEXT_PROMPT.md` + `TECHNICAL_REFERENCE.md`.
+
+**Phase 6 — Align:**
+Optional read-only subagents for market/competitor research; synthesis targets ForgeKit templates (`BRAND_AND_PRODUCT`, strategic `TODO`).
+
+**Phase 7 — Harden:**
+Strong fit. Spawn parallel **read-only** subagents per audit type (security/black-hat, UX cohesion, code quality). Each subagent runs **`runAudit`** + **`searchLessons`** as appropriate. Parent synthesizes into `BLACK_HAT_REPORT.md`, `CODE_QUALITY.md`, triages into `TODO.md`, and updates tracking.
+
+### Recommended pattern
+
+1. Call **`suggestSubagentDecomposition`** with current phase + task description.
+2. Spawn subagents with **`background: true`** (or equivalent) when the host supports it.
+3. Parent collects outputs → progressive docs + `.forgekit/workflow_tracking.json`.
+4. Run **`validateTracking`** after synthesis.
+
+### Concrete example (Phase 7 — Grok-style hosts)
+
+```
+Call suggestSubagentDecomposition for phase 7 and task "black-hat security audit, UX cohesion review, and code quality audit".
+
+Spawn three read-only subagents in parallel:
+1. Security: runAudit("black-hat") + searchLessons for security issues.
+2. UX: ux-cohesion or panel-usability audit against current UI flows.
+3. Code quality: audit against CODE_QUALITY template + getAntiPatterns.
+
+Parent: synthesize into BLACK_HAT_REPORT.md + CODE_QUALITY.md, update tracking gotchas/decisions, present prioritized next actions.
+```
+
+Hosts differ in spawn syntax — call **`getAgentIntegrationGuide`** (`grok`, `cursor`, `claude`, or `generic`) for tailored commands.
+
+### Key rule
+
+After subagent results return, the **parent must** update `.forgekit/workflow_tracking.json` (advance exit criteria, add decisions/gotchas, update session notes) and relevant progressive docs. Subagents fix or explore in isolation but **do not** replace ForgeKit as the system of record for lifecycle state, decision rationale, or gotcha capture.
+
+---
+
 ## 2. Per-Phase Playbook
 
 ### Phase 1: Architecture + Planning
@@ -177,6 +237,7 @@ After every gstack sprint that completes meaningful work, **update `.forgekit/wo
 - Identify the hardest integration points (in Exec Foundry: DOCX XML manipulation)
 - Suggest a migration path for existing data
 - Recommend what to skip for v1
+- **If your agent supports a native plan mode** (Grok `/plan`, Cursor Plan mode, extended plan-before-code): use it for all Phase 1 work. Include **`getGreenfieldIntakePrompt`** questions in the plan context. Do **not** write app code or heavy docs until the user approves the plan. On approval, map the plan into **`PHASE_1_BRIEF.md`** (`getTemplate`) and log commitments in **`decisions[]`**. See **`getPlanModePatterns`** (MCP) or WORKFLOW §1c for handoff details.
 - **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and **`decisions[]`**. See **ForgeKit Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
 - **If any content is produced by an LLM** (not hand-authored, not from a conventional non-LLM API), pick one of three content-generation patterns **in Phase 1** — it drives deploy model, cost, and secret management:
   - **Runtime LLM API** — server route calls the provider per request; needs rate-limit + streaming UX. **Cloud** (OpenAI, Anthropic, …): API keys in `.env`. **Local Ollama:** `OLLAMA_BASE_URL` + `OLLAMA_MODEL`; Phase 2 **`setup:ollama`** / **`test:ollama`** (see **SYSTEM_HEALTH_CHECKS.md**, Lite §4.8) — default **Granite 4.1** / **Gemma 3**, not thinking models unless required.

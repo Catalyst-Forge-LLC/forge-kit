@@ -17,7 +17,7 @@ Use this when **ForgeKit is available via the MCP server** (recommended). The cu
 
 ## Progressive scaffolding (important)
 
-- **Phase 1:** Create and lock **`docs/PHASE_1_BRIEF.md`** (`getTemplate({ name: "PHASE_1_BRIEF" })`). Log major commitments in **`.forgekit/workflow_tracking.json` → `decisions[]`**. This replaces reliance on chat for the architecture conversation.
+- **Phase 1:** Create and lock **`docs/PHASE_1_BRIEF.md`** (`getTemplate({ name: "PHASE_1_BRIEF" })`). Log major commitments in **`.forgekit/workflow_tracking.json` → `decisions[]`**. If the host supports **native plan mode**, use **`getPlanModePatterns`** and WORKFLOW §1c — plan first, export to the brief on approval (no app code during planning).
 - **App/code:** Phase 2 still means the **full runnable spine** in one pass: init, deps, data path, routes, components, hero flow **end-to-end**. Do **not** defer that spine.
 - **Web-app sub-question (Phase 1, when app type = web app):** before locking PocketBase + auth, ask *"Does any state need to outlive the browser — accounts, cross-device sync, shared data — or is every user's state private and fine in `localStorage`?"* If local-only → **drop PocketBase and auth**, `adapter-static` becomes viable, no deploy-time secrets; persist via `localStorage` / `IndexedDB`. If persistent → the full Default-A stack applies. Record the choice in `decisions[]` and in **`PHASE_1_BRIEF.md` §4 (`State persistence:` row)**. See **`FORGEKIT_LITE.md` §7** (A-local vs A-persistent) and **`GREENFIELD_INTAKE.md`** §7.
 - **Initial data (optional):** The user may create **JSON files** for seed, fixtures, or imports by using **any** LLM chat (including **local Ollama**) with the copy-paste prompt in **`FORGEKIT_LITE.md` §4.3** (structured JSON only; save to `data/` or `fixtures/`). The agent **validates** shape before import; the user can repeat for multiple datasets. Not a replacement for the Phase 1 brief — only for bulk structured content.
@@ -40,8 +40,8 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 1. Call **`getNewProjectKickoff`** (`includeCursorRule: false` if not using **Cursor**). It bundles this document, starter **`.forgekit/workflow_tracking.json`**, post-bootstrap user-message guidance, and optionally the Cursor rules (phase status + lessons gate + lessons MCP detail)—**or** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, **`getForgeKitCursorPhaseRule`**, and **`getForgeKitCursorLessonsRules`** separately if you need only one piece. Create **`.forgekit/`**, write files there; the **next message to the user** follows **`getPostBootstrapUserMessage`** (product-facing, no methodology leak).
 2. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
 3. Call **`getChecklist`** with section `before-session-1` — complete those items with the user (problem statement, stack, assets, hero flow).
-4. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), and hero flow. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**.
-5. Call **`getTrackingSchema`** — you will maintain **`.forgekit/workflow_tracking.json`** accordingly.
+4. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), and hero flow. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`).
+5. Call **`getTrackingSchema`** — you will maintain **`.forgekit/workflow_tracking.json`** accordingly. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeKitSkill`** if the agent supports persistent skills.
 6. Call **`getPhaseGuidance`** with phase `1` (architecture). Summarize understanding and propose structure, data model, integrations, and v1 scope **before** writing app code.
 7. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions in **`.forgekit/workflow_tracking.json`**.
 8. After architecture is confirmed and the brief is locked, call **`getPhaseGuidance`** with phase `2` (scaffolding). Read the brief + **`.forgekit/workflow_tracking.json`**, **merge the brief into `CONTEXT_PROMPT.md`**, then execute a **single-pass app skeleton** and the rest of the Phase 2 doc set (`README`, `TODO`, `.forgekit/IDEAS.md`).
@@ -62,6 +62,11 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | Security, pre-launch, marketing, docs audits | `runAudit` — use `type: "list"` for available prompts |
 | Keyword search across lesson callouts | `searchLessons` |
 | Consolidated anti-patterns | `getAntiPatterns` |
+| **Native plan mode as Phase 1** | **`getPlanModePatterns`** — use before scaffolding when the host supports plan-before-code |
+| **Agent-specific integration** (Grok, Cursor, Claude) | **`getAgentIntegrationGuide`** — primitive mappings and session openers |
+| **Installable forgekit skill** (Grok etc.) | **`getForgeKitSkill`** — copy to host skill directory |
+| **Tracking file health check** | **`validateTracking`** — after substantive work or phase transitions |
+| **Parallel subagent recommendations** | **`suggestSubagentDecomposition`** — before spawning audits/research (WORKFLOW §1c) |
 | **Starter tracking file** for a greenfield repo | `getInitialWorkflowTracking` — write the returned JSON to **`.forgekit/workflow_tracking.json`** |
 | **First reply to the human** after tracking exists (short; no tool dump) | **`getPostBootstrapUserMessage`** |
 | **Numbered vs bullet vs letter lists** when offering options | **`getUserReplyFormat`** — also in Cursor **`forgekit-phase-status.mdc`** |
@@ -109,7 +114,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 
 - At **each session start**, read the repo’s `.forgekit/workflow_tracking.json` and `CONTEXT_PROMPT.md` (if present). Use **`getPhaseGuidance`** for the **current** phase from `.forgekit/workflow_tracking.json` → `currentPhase`.
 - When exit criteria for a phase appear satisfied, **state that explicitly** and **wait for user confirmation** before treating the next phase as active; update `currentPhase` only after approval.
-- After substantive work, **update `.forgekit/workflow_tracking.json`**: exit criteria, `decisions`, `gotchas`, `sessions` per **`getTrackingSchema`**.
+- After substantive work, **update `.forgekit/workflow_tracking.json`**: exit criteria, `decisions`, `gotchas`, `sessions` per **`getTrackingSchema`**. Run **`validateTracking`** to catch structural drift.
 - If a problem does not converge after **~5 turns**, propose a **different approach**, not more patches.
 - **Git commits:** `git commit -F <file>` or plain `-m`; no unrequested attribution trailers. **Git 2.32.0+** supports `--trailer` — focus on message policy, not Git version anxiety. **Pre-2.32 only:** `unknown option 'trailer'` → `bash -c "git commit -F …"` or upgrade Git. See **`FORGEKIT_LITE.md` §8.9** and **`.cursor/rules/commit-messages.mdc`**.
 
