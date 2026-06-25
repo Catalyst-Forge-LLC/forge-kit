@@ -71,6 +71,34 @@ Document **what actually happens** when users remove data — not only the happy
 
 > 🔧 **Guidance:** When you add user-visible **trash** or retention later, this section becomes the checklist for filters (`deleted_at` empty vs set), exports, and purge jobs — keep it updated as the source of truth.
 
+## User-facing copy (optional — adopt when copy volume grows)
+
+> 🔧 **Guidance:** Centralize product strings so landing, help, tours, and in-app UI stay aligned. ForgeKit describes the **pattern**; each app implements modules and audit scripts under its own `$lib/content/` (or equivalent).
+
+### Three layers
+
+| Layer | Typical module | Owns |
+| --- | --- | --- |
+| Feature labels | `[productLabels].ts` | Canonical feature names for marketing, help, tours, nav |
+| Cross-cutting UI | `[microcopy].ts` | Save failures, quota errors, shared toasts, connectivity banners |
+| Surface modules | `[panelName]Copy.ts` | Panel intros, modals, wizard steps, section blurbs |
+
+**Inline exceptions:** `Cancel`, `Save`, `Close` unless repeated 3+ times. **Legal pages:** one markdown file per page (`terms.md`, `privacy.md`) — not sharded into copy constants.
+
+### Export and audits
+
+| Script / prompt | Purpose |
+| --- | --- |
+| `pnpm export:copy` (or app equivalent) | Regenerate **prose** + **terms** catalogs for writers (`docs/internal/USER_FACING_COPY.*.md`) |
+| `pnpm audit:copy` | Duplicate prose inside the export inventory |
+| `pnpm audit:inline-copy` | AST scan of `.svelte`; backlog = UI prose **not** in export |
+| `prompts/user-facing-content-sync-audit.md` | Feature discoverability across landing, help, tours |
+| `prompts/microcopy-centralization.md` | Phased migration checklist and duplication policy |
+
+**Pre-release target:** inline audit at **0 UI prose not in export**; sync audit passes for shipped features.
+
+**Cursor rules:** `.cursor/rules/user-facing-content.mdc` (no spec paths in UI), `.cursor/rules/us-english.mdc` (US English default).
+
 ## Feature Documentation
 
 _One section per major feature area. Each section covers: what it does, how it works technically, API routes, and edge cases._

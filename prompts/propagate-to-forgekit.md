@@ -54,6 +54,7 @@ When you run a **periodic** propagation (catch-up after a sprint, or anytime **A
 - `prompts/` (reusable prompts — check for new prompts worth generalizing)
 - Optional **generated or synced** docs worth propagating when their workflow changes — e.g. `docs/COMPETITIVE_LANDSCAPE.md` (mirror of a `specs/` competitive analysis + sync script), `docs/PRODUCT_JOURNAL.md` (git-derived changelog + LLM/heuristic tooling)
 - Optional **`docs/FEATURE_CATALOG.md`** (or equivalent) — internal inventory of shipped capabilities vs UI entry points; pairs with **`user-facing-content-sync-audit.md`** when checking landing/help/tour parity
+- Optional **`prompts/microcopy-centralization.md`** — phased inline→module migration, export/inline/duplication audits (when the app adopts `$lib/content/*Copy.ts`)
 - Optional **launch / research / checklist** docs if your app maintains them (e.g. `docs/NPS.md`, `docs/MARKETING_LAUNCH.md`, `docs/LAUNCH_CHECKLIST.md`) — propagate copy and methodology lessons into ForgeKit **MARKETING_GROWTH**, **BRAND_AND_PRODUCT**, or **TEST_PLAN** / **pre-launch-audit** as appropriate
 
 ### When to run this prompt (propagation triggers)
@@ -80,6 +81,7 @@ Run after meaningful implementation work **and** after substantive **documentati
 | **Deploy scripts, systemd units, or process stop/restart behavior** | `TimeoutStopSec`, blue-green `systemctl stop`, and graceful-shutdown tradeoffs affect **wall-clock deploy time** as well as request safety — **DEPLOYMENT.md** (and **CONTEXT_PROMPT** if it changes operator expectations). |
 | **New scripts, hooks, or dev-tooling** | Journal/lint/build wrappers → **CONTEXT_PROMPT** (tooling) or **TECHNICAL_REFERENCE** (pipelines). |
 | **`.cursor/rules/` git / commit policy** | e.g. `git-user-commits.mdc`, `commit-messages.mdc` — keep **this repo’s** `.cursor/rules/` aligned with your app when you propagate workflow changes: **end of each request**, stage only paths from that request and **commit** with message from **`git diff --staged`** (multi-line body by default); push remains explicit-only. |
+| **Microcopy centralization completed or copy-module pattern adopted** | **`prompts/microcopy-centralization.md`**, **`docs/TECHNICAL_REFERENCE.md`** § User-facing copy, **`docs/CODE_QUALITY.md`** audit checklist, **`docs/BRAND_AND_PRODUCT.md`** duplication policy, **`docs/CONTEXT_PROMPT.md`**, **`.cursor/rules/user-facing-content.mdc`**, **`.cursor/rules/us-english.mdc`**, **`mcp-server/content/cursor-rules/`** mirrors — generalize patterns only, not app-specific strings. |
 | **App-owned transactional email or documented deletion lifecycle** | Central outbound module (BaaS/auth SMTP vs product mail), env vars, webhook idempotency, DNS/SPF/DKIM; **TECHNICAL_REFERENCE** data-model subsection for cascade vs soft delete and orphan risks — also **DEPLOYMENT**, **TEST_PLAN**, **CONTEXT_PROMPT**, **pre-launch-audit**, **WORKFLOW** cross-checks. |
 | **`docs/DEV_ESTIMATE.md` materially updated** | Inventory methodology (LOC, route modules), hour bands, or US cost scenarios → align ForgeKit **`docs/DEV_ESTIMATE.md`** generalized placeholders and guidance. |
 
@@ -136,7 +138,7 @@ Do **not** rely only on the immediate trigger. Skim **multiple signal sources** 
 - `CONTINUATION_PROMPT.md`
 - `WORKFLOW.md`
 - `TRACKING_SCHEMA.md`
-- `prompts/` (reusable prompt library — includes `personal-beta-outreach.md`, `user-facing-content-sync-audit.md`)
+- `prompts/` (reusable prompt library — includes `personal-beta-outreach.md`, `user-facing-content-sync-audit.md`, `microcopy-centralization.md`)
 - `mcp-server/` — MCP packaging: `README.md`, `content/` (kickoff/bootstrap, greenfield intake, scaffold JSON, post-bootstrap messaging, Cursor rule fragments), **`content/FORGEKIT_LITE.md`** (portable kickoff — when propagation touches **URL import / scrape**, **markup drift**, **LLM verbatim recover fallback**, or **failure-copy vs wrong-URL** UX, update **§7.2** and bump the Lite **version** in header, footer, and the §12 `AGENTS.md` snippet), `src/index.ts` (e.g. `getNewProjectKickoff`, `getGreenfieldIntakePrompt`)
 
 ## What I just built/changed

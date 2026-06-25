@@ -1,0 +1,16 @@
+---
+description: User-visible UI copy must not reference internal specs or engineering jargon
+alwaysApply: true
+---
+
+# User-Facing Content
+
+## Internal vs external
+
+- **Help panel**, onboarding, tours, toasts, empty states, labels, and any other **end-user-facing** text must **not** mention internal specs, spec file names, or paths under `specs/`. Specs are for builders only.
+- It is fine to reference **in-app feature names** and menu paths users actually see.
+
+## Tone and clarity
+
+- Prefer **outcome-oriented** language (what the user gets or does), not implementation details.
+- Avoid engineering jargon in UI strings (e.g. storage format, schema field names, provider names) unless the user explicitly needs it for troubleshooting—and then keep it in expert/help contexts only.

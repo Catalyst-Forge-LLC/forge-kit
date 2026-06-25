@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-06-15 | **Microcopy centralization propagation (Exec Foundry):** New **`prompts/microcopy-centralization.md`**; **TECHNICAL_REFERENCE** § User-facing copy; **CODE_QUALITY** + **TEST_PLAN** audit hooks; **BRAND_AND_PRODUCT** duplication policy; **CONTEXT_PROMPT** patterns/anti-patterns; **WORKFLOW** Phase 7 + post-launch cadence; **`.cursor/rules/user-facing-content.mdc`** + **`us-english.mdc`** (+ MCP **`cursor-rules/`** mirrors); propagate prompt trigger + Context inventory. |
 | 2026-06-10 | **Anti-self-importance and position-of-strength tone controls:** TECHNICAL_REFERENCE (new tone controls subsection); CONTEXT_PROMPT Patterns to Follow (anti-self-importance & posture rules); BRAND_AND_PRODUCT (grandiose & striving register prevention); TEST_PLAN (anti-self-importance & position-of-strength checks). Source: Exec Foundry cover letter anti-self-importance pass. |
 | 2026-06-10 | **Factual grounding and veracity check safety nets:** TECHNICAL_REFERENCE (new veracity pass subsection); CONTEXT_PROMPT Patterns to Follow (grounding text in prompt); BRAND_AND_PRODUCT (veracity pass lesson); DESIGN_SYSTEM (VeracityCard visual spec); TEST_PLAN (grounding & veracity test cases). Source: Exec Foundry cover letter grounding and veracity pass. |
 | 2026-06-04 | **LLM JSON parse hardening (verbatim upload):** TECH_REF Output Validation lesson + guidance (`parseJsonFromLlmOutput`, `sanitizeJsonControlChars`, prompt escape rule, Support ID); CONTEXT_PROMPT integration pattern; CODE_QUALITY audit item #5; TEST_PLAN resume/cover upload checklist. Source: Exec Foundry onboarding upload fix + PostHog `Bad control character in string literal`. |
@@ -91,6 +92,20 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-06-15 — Microcopy centralization (Exec Foundry)
+
+- **`prompts/microcopy-centralization.md`** — Phased cluster migration checklist; three-layer architecture (labels / microcopy / surface `*Copy.ts`); duplication policy; three complementary audits (sync, export duplication, inline AST); legal-as-markdown guidance.
+- **`docs/TECHNICAL_REFERENCE.md`** — New **User-facing copy** section: module layout, export/audit scripts, cursor rules, pre-release target (0 inline prose backlog).
+- **`docs/CODE_QUALITY.md`** — Audit checklist row for `export:copy` + `audit:inline-copy` + sync audit before marketing pushes.
+- **`docs/TEST_PLAN.md`** — §12 optional copy-hygiene walkthrough.
+- **`docs/BRAND_AND_PRODUCT.md`** — **Microcopy duplication policy** blockquote under Copy & Messaging Lessons.
+- **`docs/CONTEXT_PROMPT.md`** — Centralized copy module pattern + anti-patterns for duplicated help prose and inline product strings.
+- **`WORKFLOW.md`** — Phase 7 hardening + post-launch re-run cadence for copy audits.
+- **`README.md`** — Prompt tree entry for `microcopy-centralization.md`.
+- **`prompts/user-facing-content-sync-audit.md`** — Cross-link to microcopy centralization prompt.
+- **`prompts/propagate-to-forgekit.md`** — Trigger row + Context inventory for microcopy pass.
+- **`.cursor/rules/user-facing-content.mdc`**, **`us-english.mdc`** — App copy tone/locale defaults (also in **`mcp-server/content/cursor-rules/`** for MCP distribution).
 
 ### 2026-06-10 — Anti-self-importance and position-of-strength tone controls
 

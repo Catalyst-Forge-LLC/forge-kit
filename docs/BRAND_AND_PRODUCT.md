@@ -149,6 +149,10 @@ _Recurring phrases that reinforce the brand. Use these in UI copy, marketing, an
 
 > 🔧 **Guidance:** These are hard-won lessons about what works and what doesn't in marketing and product copy. Patterns to follow when writing for any ForgeKit-derived product.
 
+### Microcopy duplication policy
+
+> **One source per string class.** Feature titles → `[productLabels].ts` (or equivalent). Help tip bodies → tips module only — never duplicate prose in Svelte. Legal → markdown per page, not copy shards. FAQ may shorten feature summaries; elevator-pitch variants stay intentionally separate. See `prompts/microcopy-centralization.md` and `docs/TECHNICAL_REFERENCE.md` § User-facing copy.
+
 ### Landing Page Callout Boxes
 
 A callout box immediately following a pitch paragraph should NOT restate the pitch in different words. It should answer the natural next question the pitch raises.

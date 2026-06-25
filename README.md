@@ -163,6 +163,7 @@ forge-kit/
     landing-page-rewrite.md      ← Rewrite landing page from brand doc
     personal-beta-outreach.md    ← Generate a personal outreach playbook for beta launch
     user-facing-content-sync-audit.md ← Periodic sync of all discovery surfaces with shipped features
+    microcopy-centralization.md      ← Phased inline→module migration; export/inline/duplication audits
     propagate-to-forgekit.md     ← Sync lessons back into ForgeKit templates
     product-feedback-to-spec.md  ← Turn raw user feedback into an implementation spec
   mcp-server/              ← MCP server source (see mcp-server/README.md)

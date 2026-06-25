@@ -426,6 +426,23 @@ _Use when DOCX or PDF resume import runs an LLM “map to skeleton” step befor
 
 ---
 
+## 12. User-Facing Copy Hygiene (optional — when copy modules are adopted)
+
+**Preconditions**
+
+- App uses centralized copy under `$lib/content/` (or equivalent) with `export:copy` and `audit:inline-copy` scripts
+
+**Verify**
+
+- [ ] `pnpm export:copy` completes without errors; writer catalogs updated
+- [ ] `pnpm audit:inline-copy` reports **0 UI prose not in export** (terms/CSS/noise may remain)
+- [ ] `pnpm audit:copy` — no unintended duplicate prose in export (or duplicates documented as intentional)
+- [ ] Run **`user-facing-content-sync-audit.md`** — every shipped feature appears on landing, help, and tours where appropriate
+- [ ] Help panel and onboarding strings do **not** mention internal spec paths or backend service names
+- [ ] New panel added in this release has a corresponding `*Copy.ts` module (no new product prose left inline)
+
+---
+
 ## Notes
 
 > 🔧 **Guidance:** Add test-specific notes, known issues, or environment-specific workarounds here.

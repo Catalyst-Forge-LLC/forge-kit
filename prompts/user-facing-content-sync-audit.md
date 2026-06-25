@@ -4,6 +4,8 @@ Run this audit periodically (monthly, or after any week with 3+ shipped features
 
 This complements [Docs Alignment Audit](./docs-alignment-audit.md) (accuracy vs. code) by focusing on **completeness and discoverability** of the product's public story.
 
+For **where strings live in code** (inline Svelte → `$lib/content/*Copy.ts`, export scripts, duplication policy), see [Microcopy Centralization](./microcopy-centralization.md).
+
 ---
 
 ## How to Use

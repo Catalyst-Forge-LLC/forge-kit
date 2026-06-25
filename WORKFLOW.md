@@ -746,9 +746,9 @@ Full templates for each document live in `_forgekit/docs/` (or ForgeKit MCP `get
 
 **Phase 6 (Strategic Review):** Create `BRAND_AND_PRODUCT.md`. Reorganize `TODO.md` by brand pillars. Cross-reference TODO against brand doc. Process `.forgekit/IDEAS.md` into TODO. Complete or deepen `DESIGN_SYSTEM.md`. Add `MARKETING_GROWTH.md` when growth planning is real.
 
-**Phase 7 (Hardening):** Create `CODE_QUALITY.md`, `BLACK_HAT_REPORT.md`, `DEPLOYMENT.md`, `BUGS.md`; `BUSINESS_PLAN.md` if pursuing paid users. Finish or extend `TEST_PLAN.md` if not already mature. Optional `DEV_ESTIMATE.md`. Run pre-launch audit (see `prompts/pre-launch-audit.md`). Consolidate and cross-reference all docs. Run docs alignment audit.
+**Phase 7 (Hardening):** Create `CODE_QUALITY.md`, `BLACK_HAT_REPORT.md`, `DEPLOYMENT.md`, `BUGS.md`; `BUSINESS_PLAN.md` if pursuing paid users. Finish or extend `TEST_PLAN.md` if not already mature. Optional `DEV_ESTIMATE.md`. Run pre-launch audit (see `prompts/pre-launch-audit.md`). If the app uses centralized copy modules, run **`export:copy`** + **`audit:inline-copy`** (target: 0 UI prose not in export) and **`user-facing-content-sync-audit.md`** before launch marketing. Consolidate and cross-reference all docs. Run docs alignment audit.
 
-**Post-Launch (Growth):** Run a Cialdini marketing audit on the landing page (see `prompts/cialdini-marketing-audit.md`). Run a competitor deep dive (see `prompts/competitor-deep-dive.md`). Extend **`MARKETING_GROWTH.md`** (create in Phase 6+ if missing) for scaled acquisition, metrics, and budget. Feature specs (`specs/` directory) remain the primary design tool for complex features — write the spec, review it, then implement.
+**Post-Launch (Growth):** Run a Cialdini marketing audit on the landing page (see `prompts/cialdini-marketing-audit.md`). Run a competitor deep dive (see `prompts/competitor-deep-dive.md`). Extend **`MARKETING_GROWTH.md`** (create in Phase 6+ if missing) for scaled acquisition, metrics, and budget. After shipping several features in a sprint, re-run the sync audit; add new panels via `*Copy.ts` in the same PR (`prompts/microcopy-centralization.md`). Feature specs (`specs/` directory) remain the primary design tool for complex features — write the spec, review it, then implement.
 
 ### Key Lessons from Exec Foundry's Documentation
 
