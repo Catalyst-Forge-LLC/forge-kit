@@ -966,6 +966,138 @@ server.tool(
   }
 );
 
+// -- Tool: validateTracking ------------------------------------------------
+
+server.tool(
+  "validateTracking",
+  "Validate a .forgekit/workflow_tracking.json file (or supplied JSON) against the schema and ForgeKit phase rules. Returns issues + suggested fixes. Safe to call often.",
+  {
+    trackingJson: z.string().optional().describe("Raw JSON string of the tracking file (if not supplying path)"),
+    path: z.string().optional().describe("Filesystem path to .forgekit/workflow_tracking.json (server will attempt to read)"),
+  },
+  async ({ trackingJson, path }) => {
+    let jsonText = trackingJson;
+    if (!jsonText && path) {
+      try {
+        const fs = await import("node:fs");
+        jsonText = fs.readFileSync(path, "utf-8");
+      } catch (e) {
+        return { content: [{ type: "text" as const, text: `Could not read file at ${path}: ${e}` }] };
+      }
+    }
+    if (!jsonText) {
+      // Try default location
+      try {
+        const defaultPath = join(FORGEKIT_ROOT, "workflow_tracking.json"); // or customer would pass path
+        const fs = await import("node:fs");
+        jsonText = fs.readFileSync(defaultPath, "utf-8");
+      } catch {}
+    }
+
+    if (!jsonText) {
+      return { content: [{ type: "text" as const, text: "No tracking JSON provided and no default file found. Pass trackingJson or path." }] };
+    }
+
+    let data: any;
+    try {
+      data = JSON.parse(jsonText);
+    } catch (e) {
+      return { content: [{ type: "text" as const, text: `Invalid JSON: ${e}` }] };
+    }
+
+    const issues: string[] = [];
+    const fixes: string[] = [];
+
+    if (!data.project || !data.project.name) issues.push("Missing or incomplete top-level project object.");
+    if (!data.currentPhase) issues.push("Missing currentPhase (should be e.g. '1-architecture').");
+    if (!data.phases) issues.push("Missing phases object.");
+
+    // Basic phase checks
+    const phaseKeys = Object.keys(data.phases || {});
+    if (phaseKeys.length === 0) {
+      issues.push("No phases defined in tracking.");
+    }
+
+    if (data.currentPhase && !phaseKeys.includes(data.currentPhase)) {
+      issues.push(`currentPhase "${data.currentPhase}" not present in phases object.`);
+    }
+
+    if (issues.length === 0) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: "Tracking file looks structurally healthy.\n\n" +
+                "Recommended next steps:\n" +
+                "- Confirm exit criteria are being actively moved from Remaining → Met.\n" +
+                "- Ensure major decisions have rationale + alternatives.\n" +
+                "- Add gotchas when surprises occur.\n\n" +
+                "Call getTrackingSchema for the full expected shape."
+        }]
+      };
+    }
+
+    return {
+      content: [{
+        type: "text" as const,
+        text: "Tracking validation issues found:\n\n" +
+              issues.map(i => `- ${i}`).join("\n") +
+              "\n\nSuggested fixes:\n" +
+              "- Use getTrackingSchema() to see the canonical shape.\n" +
+              "- Populate decisions[] with rationale when locking Phase 1.\n" +
+              "- Keep exitCriteriaMet/Remaining in sync with actual progress."
+      }]
+    };
+  }
+);
+
+// -- Tool: suggestSubagentDecomposition ------------------------------------
+
+server.tool(
+  "suggestSubagentDecomposition",
+  "Given a phase and task, returns recommended subagent spawn parameters (type, capability_mode, isolation, persona hints, and prompt seeds) plus a parent synthesis step. Designed for agents like Grok that support spawn_subagent.",
+  {
+    phase: z.string().describe("Current ForgeKit phase (1-7 or name like 'hardening')"),
+    taskDescription: z.string().describe("What the subagents should accomplish"),
+    maxSubagents: z.number().optional().default(3),
+  },
+  async ({ phase, taskDescription, maxSubagents }) => {
+    const phaseNum = phase.replace(/\D/g, "") || "7";
+    const examples = [];
+
+    if (["7", "harden", "hardening"].includes(phaseNum.toLowerCase()) || taskDescription.toLowerCase().includes("audit")) {
+      examples.push(
+        "Subagent 1 (security): subagent_type='explore', capability_mode='read-only', isolation='none', prompt='Call runAudit(\"black-hat\") and searchLessons for security issues. Output structured findings.'",
+        "Subagent 2 (ux): subagent_type='explore', capability_mode='read-only', prompt='Run ux-cohesion-audit or panel-usability-audit against the current UI flows.'",
+        "Subagent 3 (code-quality): subagent_type='explore', capability_mode='read-only', prompt='Audit against CODE_QUALITY template + known anti-patterns. Flag silent failures and schema drift.'"
+      );
+    } else if (["4","5","iterate","refine"].includes(phaseNum.toLowerCase())) {
+      examples.push(
+        `Subagent 1 (research): subagent_type='explore', capability_mode='read-only', prompt='Deep research on ${taskDescription}. Return options + tradeoffs.'`,
+        `Subagent 2 (spike): subagent_type='general-purpose', capability_mode='read-write', isolation='worktree', prompt='Prototype the core of ${taskDescription} in an isolated worktree.'`
+      );
+    } else {
+      examples.push(
+        `Main subagent: subagent_type='explore', capability_mode='read-only', prompt='Analyze ${taskDescription} in context of current phase ${phase}. Return clear findings and recommendations.'`
+      );
+    }
+
+    const synthesis = "Parent: Collect all subagent outputs. Update .forgekit/workflow_tracking.json (gotchas, decisions). Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
+
+    return {
+      content: [{
+        type: "text" as const,
+        text:
+          `Recommended decomposition for Phase ${phase} — task: "${taskDescription}"\n\n` +
+          `Max recommended subagents: ${maxSubagents}\n\n` +
+          examples.slice(0, maxSubagents).join("\n\n") +
+          `\n\nSynthesis step (in parent thread):\n${synthesis}\n\n` +
+          "Use spawn_subagent with background:true for long tasks and retrieve results with get_command_or_subagent_output.\n" +
+          "After results return, always update tracking and relevant progressive docs."
+      }]
+    };
+  }
+);
+
 // ---------------------------------------------------------------------------
 // Start
 // ---------------------------------------------------------------------------
@@ -995,6 +1127,8 @@ function printStartupHintsToStderr(): void {
     '  getPhaseGuidance (phase "1"–"7" or e.g. "scaffolding")',
     '  getTemplate with name "list", then a template name (e.g. PHASE_1_BRIEF)',
     '  searchLessons with a keyword',
+    "  validateTracking (check .forgekit/workflow_tracking.json health)",
+    "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
     "",
     "Suppress this banner: FORGEKIT_QUIET=1",
     "",
