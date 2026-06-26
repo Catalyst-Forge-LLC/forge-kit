@@ -148,6 +148,41 @@ _[Same structure as above]_
 | ------ | ----- | ------- | ------------- |
 | [POST] | [/api/user/export] | [Queue or return archive] | [yes] |
 
+### [Structured eligibility / requirement fit (optional)]
+
+> 🔧 **Guidance:** When postings or profiles carry **structured requirements** the product compares to user-declared status (education level, professional license, security clearance, work authorization, etc.), implement as a **repeatable shape** — not one-off strings per surface.
+
+**Taxonomy module (shared client + server):**
+
+- Ordered **requirement levels** + **flexibility** qualifiers (e.g. required / preferred / flexible; active / sponsorable).
+- Separate **user status** type when profile values differ from job requirements (e.g. active vs inactive/lapsed).
+- Type guards, `hardMismatch()`, optional `match()` for positive badges, `formatRequirement()` for Logistics rows.
+
+**Data model:**
+
+- Job/posting fields: `[domain]_requirement`, `[domain]_flexibility` (or JSON sub-object if multiple domains).
+- User profile fields: `[domain]_status`, optional `[domain]_inactive_level`.
+- PocketBase mappers **`pbJobToApp` / `appJobToPB` / user config** — include fields in **PATCH field maps** (easy to forget).
+
+**Extraction pipeline:**
+
+- Regex/heuristics on plain posting text first (context-gated patterns to avoid false positives).
+- LLM extraction schema second; merge on import/refresh with regex fallback when LLM omits.
+- Propagate on **metadata-only refresh** and **full posting refresh** branches.
+
+**Surfaces (keep in sync):**
+
+- Detail **Logistics** row; card **match/mismatch** badge; board **filter** predicate shared with `FilterBar` counts.
+- **`buildCandidateProfileForFit`** (or equivalent) + **`build*ContextBlock`** in tailoring/prep/adapt prompts.
+- Onboarding/profile select + optional **resume inference**; help topic.
+
+**Edge cases:**
+
+- `preferred` / `must_be_clearable` flexibilities should not trigger hard mismatch badges.
+- Do not backfill legacy rows; populate on next import/refresh unless you run an explicit migration.
+
+**API Routes:** document import, refresh, user config PATCH, and any prerequisite errors (`so we suggest X` → assertive voice).
+
 ## AI/LLM Integration
 
 _If your app uses AI, document the integration patterns here. Record the Phase 1 **content-generation pattern** (runtime API, build-time seed, or BYO-LLM paste) and **provider** — including **local Ollama** when used (`OLLAMA_BASE_URL`, `OLLAMA_MODEL`; setup/test via ForgeKit **`setup-ollama`** / **`test-ollama`**). Default local models: **Granite 4.1** or **Gemma 3** instruct — not reasoning/thinking models unless product requirements say otherwise._

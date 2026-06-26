@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-06-26 | **Assertive product voice + structured eligibility fit (Exec Foundry):** **user-facing-content.mdc** Assertive capability copy; **BRAND_AND_PRODUCT** We say/We don't say table; **CONTEXT_PROMPT** assertive voice + async callback snapshot patterns; **TECHNICAL_REFERENCE** *[Structured eligibility / requirement fit]* stub; **TEST_PLAN** §4.5–4.6; **CODE_QUALITY** pre-launch grep; propagate prompt triggers + Step 3 mapping; MCP **cursor-rules/** mirror. |
 | 2026-06-15 | **Microcopy centralization propagation (Exec Foundry):** New **`prompts/microcopy-centralization.md`**; **TECHNICAL_REFERENCE** § User-facing copy; **CODE_QUALITY** + **TEST_PLAN** audit hooks; **BRAND_AND_PRODUCT** duplication policy; **CONTEXT_PROMPT** patterns/anti-patterns; **WORKFLOW** Phase 7 + post-launch cadence; **`.cursor/rules/user-facing-content.mdc`** + **`us-english.mdc`** (+ MCP **`cursor-rules/`** mirrors); propagate prompt trigger + Context inventory. |
 | 2026-06-10 | **Anti-self-importance and position-of-strength tone controls:** TECHNICAL_REFERENCE (new tone controls subsection); CONTEXT_PROMPT Patterns to Follow (anti-self-importance & posture rules); BRAND_AND_PRODUCT (grandiose & striving register prevention); TEST_PLAN (anti-self-importance & position-of-strength checks). Source: Exec Foundry cover letter anti-self-importance pass. |
 | 2026-06-10 | **Factual grounding and veracity check safety nets:** TECHNICAL_REFERENCE (new veracity pass subsection); CONTEXT_PROMPT Patterns to Follow (grounding text in prompt); BRAND_AND_PRODUCT (veracity pass lesson); DESIGN_SYSTEM (VeracityCard visual spec); TEST_PLAN (grounding & veracity test cases). Source: Exec Foundry cover letter grounding and veracity pass. |
@@ -92,6 +93,16 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-06-26 — Assertive product voice + structured eligibility fit (Exec Foundry)
+
+- **`.cursor/rules/user-facing-content.mdc`** — New **Assertive capability copy** section: direct verbs for product behavior; when to keep *can* (permission, limits, people). Mirrored in **`mcp-server/content/cursor-rules/`** and Exec Foundry **`.cursor/rules/`**.
+- **`docs/BRAND_AND_PRODUCT.md`** — **Assertive product voice (no hedging *can*)** subsection with We say / We don't say table + lesson learned.
+- **`docs/CONTEXT_PROMPT.md`** — Patterns: assertive product voice in copy modules; progressive async UI snapshot callbacks before close/unmount.
+- **`docs/TECHNICAL_REFERENCE.md`** — New **`[Structured eligibility / requirement fit (optional)]`** feature stub (taxonomy, extraction, surfaces, PATCH maps).
+- **`docs/TEST_PLAN.md`** — §4.5 assertive copy grep; §4.6 structured eligibility checklist.
+- **`docs/CODE_QUALITY.md`** — Pre-launch copy checklist extended with `\bcan\b` capability-hedge grep.
+- **`prompts/propagate-to-forgekit.md`** + Exec Foundry **`Propagate to ForgeKit.md`** — Trigger rows + Step 3 mapping for assertive voice and structured eligibility.
 
 ### 2026-06-15 — Microcopy centralization (Exec Foundry)
 

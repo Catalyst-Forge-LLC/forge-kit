@@ -195,6 +195,25 @@ _Use when the product generates tailored materials representing the user (cover 
   - Verify that there are no humble-brags that raise a hurdle only to clear it.
   - Verify that there is no rhetorical scaffolding, self-narration, or instructed interpretation (e.g., calling career periods "chapters" or "milestones").
 
+### 4.5 Assertive product copy — no hedging *can* (if applicable)
+
+_After marketing, help, or onboarding edits — or when adding feature descriptions._
+
+- [ ] Grep copy modules for `\bcan\b`; fix **product capability** hedges (`can strengthen` → `strengthens`, `can suggest` → `suggests`).
+- [ ] Leave **user permission** (`You can…`), **factual limits** (`what we can read…`), and **people** (`who can help`) unchanged.
+- [ ] How-it-works / landing steps use present-tense direct verbs for shipped behavior.
+
+### 4.6 Structured eligibility / requirement fit (if applicable)
+
+_Use when jobs or listings store structured requirements compared to user profile status (education, clearance, license, work authorization, etc.)._
+
+- [ ] Import + refresh populate requirement fields; regex fallback when LLM omits.
+- [ ] User declares status in profile/onboarding; optional inference from resume text.
+- [ ] Card badge + detail Logistics row + board filter use shared mismatch/match helpers (filter counts align with board).
+- [ ] Fit scoring and tailoring/prep prompts include requirement context block.
+- [ ] PATCH / API field maps include requirement fields (grep `fieldMap` / config schema).
+- [ ] Unit tests: extraction regex samples, `hardMismatch` / filter predicates.
+
 ---
 
 ## 5. Billing & Entitlements (if applicable)

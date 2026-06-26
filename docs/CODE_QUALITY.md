@@ -111,7 +111,7 @@ _Run through this list periodically, especially before releases._
 - [ ] Check for stale closure captures in async functions with reactive state
 - [ ] Validate all user input before database queries (injection prevention)
 - [ ] Verify error messages are user-facing, not developer-facing
-- [ ] **User-facing copy (when adopted):** run `export:copy`; `audit:inline-copy` at **0 UI prose not in export**; run `user-facing-content-sync-audit.md` before major marketing pushes
+- [ ] **User-facing copy (when adopted):** run `export:copy`; `audit:inline-copy` at **0 UI prose not in export**; run `user-facing-content-sync-audit.md` before major marketing pushes; grep `\bcan\b` for capability hedges (`can strengthen` → `strengthens`) per **`.cursor/rules/user-facing-content.mdc`**
 - [ ] Check that no secrets are hardcoded or logged
 - [ ] Verify all database filter strings use parameterized helpers (no string interpolation)
 - [ ] Check that promo code redemption and usage counter increments are atomic

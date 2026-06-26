@@ -205,6 +205,20 @@ When the product produces **cover letters**, **outreach**, or other **persuasive
 >
 > 💡 **Lesson learned:** **Anti-self-importance and position-of-strength rules prevent grandiose and striving registers.** When generating outbound copy representing the user, explicitly instruct the LLM to write in a plain, confident, and professional tone. Ban grandiose framing of routine work, visionary self-positioning, analytical flattery, name-dropping by negation, performative specificity, and modifier stacking. Enforce a "position of strength" posture: ban mirroring the job description as proof of fit, delivering maxims/theses as quotable wisdom, branding ordinary habits as named methods, using striving/grind vocabulary, and using rhetorical scaffolding, self-narration, or clever self-authored aphorisms. Let the facts of what the user built carry the weight directly.
 
+### Assertive product voice (no hedging *can*)
+
+Marketing, help, onboarding, and feature descriptions should state **what the product does** in the present tense with direct verbs — not tentative capability language.
+
+| We say | We don't say |
+|--------|----------------|
+| “[Feature] **strengthens** your resume before you apply.” | “[Feature] **can strengthen** your resume…” |
+| “The engine **suggests** roles that match your direction.” | “The engine **can suggest** roles…” |
+| “Overview **keeps** both the apply link and where you found it.” | “Overview **can keep** both links…” |
+
+**Keep *can* for:** user options (“You can change it later”), factual extraction limits (“when we can read it from the listing”), and people (“someone who can intro you”) — not for describing shipped product behavior.
+
+> 💡 **Lesson learned:** Hedging **can** on capability lines reads as marketing filler and undercuts a premium positioning. After landing or how-it-works edits, grep `\bcan\b` in copy modules and fix product-capability instances in the same pass. LLM prompts that describe product behavior should use the same assertive voice so generated help/marketing does not reintroduce hedges.
+
 ### Name Competitors in Differentiator Copy
 
 In FAQ or comparison sections, name the specific tools your buyer is already evaluating — don't hide behind vague "other tools" or "existing solutions."
