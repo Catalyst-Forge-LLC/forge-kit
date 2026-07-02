@@ -3,7 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { stripForgeKitTemplateToShell } from "./templateStrip.js";
 import { validateTrackingData, formatValidationResult } from "./trackingValidate.js";
@@ -1363,15 +1363,59 @@ server.tool(
 // ---------------------------------------------------------------------------
 
 /** Hints for humans (stderr only — stdout is reserved for MCP JSON-RPC). */
+function posixPath(p: string): string {
+  return p.replace(/\\/g, "/");
+}
+
+function mcpDistEntryPath(): string {
+  return join(FORGEKIT_ROOT, "mcp-server", "dist", "index.js");
+}
+
+function cursorMcpConfigJson(): string {
+  const entry = posixPath(mcpDistEntryPath());
+  const root = posixPath(FORGEKIT_ROOT);
+  return JSON.stringify(
+    {
+      mcpServers: {
+        forgekit: {
+          command: "node",
+          args: [entry],
+          env: { FORGEKIT_ROOT: root },
+        },
+      },
+    },
+    null,
+    2
+  );
+}
+
 function printStartupHintsToStderr(): void {
   const quiet = process.env.FORGEKIT_QUIET;
   if (quiet === "1" || quiet === "true") return;
+
+  const entry = posixPath(mcpDistEntryPath());
+  const distReady = existsSync(mcpDistEntryPath());
 
   const lines = [
     "",
     "[ForgeKit MCP] Server listening on stdio (JSON-RPC on stdout). Content root:",
     `  FORGEKIT_ROOT=${FORGEKIT_ROOT}`,
     "",
+    "Connect this server in your agent host (skip if already configured):",
+    "",
+    "  Cursor — project .cursor/mcp.json or Settings → MCP → add server:",
+    cursorMcpConfigJson(),
+    "",
+    "  Claude Desktop — %APPDATA%\\Claude\\claude_desktop_config.json (same mcpServers block as above)",
+    `  Claude Code — claude mcp add forgekit node ${entry}`,
+    "  Print paths again — from forge-kit clone: forgekit mcp cursor-config",
+    "",
+    ...(distReady
+      ? []
+      : [
+          "  NOTE: mcp-server/dist/index.js is missing — run forgekit mcp build before Cursor can start this server.",
+          "",
+        ]),
     "Tell your agent — new project (easiest):",
     '  "Call ForgeKit getNewProjectKickoff or kickoffGreenfield, then set up the project per that bundle."',
     "  (Granular: getNewProjectBootstrap + getInitialWorkflowTracking + getPostBootstrapUserMessage + getForgeKitCursorPhaseRule + getForgeKitCursorLessonsRules.)",

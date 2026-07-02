@@ -57,7 +57,7 @@ pnpm run build
 | `FORGEKIT_TEMPLATE_DEFAULT_MODE` | `full` or `shell` — default when `getTemplate` omits `mode` (unset = `shell`) |
 | `FORGEKIT_QUIET` | Set to `1` or `true` to hide the stderr startup banner (hints for Cursor / first prompts) |
 
-On startup, the server prints a short **stderr** banner with example prompts for your agent. **Do not** log to stdout — MCP uses stdout only for JSON-RPC.
+On startup, the server prints a short **stderr** banner with **Cursor / Claude MCP config** (copy-paste JSON) and example prompts for your agent. **Do not** log to stdout — MCP uses stdout only for JSON-RPC.
 
 ## Configure in Cursor
 
