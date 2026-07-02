@@ -21,11 +21,14 @@ See [mcp-server/README.md](mcp-server/README.md) for `.cursor/mcp.json`. In your
 
 **Template-in-repo:** Copy this folder into your project as `_forgekit/` → paste the contents of `INITIAL_PROMPT.md` into your first agent chat → fill in the bracketed placeholders → go.
 
-**Install scripts (from a clone of this repo, or after `pnpm link --global`):**
+**Install scripts (from a clone of this repo, or after global CLI setup):**
 
 ```bash
-# One-time: from your forge-kit clone
-pnpm link --global
+# One-time: from your forge-kit clone (registers forgekit on PATH)
+pnpm run link:global
+
+# If forgekit is still not found, ensure PNPM_HOME is on PATH:
+pnpm setup    # then open a new terminal
 
 # From your project folder (no --path needed):
 cd /path/to/your-app
@@ -36,6 +39,8 @@ forgekit install                 # full _forgekit/ + tracking starter
 pnpm run install:lite -- --path /path/to/your-app
 pnpm run install:forgekit -- --path /path/to/your-app
 ```
+
+**Without global install:** `node /path/to/forge-kit/scripts/forgekit-cli.mjs install --lite`
 
 Use `--force` to overwrite existing files, `--dry-run` to preview, `--skip-tracking` to omit the tracking JSON.
 

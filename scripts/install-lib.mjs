@@ -39,7 +39,7 @@ export function resolveTarget(target, { defaultToCwd = false } = {}) {
   const raw = target?.trim() || (defaultToCwd ? cwd() : "");
   if (!raw) {
     console.error("Missing target directory.");
-    console.error("Usage: forgekit install   (from project folder after pnpm link --global)");
+    console.error("Usage: forgekit install   (from project folder after pnpm run link:global)");
     console.error("   or: pnpm run install:forgekit -- --path <project-root>");
     console.error("   or: FORGEKIT_TARGET=<project-root> pnpm run install:forgekit");
     process.exit(1);

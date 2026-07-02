@@ -17,7 +17,7 @@ Usage:
   forgekit mcp <subcommand>        Build, status, ping, Cursor config
 
 Global link (one-time, from your forge-kit clone):
-  pnpm link --global
+  pnpm run link:global              # pnpm add -g . + PATH shim fix (Windows/Git Bash)
 
 Then from any project folder:
   cd /path/to/your-app

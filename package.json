@@ -10,6 +10,7 @@
   "scripts": {
     "install:forgekit": "node scripts/install-forgekit.mjs",
     "install:lite": "node scripts/install-forgekit-lite.mjs",
+    "link:global": "node scripts/link-global.mjs",
     "mcp:build": "node scripts/mcp-status.mjs build",
     "mcp:status": "node scripts/mcp-status.mjs status",
     "mcp:ping": "node scripts/mcp-status.mjs ping",
