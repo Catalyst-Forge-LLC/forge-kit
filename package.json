@@ -1,10 +1,26 @@
 {
-  "name": "forge-kit",
+  "name": "forgekit",
+  "version": "0.3.0",
   "private": true,
-  "description": "ForgeKit methodology repo — install scripts for customer projects",
+  "description": "ForgeKit methodology — CLI install and MCP server",
   "type": "module",
+  "bin": {
+    "forgekit": "./scripts/forgekit-cli.mjs"
+  },
   "scripts": {
     "install:forgekit": "node scripts/install-forgekit.mjs",
     "install:lite": "node scripts/install-forgekit-lite.mjs"
-  }
+  },
+  "files": [
+    "scripts/",
+    "content/",
+    "docs/",
+    "prompts/",
+    "WORKFLOW.md",
+    "TRACKING_SCHEMA.md",
+    "workflow_tracking.json",
+    "INITIAL_PROMPT.md",
+    "CONTINUATION_PROMPT.md",
+    "LICENSE"
+  ]
 }

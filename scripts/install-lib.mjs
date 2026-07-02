@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { cwd } from "node:process";
 import { cpSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,15 +35,17 @@ export function parseInstallArgs(argv) {
   return args;
 }
 
-export function requireTarget(target) {
-  if (!target) {
+export function resolveTarget(target, { defaultToCwd = false } = {}) {
+  const raw = target?.trim() || (defaultToCwd ? cwd() : "");
+  if (!raw) {
     console.error("Missing target directory.");
-    console.error("Usage: pnpm run <script> -- --path <project-root>");
-    console.error("   or: FORGEKIT_TARGET=<project-root> pnpm run <script>");
+    console.error("Usage: forgekit install   (from project folder after pnpm link --global)");
+    console.error("   or: pnpm run install:forgekit -- --path <project-root>");
+    console.error("   or: FORGEKIT_TARGET=<project-root> pnpm run install:forgekit");
     process.exit(1);
   }
 
-  const resolved = resolve(target);
+  const resolved = resolve(raw);
   if (!existsSync(resolved)) {
     console.error(`Target does not exist: ${resolved}`);
     process.exit(1);
@@ -52,6 +55,11 @@ export function requireTarget(target) {
     process.exit(1);
   }
   return resolved;
+}
+
+/** @deprecated use resolveTarget */
+export function requireTarget(target, opts) {
+  return resolveTarget(target, opts);
 }
 
 export function ensureDir(path, dryRun) {

@@ -15,7 +15,7 @@ ForgeKit is maintained as **open source on a best-effort basis**. There is no gu
 
 ## Before you open a PR
 
-- Read [WORKFLOW.md](WORKFLOW.md) and [mcp-server/content/FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) for tone and structure.
+- Read [WORKFLOW.md](WORKFLOW.md) and [content/FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) for tone and structure.
 - Do **not** commit secrets, `.env` files, customer data, or `debug.log`-style artifacts.
 - Ground commit messages in the actual diff (see `.cursor/rules/commit-messages.mdc` in this repo).
 - If you change **FORGEKIT_LITE.md**, bump the version in the header, footer, and §12 `AGENTS.md` snippet reference when the change is substantive.

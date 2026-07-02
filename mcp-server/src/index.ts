@@ -23,7 +23,7 @@ const PROMPTS_DIR = join(FORGEKIT_ROOT, "prompts");
 const WORKFLOW_PATH = join(FORGEKIT_ROOT, "WORKFLOW.md");
 const TRACKING_SCHEMA_PATH = join(FORGEKIT_ROOT, "TRACKING_SCHEMA.md");
 const WORKFLOW_TRACKING_PATH = join(FORGEKIT_ROOT, "workflow_tracking.json");
-const MCP_CONTENT_DIR = join(FORGEKIT_ROOT, "mcp-server", "content");
+const MCP_CONTENT_DIR = join(FORGEKIT_ROOT, "content");
 
 /** Default getTemplate mode: `shell` (IP-safe) unless FORGEKIT_TEMPLATE_DEFAULT_MODE=full */
 function defaultTemplateMode(): "full" | "shell" {
@@ -308,7 +308,7 @@ server.tool(
       `WORKFLOW.md: ${workflowOk ? "readable" : "missing (check FORGEKIT_ROOT)"}`,
       "subagentSupportRecommended: true (use suggestSubagentDecomposition when host supports parallel workers)",
       "planModeRecommended: true for Phase 1 (getPlanModePatterns, ingestPlanArtifact on approval)",
-      "Greenfield kickoff (forgekit-mcp ≥0.2.1): tools register as getNewProjectKickoff, kickoffGreenfield, kickoffGreenfieldNoCursor — ping does not enumerate tools; it only confirms this process, version, and paths. If your client does not show those names, reconnect MCP or read mcp-server/content/KICKOFF_WITHOUT_MCP.md.",
+      "Greenfield kickoff (forgekit-mcp ≥0.2.1): tools register as getNewProjectKickoff, kickoffGreenfield, kickoffGreenfieldNoCursor — ping does not enumerate tools; it only confirms this process, version, and paths. If your client does not show those names, reconnect MCP or read content/KICKOFF_WITHOUT_MCP.md.",
     ].join("\n");
 
     return toolResult(format, {
@@ -961,7 +961,7 @@ server.tool(
         type: "text" as const,
         text:
           "Use these defaults for `scripts/setup-pocketbase.mjs` / `scaffold-defaults.json` in the app repo. " +
-          "Copy reference scripts from `mcp-server/content/scripts/` and ONE_CLICK_DEV_SETUP.md launchers. " +
+          "Copy reference scripts from `content/scripts/` and ONE_CLICK_DEV_SETUP.md launchers. " +
           "Isolated checks: test-pocketbase, setup-ollama, test-ollama (SYSTEM_HEALTH_CHECKS.md). " +
           "Do not hardcode a stale PocketBase semver — use versionPolicy in JSON. " +
           "Ollama: non-thinking Granite 4.1 / Gemma 3 defaults unless OLLAMA_USE_THINKING=1. " +

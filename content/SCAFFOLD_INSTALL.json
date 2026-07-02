@@ -18,14 +18,14 @@
   },
   "oneClickDev": {
     "purpose": "Non-technical operators double-click setup/run/status; agents create these in Phase 2.",
-    "forgeKitGuide": "mcp-server/content/ONE_CLICK_DEV_SETUP.md",
+    "forgeKitGuide": "content/ONE_CLICK_DEV_SETUP.md",
     "referenceScripts": [
-      "mcp-server/content/scripts/forgekit-dev-launcher.mjs",
-      "mcp-server/content/scripts/setup-pocketbase.mjs",
-      "mcp-server/content/scripts/forgekit-env.mjs",
-      "mcp-server/content/scripts/test-pocketbase.mjs",
-      "mcp-server/content/scripts/setup-ollama.mjs",
-      "mcp-server/content/scripts/test-ollama.mjs"
+      "content/scripts/forgekit-dev-launcher.mjs",
+      "content/scripts/setup-pocketbase.mjs",
+      "content/scripts/forgekit-env.mjs",
+      "content/scripts/test-pocketbase.mjs",
+      "content/scripts/setup-ollama.mjs",
+      "content/scripts/test-ollama.mjs"
     ],
     "repoRootFiles": [
       "setup.bat",
@@ -55,7 +55,7 @@
   },
   "systemHealthChecks": {
     "purpose": "Isolated pass/fail scripts per dependency — not full app start.",
-    "forgeKitGuide": "mcp-server/content/SYSTEM_HEALTH_CHECKS.md",
+    "forgeKitGuide": "content/SYSTEM_HEALTH_CHECKS.md",
     "pocketBase": {
       "script": "scripts/test-pocketbase.mjs",
       "launcherBat": "test-pocketbase.bat"
@@ -71,7 +71,7 @@
   },
   "devAutomation": {
     "purpose": "Optional scripts in the app repo so setup is repeatable (env check, codegen, seed, E2E browsers, git hooks). Not part of the PocketBase binary install.",
-    "forgeKitGuide": "mcp-server/content/DEV_AUTOMATION_SCRIPTS.md (in ForgeKit repo)",
+    "forgeKitGuide": "content/DEV_AUTOMATION_SCRIPTS.md (in ForgeKit repo)",
     "examples": {
       "envCheck": "pnpm run env:check",
       "codegen": "pnpm run gen:types",
@@ -92,7 +92,7 @@
       "scripts/ensure-pocketbase-schema.ts (or .mjs) — admin auth + upsert collections",
       "package.json script e.g. pocketbase:schema"
     ],
-    "forgeKitGuide": "mcp-server/content/POCKETBASE_SCHEMA_SCRIPT.md (in ForgeKit repo)"
+    "forgeKitGuide": "content/POCKETBASE_SCHEMA_SCRIPT.md (in ForgeKit repo)"
   },
   "notes": [
     "Prefer one-click setup.bat / setup.sh for humans; pnpm scripts for agents.",

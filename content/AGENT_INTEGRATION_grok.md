@@ -51,7 +51,7 @@ After meaningful work (especially subagent results or feature completion):
 
 ## Skills Usage
 
-Install the forgekit skill (copy from mcp-server/content/skills/forgekit/SKILL.md to ~/.grok/skills/forgekit/SKILL.md).
+Install the forgekit skill (copy from content/skills/forgekit/SKILL.md to ~/.grok/skills/forgekit/SKILL.md).
 
 Then simply say things like:
 - "/forgekit kickoff new project"

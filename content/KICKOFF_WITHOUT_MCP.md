@@ -6,11 +6,11 @@ Some Cursor sessions **do not expose MCP tools** to the agent (or only a subset)
 
 **If you must replicate the kickoff bundle from this repo** (same sources as `buildNewProjectKickoff` in `mcp-server/src/index.ts`), read and apply in order:
 
-1. `mcp-server/content/NEW_PROJECT_BOOTSTRAP.md` — methodology and next steps  
+1. `content/NEW_PROJECT_BOOTSTRAP.md` — methodology and next steps  
 2. `workflow_tracking.json` at the **ForgeKit repo root** — copy JSON to the **customer** repo as **`.forgekit/workflow_tracking.json`**, then apply the MCP path rewrites described in `getInitialWorkflowTracking` (or use the MCP tool when available)  
-3. `mcp-server/content/POST_BOOTSTRAP_USER_MESSAGE.md` — how the first user-facing reply should read  
-4. `mcp-server/content/cursor-rules/forgekit-phase-status.mdc` — write to `.cursor/rules/forgekit-phase-status.mdc` in the customer repo (Cursor only)  
-5. `mcp-server/content/cursor-rules/forgekit-lessons-gate.mdc` and `forgekit-lessons-mcp.mdc` — write to `.cursor/rules/` (lessons + anti-patterns gate before large work)  
-6. `mcp-server/content/USER_REPLY_FORMAT.md` — numbered vs bullet vs letter lists (also summarized inside the phase `.mdc` rule)
+3. `content/POST_BOOTSTRAP_USER_MESSAGE.md` — how the first user-facing reply should read  
+4. `content/cursor-rules/forgekit-phase-status.mdc` — write to `.cursor/rules/forgekit-phase-status.mdc` in the customer repo (Cursor only)  
+5. `content/cursor-rules/forgekit-lessons-gate.mdc` and `forgekit-lessons-mcp.mdc` — write to `.cursor/rules/` (lessons + anti-patterns gate before large work)  
+6. `content/USER_REPLY_FORMAT.md` — numbered vs bullet vs letter lists (also summarized inside the phase `.mdc` rule)
 
 **Prefer:** switch to a Cursor mode that exposes ForgeKit MCP to the agent, or call **`kickoffGreenfield`** (no parameters) if **`getNewProjectKickoff`** does not appear in the tool list.

@@ -19,7 +19,7 @@ If **ForgeKit is connected as an MCP server**, do **not** require a local `_forg
 
 **Phase 2 scaffolding (when you reach it):** If the stack includes **scripted PocketBase setup**, call **`getScaffoldInstallParams`** and align **`scripts/scaffold-defaults.json`** with the returned JSON — then have the user run **`pnpm install && pnpm run setup:pocketbase`** (or **`pnpm run bootstrap`**) **in the terminal** instead of generating many small files in the IDE. Put the **PocketBase HTTP port and public URL in `.env` / `.env.example`** (e.g. `PUBLIC_POCKETBASE_URL=http://127.0.0.1:8096`); the user may have **other PocketBase processes** (other projects) already on the default **8090**, so a fixed port in env keeps the `serve` script, the SvelteKit client, and schema scripts in sync. Prefer a **`pocketbase:schema`** (or similar) script that applies collections using **`POCKETBASE_ADMIN_EMAIL` / `POCKETBASE_ADMIN_PASSWORD`** from `.env` (see ForgeKit **`POCKETBASE_SCHEMA_SCRIPT.md`** via the scaffold JSON **`schemaAutomation`** block) instead of manual Admin UI for each collection. For **repeatable dev setup** (env check, codegen, seed, E2E browsers, git hooks), follow ForgeKit **`DEV_AUTOMATION_SCRIPTS.md`** and the **`devAutomation`** block in the same **`getScaffoldInstallParams`** output.
 
-**Optional — JSON seed/fixture data from any LLM:** The user can generate structured JSON in **another** LLM chat (or the same one), save it under e.g. `data/` or `fixtures/`, and ask you to validate and import. Use the copy-paste prompt in **`mcp-server/content/FORGEKIT_LITE.md` §4.3** (template-in-repo: `_forgekit/mcp-server/content/FORGEKIT_LITE.md`); **validate** all such JSON at the boundary before writing to a DB.
+**Optional — JSON seed/fixture data from any LLM:** The user can generate structured JSON in **another** LLM chat (or the same one), save it under e.g. `data/` or `fixtures/`, and ask you to validate and import. Use the copy-paste prompt in **`content/FORGEKIT_LITE.md` §4.3** (template-in-repo: `_forgekit/content/FORGEKIT_LITE.md`); **validate** all such JSON at the boundary before writing to a DB.
 
 **Optional — web search (live data):** If the app needs **up-to-date web search**, the user can sign up for **[Tavily](https://tavily.com/)** and/or the **[Brave Search API](https://api-dashboard.search.brave.com/)** (free or entry-level credits — see vendor pricing), add the key to **`.env`**, and ask you to wire **server-side** calls only. **`FORGEKIT_LITE.md` §4.4** has the full note; log provider choice in **`decisions[]`**.
 
@@ -50,7 +50,7 @@ Skip the **“copy-paste paths”** section below unless we are using a **local*
 1. Read `_forgekit/WORKFLOW.md` to understand the full phase map, playbooks, and patterns.
 2. Read `_forgekit/TRACKING_SCHEMA.md` to understand the tracking file structure before updating it.
 3. Read **`.forgekit/workflow_tracking.json`** to see current project state.
-4. If using **Cursor**, copy **`_forgekit/mcp-server/content/cursor-rules/forgekit-phase-status.mdc`** to **`.cursor/rules/forgekit-phase-status.mdc`** (create folders if needed) so agents surface phase / next actions from `.forgekit/workflow_tracking.json`.
+4. If using **Cursor**, copy **`_forgekit/content/cursor-rules/forgekit-phase-status.mdc`** to **`.cursor/rules/forgekit-phase-status.mdc`** (create folders if needed) so agents surface phase / next actions from `.forgekit/workflow_tracking.json`.
 5. We're starting with Phase 1 (Architecture + Planning).
 
 **Rules for every session:**

@@ -8,7 +8,7 @@
 
 **Related artifacts:**
 - `WORKFLOW.md` (especially § on specs lifecycle and gstack complementarity)
-- `mcp-server/src/index.ts` and `mcp-server/content/`
+- `mcp-server/src/index.ts` and `content/`
 - Existing meta-specs in this folder
 - `TRACKING_SCHEMA.md`
 - `prompts/propagate-to-forgekit.md`
@@ -43,7 +43,7 @@ Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_pla
 **Detailed Implementation Approach**
 
 1. **Guidance updates (low-risk, high-visibility)**
-   - In `mcp-server/content/NEW_PROJECT_BOOTSTRAP.md` and the output of `getPhaseGuidance("1")`, add a prominent block:
+   - In `content/NEW_PROJECT_BOOTSTRAP.md` and the output of `getPhaseGuidance("1")`, add a prominent block:
      ```
      If your agent supports a native plan mode (Grok Build `/plan`, equivalent in other systems):
      1. Call `enter_plan_mode` (or equivalent) with a prompt that includes the greenfield intake questions from `getGreenfieldIntakePrompt`.
@@ -75,14 +75,14 @@ Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_pla
    - The handler can live in a new helper in `mcp-server/src/` (e.g. `planIngest.ts`) and be called from the tool.
 
 3. **Cross-agent patterns**
-   - Create `mcp-server/content/PLAN_MODE_PATTERNS.md` (served by a new `getPlanModePatterns` tool or included in bootstrap).
+   - Create `content/PLAN_MODE_PATTERNS.md` (served by a new `getPlanModePatterns` tool or included in bootstrap).
    - Document equivalents: Grok plan mode, Claude "think step by step + review before code", Cursor Composer planning, etc.
 
 **Deliverables to create/edit:**
 - `mcp-server/src/planIngest.ts` (new)
 - Edits to `src/index.ts` to register the tool
 - Updates to `NEW_PROJECT_BOOTSTRAP.md`, `WORKFLOW.md` §1 (Phase 1), and `getPhaseGuidance`
-- New file: `mcp-server/content/PLAN_MODE_PATTERNS.md`
+- New file: `content/PLAN_MODE_PATTERNS.md`
 
 **Value:** Makes ForgeKit feel native to the agent's best planning UX. The plan artifact becomes the durable handoff instead of chat history.
 
@@ -109,7 +109,7 @@ ForgeKit's audits (black-hat, UX-cohesion, docs-alignment, competitor-deep-dive)
    ```
 
 2. **Persona and instruction assets**
-   - Create `mcp-server/content/personas/` (or reuse/extend existing):
+   - Create `content/personas/` (or reuse/extend existing):
      - `security-auditor.md`
      - `ux-cohesion-reviewer.md`
      - `stabilize-debugger.md`
@@ -147,7 +147,7 @@ Grok skills (see `~/.grok/skills/<name>/SKILL.md` with YAML frontmatter) are act
 **Detailed Implementation Approach**
 
 1. **Canonical forgekit skill definition**
-   - Add `mcp-server/content/skills/forgekit/SKILL.md` (a ready-to-copy file).
+   - Add `content/skills/forgekit/SKILL.md` (a ready-to-copy file).
    - Frontmatter example:
      ```yaml
      ---
@@ -211,7 +211,7 @@ Current implementation (McpServer + `server.tool` with Zod schemas, text returns
     "getAgentIntegrationGuide",
     "Returns tailored bootstrap + primitive mappings for a specific agent.",
     { agent: z.enum(["grok", "claude", "cursor", "generic"]).default("generic") },
-    async ({ agent }) => { /* return content from mcp-server/content/AGENT_INTEGRATION_<agent>.md */ }
+    async ({ agent }) => { /* return content from content/AGENT_INTEGRATION_<agent>.md */ }
   );
   ```
 
@@ -226,7 +226,7 @@ Current implementation (McpServer + `server.tool` with Zod schemas, text returns
 
 **Files to touch:**
 - `mcp-server/src/index.ts` (add tools + metadata support)
-- New files under `mcp-server/content/AGENT_INTEGRATION_*.md`
+- New files under `content/AGENT_INTEGRATION_*.md`
 - `mcp-server/README.md` and root README
 
 **Value:** The MCP becomes a true collaborator that understands what the connected agent can do.
@@ -261,7 +261,7 @@ Current implementation (McpServer + `server.tool` with Zod schemas, text returns
 - Strengthen `prompts/propagate-to-forgekit.md` with a Grok-specific example that uses `spawn_subagent` + `todo_write` to analyze a project before contributing lessons.
 - **Spec folder hygiene:** Create `specs/canonical/` now and move the three meta-specs (or symlink). Update `forgekit-prelaunch-review.md` and the new file with full canonical headers. Add a short `specs/README.md`.
 - **Headless support:** Add structured JSON variants to key tools and a section in `WORKFLOW.md` "Using ForgeKit in headless/CI pipelines".
-- **Media & exports:** Add patterns in Phase 1 guidance and a small `mcp-server/content/EXPORT_PATTERNS.md` that references agents with strong docx/pptx generation (Grok skills, etc.).
+- **Media & exports:** Add patterns in Phase 1 guidance and a small `content/EXPORT_PATTERNS.md` that references agents with strong docx/pptx generation (Grok skills, etc.).
 - **Dogfooding:** Add a `scripts/dogfood-cycle.mjs` that can be run against a throwaway repo using different agents.
 
 ---
@@ -284,7 +284,7 @@ All new tools should follow existing patterns: text-first returns for human/agen
 
 - **WORKFLOW.md**: New top-level section on subagents (modeled on §1b gstack). Expanded Phase 1, 4, 5, 7 playbooks. Update spec lifecycle guidance to reference the new canonical spec.
 - **TRACKING_SCHEMA.md**: Document the new optional `agentContext` object and `subagentRuns` per phase.
-- **mcp-server/content/**: Several new `.md` files (PLAN_MODE_PATTERNS, AGENT_INTEGRATION_*, SKILL template, EXPORT_PATTERNS).
+- **content/**: Several new `.md` files (PLAN_MODE_PATTERNS, AGENT_INTEGRATION_*, SKILL template, EXPORT_PATTERNS).
 - **mcp-server/src/index.ts** + new helper modules: 3–5 new tools + metadata support.
 - **Root README + mcp-server/README**: Mention new capabilities and registration for Grok.
 - **prompts/propagate-to-forgekit.md**: Add a "modern agent analysis" variant.
@@ -295,7 +295,7 @@ All changes must keep the Lite path and existing MCP clients fully working.
 
 ## 5. Grok Build Skill Template (Deliverable)
 
-Create `mcp-server/content/skills/forgekit/SKILL.md` (copyable to `~/.grok/skills/forgekit/SKILL.md`).
+Create `content/skills/forgekit/SKILL.md` (copyable to `~/.grok/skills/forgekit/SKILL.md`).
 
 Include:
 - Frontmatter as shown in 2.3
@@ -390,7 +390,7 @@ This pattern generalizes across phases.
    Tools follow existing patterns and are additive (no breakage to Lite or prior MCP clients).
 
 2. **ForgeKit skill definition created**  
-   - `mcp-server/content/skills/forgekit/SKILL.md`  
+   - `content/skills/forgekit/SKILL.md`  
    Full SKILL.md with YAML frontmatter (name, description, user-invocable, allowed-tools) + detailed body covering:  
    - 7-phase core rules  
    - Session start discipline (read tracking + CONTEXT_PROMPT)  
@@ -403,14 +403,14 @@ This pattern generalizes across phases.
    The P0 sketch called for "1c. Using Subagents with Modern Agents" after §1b (gstack). That section is **not** in `WORKFLOW.md` yet; subagent guidance currently lives in this spec, `AGENT_INTEGRATION_grok.md`, and the forgekit skill. Land §1c in a follow-up pass.
 
 4. **Supporting content files created**  
-   - `mcp-server/content/PLAN_MODE_PATTERNS.md`: Detailed recommended flow for using native plan modes as Phase 1 implementation, Grok-specific steps, cross-agent equivalents, required artifacts.  
-   - `mcp-server/content/AGENT_INTEGRATION_grok.md`: Mapping table (Grok primitives → ForgeKit phases), recommended session openers, subagent patterns, tracking sync, skills usage, headless tips, local MCP registration command, and dogfooding guidance.
+   - `content/PLAN_MODE_PATTERNS.md`: Detailed recommended flow for using native plan modes as Phase 1 implementation, Grok-specific steps, cross-agent equivalents, required artifacts.  
+   - `content/AGENT_INTEGRATION_grok.md`: Mapping table (Grok primitives → ForgeKit phases), recommended session openers, subagent patterns, tracking sync, skills usage, headless tips, local MCP registration command, and dogfooding guidance.
 
 **Files changed/added (relative to repo root):**
 - mcp-server/src/index.ts (new tools + hints)
-- mcp-server/content/skills/forgekit/SKILL.md (new, with directory)
-- mcp-server/content/PLAN_MODE_PATTERNS.md (new)
-- mcp-server/content/AGENT_INTEGRATION_grok.md (new)
+- content/skills/forgekit/SKILL.md (new, with directory)
+- content/PLAN_MODE_PATTERNS.md (new)
+- content/AGENT_INTEGRATION_grok.md (new)
 - specs/canonical/forgekit-modern-agents-evolution.md (this spec)
 
 **Notes on what worked:**
@@ -472,4 +472,4 @@ See AGENT_INTEGRATION_grok.md for full registration example.
 
 3. **Structured JSON tool outputs** — `mcp-server/src/mcpFormat.ts`; `format=json` on `ping`, `validateTracking`, `suggestSubagentDecomposition`, `ingestPlanArtifact`; `getTemplate` / `runAudit` add `format` + `includeMetadata` (recommendedSubagentPersona on audits). `ping` reports subagent/plan-mode recommendations.
 
-**Status:** P1 sketch complete. Next: dogfooding in live Grok/Cursor sessions, optional `ingestPlanArtifact` LLM-assisted refinement, persona assets (`mcp-server/content/personas/`).
+**Status:** P1 sketch complete. Next: dogfooding in live Grok/Cursor sessions, optional `ingestPlanArtifact` LLM-assisted refinement, persona assets (`content/personas/`).

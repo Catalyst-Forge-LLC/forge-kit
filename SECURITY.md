@@ -23,7 +23,7 @@ ForgeKit includes:
 
 - Documentation and agent prompts (lower direct risk, but can steer agents toward unsafe practices if wrong)
 - The **MCP server** (local process; should not expose network services by default)
-- **Reference scripts** (`mcp-server/content/scripts/`) that download binaries (PocketBase) or talk to local services (Ollama)
+- **Reference scripts** (`content/scripts/`) that download binaries (PocketBase) or talk to local services (Ollama)
 
 When reporting issues in **app repos** that use ForgeKit, distinguish ForgeKit upstream bugs from project-specific `.env` or custom code.
 

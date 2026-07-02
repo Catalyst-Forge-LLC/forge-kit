@@ -3,8 +3,8 @@
 **Spec kind:** Canonical reference (implemented review record)
 
 **Status:** Implemented (2026-06-01) — all findings addressed (H1/H2, M1–M4, L1–L4).
-**Scope:** Whole-kit pass before adopting ForgeKit on a new project, with extra focus on **`mcp-server/content/FORGEKIT_LITE.md`** (the standalone, no-MCP path the maintainer uses most).
-**Reviewer:** agent pass over `FORGEKIT_LITE.md`, `README.md`, `WORKFLOW.md`, `mcp-server/README.md`, and the reference scripts in `mcp-server/content/scripts/`.
+**Scope:** Whole-kit pass before adopting ForgeKit on a new project, with extra focus on **`content/FORGEKIT_LITE.md`** (the standalone, no-MCP path the maintainer uses most).
+**Reviewer:** agent pass over `FORGEKIT_LITE.md`, `README.md`, `WORKFLOW.md`, `mcp-server/README.md`, and the reference scripts in `content/scripts/`.
 
 ---
 
@@ -20,7 +20,7 @@ ForgeKit is in good shape and **ready for a new project**. The Lite file is unus
 
 **Status:** Fixed (2026-06-01) — `forgekit-dev-launcher.mjs` reads Lite `exitCriteria` booleans and MCP array shapes.
 
-**Where:** `mcp-server/content/scripts/forgekit-dev-launcher.mjs` (`renderProgress()`) vs `FORGEKIT_LITE.md` §11 starter tracking.
+**Where:** `content/scripts/forgekit-dev-launcher.mjs` (`renderProgress()`) vs `FORGEKIT_LITE.md` §11 starter tracking.
 
 **Problem:** Lite §11 writes `phases["1"].exitCriteria` as an **object of booleans** (`{ phase1BriefLocked: false, ... }`) with `schemaVersion: "lite-1"`. The launcher's `renderProgress()` instead reads:
 - `PHASE_LABELS` keyed `"1-architecture"`, `"2-scaffolding"`, … (the **MCP/full** schema keys), and

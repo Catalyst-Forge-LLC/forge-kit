@@ -8,7 +8,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 **What belongs in the summary column:** The *generalized* outcome (e.g. “propagate prompt: principle-first lessons, examples secondary”), not a dump of app-specific literals. Use the Detail section for file-level bullets; frame those bullets as *what template behavior changed*, not as a copy-paste of example numbers or strings from the source app.
 
-**FORGEKIT_LITE release checklist** (when editing `mcp-server/content/FORGEKIT_LITE.md`):
+**FORGEKIT_LITE release checklist** (when editing `content/FORGEKIT_LITE.md`):
 
 1. **Version strings** — bump every `v#.#.#` in the file: header block (~line 3), `AGENTS.md` snippet in §12, footer. Canonical source is the header; keep all three in sync.
 2. **`schemaVersion`** in §11 starter JSON — bump only when `workflow_tracking.json` shape changes (e.g. `lite-1` → `lite-2`).
@@ -96,7 +96,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 ### 2026-06-26 — Assertive product voice + structured eligibility fit (Exec Foundry)
 
-- **`.cursor/rules/user-facing-content.mdc`** — New **Assertive capability copy** section: direct verbs for product behavior; when to keep *can* (permission, limits, people). Mirrored in **`mcp-server/content/cursor-rules/`** and Exec Foundry **`.cursor/rules/`**.
+- **`.cursor/rules/user-facing-content.mdc`** — New **Assertive capability copy** section: direct verbs for product behavior; when to keep *can* (permission, limits, people). Mirrored in **`content/cursor-rules/`** and Exec Foundry **`.cursor/rules/`**.
 - **`docs/BRAND_AND_PRODUCT.md`** — **Assertive product voice (no hedging *can*)** subsection with We say / We don't say table + lesson learned.
 - **`docs/CONTEXT_PROMPT.md`** — Patterns: assertive product voice in copy modules; progressive async UI snapshot callbacks before close/unmount.
 - **`docs/TECHNICAL_REFERENCE.md`** — New **`[Structured eligibility / requirement fit (optional)]`** feature stub (taxonomy, extraction, surfaces, PATCH maps).
@@ -116,7 +116,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 - **`README.md`** — Prompt tree entry for `microcopy-centralization.md`.
 - **`prompts/user-facing-content-sync-audit.md`** — Cross-link to microcopy centralization prompt.
 - **`prompts/propagate-to-forgekit.md`** — Trigger row + Context inventory for microcopy pass.
-- **`.cursor/rules/user-facing-content.mdc`**, **`us-english.mdc`** — App copy tone/locale defaults (also in **`mcp-server/content/cursor-rules/`** for MCP distribution).
+- **`.cursor/rules/user-facing-content.mdc`**, **`us-english.mdc`** — App copy tone/locale defaults (also in **`content/cursor-rules/`** for MCP distribution).
 
 ### 2026-06-10 — Anti-self-importance and position-of-strength tone controls
 
@@ -204,8 +204,8 @@ Reusable whole-app UX audit, generalized from an Exec Foundry pass that produced
 
 Single agent workspace folder for **Lite file bootstrap** and **MCP greenfield**:
 
-- **`mcp-server/content/FORGEKIT_LITE.md`** — **v1.1.8**; §1.5 renamed to **`.forgekit/`** (Lite and MCP).
-- **`mcp-server/content/NEW_PROJECT_BOOTSTRAP.md`** — tracking + guardrails under **`.forgekit/`**; no repo-root split.
+- **`content/FORGEKIT_LITE.md`** — **v1.1.8**; §1.5 renamed to **`.forgekit/`** (Lite and MCP).
+- **`content/NEW_PROJECT_BOOTSTRAP.md`** — tracking + guardrails under **`.forgekit/`**; no repo-root split.
 - **`mcp-server/src/index.ts`** — kickoff bundle and **`getInitialWorkflowTracking`** write path.
 - **`cursor-rules/forgekit-no-trailer.mdc`**, **`forgekit-updates-log.mdc`**, **`forgekit-workspace-README.md`** — renamed from `forgekit-lite-*`.
 - **`WORKFLOW.md`**, **`README.md`**, **`INITIAL_PROMPT.md`**, **`CONTINUATION_PROMPT.md`**, **`TRACKING_SCHEMA.md`**, **`docs/PHASE_1_BRIEF.md`**, **`docs/CONTEXT_PROMPT.md`** — customer paths use **`.forgekit/`**.
@@ -215,8 +215,8 @@ Single agent workspace folder for **Lite file bootstrap** and **MCP greenfield**
 
 Merged **`FORGEKIT_LITE_UPDATES.md`** maintainer notes into upstream Lite:
 
-- **`mcp-server/content/FORGEKIT_LITE.md`** — **v1.1.7**; **§1.6** feedback log; **§4.2.1** environment variables; **§4.1** native-addon preflight; **§4.2** workspace UI+API layout + updates-log rule in step 3; **§13–§14** anti-patterns and baseline docs for env/port drift.
-- **`mcp-server/content/FORGEKIT_LITE_UPDATES.md`** — empty per-project starter (protocol text now in §1.6).
+- **`content/FORGEKIT_LITE.md`** — **v1.1.7**; **§1.6** feedback log; **§4.2.1** environment variables; **§4.1** native-addon preflight; **§4.2** workspace UI+API layout + updates-log rule in step 3; **§13–§14** anti-patterns and baseline docs for env/port drift.
+- **`content/FORGEKIT_LITE_UPDATES.md`** — empty per-project starter (protocol text now in §1.6).
 - **`prompts/propagate-to-forgekit.md`** — trigger rows for monorepo env / native builds.
 
 Bundled assets unchanged in role: **`cursor-rules/forgekit-lite-*.mdc`**, **`forgekit-lite-workspace-README.md`**.
@@ -225,11 +225,11 @@ Bundled assets unchanged in role: **`cursor-rules/forgekit-lite-*.mdc`**, **`for
 
 Lessons from publishing **ChronoVault** after Lite bootstrap had committed ForgeKit workspace files to git history (before optional `.forgekit/` gitignore guidance):
 
-- **`mcp-server/content/FORGEKIT_LITE.md`** — **v1.1.6**; new **§1.5** `.forgekit-lite/` gitignored workspace; **§4.1.1** GitHub GH007 / noreply identity; §4.2 / §11 / §12 / §14 path updates; §13 anti-patterns for public Lite commits and history rewrite.
-- **`mcp-server/content/FORGEKIT_LITE_UPDATES.md`** — new feedback-log template (§6–§8 from ChronoVault boot).
-- **`mcp-server/content/cursor-rules/forgekit-lite-no-trailer.mdc`** + **`forgekit-lite-updates-log.mdc`** — bundled for Lite workspace copy.
-- **`mcp-server/content/forgekit-lite-workspace-README.md`** — local setup notes for `.forgekit-lite/`.
-- **`mcp-server/content/NEW_PROJECT_BOOTSTRAP.md`** — MCP vs Lite file-bootstrap path split (§1.5 cross-ref).
+- **`content/FORGEKIT_LITE.md`** — **v1.1.6**; new **§1.5** `.forgekit-lite/` gitignored workspace; **§4.1.1** GitHub GH007 / noreply identity; §4.2 / §11 / §12 / §14 path updates; §13 anti-patterns for public Lite commits and history rewrite.
+- **`content/FORGEKIT_LITE_UPDATES.md`** — new feedback-log template (§6–§8 from ChronoVault boot).
+- **`content/cursor-rules/forgekit-lite-no-trailer.mdc`** + **`forgekit-lite-updates-log.mdc`** — bundled for Lite workspace copy.
+- **`content/forgekit-lite-workspace-README.md`** — local setup notes for `.forgekit-lite/`.
+- **`content/NEW_PROJECT_BOOTSTRAP.md`** — MCP vs Lite file-bootstrap path split (§1.5 cross-ref).
 - **`prompts/propagate-to-forgekit.md`** — trigger row for published-repo / Lite workspace layout.
 
 ### 2026-05-19 — Code deduplication and admin proxy of private edge nodes
@@ -278,7 +278,7 @@ Exec Foundry shipped **layered listing fetch**, **selector maintenance**, **user
 - **`docs/TECHNICAL_REFERENCE.md`** — New subsection **URL import: deterministic extractors vs markup drift (and optional LLM recover)** — principle-first: separate **wrong URL** from **layout/extraction failure**; layered pipeline; selector fixes vs optional single **verbatim** small-model recover; diagnostics without full HTML; pointer to **`FORGEKIT_LITE.md` §7.2** + partial specs.
 - **`docs/CONTEXT_PROMPT.md`** — New **Patterns to Follow** bullet: **Scrape pipeline: markup drift vs bad URLs** with TECH_REF cross-link.
 - **`docs/TEST_PLAN.md`** — §2a bullet **Markup drift / empty parse** (outcome-oriented errors; optional recover env gate; diagnostics).
-- **`mcp-server/content/FORGEKIT_LITE.md`** — **v1.1.5**; new **§7.2 External URL → structured record (scrape / import)**; header/footer/`AGENTS` snippet version bumps.
+- **`content/FORGEKIT_LITE.md`** — **v1.1.5**; new **§7.2 External URL → structured record (scrape / import)**; header/footer/`AGENTS` snippet version bumps.
 - **`README.md`**, **`WORKFLOW.md`**, **`INITIAL_PROMPT.md`** — Cross-references to Lite §7.2 / TECH_REF template (INITIAL already aligned).
 - **`prompts/propagate-to-forgekit.md`** and **`exec-foundry/prompts/Propagate to ForgeKit.md`** — ForgeKit **`content/`** inventory names **`FORGEKIT_LITE.md`** and when to edit §7.2 + version; **Step 5** **ForgeKit Lite parity** checklist; **Step 3** mapping row for external URL scrape; **When to run** trigger row **URL / listing import pipeline**.
 
@@ -350,11 +350,11 @@ Users often run **more than one** PocketBase (multiple projects, another clone, 
 After two iterations polished `FORGEKIT_LITE.md`, the v1.1 and v1.1.1 concepts were trapped inside that one file. This pass pushes them outward so the rest of the ForgeKit doc set references the same mental model without requiring a reader to start in Lite.
 
 - **`.cursor/rules/commit-messages.mdc`** — workspace rule. Explicit **Mode A vs Mode B** framing. Mode A: the agent typed a trailer → rewrite the command. Mode B: a clean command, and the shell/IDE wrapper injects `--trailer` at argv level below rule-file scope → hop out of the wrapper with `bash -c "git commit -F path/to/msg.txt"` (preferred) or `cmd.exe //c "cd /d <repo> && git commit -F <file>"` (Windows fallback). Notes that `-F` alone does **not** protect against Mode B. Warns against upgrading git to silence `unknown option 'trailer'`: on git 2.32+ the error becomes silent acceptance, which is worse than loud failure. Points back to `FORGEKIT_LITE.md` §8.9 and §4.1.
-- **`mcp-server/content/NEW_PROJECT_BOOTSTRAP.md`** — MCP-first bootstrap.
+- **`content/NEW_PROJECT_BOOTSTRAP.md`** — MCP-first bootstrap.
   - Progressive scaffolding — added a **web-app sub-question** (state outliving browser? → A-local drops PocketBase + auth; A-persistent keeps the full stack), a **content-generation pattern** picker (runtime LLM API / build-time LLM generation / BYO-LLM paste) with the trade-offs that matter at Phase 1, both tied back to `PHASE_1_BRIEF.md` §4 and §12.
   - Files to create — a new bullet: create `AGENTS.md`, `CLAUDE.md`, and `.cursor/rules/forgekit-lite-no-trailer.mdc` **unconditionally** regardless of current agent. Users switch tools; a CLAUDE-only repo opened in Cursor next week has no guardrail. Caveat: rule files only guard **Mode A**; Mode B needs the shell hop.
   - Rules — Git commits bullet documenting `-F`, the trailer ban list, Mode B + `bash -c` hop, and the git-version trade-off.
-- **`mcp-server/content/GREENFIELD_INTAKE.md`** — Phase 1 intake helper.
+- **`content/GREENFIELD_INTAKE.md`** — Phase 1 intake helper.
   - New **§7 State persistence** section in the same copy-paste shape as existing §6 web search. "Before locking PocketBase + auth, ask…" → A-local vs A-persistent → deploy/secret consequences → record in `PHASE_1_BRIEF.md` §4.
   - New **§8 Content-generation pattern** section, only if content is LLM-produced. Same three-pattern taxonomy as Lite §7.1 with the decision factors spelled out; record in `PHASE_1_BRIEF.md` §12.
   - Updated the "Why this exists" footer to include state persistence and content-generation alongside the existing exports / multi-tenant / hybrid-spec / search list.

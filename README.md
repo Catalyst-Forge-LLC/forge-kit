@@ -14,17 +14,23 @@ Distilled from real-world app development on [Exec Foundry](https://execfoundry.
 
 **Template-in-repo:** Copy this folder into your project as `_forgekit/` → paste the contents of `INITIAL_PROMPT.md` into your first agent chat → fill in the bracketed placeholders → go.
 
-**Install scripts (from a clone of this repo):** Run against an existing project folder — no MCP required.
+**Install scripts (from a clone of this repo, or after `pnpm link --global`):**
 
 ```bash
-# Full offline kit → <project>/_forgekit/ (+ .forgekit/workflow_tracking.json starter)
-pnpm run install:forgekit -- --path /path/to/your-app
+# One-time: from your forge-kit clone
+pnpm link --global
 
-# Lite only → <project>/.forgekit/FORGEKIT_LITE.md (+ lite tracking + cursor rules)
+# From your project folder (no --path needed):
+cd /path/to/your-app
+forgekit install --lite          # .forgekit/FORGEKIT_LITE.md only
+forgekit install                 # full _forgekit/ + tracking starter
+
+# Or from the forge-kit clone with an explicit path:
 pnpm run install:lite -- --path /path/to/your-app
+pnpm run install:forgekit -- --path /path/to/your-app
 ```
 
-Use `--force` to overwrite existing files, `--dry-run` to preview, `--skip-tracking` to omit the tracking JSON. See `scripts/install-forgekit.mjs` and `scripts/install-forgekit-lite.mjs` for details.
+Use `--force` to overwrite existing files, `--dry-run` to preview, `--skip-tracking` to omit the tracking JSON.
 
 Both paths follow the same 7-phase lifecycle. The MCP path keeps methodology server-side and always up to date; the template path is self-contained.
 
@@ -70,11 +76,11 @@ To resume in a later session, paste `CONTINUATION_PROMPT.md` into a new agent ch
 
 ### Optional: LLM-generated JSON for seed or fixture data
 
-You can use **any** LLM chat (same or different product as your coding agent — including a **local Ollama** window) to produce **valid JSON** for dev seeds, test fixtures, or demo content: paste a structured prompt, save the model’s output to a file in the repo, then have your project agent validate and wire it. Repeat per dataset (e.g. one file for users, another for a catalog). Full ForgeKit documents this in [WORKFLOW.md](WORKFLOW.md) (Phase 2 — what to provide). **ForgeKit Lite** includes a **copy-paste prompt** in [mcp-server/content/FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) §4.3.
+You can use **any** LLM chat (same or different product as your coding agent — including a **local Ollama** window) to produce **valid JSON** for dev seeds, test fixtures, or demo content: paste a structured prompt, save the model’s output to a file in the repo, then have your project agent validate and wire it. Repeat per dataset (e.g. one file for users, another for a catalog). Full ForgeKit documents this in [WORKFLOW.md](WORKFLOW.md) (Phase 2 — what to provide). **ForgeKit Lite** includes a **copy-paste prompt** in [content/FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) §4.3.
 
 ### Optional: web search APIs (Tavily, Brave, …)
 
-If the app needs **live web search** (research, RAG, “what’s current”), sign up for a **developer API** and put the key in **`.env`** — common starting points with **free or entry-level credits** are [Tavily](https://tavily.com/) (docs: [docs.tavily.com](https://docs.tavily.com/)) and the [Brave Search API](https://api-dashboard.search.brave.com/) (see their [pricing](https://api-dashboard.search.brave.com/documentation/pricing)). Confirm limits on the vendor site. **ForgeKit Lite** explains the workflow in [mcp-server/content/FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) §4.4.
+If the app needs **live web search** (research, RAG, “what’s current”), sign up for a **developer API** and put the key in **`.env`** — common starting points with **free or entry-level credits** are [Tavily](https://tavily.com/) (docs: [docs.tavily.com](https://docs.tavily.com/)) and the [Brave Search API](https://api-dashboard.search.brave.com/) (see their [pricing](https://api-dashboard.search.brave.com/documentation/pricing)). Confirm limits on the vendor site. **ForgeKit Lite** explains the workflow in [content/FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) §4.4.
 
 ### Optional: LLM-backed content (runtime / build-time / BYO-LLM)
 
@@ -82,23 +88,23 @@ If the app **displays LLM-generated content**, pick one of three patterns **in P
 
 - **Runtime LLM API** — server route calls the provider per request; requires a server runtime (not `adapter-static`), rate limits, and streaming UX for latency. Live and personalized.
   - **Cloud:** OpenAI, Anthropic, etc. — API key in `.env`; cost scales with traffic.
-  - **Local Ollama:** no cloud key; **`OLLAMA_BASE_URL`** + **`OLLAMA_MODEL`** in `.env`. Phase 2 adds **`setup-ollama.bat`** / **`test-ollama.bat`** (install, VRAM-sized model pull, completion smoke test). Defaults: **Granite 4.1** or **Gemma 3** instruct models — not reasoning/thinking models unless the brief requires them. See [SYSTEM_HEALTH_CHECKS.md](mcp-server/content/SYSTEM_HEALTH_CHECKS.md) and [FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) §4.8.
+  - **Local Ollama:** no cloud key; **`OLLAMA_BASE_URL`** + **`OLLAMA_MODEL`** in `.env`. Phase 2 adds **`setup-ollama.bat`** / **`test-ollama.bat`** (install, VRAM-sized model pull, completion smoke test). Defaults: **Granite 4.1** or **Gemma 3** instruct models — not reasoning/thinking models unless the brief requires them. See [SYSTEM_HEALTH_CHECKS.md](content/SYSTEM_HEALTH_CHECKS.md) and [FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) §4.8.
 - **Build-time LLM generation** — `scripts/seed.ts` (or `pnpm run seed`) calls the provider **once**, writes JSON into `data/`, commits it. Zero runtime LLM cost; pairs well with local-state apps + `adapter-static`. The seed script can target **cloud APIs** or **local Ollama** the same way as runtime routes (`OLLAMA_BASE_URL` / `OLLAMA_MODEL` only needed when you run `pnpm run seed`, not when users run the app).
 - **BYO-LLM paste** — ship a prompt in the repo; the user runs it in **any** LLM chat (ChatGPT, Claude, a local Ollama UI, …); pastes JSON into `data/seed.json`; Zod validates at app start. Zero project-level API keys and no project-level provider bill.
 
 Record **pattern**, **provider** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4o-mini`), **env var names**, and **validator paths** in **`PHASE_1_BRIEF.md`** (content-generation section) and **`.forgekit/workflow_tracking.json` → `decisions[]`**.
 
-**ForgeKit Lite** §7.1 has minimal reference skeletons (SvelteKit route for OpenAI and Ollama, seed script, import-time validator): [mcp-server/content/FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md#71-content-generation-patterns).
+**ForgeKit Lite** §7.1 has minimal reference skeletons (SvelteKit route for OpenAI and Ollama, seed script, import-time validator): [content/FORGEKIT_LITE.md](content/FORGEKIT_LITE.md#71-content-generation-patterns).
 
 **Listing / article URL import (fetch + parse):** If v1 creates records from **pasted external URLs**, read **ForgeKit Lite** §7.2 for layered fetch, **markup drift**, failure UX (don’t blame users for correct URLs when parse fails), and optional **last-resort structured LLM recover**. Full templates expand this in [docs/TECHNICAL_REFERENCE.md](docs/TECHNICAL_REFERENCE.md) (*URL import: deterministic extractors vs markup drift*).
 
 ### Web apps: state persistence choice (local vs accounts)
 
-Before locking a backend, answer: *"Does any state need to outlive the current browser — accounts, cross-device sync, shared data — or is per-user state fine in `localStorage` / `IndexedDB`?"* If **local-only**, drop PocketBase + auth and target `adapter-static`; if **persistent**, use the full Default-A stack. See [FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) §7 (A-local vs A-persistent).
+Before locking a backend, answer: *"Does any state need to outlive the current browser — accounts, cross-device sync, shared data — or is per-user state fine in `localStorage` / `IndexedDB`?"* If **local-only**, drop PocketBase + auth and target `adapter-static`; if **persistent**, use the full Default-A stack. See [FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) §7 (A-local vs A-persistent).
 
 ### Local PocketBase: port in `.env`, version at install (not hardcoded)
 
-Put the **API URL and port** in **`.env`** / **`.env.example`**. Install scripts resolve PocketBase **`latest`** from GitHub unless **`POCKETBASE_VERSION`** pins a tested semver — do not rely on a single old version frozen in docs. For non-technical operators, Phase 2 should add **setup.bat** / **run.bat** / **status.bat** (see [ONE_CLICK_DEV_SETUP.md](mcp-server/content/ONE_CLICK_DEV_SETUP.md) and [FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) §4.2.2–§4.8). **Troubleshoot one service:** **test-pocketbase.bat**; local LLM: **setup-ollama.bat** / **test-ollama.bat** ([SYSTEM_HEALTH_CHECKS.md](mcp-server/content/SYSTEM_HEALTH_CHECKS.md)). Phase progress: **status.bat** or **docs/FORGEKIT_PROGRESS.md**.
+Put the **API URL and port** in **`.env`** / **`.env.example`**. Install scripts resolve PocketBase **`latest`** from GitHub unless **`POCKETBASE_VERSION`** pins a tested semver — do not rely on a single old version frozen in docs. For non-technical operators, Phase 2 should add **setup.bat** / **run.bat** / **status.bat** (see [ONE_CLICK_DEV_SETUP.md](content/ONE_CLICK_DEV_SETUP.md) and [FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) §4.2.2–§4.8). **Troubleshoot one service:** **test-pocketbase.bat**; local LLM: **setup-ollama.bat** / **test-ollama.bat** ([SYSTEM_HEALTH_CHECKS.md](content/SYSTEM_HEALTH_CHECKS.md)). Phase progress: **status.bat** or **docs/FORGEKIT_PROGRESS.md**.
 
 ### Using ForgeKit with gstack
 
@@ -196,7 +202,7 @@ Templates cover architecture, business strategy, security, design systems, deplo
 ## Prerequisites
 
 - **For MCP mode:** Node.js and npm (to run the MCP server). Compatible with Cursor, Claude Desktop, Claude Code, Windsurf, and any MCP-compatible agent.
-- **For template-in-repo / Lite greenfield:** **Git**, **Node.js 20+** (LTS from [nodejs.org](https://nodejs.org/)), **npm** (bundled with Node), and **pnpm** (via corepack or `npm install -g pnpm`) — §4.1 preflight before Phase 1 file work. **Phase 2** adds stack-specific checks (PocketBase, Ollama, Playwright, native compilers, API keys) per [FORGEKIT_LITE.md](mcp-server/content/FORGEKIT_LITE.md) §4.1.2.
+- **For template-in-repo / Lite greenfield:** **Git**, **Node.js 20+** (LTS from [nodejs.org](https://nodejs.org/)), **npm** (bundled with Node), and **pnpm** (via corepack or `npm install -g pnpm`) — §4.1 preflight before Phase 1 file work. **Phase 2** adds stack-specific checks (PocketBase, Ollama, Playwright, native compilers, API keys) per [FORGEKIT_LITE.md](content/FORGEKIT_LITE.md) §4.1.2.
 - **For template-in-repo mode:** Any AI coding agent that can read files from disk (Claude, GPT, etc.).
 - **With gstack (optional):** If you have [gstack](https://github.com/garrytan/gstack) installed, ForgeKit uses its skills for sprint execution and QA. See "Using ForgeKit with gstack" above and WORKFLOW.md §1b.
 - **Stack:** ForgeKit is stack-agnostic. The embedded lessons lean toward SvelteKit, PocketBase, Tailwind, and common LLM providers (Anthropic, OpenAI, **local Ollama**), but the phases, templates, and methodology work with any stack.

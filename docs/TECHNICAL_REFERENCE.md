@@ -282,7 +282,7 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 >
 > **Observability:** Record **per-stage diagnostics** (e.g. fetch vs browser vs recover; approximate description length) for support bundles — without logging full HTML in analytics.
 >
-> 🔧 **Guidance:** Capture shipped behavior in a **delivery spec** (`specs/partial/` until deferred observability or tests are done); link from backlog (`TODO.md`). Full ForgeKit methodology also mirrors scrape/import resilience for Lite-only projects in **`mcp-server/content/FORGEKIT_LITE.md`** §7.2.
+> 🔧 **Guidance:** Capture shipped behavior in a **delivery spec** (`specs/partial/` until deferred observability or tests are done); link from backlog (`TODO.md`). Full ForgeKit methodology also mirrors scrape/import resilience for Lite-only projects in **`content/FORGEKIT_LITE.md`** §7.2.
 
 ### Multi-record URL import (bulk paste / spreadsheet)
 
