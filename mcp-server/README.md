@@ -33,6 +33,7 @@ pnpm run build
 | `getNewProjectBootstrap` | **MCP-first onboarding:** same as kickoff bundle’s methodology section alone; maps phases to MCP tools |
 | `getForgeKitLite` | **Portable Lite protocol:** full `FORGEKIT_LITE.md` for drop-in / paste bootstrap (no MCP required in the app repo) |
 | `getForgeKitLiteUpdates` | Starter `.forgekit/FORGEKIT_LITE_UPDATES.md` for local Lite protocol feedback (§1.6) |
+| `getGenesisSpecPrompt` | **Pre-Phase-1:** copy-paste prompt for an external LLM chat — researches prior art + underlying file format, drafts a `GENESIS.md` "what, not how" build spec; feed the result into `ingestPlanArtifact` |
 | `getGreenfieldIntakePrompt` | **Phase 1:** exports (PDF/DOCX/PPTX, etc.), tenancy, hybrid vs full spec, compliance, hero flow — complements `getChecklist(before-session-1)` |
 | `getForgeKitCursorPhaseRule` | **Cursor:** optional `.cursor/rules/forgekit-phase-status.mdc` — agents show phase / next actions from `.forgekit/workflow_tracking.json` |
 | `getForgeKitCursorLessonsRules` | **Cursor:** `.cursor/rules/forgekit-lessons-gate.mdc` + `forgekit-lessons-mcp.mdc` — when to call `getAntiPatterns` / `searchLessons` before large work (also bundled in `getNewProjectKickoff`) |

@@ -57,14 +57,14 @@ const PLAN_KEYWORD_RULES: { key: BriefSectionKey; keywords: string[] }[] = [
   { key: "2-users", keywords: ["user", "hero", "workflow", "audience", "persona", "journey"] },
   { key: "3-constraints", keywords: ["constraint", "requirement", "non-goal", "assumption", "boundary"] },
   { key: "4-stack", keywords: ["stack", "framework", "tooling", "technology", "architecture overview", "folder structure", "tech"] },
-  { key: "5-data", keywords: ["data model", "entity", "schema", "database", "migration", "storage"] },
+  { key: "5-data", keywords: ["data model", "entity", "schema", "database", "migration", "storage", "file format", "data format", "domain concept", "domain model", "serialization", "background"] },
   { key: "6-integrations", keywords: ["integration", "api", "external", "payment", "email", "webhook", "third party"] },
   { key: "6a-content", keywords: ["content generation", "llm", "ollama", "openai", "seed", "byo"] },
-  { key: "7-risks", keywords: ["risk", "hardest", "challenge", "mitigation", "pitfall"] },
+  { key: "7-risks", keywords: ["risk", "hardest", "challenge", "mitigation", "pitfall", "edge case"] },
   { key: "8-decisions", keywords: ["decision", "architectural", "chosen", "rationale", "alternative"] },
   { key: "9-open", keywords: ["open question", "unresolved", "defer", "todo", "unknown"] },
-  { key: "10-out-of-scope", keywords: ["out of scope", "not in v1", "defer to v2", "won't", "wont"] },
-  { key: "11-features", keywords: ["feature", "first batch", "milestone", "roadmap", "v1 scope", "backlog"] },
+  { key: "10-out-of-scope", keywords: ["out of scope", "not in v1", "defer to v2", "won't", "wont", "non-goal"] },
+  { key: "11-features", keywords: ["feature", "first batch", "milestone", "roadmap", "v1 scope", "backlog", "functional requirement"] },
 ];
 
 function normalizeHeading(heading: string): string {
@@ -113,8 +113,12 @@ function scoreHeadingForBrief(heading: string): BriefSectionKey {
 
   for (const rule of PLAN_KEYWORD_RULES) {
     for (const kw of rule.keywords) {
-      if (norm.includes(kw)) {
-        const score = kw.length;
+      // Normalize keywords the same way headings are normalized (strips
+      // punctuation like hyphens/apostrophes to spaces) so e.g. "non-goal"
+      // still matches a heading's normalized "non goal".
+      const normKw = normalizeHeading(kw);
+      if (normKw && norm.includes(normKw)) {
+        const score = normKw.length;
         if (score > bestScore) {
           bestScore = score;
           best = rule.key;

@@ -974,13 +974,39 @@ server.tool(
   }
 );
 
+// -- Tool: getGenesisSpecPrompt ---------------------------------------------
+
+server.tool(
+  "getGenesisSpecPrompt",
+  "Pre-Phase-1 helper: a copy-paste prompt to run in ANY external LLM chat (not this MCP) to produce a GENESIS.md " +
+    "'what, not how' build spec — market/prior-art check, underlying data/file-format research, functional + " +
+    "non-functional requirements, edge cases, milestones, acceptance criteria. Best for tools that wrap/extend an " +
+    "existing app's data format, but generalizes. Feed the result into ingestPlanArtifact to draft PHASE_1_BRIEF.md, " +
+    "or use alongside getGreenfieldIntakePrompt for delivery questions it doesn't cover.",
+  {},
+  async () => {
+    const path = join(MCP_CONTENT_DIR, "GENESIS_SPEC_PROMPT.md");
+    const content = readFile(path);
+    if (!content) {
+      return {
+        content: [{
+          type: "text" as const,
+          text: "GENESIS_SPEC_PROMPT.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+        }],
+      };
+    }
+    return { content: [{ type: "text" as const, text: content }] };
+  }
+);
+
 // -- Tool: getGreenfieldIntakePrompt ---------------------------------------
 
 server.tool(
   "getGreenfieldIntakePrompt",
   "Phase 1 helper: structured questions about exports (PDF/DOCX/PPTX, etc.), tenancy (e.g. consultants with many clients), " +
     "hybrid vs full spec, compliance tier, and hero flow. Complements getChecklist(before-session-1). " +
-    "Agent should capture answers in PHASE_1_BRIEF.md and .forgekit/workflow_tracking.json decisions[].",
+    "Agent should capture answers in PHASE_1_BRIEF.md and .forgekit/workflow_tracking.json decisions[]. " +
+    "For a pre-written portable spec instead of in-session Q&A, see getGenesisSpecPrompt.",
   {},
   async () => {
     const path = join(MCP_CONTENT_DIR, "GREENFIELD_INTAKE.md");
@@ -1213,7 +1239,7 @@ server.tool(
 
 server.tool(
   "ingestPlanArtifact",
-  "Map an approved native plan artifact (plan.md, etc.) into a PHASE_1_BRIEF.md draft plus decisions[] entries for .forgekit/workflow_tracking.json. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
+  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decisions[] entries for .forgekit/workflow_tracking.json. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
   {
     planContent: z.string().describe("Full text of the approved plan.md or equivalent planning artifact"),
     projectName: z.string().optional().describe("App/project name for the brief title"),
@@ -1387,6 +1413,7 @@ function printStartupHintsToStderr(): void {
     "  getForgeKitCursorPhaseRule (Cursor: phase status rule for new projects)",
     "  getForgeKitCursorLessonsRules (Cursor: lessons gate + MCP reminder rules)",
     "  getScaffoldInstallParams (Phase 2: PocketBase scripted install defaults)",
+    "  getGenesisSpecPrompt (pre-Phase-1: copy-paste prompt for an external LLM chat to draft a GENESIS.md build spec)",
     "  getGreenfieldIntakePrompt (Phase 1: exports, tenancy, hybrid spec, hero flow)",
     '  getPhaseGuidance (phase "1"–"7" or e.g. "scaffolding")',
     '  getTemplate with name "list", then a template name (e.g. PHASE_1_BRIEF)',
