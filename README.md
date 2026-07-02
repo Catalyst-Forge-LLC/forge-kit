@@ -13,7 +13,7 @@ Distilled from real-world app development on [Exec Foundry](https://execfoundry.
 **MCP (recommended):** From your forge-kit clone, build and verify the server, then enable it in Cursor:
 
 ```bash
-pnpm run mcp:build              # or: forgekit mcp build
+pnpm run mcp:build              # or: forgekit mcp build (prints Cursor MCP config)
 pnpm run mcp:status -- --ping   # static checks + live ping
 ```
 

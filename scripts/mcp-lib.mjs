@@ -121,6 +121,44 @@ export function staticMcpChecks() {
   return { issues, notes };
 }
 
+export function posixPath(p) {
+  return p.replace(/\\/g, "/");
+}
+
+export function mcpClientConfigObject() {
+  return {
+    mcpServers: {
+      forgekit: {
+        command: "node",
+        args: [posixPath(MCP_ENTRY)],
+        env: { FORGEKIT_ROOT: posixPath(FORGEKIT_ROOT) },
+      },
+    },
+  };
+}
+
+/** Copy-paste MCP client setup — shown after `forgekit mcp build`. */
+export function printMcpClientSetupBanner({ showBuildComplete = true } = {}) {
+  const entry = posixPath(MCP_ENTRY);
+
+  if (showBuildComplete) {
+    console.log("\n✓ Build complete.\n");
+  }
+
+  console.log("Connect ForgeKit MCP (Cursor starts the server for you — no `mcp dev` needed):\n");
+  console.log("  Cursor — project .cursor/mcp.json or Settings → MCP → add server:");
+  console.log(JSON.stringify(mcpClientConfigObject(), null, 2));
+  console.log("");
+  console.log("  Claude Desktop — %APPDATA%\\Claude\\claude_desktop_config.json (same mcpServers block)");
+  console.log(`  Claude Code — claude mcp add forgekit node ${entry}`);
+  console.log("");
+  console.log("  Then reload MCP in Cursor (Settings → MCP) or restart Cursor.");
+  console.log("  Verify: forgekit mcp ping   |   Reprint: forgekit mcp cursor-config");
+  console.log("");
+  console.log('  First agent prompt: "Call ForgeKit getNewProjectKickoff and set up the project."');
+  console.log("");
+}
+
 export function runMcpBuild() {
   console.log("Building ForgeKit MCP server...\n");
   const install = spawnSync("pnpm", ["install"], { cwd: MCP_SERVER_DIR, stdio: "inherit", shell: true });
@@ -128,22 +166,12 @@ export function runMcpBuild() {
     process.exit(install.status ?? 1);
   }
   const build = spawnSync("pnpm", ["run", "build"], { cwd: MCP_SERVER_DIR, stdio: "inherit", shell: true });
-  process.exit(build.status ?? 0);
+  if (build.status !== 0) {
+    process.exit(build.status ?? 1);
+  }
+  printMcpClientSetupBanner();
 }
 
 export function printCursorConfigTemplate() {
-  const template = {
-    mcpServers: {
-      forgekit: {
-        command: "node",
-        args: [MCP_ENTRY.replace(/\\/g, "/")],
-        env: {
-          FORGEKIT_ROOT: FORGEKIT_ROOT.replace(/\\/g, "/"),
-        },
-      },
-    },
-  };
-  console.log(JSON.stringify(template, null, 2));
-  console.log("\nSave to .cursor/mcp.json (project) or Cursor global MCP settings.");
-  console.log("Then restart Cursor or reload MCP servers in Settings → MCP.");
+  printMcpClientSetupBanner({ showBuildComplete: false });
 }
