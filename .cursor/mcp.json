@@ -2,7 +2,10 @@
   "mcpServers": {
     "forgekit": {
       "command": "node",
-      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"]
+      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"],
+      "env": {
+        "FORGEKIT_ROOT": "Z:/workspace/forge-kit"
+      }
     }
   }
 }

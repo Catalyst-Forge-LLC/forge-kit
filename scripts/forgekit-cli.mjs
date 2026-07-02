@@ -7,12 +7,14 @@ import {
   runInstallForgekit,
   runInstallLite,
 } from "./install.mjs";
+import { runMcpCommand } from "./mcp-status.mjs";
 
 const CLI_HELP = `
-ForgeKit — bootstrap a project folder (no MCP required)
+ForgeKit — bootstrap a project folder and run the MCP server
 
 Usage:
   forgekit install [--lite] [options]
+  forgekit mcp <subcommand>        Build, status, ping, Cursor config
 
 Global link (one-time, from your forge-kit clone):
   pnpm link --global
@@ -22,25 +24,40 @@ Then from any project folder:
   forgekit install --lite
   forgekit install
 
-Options:
+From your forge-kit clone (MCP server):
+  forgekit mcp build               Install deps + compile dist/
+  forgekit mcp status [--ping]     Static checks + optional live ping
+  forgekit mcp ping                Live ping (JSON)
+  forgekit mcp cursor-config       Print recommended .cursor/mcp.json
+
+Install options:
   --lite             Lite protocol only (.forgekit/FORGEKIT_LITE.md)
   --force, -f        Overwrite existing files
   --dry-run          Preview without writing
   --skip-tracking    Skip workflow_tracking.json starter
   --path, -p <dir>   Install elsewhere (default: current directory)
   --help, -h         Show help
+
+Run \`forgekit mcp --help\` for all MCP subcommands.
 `.trim();
 
 function main() {
   const argv = process.argv.slice(2);
 
-  if (argv.length === 0 || (argv.includes("--help") || argv.includes("-h")) && !argv.includes("install")) {
+  if (argv.length === 0 || ((argv.includes("--help") || argv.includes("-h")) && argv[0] !== "install" && argv[0] !== "mcp")) {
     console.log(CLI_HELP);
     process.exit(0);
   }
 
-  if (argv[0] !== "install") {
-    console.error(`Unknown command: ${argv[0] ?? "(none)"}`);
+  const cmd = argv[0];
+
+  if (cmd === "mcp") {
+    runMcpCommand(argv.slice(1));
+    return;
+  }
+
+  if (cmd !== "install") {
+    console.error(`Unknown command: ${cmd ?? "(none)"}`);
     console.error("Run forgekit --help");
     process.exit(1);
   }

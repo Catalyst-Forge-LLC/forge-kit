@@ -4,6 +4,17 @@ A local MCP server that exposes the ForgeKit methodology to any MCP-compatible A
 
 ## Setup
 
+From the **forge-kit repo root** (recommended):
+
+```bash
+pnpm run mcp:build              # install deps + compile dist/
+pnpm run mcp:status             # dist/, content/, Cursor mcp.json
+pnpm run mcp:ping               # live JSON-RPC ping tool call
+forgekit mcp cursor-config      # print .cursor/mcp.json template
+```
+
+Or manually:
+
 ```bash
 cd mcp-server
 pnpm install
@@ -57,11 +68,16 @@ Add to your Cursor MCP settings (`.cursor/mcp.json` in the project root, or glob
   "mcpServers": {
     "forgekit": {
       "command": "node",
-      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"]
+      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"],
+      "env": {
+        "FORGEKIT_ROOT": "Z:/workspace/forge-kit"
+      }
     }
   }
 }
 ```
+
+Run `forgekit mcp cursor-config` from your clone for paths filled in automatically.
 
 ## Configure in Claude Desktop
 
@@ -116,13 +132,11 @@ pnpm start      # runs compiled version
 
 ## Testing
 
-1. **Rebuild after changes:** `pnpm run build` — Cursor loads `dist/index.js` from `mcp.json`.
-2. **In Cursor:** Open **MCP** settings, confirm **forgekit** is green; use **agent/chat** with an instruction like *“Call the ForgeKit `ping` tool”* (if your Cursor build exposes workspace MCP tools to the agent). If `ping` returns version + `FORGEKIT_ROOT` + `WORKFLOW.md: readable`, the server and content paths are good.
-3. **MCP Inspector (CLI):** From `mcp-server/`, with the official inspector (installs on first run):
-   ```bash
-   npx @modelcontextprotocol/inspector node dist/index.js
-   ```
-   Connect in the browser UI and invoke **`ping`** to verify JSON-RPC without Cursor.
+1. **Rebuild after changes:** `pnpm run mcp:build` (repo root) or `pnpm run build` in `mcp-server/` — Cursor loads `dist/index.js` from `mcp.json`.
+2. **CLI ping (no Cursor):** `pnpm run mcp:ping` or `forgekit mcp ping` — spawns the server and calls the **`ping`** tool; expect JSON with `ok: true`, version, and `FORGEKIT_ROOT`.
+3. **Full status:** `pnpm run mcp:status -- --ping` — static file checks, Cursor config review, and live ping.
+4. **In Cursor:** Open **MCP** settings, confirm **forgekit** is green; use **agent/chat** with *“Call the ForgeKit `ping` tool”*. If `ping` returns version + `FORGEKIT_ROOT` + `WORKFLOW.md: readable`, the server and content paths are good.
+5. **MCP Inspector:** `pnpm run mcp:inspector` or `forgekit mcp inspector` — browser UI to invoke **`ping`** without Cursor.
 
 ## Troubleshooting
 

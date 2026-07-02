@@ -10,7 +10,14 @@ Distilled from real-world app development on [Exec Foundry](https://execfoundry.
 
 ## Quickstart
 
-**MCP (recommended):** Enable the ForgeKit MCP server ([setup](mcp-server/README.md)) → in your first chat, tell the agent *"Call `getNewProjectKickoff` and set up the project"* (one bundled call) → the agent handles the rest.
+**MCP (recommended):** From your forge-kit clone, build and verify the server, then enable it in Cursor:
+
+```bash
+pnpm run mcp:build              # or: forgekit mcp build
+pnpm run mcp:status -- --ping   # static checks + live ping
+```
+
+See [mcp-server/README.md](mcp-server/README.md) for `.cursor/mcp.json`. In your first chat, tell the agent *"Call `getNewProjectKickoff` and set up the project"* (one bundled call) → the agent handles the rest.
 
 **Template-in-repo:** Copy this folder into your project as `_forgekit/` → paste the contents of `INITIAL_PROMPT.md` into your first agent chat → fill in the bracketed placeholders → go.
 
