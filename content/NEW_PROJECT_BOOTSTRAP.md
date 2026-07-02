@@ -15,6 +15,21 @@ Use this when **ForgeKit is available via the MCP server** (recommended). The cu
 
 ---
 
+## Greenfield git (no `.git` yet is normal)
+
+On a **new project folder**, commands like `git status`, `git log`, or `git rev-parse` may fail with **`fatal: not a git repository`**. **That is expected—not a setup failure.** Do **not** stop kickoff, panic, or ask the user to run `git init` manually.
+
+**You** initialize git after bootstrap files exist (unless the user chose **no-git mode** — see **`FORGEKIT_LITE.md` §4.1**):
+
+1. Write kickoff artifacts first: **`.forgekit/workflow_tracking.json`**, guardrails, optional Cursor rules.
+2. Check with `git rev-parse --is-inside-work-tree`. If it returns false or errors, run **`git init -b main`** at the repo root (or `git init` + `git branch -m main` on older Git). **Never** re-init an existing repo.
+3. Write a **minimal** `.gitignore` now — at least `node_modules/`, `.env`, `.DS_Store`. Add `.forgekit/` **only** if you chose the gitignore branch in **`FORGEKIT_LITE.md` §1.5** (default MCP greenfield: **commit `.forgekit/`**).
+4. Make a **first commit** when steps 1–3 are done so the user has a clean baseline (plain `-m` or `-F`; no attribution trailers — see Rules below). Skip if the repo already had history; skip entirely in no-git mode.
+
+Do **not** treat an early missing-repo git error as blocking. Prefer **`git rev-parse --is-inside-work-tree`** over blind `git status` when you only need to know whether init is required.
+
+---
+
 ## Progressive scaffolding (important)
 
 - **Phase 1:** Create and lock **`docs/PHASE_1_BRIEF.md`** (`getTemplate({ name: "PHASE_1_BRIEF" })`). Log major commitments in **`.forgekit/workflow_tracking.json` → `decisions[]`**. If the host supports **native plan mode**, use **`getPlanModePatterns`** and WORKFLOW §1c — plan first, export to the brief on approval (no app code during planning).
@@ -38,13 +53,14 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 ## First actions (in order)
 
 1. Call **`getNewProjectKickoff`** (`includeCursorRule: false` if not using **Cursor**). It bundles this document, starter **`.forgekit/workflow_tracking.json`**, post-bootstrap user-message guidance, and optionally the Cursor rules (phase status + lessons gate + lessons MCP detail)—**or** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, **`getForgeKitCursorPhaseRule`**, and **`getForgeKitCursorLessonsRules`** separately if you need only one piece. Create **`.forgekit/`**, write files there; the **next message to the user** follows **`getPostBootstrapUserMessage`** (product-facing, no methodology leak).
-2. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
-3. Call **`getChecklist`** with section `before-session-1` — complete those items with the user (problem statement, stack, assets, hero flow).
-4. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), and hero flow. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`).
-5. Call **`getTrackingSchema`** — you will maintain **`.forgekit/workflow_tracking.json`** accordingly. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeKitSkill`** if the agent supports persistent skills.
-6. Call **`getPhaseGuidance`** with phase `1` (architecture). Summarize understanding and propose structure, data model, integrations, and v1 scope **before** writing app code.
-7. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions in **`.forgekit/workflow_tracking.json`**.
-8. After architecture is confirmed and the brief is locked, call **`getPhaseGuidance`** with phase `2` (scaffolding). Read the brief + **`.forgekit/workflow_tracking.json`**, **merge the brief into `CONTEXT_PROMPT.md`**, then execute a **single-pass app skeleton** and the rest of the Phase 2 doc set (`README`, `TODO`, `.forgekit/IDEAS.md`).
+2. **Initialize git if needed** (see **Greenfield git** above): after bootstrap files exist, `git init -b main` when `git rev-parse --is-inside-work-tree` fails; minimal `.gitignore`; optional first commit. Do not ask the user to run `git init`.
+3. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
+4. Call **`getChecklist`** with section `before-session-1` — complete those items with the user (problem statement, stack, assets, hero flow).
+5. Call **`getGreenfieldIntakePrompt`** — product/delivery questions: exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier (even if “none yet”), and hero flow. Capture answers in **`PHASE_1_BRIEF.md`** and **`decisions[]`**. If using native plan mode, include these questions in the plan context (`getPlanModePatterns`).
+6. Call **`getTrackingSchema`** — you will maintain **`.forgekit/workflow_tracking.json`** accordingly. Optionally call **`getAgentIntegrationGuide`** for your host (`grok`, `cursor`, `claude`, `generic`) and **`getForgeKitSkill`** if the agent supports persistent skills.
+7. Call **`getPhaseGuidance`** with phase `1` (architecture). Summarize understanding and propose structure, data model, integrations, and v1 scope **before** writing app code.
+8. During Phase 1, create **`docs/PHASE_1_BRIEF.md`** from **`getTemplate({ name: "PHASE_1_BRIEF" })`**, fill every section, and **lock** it; mirror major decisions in **`.forgekit/workflow_tracking.json`**.
+9. After architecture is confirmed and the brief is locked, call **`getPhaseGuidance`** with phase `2` (scaffolding). Read the brief + **`.forgekit/workflow_tracking.json`**, **merge the brief into `CONTEXT_PROMPT.md`**, then execute a **single-pass app skeleton** and the rest of the Phase 2 doc set (`README`, `TODO`, `.forgekit/IDEAS.md`).
 
 ---
 
@@ -83,6 +99,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 **Immediately (greenfield):**
 
 - **`.forgekit/`** — create the directory. Write **`.forgekit/workflow_tracking.json`** inside it (output from **`getInitialWorkflowTracking`**), then fill `project.name`, `project.created`, `project.description`, and update phases as you work. Add **`.forgekit/`** to **`.gitignore`** if the repo may be published.
+- **Git repo** — if `git rev-parse --is-inside-work-tree` fails, **`git init -b main`** after bootstrap files exist (see **Greenfield git**). A failed early `git status` on an empty folder is **not** an error. Add minimal **`.gitignore`** and an optional first commit before Phase 1 intake.
 - **Trailer-ban guardrails — create unconditionally, regardless of current agent.** Users switch tools mid-project. Write **`AGENTS.md`**, **`CLAUDE.md`**, and **`.forgekit/cursor/rules/forgekit-no-trailer.mdc`** under **`.forgekit/`**; **symlink or copy** the `.mdc` into **`.cursor/rules/`**. Core text: no unrequested attribution in commit messages. **`git commit --trailer`** is normal on **Git 2.32+**; pre-2.32 may need a shell hop if the wrapper injects `--trailer` — see **`FORGEKIT_LITE.md` §4.2 step 3, §8.9, §12.5**.
 - **Cursor users:** `.cursor/rules/forgekit-phase-status.mdc` — from **`getForgeKitCursorPhaseRule`**. **`forgekit-lessons-gate.mdc`** + **`forgekit-lessons-mcp.mdc`** — from **`getForgeKitCursorLessonsRules`** or **`getNewProjectKickoff`** (lessons workflow before substantial changes).
 

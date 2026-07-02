@@ -126,6 +126,7 @@ function buildNewProjectKickoff(
       ? ", **`getForgeKitCursorPhaseRule`**, and **`getForgeKitCursorLessonsRules`**"
       : "") +
     ". Write the files below, then reply to the user per **Post-bootstrap user message** (short; no JSON or tool dump).\n\n" +
+    "**Greenfield git:** No `.git` yet is normal. After bootstrap files exist, run **`git init -b main`** if `git rev-parse --is-inside-work-tree` fails — see **Greenfield git** in Bootstrap methodology. Do **not** treat early `git status` / `fatal: not a git repository` as a blocking error.\n\n" +
     "---\n\n";
 
   let text =
