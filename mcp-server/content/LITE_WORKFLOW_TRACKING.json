@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "lite-1",
+  "project": {
+    "name": "",
+    "created": "",
+    "description": "",
+    "sourceControl": "git"
+  },
+  "currentPhase": 1,
+  "phases": {
+    "1": {
+      "name": "Plan",
+      "status": "in_progress",
+      "exitCriteria": {
+        "phase1BriefLocked": false,
+        "stackLocked": false,
+        "heroFlowAgreed": false,
+        "v1ScopeAgreed": false
+      }
+    },
+    "2": {
+      "name": "Build",
+      "status": "pending",
+      "exitCriteria": {
+        "runnableSpine": false,
+        "heroFlowEndToEnd": false,
+        "contextPromptWritten": false
+      }
+    },
+    "3": { "name": "Stabilize", "status": "pending", "exitCriteria": {} },
+    "4": { "name": "Iterate", "status": "pending", "exitCriteria": {} },
+    "5": { "name": "Refine", "status": "pending", "exitCriteria": {} },
+    "6": { "name": "Align", "status": "pending", "exitCriteria": {} },
+    "7": { "name": "Harden", "status": "pending", "exitCriteria": {} }
+  },
+  "decisions": [],
+  "gotchas": [],
+  "sessions": [],
+  "openQuestions": []
+}

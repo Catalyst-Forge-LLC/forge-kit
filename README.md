@@ -14,6 +14,18 @@ Distilled from real-world app development on [Exec Foundry](https://execfoundry.
 
 **Template-in-repo:** Copy this folder into your project as `_forgekit/` → paste the contents of `INITIAL_PROMPT.md` into your first agent chat → fill in the bracketed placeholders → go.
 
+**Install scripts (from a clone of this repo):** Run against an existing project folder — no MCP required.
+
+```bash
+# Full offline kit → <project>/_forgekit/ (+ .forgekit/workflow_tracking.json starter)
+pnpm run install:forgekit -- --path /path/to/your-app
+
+# Lite only → <project>/.forgekit/FORGEKIT_LITE.md (+ lite tracking + cursor rules)
+pnpm run install:lite -- --path /path/to/your-app
+```
+
+Use `--force` to overwrite existing files, `--dry-run` to preview, `--skip-tracking` to omit the tracking JSON. See `scripts/install-forgekit.mjs` and `scripts/install-forgekit-lite.mjs` for details.
+
 Both paths follow the same 7-phase lifecycle. The MCP path keeps methodology server-side and always up to date; the template path is self-contained.
 
 ## The 7 phases

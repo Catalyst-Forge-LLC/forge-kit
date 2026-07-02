@@ -1,0 +1,10 @@
+{
+  "name": "forge-kit",
+  "private": true,
+  "description": "ForgeKit methodology repo — install scripts for customer projects",
+  "type": "module",
+  "scripts": {
+    "install:forgekit": "node scripts/install-forgekit.mjs",
+    "install:lite": "node scripts/install-forgekit-lite.mjs"
+  }
+}
