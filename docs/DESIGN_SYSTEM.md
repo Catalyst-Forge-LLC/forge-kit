@@ -136,6 +136,19 @@ Dense workspace panels (e.g. a **[Resource] library**, **[Entity] bank**, or cat
 
 > 💡 **Lesson learned:** **Run a systematic vertical density pass** across all panels and tabs once the feature set stabilizes. Common wins: remove redundant section headers that duplicate the tab label, collapse instructional text into the textarea placeholder or a tooltip, tighten `gap-*` and `py-*` from generous early-development spacing (e.g., `gap-6` → `gap-3`, `py-6` → `py-3`), and eliminate per-section intro paragraphs when the panel header or tab name already communicates the purpose. A canonical spec (e.g., `specs/canonical/panel-vertical-density.md`) with shared CSS class tokens and before/after spacing conventions keeps the pass consistent across panels. **Why:** Every unnecessary line of chrome above the primary input area costs the user a scroll; density is especially critical on slide-over panels where vertical space is limited.
 
+### Panel navigation model (side-tab rail)
+
+_Use when a slide-out panel has **≥ 3 co-equal sections** (settings groups, feature areas, workflow stages) that today live as a top tab strip, nested tab bars, or a long accordion._
+
+Once a panel grows past two modes, a **section rail** reads calmer than stacked cards or a crowded tab strip. The canonical shape has four rules:
+
+1. **Persistent header card.** The panel's primary object (the file, the record, the summary) renders **once at the top** and stays visible across every section — it is not a section you can navigate away from.
+2. **A section rail, not stacked cards.** Sections are a **vertical rail on wide screens** (`lg:` and up, `lg:sticky lg:top-0`) and a **horizontal scrollable pill strip on narrow screens**. One click reaches any section.
+3. **One scroll.** The panel body is the **only** `overflow-y-auto` region; content panes do not add a second nested scrollbar in the same column (see the single-scroll anti-pattern in `CONTEXT_PROMPT.md`).
+4. **One content pane at a time**, chosen by a single `*Section`/`activeTab` state with a reset effect when the panel/tab closes.
+
+> 🔧 **Guidance:** Adopt a rail at **≥ 3 sections**; panels with **≤ 2 modes** keep a plain top tab strip (a rail adds chrome without payoff). **Exception — master-detail panels** (an entity list you pick from: contacts, stories, saved records) keep their own list rail and its independent list scroll; they borrow only rules 1 and 3 (persistent header, no nested scroll **inside the detail pane**). Extract two shared primitives so the model does not re-multiply chrome: a **`PanelShell`** (backdrop, fixed-right column, entrance animation, header slot, optional non-scrolling `belowHeader` slot for tab strips/search, single scroll body, built-in width toggle) and a **`PanelSideNav`** (responsive rail driven by a typed `{ id, icon, label, statusLabel?, disabled? }[]`). Record the model in a living design/spec doc so new panels default to it. **Why:** Every panel that reinvents its own interior wayfinding is a "feels like N stitched-together apps" cohesion tell; a shared shell + rail makes wayfinding identical everywhere and removes duplicated backdrop/scroll markup.
+
 ### Modals
 
 - Centered with backdrop

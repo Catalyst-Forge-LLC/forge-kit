@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-07-04 | **Panel side-tab navigation model (Exec Foundry):** **DESIGN_SYSTEM** new *Panel navigation model (side-tab rail)* under Layout Patterns (persistent header → responsive rail → single scroll → one pane; ≥3-section threshold; master-detail exception; shared `PanelShell` + `PanelSideNav` primitives). **CONTEXT_PROMPT** — Framework gotcha (Svelte markup imbalance degrades a component's prop types → errors surface in the *consumer*; use `build` for the real message); Patterns to Follow (extract one panel shell + section-rail primitive; keep a panel mounted off-screen via `dockHidden` for background work; sync active section in URL); Anti-Patterns (no nested double-scroll in a panel body; don't reinvent panel chrome per component). |
 | 2026-06-26 | **Assertive product voice + structured eligibility fit (Exec Foundry):** **user-facing-content.mdc** Assertive capability copy; **BRAND_AND_PRODUCT** We say/We don't say table; **CONTEXT_PROMPT** assertive voice + async callback snapshot patterns; **TECHNICAL_REFERENCE** *[Structured eligibility / requirement fit]* stub; **TEST_PLAN** §4.5–4.6; **CODE_QUALITY** pre-launch grep; propagate prompt triggers + Step 3 mapping; MCP **cursor-rules/** mirror. |
 | 2026-06-15 | **Microcopy centralization propagation (Exec Foundry):** New **`prompts/microcopy-centralization.md`**; **TECHNICAL_REFERENCE** § User-facing copy; **CODE_QUALITY** + **TEST_PLAN** audit hooks; **BRAND_AND_PRODUCT** duplication policy; **CONTEXT_PROMPT** patterns/anti-patterns; **WORKFLOW** Phase 7 + post-launch cadence; **`.cursor/rules/user-facing-content.mdc`** + **`us-english.mdc`** (+ MCP **`cursor-rules/`** mirrors); propagate prompt trigger + Context inventory. |
 | 2026-06-10 | **Anti-self-importance and position-of-strength tone controls:** TECHNICAL_REFERENCE (new tone controls subsection); CONTEXT_PROMPT Patterns to Follow (anti-self-importance & posture rules); BRAND_AND_PRODUCT (grandiose & striving register prevention); TEST_PLAN (anti-self-importance & position-of-strength checks). Source: Exec Foundry cover letter anti-self-importance pass. |
@@ -93,6 +94,13 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-07-04 — Panel side-tab navigation model (Exec Foundry)
+
+Source: Exec Foundry rolled a reusable side-tab navigation model across its slide-out panels via two new shared primitives (`PanelShell` + `PanelSideNav`), then browser-verified. Spec: `specs/completed/panel-side-tab-navigation-model.md`.
+
+- **`docs/DESIGN_SYSTEM.md`** — New **Panel navigation model (side-tab rail)** subsection under Layout Patterns: the four rules (persistent header card, section rail vs stacked cards, single scroll, one content pane), the **≥3-section adoption threshold**, the **master-detail exception** (keep list scroll; borrow persistent-header + no-nested-detail-scroll), and **Guidance** to extract a shared `PanelShell` (chrome/backdrop/animation/header/`belowHeader`/single scroll body/width toggle) + `PanelSideNav` (typed responsive rail).
+- **`docs/CONTEXT_PROMPT.md`** — Critical Patterns → Framework gotchas: a Svelte markup/tag imbalance degrades a component's **prop types** so errors surface in the **consumer** (`implicitly has an 'any' type`, `Property … is missing`); run a full build on the child for the real compiler message. Patterns to Follow: extract one panel shell + section-rail primitive (migrate reference panel first, then batches); keep a panel mounted off-screen via a **`dockHidden`** flag for background work (render while `open || work.running`, floating progress chip, preserve in-flight state in `onClose`); extended the Multi-panel SPA + URL state pattern to sync the active section. Anti-Patterns: no second `overflow-y-auto` nested inside a panel's scrolling body (with the master-detail side-by-side exception); don't reinvent panel chrome per component.
 
 ### 2026-06-26 — Assertive product voice + structured eligibility fit (Exec Foundry)
 
