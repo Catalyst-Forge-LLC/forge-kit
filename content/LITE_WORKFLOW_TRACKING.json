@@ -4,7 +4,9 @@
     "name": "",
     "created": "",
     "description": "",
-    "sourceControl": "git"
+    "sourceControl": "git",
+    "archetype": "product",
+    "status": "active"
   },
   "currentPhase": 1,
   "phases": {

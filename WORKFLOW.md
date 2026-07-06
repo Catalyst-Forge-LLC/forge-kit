@@ -118,7 +118,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Agent rule:** Pull a template with **`getTemplate`** (or copy from `_forgekit/docs/`) **when entering the work that needs it**, not earlier. Use `mode: "shell"` when you only need structure; `mode: "full"` when you need embedded lessons for that doc.
 
-**ForgeKit template propagation (two tracks):** When a customer app ships meaningful features or durable doc insights, run **`prompts/propagate-to-forgekit.md`** (or the project-local mirror). Treat it as **two parallel deliverables**: **(1) Feature memory** — extend **`TECHNICAL_REFERENCE.md`** (Feature Documentation) and **`TEST_PLAN.md`** for each new **named capability** (journal **`Added`** lines are a good checklist), not only prose in **`CONTEXT_PROMPT.md`**; **(2) Pattern memory** — generalized lessons and anti-patterns in **`CONTEXT_PROMPT.md`**, **`CODE_QUALITY.md`**, and other templates as appropriate. Callouts without a feature-area home are an incomplete pass. **Append `update-log.md`** (table + Detail) after every propagation round.
+**ForgeKit template propagation (two tracks):** When a customer app ships meaningful features or durable doc insights, run **`prompts/propagate-to-forgekit.md`** (or the project-local mirror). Treat it as **two parallel deliverables**: **(1) Feature memory** — extend **`TECHNICAL_REFERENCE.md`** (Feature Documentation) and **`TEST_PLAN.md`** for each new **named capability** (journal **`Added`** lines are a good checklist), not only prose in **`CONTEXT_PROMPT.md`**; **(2) Pattern memory** — generalized lessons and anti-patterns in **`CONTEXT_PROMPT.md`**, **`CODE_QUALITY.md`**, and other templates as appropriate. Callouts without a feature-area home are an incomplete pass. **Append `update-log.md`** (table + Detail) after every propagation round. When a project **ends** (shipped, delivered, shelved), the **wrap protocol (§1e)** makes this harvest mandatory rather than opportunistic.
 
 ---
 
@@ -220,6 +220,45 @@ After subagent results return, the **parent must** update `.forgekit/workflow_tr
 
 ---
 
+## 1d. Project archetypes (scaling the lifecycle down)
+
+The 7 phases were extracted from a commercial SaaS build, and the default exit criteria assume one — payments, brand pillars, business plan, security audit. Many ForgeKit projects are **not** that: a gift app for a birthday, an internal dashboard, a weekend tool. Forcing a one-time-use trivia game through "Payment flow works end to end" produces noise (endless `N/A` annotations) and, worse, teaches agents to rubber-stamp criteria instead of reading them.
+
+**Fix: choose an archetype in Phase 1 and prune the tracking template at bootstrap.** The archetype is a product-shape question, same class as state persistence — ask it early, record it in **`PHASE_1_BRIEF.md`** (§1 or §3) and **`decisions[]`**, and store it as **`project.archetype`** in **`.forgekit/workflow_tracking.json`** (see `TRACKING_SCHEMA.md`).
+
+| Archetype | What it is | Phase adjustments |
+|-----------|-----------|-------------------|
+| **`product`** (default) | Something other people will use, possibly pay for | Full 7-phase lifecycle exactly as documented. When in doubt, use this. |
+| **`internal-tool`** | Real recurring users, no market: team dashboards, ops tooling, personal daily-driver apps | Phases 1–5 and 7 apply. **Phase 6 (Align) is optional** — skip `BRAND_AND_PRODUCT.md` and pillar reorganization unless the tool grows a real audience. In Phase 7, drop `BUSINESS_PLAN.md`, payments, and marketing-facing criteria; keep security (it still holds real data), deployment, error handling, and docs. |
+| **`one-shot`** (keepsake / event / demo) | Built for one occasion or one recipient: gift apps, event pages, conference demos, one-time tools | Phases 1–4 apply, scaled to size (Phase 1 may be one exchange; Phase 3 may be minutes). **Phases 5–7 collapse into a single "polish + ship" gate:** works on the target device (usually a phone), no dead ends in the hero flow, `prefers-reduced-motion` respected, deployed or handed off, personal/placeholder content filled. No brand doc, no business plan, no black-hat audit, no refactoring pass for a codebase with no future. What *replaces* the hardening depth is **emotional polish** — for a keepsake, the reveal moment matters more than the error format. |
+
+**Agent duties when archetype ≠ `product`:**
+
+1. **Prune, don't annotate.** At bootstrap (or as soon as the archetype is decided), remove non-applicable exit criteria from the tracking file's phase arrays and replace collapsed phases with the archetype's gate criteria. A criterion that survives pruning must be genuinely checkable — the goal is that every remaining item is real.
+2. **Log the pruning as a decision** (`decisions[]`) so a later session knows the missing criteria were removed intentionally, not lost.
+3. **Escalate on drift.** If a `one-shot` starts growing accounts, or an `internal-tool` gets external users, say so explicitly and propose re-promoting to `product` — restoring the pruned criteria for the phases still ahead. Archetypes scale the lifecycle down; they are not a permanent exemption.
+
+For quick throwaway spikes (an experiment you may delete tomorrow), consider skipping ForgeKit entirely — a tracking file for a two-hour prototype is overhead, not discipline. The archetypes above are for projects that will be **finished**, however small.
+
+---
+
+## 1e. Wrap protocol (closing a project and harvesting its lessons)
+
+ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project long — but nothing consumed them systematically at the end. A small project could log two genuinely reusable gotchas and have them die in the repo because no propagation pass ever ran. The wrap protocol closes that loop: **finishing a project includes harvesting it.**
+
+**When to run:** the project is done (shipped, delivered, handed off) or being intentionally shelved. For `one-shot` projects this is a natural, expected step — the project ends, ForgeKit keeps the lessons. For long-lived products, run the same harvest step at major milestones (launch, ownership change) rather than waiting for a "wrap" that may never come.
+
+**Steps:**
+
+1. **Sweep the tracking file.** Read every `gotchas[]` and `decisions[]` entry plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections. For each, ask: *is this generalizable beyond this app?* Framework traps, CLI behavior changes, and integration surprises usually are; app-specific content decisions usually are not.
+2. **Run the propagation prompt** (`prompts/propagate-to-forgekit.md`) with the harvest list as input — see its **Harvest mode** section, designed for exactly this sweep. Small projects without a product journal or full doc set use the tracking file as the primary discovery source.
+3. **Close the tracking file.** Set `project.status` to `"wrapped"` (see `TRACKING_SCHEMA.md`), add a final `sessions[]` entry summarizing end state and where things live (deploy URL, handoff notes), and make a final commit. Optionally tag the repo (`v1.0`, `shipped`).
+4. **Log the propagation** in ForgeKit's `update-log.md` as usual. A wrap with zero propagable lessons is legitimate — note "wrapped, nothing to propagate" in the final session entry and skip steps 2 and 4.
+
+**Why this is a protocol and not a suggestion:** the compounding loop (README) only compounds if lessons actually flow back. One flagship project propagating regularly plus a dozen small projects propagating never is a leak — the small projects are often where the freshest scaffolding and framework gotchas surface, because they exercise the newest tool versions.
+
+---
+
 ## 2. Per-Phase Playbook
 
 ### Phase 1: Architecture + Planning
@@ -238,6 +277,7 @@ After subagent results return, the **parent must** update `.forgekit/workflow_tr
 - Suggest a migration path for existing data
 - Recommend what to skip for v1
 - **If your agent supports a native plan mode** (Grok `/plan`, Cursor Plan mode, extended plan-before-code): use it for all Phase 1 work. Include **`getGreenfieldIntakePrompt`** questions in the plan context. Do **not** write app code or heavy docs until the user approves the plan. On approval, map the plan into **`PHASE_1_BRIEF.md`** (`getTemplate`) and log commitments in **`decisions[]`**. See **`getPlanModePatterns`** (MCP) or WORKFLOW §1c for handoff details.
+- **Classify the project archetype** (`product` | `internal-tool` | `one-shot`) per **§1d** and prune the tracking template's exit criteria to match. Record it in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file. Default to `product` when unsure.
 - **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and **`decisions[]`**. See **ForgeKit Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
 - **If any content is produced by an LLM** (not hand-authored, not from a conventional non-LLM API), pick one of three content-generation patterns **in Phase 1** — it drives deploy model, cost, and secret management:
   - **Runtime LLM API** — server route calls the provider per request; needs rate-limit + streaming UX. **Cloud** (OpenAI, Anthropic, …): API keys in `.env`. **Local Ollama:** `OLLAMA_BASE_URL` + `OLLAMA_MODEL`; Phase 2 **`setup:ollama`** / **`test:ollama`** (see **SYSTEM_HEALTH_CHECKS.md**, Lite §4.8) — default **Granite 4.1** / **Gemma 3**, not thinking models unless required.

@@ -26,15 +26,20 @@ Both schemas describe the same seven lifecycle phases. **`scripts/forgekit-dev-l
 
 ### `project`
 
-Static metadata. Set once at project creation.
+Static metadata. Set once at project creation (except `status`, which flips at wrap).
 
 ```json
 {
   "name": "My App",
   "created": "2026-03-12",
-  "description": "One-sentence description"
+  "description": "One-sentence description",
+  "archetype": "product",
+  "status": "active"
 }
 ```
+
+- **`archetype`** — `product` (default) | `internal-tool` | `one-shot`. Set during Phase 1 per **WORKFLOW.md §1d**. When the archetype is not `product`, **prune** non-applicable exit criteria from the phase arrays at bootstrap (e.g. drop payments/business-plan criteria for an internal tool; collapse phases 5–7 into a single polish-and-ship gate for a one-shot). Log the pruning in `decisions[]` so the removal reads as intentional. Do **not** leave inapplicable criteria in place and mark them "N/A" one by one — prune once instead.
+- **`status`** — `active` (default) | `wrapped`. Set to `wrapped` when the project is finished or shelved, after running the **wrap protocol** (WORKFLOW.md §1e): sweep `gotchas[]` + `decisions[]` for generalizable lessons, run the propagation prompt (Harvest mode), add a final `sessions[]` entry with end state and handoff pointers.
 
 ### `currentPhase`
 

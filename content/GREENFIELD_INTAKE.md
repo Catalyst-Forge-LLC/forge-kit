@@ -8,6 +8,12 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 
 ---
 
+## 0. Project archetype (ask or infer first)
+
+- **Is this a product, an internal tool, or a one-shot?** — **product** (others will use it, possibly pay), **internal-tool** (real recurring users, no market), **one-shot** (gift, event page, demo — one occasion, then done). Often obvious from the problem statement; confirm rather than interrogate.
+- The archetype **prunes the lifecycle**: internal tools make Phase 6 optional and drop payments/business-plan criteria from Phase 7; one-shots collapse phases 5–7 into a single polish-and-ship gate. See **WORKFLOW.md §1d**.
+- Record in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file, then prune the tracking template's exit criteria to match (log the pruning as a decision).
+
 ## 1. Outputs and formats
 
 - **What must users be able to export or download?** (e.g. PDF, DOCX, PPTX, Markdown, CSV)
@@ -67,4 +73,4 @@ Ask which **provider and model** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4
 
 ## Why this exists
 
-`before-session-1` alone does not spell out **exports** (including slide decks), **multi-tenant consulting**, **hybrid vs full spec**, **live web search needs**, **state persistence (local vs accounts)**, or **LLM-content generation pattern** — common sources of rework if captured only late in Phase 1.
+`before-session-1` alone does not spell out **project archetype (product vs internal tool vs one-shot)**, **exports** (including slide decks), **multi-tenant consulting**, **hybrid vs full spec**, **live web search needs**, **state persistence (local vs accounts)**, or **LLM-content generation pattern** — common sources of rework if captured only late in Phase 1.

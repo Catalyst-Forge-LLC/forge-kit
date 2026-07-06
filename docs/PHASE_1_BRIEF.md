@@ -13,6 +13,8 @@ _Structured capture of planning and architecture **before** code scaffolding. Go
 **What we are building (2–4 sentences):**
 
 
+**Project archetype:** `[product | internal-tool | one-shot]` _(WORKFLOW.md §1d — non-`product` archetypes prune later-phase exit criteria in the tracking file; log the pruning in `decisions[]`)_
+
 **What “done” looks like for v1 (measurable where possible):**
 
 

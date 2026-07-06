@@ -1,6 +1,6 @@
 # ForgeKit Lite — portable kickoff for any agentic chat
 
-> **ForgeKit Lite v1.3.0**
+> **ForgeKit Lite v1.4.0**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeKit** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream `forge-kit` repo).
 >
@@ -142,6 +142,16 @@ Every project flows through these phases. The agent **pauses at every phase tran
 
 **Deep focus in Lite:** Phases **1** and **2**. Most projects die because the brief was skipped and the spine was half-built. Phases 3–7 are real but mostly need the user to say "let's move on" — the agent's job after Phase 2 is to keep `.forgekit/workflow_tracking.json` current and not regress.
 
+**Project archetype (scale the lifecycle to the project):** During Phase 1 intake, classify the project and record it in the brief, `decisions[]`, and `project.archetype` in the tracking file:
+
+- **`product`** (default) — others will use it, maybe pay for it. Full 7-phase lifecycle.
+- **`internal-tool`** — real recurring users, no market. Phase 6 (Align) optional; Phase 7 keeps security/deploy/docs but drops payments, business plan, and marketing criteria.
+- **`one-shot`** — keepsake, gift, event, or demo built for one occasion. Phases 1–4 scaled down; phases 5–7 collapse into one **polish + ship** gate: works on the target device (usually a phone), no dead ends, `prefers-reduced-motion` respected, personal/placeholder content filled, deployed or handed off. Emotional polish outranks hardening depth here.
+
+When archetype ≠ `product`, **prune** the non-applicable exit criteria in the tracking file once (and log the pruning in `decisions[]`) instead of annotating them "N/A" forever. If the project outgrows its archetype (a one-shot grows accounts), flag it and propose re-promoting to `product`.
+
+**Wrap (when the project ends):** Finishing a project includes **harvesting** it. When the app ships, is delivered, or is intentionally shelved: sweep `gotchas[]` + `decisions[]` for lessons that generalize beyond this app (framework traps, CLI changes, integration surprises), record them in `FORGEKIT_LITE_UPDATES.md` (§1.6) or propagate to the upstream ForgeKit repo if you have one, set `project.status` to `"wrapped"`, and add a final `sessions[]` entry with the end state (deploy URL, handoff notes). Small projects often surface the freshest tooling gotchas — do not let them die in the repo.
+
 ---
 
 ## 4. First actions for the agent (in order)
@@ -277,6 +287,7 @@ Log anything non-obvious in **`gotchas[]`** (e.g. *"Playwright browsers installe
     pnpm dlx sv create app --template minimal --types ts --no-add-ons --install pnpm
     ```
     - **Folder name:** `app/` or `web/` are conventional. **Do not** name it `src` — SvelteKit creates its own `src/` *inside* the project, and a parent called `src` produces confusing `src/src/...` paths.
+    - **Recent `sv` versions may emit no `svelte.config.js`.** From `sv` CLI ~v0.16, adapter and compiler options can live inside the `sveltekit()` plugin call in **`vite.config.ts`** instead of a separate config file. Do not hunt for (or blindly create) `svelte.config.js` to configure the adapter — read `vite.config.ts` first. For `adapter-static` prerendering, set `export const prerender = true` in **`src/routes/+layout.ts`** — that works under either config layout.
     - **Never** use `sv create .` against a populated repo root — there is no stable flag to skip the interactive "non-empty" prompt, and the agent terminal will hang (§8 rule 6, §13).
     - If a prior run left a partially created `app/`, **remove it** (or scaffold into a different new name) before retrying — do **not** re-run against the partial tree and try to answer the prompt.
     - If you use this shortcut, note that **dev commands run from `app/`**: `cd app && pnpm dev`, or `pnpm -C app dev` from the repo root. Record the layout in `decisions[]` and call it out at the top of `README.md` (§14).
@@ -445,6 +456,7 @@ These are the **topics the agent needs to cover in Phase 1**, not a checklist to
 - **Problem & audience** — what they're building and why, who the primary user is, what pain v1 removes.
 - **Hero workflow** — in one sentence, the *one* end-to-end journey that must work in v1 (e.g. "sign up → onboard → generate report → export PDF"). What proves the spine is alive?
 - **Type of app** — **A. web app** (UI, auth, stored data) or **B. API / service / script** (no UI or minimal UI)? The matching default stack (§7) is used automatically — the user picks the **type**, not the stack. Only ask about language/framework/DB/deploy if the user volunteers a constraint or explicitly overrides the default.
+- **Project archetype** — is this a **product** (others will use it), an **internal tool** (recurring users, no market), or a **one-shot** (gift, event, demo — one occasion, then done)? Often obvious from Round 1 — confirm rather than ask. Drives which later phases apply (§3) and which exit criteria get pruned from the tracking file.
 - **v1 scope** — what *must* ship in v1, what is explicitly *out* of v1 (deferred, not deleted).
 - **Constraints** — timeline, team size, budget, latency targets, offline support, compliance hints (even "none yet, but enterprise later").
 - **Delivery shape** — exports (PDF / DOCX / PPTX / CSV / Markdown)? Multi-tenant (one org or many orgs × clients)? Auth model (public, invite-only, SSO)? Is the product read in-app or is export the main deliverable?
@@ -489,6 +501,8 @@ _Status: DRAFT | LOCKED (<date>)_
 - Problem:
 - Primary audience:
 - Why now:
+- Archetype: <!-- product | internal-tool | one-shot — see §3; drives which later phases apply -->
+
 
 ## 2. Hero workflow (v1)
 - One-sentence journey:
@@ -902,7 +916,9 @@ Write this to **`.forgekit/workflow_tracking.json`** on first run. Replace the p
     "name": "<project name>",
     "created": "<YYYY-MM-DD>",
     "description": "<one-line description>",
-    "sourceControl": "git"
+    "sourceControl": "git",
+    "archetype": "product",
+    "status": "active"
   },
   "currentPhase": 1,
   "phases": {
@@ -945,7 +961,7 @@ Save this as `.forgekit/AGENTS.md` so agents that auto-load it (Codex, Cursor, C
 
 ```markdown
 <!--
-  Agent protocol based on ForgeKit Lite v1.3.0.
+  Agent protocol based on ForgeKit Lite v1.4.0.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream forge-kit repo).
 -->
@@ -1136,4 +1152,4 @@ ForgeKit Lite covers the shape of a project. The full **ForgeKit MCP server** ad
 
 ---
 
-**ForgeKit Lite v1.3.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeKit Lite v1.4.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

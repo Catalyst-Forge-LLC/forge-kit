@@ -2,7 +2,9 @@
   "project": {
     "name": "",
     "created": "",
-    "description": ""
+    "description": "",
+    "archetype": "product",
+    "status": "active"
   },
   "currentPhase": "1-architecture",
   "phases": {

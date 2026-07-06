@@ -64,6 +64,8 @@ Phases 4 and 5 commonly alternate. A typical path is 1 → 2 → 3 → 4 → 5 �
 
 Each phase has detailed entry/exit criteria, a playbook, and example prompts in [WORKFLOW.md](WORKFLOW.md).
 
+The lifecycle **scales to the project**. In Phase 1 you classify the **archetype** — `product` (full lifecycle), `internal-tool` (Phase 6 optional; no payments/business-plan criteria), or `one-shot` (a gift, event, or demo app: phases 5–7 collapse into a single polish-and-ship gate) — and the tracking template's exit criteria are pruned to match (WORKFLOW.md §1d). When any project **ends**, a **wrap protocol** (§1e) harvests its logged gotchas and decisions back into these templates, so even a weekend build feeds the compounding loop.
+
 Documentation is **progressive** (WORKFLOW.md §1a): Phase 1 produces the brief; Phase 2 adds four core docs; later phases add templates only when the work demands them. No empty boilerplate on day one.
 
 ## How ForgeKit compares
@@ -144,7 +146,7 @@ Use gstack skills *within* ForgeKit phases. gstack persists some sprint artifact
 
 ### Propagating lessons back
 
-When you learn something new — a pattern that works, a gotcha that cost hours — propagate it back into ForgeKit's templates so your next project starts smarter. See `prompts/propagate-to-forgekit.md`.
+When you learn something new — a pattern that works, a gotcha that cost hours — propagate it back into ForgeKit's templates so your next project starts smarter. See `prompts/propagate-to-forgekit.md`. **Any** ForgeKit project is a valid source: small projects use the prompt's **Harvest mode** (sweep the tracking file's `gotchas[]` and `decisions[]`), and the **wrap protocol** (WORKFLOW.md §1e) runs the same harvest whenever a project ends.
 
 ## What your project looks like
 
@@ -176,6 +178,7 @@ forge-kit/
   CONTINUATION_PROMPT.md   ← Resume prompt for later sessions (MCP + local modes)
   TRACKING_SCHEMA.md       ← How the AI reads and updates `.forgekit/workflow_tracking.json`
   update-log.md            ← Chronological log of ForgeKit template/prompt changes (propagation runs)
+  update-log-archive.md    ← Pre-open-source entries (archived; see convention note in update-log.md)
   workflow_tracking.json   ← Starter tracking JSON (MCP/Lite: write to customer `.forgekit/workflow_tracking.json`)
   docs/
     PHASE_1_BRIEF.md       ← Template: structured Phase 1 planning handoff
