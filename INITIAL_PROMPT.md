@@ -184,7 +184,7 @@ Phase 2 (Scaffolding + Core Build):
   - `TODO.md` (initial backlog; seed from brief §11)
   - `.forgekit/IDEAS.md` (parking lot — capture ideas here instead of cluttering the backlog)
 - **Do not** create the rest of the ForgeKit doc library in Phase 2 (e.g. `BRAND_AND_PRODUCT`, `CODE_QUALITY`, `DEPLOYMENT`) unless I explicitly need one to finish the spine. Add other templates **in later phases** when that work starts (`TECHNICAL_REFERENCE`, `TEST_PLAN`, `DESIGN_SYSTEM` in Phase 4+ as warranted; brand/strategy docs in Phase 6; hardening docs in Phase 7). Phase 6 may add an optional internal **`FEATURE_CATALOG.md`** and periodic **`user-facing-content-sync-audit`** when the product map is large.
-- Reusable audit prompts: `_forgekit/prompts/` **or** ForgeKit MCP **`runAudit`** (security, pre-launch, docs alignment, user-facing content sync, brand copy, landing page, Cialdini, competitor, propagate-to-forgekit).
+- Reusable audit prompts: `_forgekit/prompts/` **or** ForgeKit MCP **`runAudit`** (security, pre-launch, docs alignment, user-facing content sync, brand copy, landing page, Cialdini, competitor, propagate-to-forgekit, engineering-skill-library).
 
 Then pause and ask if I want to continue to Phase 3 (Bug Fixing + Environment Stabilization).
 

@@ -68,6 +68,7 @@ Run after meaningful implementation work **and** after substantive **documentati
 | **New or updated `specs/`** | Extract reusable architecture, data, and UX patterns. |
 | **Spec lifecycle folder conventions changed** | New/renamed spec folders (e.g. `specs/partial/`, `specs/completed/`, `specs/canonical/` for living references) or changes to when a spec moves between them → **WORKFLOW.md** spec-lifecycle subsection and, if the app codifies it, `.cursor/rules/specs-and-todo.mdc` + `.cursor/rules/spec-completion.mdc` guidance. |
 | **New or updated project `prompts/`** | Generalize methodologies into `prompts/` here when they apply beyond one app. |
+| **Skill library / handoff docs created or updated** (`docs/skills/` or similar) | Generalizable judgment, debugging playbooks, and anti-patterns → **CONTEXT_PROMPT** / **CODE_QUALITY** / **TECHNICAL_REFERENCE** lessons; the capture methodology lives in **`prompts/engineering-skill-library.md`**. |
 | **Competitive intelligence** (e.g. paid-ad screenshot reviews, landscape specs) | See `docs/MARKETING_GROWTH.md` → *Competitive intelligence: paid social screenshots* and `docs/BRAND_AND_PRODUCT.md` → *Don't echo competitor ad tropes*. |
 | **Product journal / changelog automation** | Changes to git→journal scripts, LLM vs heuristic defaults, or append semantics → **CONTEXT_PROMPT** (tooling) and optionally **TECHNICAL_REFERENCE** (pipelines). |
 | **Major feature or integration** | Use the Step 3 mapping table (TECH_REF, CONTEXT_PROMPT, etc.). |
@@ -140,7 +141,7 @@ Do **not** rely only on the immediate trigger. Skim **multiple signal sources** 
 - `CONTINUATION_PROMPT.md`
 - `WORKFLOW.md`
 - `TRACKING_SCHEMA.md`
-- `prompts/` (reusable prompt library — includes `personal-beta-outreach.md`, `user-facing-content-sync-audit.md`, `microcopy-centralization.md`)
+- `prompts/` (reusable prompt library — includes `personal-beta-outreach.md`, `user-facing-content-sync-audit.md`, `microcopy-centralization.md`, `engineering-skill-library.md`)
 - `mcp-server/` — MCP packaging: `README.md`, `content/` (kickoff/bootstrap, greenfield intake, scaffold JSON, post-bootstrap messaging, Cursor rule fragments), **`content/FORGEKIT_LITE.md`** (portable kickoff — when propagation touches **URL import / scrape**, **markup drift**, **LLM verbatim recover fallback**, or **failure-copy vs wrong-URL** UX, update **§7.2** and bump the Lite **version** in header, footer, and the §12 `AGENTS.md` snippet), `src/index.ts` (e.g. `getNewProjectKickoff`, `getGreenfieldIntakePrompt`)
 
 ## What I just built/changed

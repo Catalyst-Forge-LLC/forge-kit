@@ -201,6 +201,16 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 >
 > 💡 **Also:** When LLM output needs to fit into structured formats (DOCX, database fields), have the code own the structure and use the LLM only for content. Don't ask the LLM to generate find/replace pairs or structural markup.
 
+> 💡 **Lesson learned:** **Fence untrusted content inside prompts.** Any text the app did not author — user input, scraped pages, uploaded documents, third-party API responses — is a **prompt-injection vector** ("ignore previous instructions and…"). Wrap every such value in a labeled delimiter block and prepend a standing guard instruction that says content inside the block is **data to analyze, never instructions to follow.** Keep the wrapping helper (and a shared `INJECTION_GUARD`-style constant) **internal to the one LLM module** so new prompt functions inherit the defense by construction rather than each author remembering it. **Why:** a model that obeys embedded directives can leak the system prompt or emit fabricated content that the user then submits under their own name — the highest-trust failure class for any AI product.
+
+### Model selection and the provider choke point
+
+[Document your model tiers, how a model is chosen per call, and the single module all model calls pass through.]
+
+> 💡 **Lesson learned:** **Route every model call through one function and pick the tier by the value of the output.** A single `callLLM()`-style entry point is where provider switching (hosted vs local Ollama), usage logging, and response normalization live — features should never construct a provider client directly. Choose the model by what the output is worth: the **most capable/expensive** tier for extraction and anything the user submits as their own; a **mid** tier as the default workhorse; a **cheap/fast** tier for classification, retries, and recovery. Keep model ids in **config/constants**, never in function or route names (`callBigModel()` rots the day you change providers — see `.cursor/rules/api-naming` guidance). For user-facing actions, a small **fallback chain** that retries down the tiers on provider overload (429/503) beats hard-failing.
+>
+> 📝 **Example:** Read the **entire** response, not the first content block — providers can return reasoning/tool blocks before text, so `content[0]` intermittently yields "empty" output; concatenate all text blocks in the wrapper. Disable **extended/adaptive thinking** for JSON tasks (reasoning tokens can eat the output budget and return empty text). Treat a **blank model-name env var** as unset so `MODEL_X=` doesn't get passed into the API and rejected.
+
 ### Output Validation
 
 [How do you validate LLM responses? What happens when the LLM returns malformed output?]

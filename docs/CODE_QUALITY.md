@@ -117,6 +117,8 @@ _Run through this list periodically, especially before releases._
 - [ ] Check that promo code redemption and usage counter increments are atomic
 - [ ] Verify delegation/impersonation routes check access level before mutations
 - [ ] Check that rate limiting covers all expensive endpoints (LLM calls, scraping, file processing)
+- [ ] Verify untrusted content (user input, scraped pages, uploads) is fenced with an injection-guard wrapper before entering any LLM prompt
+- [ ] Verify LLM calls read all response text blocks (not `content[0]`), disable thinking for JSON tasks, and treat blank model-name env vars as unset
 - [ ] Verify Stripe webhook signatures are validated on all payment endpoints
 - [ ] Verify all `fetch` call sites check `res.ok` before calling `.json()` or assigning response data to state
 - [ ] Check that all `setInterval` polling loops handle 429 responses with exponential backoff (not just `!res.ok` → skip)

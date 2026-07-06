@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-07-05 | **Engineering skill library (Exec Foundry):** New **`prompts/engineering-skill-library.md`** — capture a principal-engineer handoff / skill library (audit-first, subsystem deep-dives, debugging playbooks, judgment frameworks) from a mature codebase. **TECHNICAL_REFERENCE** — prompt-injection fencing lesson + new *Model selection and the provider choke point* subsection (tier by output value, one `callLLM` entry point, multi-block responses, thinking-off for JSON, blank env var). **CONTEXT_PROMPT** — new *LLM provider integration* pattern group. **CODE_QUALITY** — injection-guard + LLM response-handling checklist rows. **WORKFLOW** Phase 7 handoff artifact; README prompt tree; INITIAL_PROMPT runAudit list; MCP aliases (`skill-library`, `handoff`); propagate prompts — trigger row + inventory (both copies). |
 | 2026-07-04 | **Panel side-tab navigation model (Exec Foundry):** **DESIGN_SYSTEM** new *Panel navigation model (side-tab rail)* under Layout Patterns (persistent header → responsive rail → single scroll → one pane; ≥3-section threshold; master-detail exception; shared `PanelShell` + `PanelSideNav` primitives). **CONTEXT_PROMPT** — Framework gotcha (Svelte markup imbalance degrades a component's prop types → errors surface in the *consumer*; use `build` for the real message); Patterns to Follow (extract one panel shell + section-rail primitive; keep a panel mounted off-screen via `dockHidden` for background work; sync active section in URL); Anti-Patterns (no nested double-scroll in a panel body; don't reinvent panel chrome per component). |
 | 2026-06-26 | **Assertive product voice + structured eligibility fit (Exec Foundry):** **user-facing-content.mdc** Assertive capability copy; **BRAND_AND_PRODUCT** We say/We don't say table; **CONTEXT_PROMPT** assertive voice + async callback snapshot patterns; **TECHNICAL_REFERENCE** *[Structured eligibility / requirement fit]* stub; **TEST_PLAN** §4.5–4.6; **CODE_QUALITY** pre-launch grep; propagate prompt triggers + Step 3 mapping; MCP **cursor-rules/** mirror. |
 | 2026-06-15 | **Microcopy centralization propagation (Exec Foundry):** New **`prompts/microcopy-centralization.md`**; **TECHNICAL_REFERENCE** § User-facing copy; **CODE_QUALITY** + **TEST_PLAN** audit hooks; **BRAND_AND_PRODUCT** duplication policy; **CONTEXT_PROMPT** patterns/anti-patterns; **WORKFLOW** Phase 7 + post-launch cadence; **`.cursor/rules/user-facing-content.mdc`** + **`us-english.mdc`** (+ MCP **`cursor-rules/`** mirrors); propagate prompt trigger + Context inventory. |
@@ -94,6 +95,22 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-07-05 — Engineering skill library (Exec Foundry)
+
+Source: Exec Foundry produced a 15-document "retiring principal engineer" skill library (`docs/skills/`) capturing architecture rationale, subsystem deep-dives (data layer, auth/delegation, LLM, DOCX, scraping, billing), debugging playbooks, security/testing gates, and judgment frameworks. This pass propagates the **methodology** and the generalizable **lessons** the library surfaced that ForgeKit did not yet carry.
+
+- **`prompts/engineering-skill-library.md`** (new) — Generalized capture prompt: audit-first process (core modules, convention files, failure record, specs, representative routes), skill-set shape (architecture + per-subsystem + playbooks + security/testing/process + judgment capstone), mentoring-voice rules (WHY + scar per convention, anti-patterns and war stories, write for less context), index + verification steps. Companion note distinguishing it from findings-oriented audits.
+- **`docs/TECHNICAL_REFERENCE.md`** — Prompt Architecture: lesson on **fencing untrusted content** (labeled delimiter blocks + standing guard instruction, helper internal to the one LLM module). New **Model selection and the provider choke point** subsection: one `callLLM()`-style entry point; tier chosen by output value (capable for user-submitted artifacts, mid workhorse, cheap for classification/recovery); model ids in config not identifiers; fallback chains on provider overload. Example block: concatenate **all** text blocks (not `content[0]`), disable extended thinking for JSON tasks, treat blank model env vars as unset.
+- **`docs/CONTEXT_PROMPT.md`** — Critical Patterns: new **LLM provider integration** group mirroring the above at gotcha level (multi-block responses, thinking vs JSON, blank env var, tier-by-value + config-based naming, injection wrapping).
+- **`docs/CODE_QUALITY.md`** — Audit checklist: verify injection-guard fencing on all untrusted prompt content; verify LLM calls read all response blocks / disable thinking for JSON / handle blank model env vars.
+- **`WORKFLOW.md`** — Phase 7 (Hardening) doc schedule: optional **handoff artifact** — run the skill-library prompt before beta, ownership change, or handing work to a cheaper model.
+- **`README.md`** — Prompt tree row for `engineering-skill-library.md`.
+- **`INITIAL_PROMPT.md`** — runAudit prompt list extended.
+- **`mcp-server/src/index.ts`** — `runAudit` aliases `skill-library` and `handoff` (prompt file itself auto-discovered from `prompts/`).
+- **`prompts/propagate-to-forgekit.md`** + Exec Foundry **`prompts/Propagate to ForgeKit.md`** — New trigger row (skill library / handoff docs created or updated) and prompt-library inventory updated in both copies.
+
+Deliberately not propagated: app-specific content of the 14 skill docs (PocketBase filter helper internals, DOCX run-splitting mechanics, plan-tier tables, scraping vendor chains) — ForgeKit already carries the generalized versions of those lessons from earlier passes; this pass added only the net-new gaps above.
 
 ### 2026-07-04 — Panel side-tab navigation model (Exec Foundry)
 

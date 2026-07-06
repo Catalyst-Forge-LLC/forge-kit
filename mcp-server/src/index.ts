@@ -577,6 +577,8 @@ server.tool(
       landing: "landing-page-rewrite",
       "landing-page": "landing-page-rewrite",
       propagate: "propagate-to-forgekit",
+      "skill-library": "engineering-skill-library",
+      handoff: "engineering-skill-library",
     };
 
     const resolved = aliases[type.toLowerCase()] ?? type.replace(/\.md$/, "");

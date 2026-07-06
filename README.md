@@ -196,6 +196,7 @@ forge-kit/
     microcopy-centralization.md      ← Phased inline→module migration; export/inline/duplication audits
     propagate-to-forgekit.md     ← Sync lessons back into ForgeKit templates
     product-feedback-to-spec.md  ← Turn raw user feedback into an implementation spec
+    engineering-skill-library.md ← Capture a principal-engineer handoff / skill library from a mature codebase
   mcp-server/              ← MCP server source (see mcp-server/README.md)
 ```
 
