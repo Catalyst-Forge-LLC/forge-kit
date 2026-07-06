@@ -4,9 +4,11 @@
 
 A structured development methodology for solo developers building full-stack apps with AI coding agents. It turns a general-purpose AI into an experienced build partner by giving it a 7-phase lifecycle, battle-tested lessons, and operational discipline.
 
+What makes ForgeKit different is the **compounding loop**: every production lesson from an app built with ForgeKit — a gotcha that cost hours, a pattern that worked, a security finding — is propagated back into these templates through a documented protocol ([prompts/propagate-to-forgekit.md](prompts/propagate-to-forgekit.md)), with an auditable history in [update-log.md](update-log.md). Most frameworks gate the work; ForgeKit also compounds the learning, so each new project starts smarter than the last.
+
 **Open source** under the [Apache License 2.0](LICENSE). Fork, use in commercial projects, and contribute via [CONTRIBUTING.md](CONTRIBUTING.md). Security reports: [SECURITY.md](SECURITY.md).
 
-Distilled from real-world app development on [Exec Foundry](https://execfoundry.com).
+Distilled from real-world app development on [Exec Foundry](https://execfoundry.com) and refined across a dozen further projects since.
 
 ## Quickstart
 
@@ -63,6 +65,19 @@ Phases 4 and 5 commonly alternate. A typical path is 1 → 2 → 3 → 4 → 5 �
 Each phase has detailed entry/exit criteria, a playbook, and example prompts in [WORKFLOW.md](WORKFLOW.md).
 
 Documentation is **progressive** (WORKFLOW.md §1a): Phase 1 produces the brief; Phase 2 adds four core docs; later phases add templates only when the work demands them. No empty boilerplate on day one.
+
+## How ForgeKit compares
+
+Spec-driven development is now a crowded space. ForgeKit overlaps with the well-known frameworks on structure but differs on what it accumulates:
+
+| Framework | Core idea | Where ForgeKit differs |
+|-----------|-----------|------------------------|
+| **GitHub Spec Kit** | Constitution + gated specify → plan → tasks → implement flow | Spec Kit's templates are structural scaffolding you fill in. ForgeKit's templates arrive **pre-loaded with production lessons** (the `💡` callouts) and keep absorbing new ones via the propagation loop. |
+| **BMAD-Method** | Multi-agent orchestration with 20+ specialized personas | BMAD simulates a team through role-play. ForgeKit assumes one developer + one agent and invests in **persistent memory and lifecycle state** instead of persona breadth. |
+| **OpenSpec** | Change-delta proposals for existing codebases | Complementary — OpenSpec governs individual changes; ForgeKit governs the **whole product lifecycle**, including brand, pricing, launch, and post-launch growth, which most SDD frameworks stop short of. |
+| **Retro / memory loops** (`/retro` commands, CLAUDE.md appenders, agent reflection tools) | End-of-session lessons appended to the current project's instruction file | Those loops are **per-project**. ForgeKit's propagation protocol is **cross-project**: lessons are generalized (principle first, app specifics bracketed), deduplicated against existing coverage, routed to the right template on two tracks (feature stubs vs pattern lessons), and logged in `update-log.md`. |
+
+If you want lightweight change gating inside a single repo, Spec Kit or OpenSpec may be all you need. ForgeKit earns its weight when you build **repeatedly** — each project's scars become the next project's starting position.
 
 ## How to use it
 
@@ -222,7 +237,7 @@ Templates cover architecture, business strategy, security, design systems, deplo
 
 ## Origin
 
-ForgeKit was extracted from building [Exec Foundry](https://execfoundry.com), an AI-powered job search tool built with SvelteKit, PocketBase, and Anthropic's Claude. The methodology emerged from 7 sessions and ~78,000 lines of real development.
+ForgeKit was extracted from building [Exec Foundry](https://execfoundry.com), an AI-powered job search tool built with SvelteKit, PocketBase, and Anthropic's Claude. The methodology emerged from 7 sessions and ~78,000 lines of real development, and has since been used to bootstrap **about a dozen further projects** — each propagation pass in [update-log.md](update-log.md) records what those builds taught the templates.
 
 Built by [Catalyst Forge](https://catalystforge.com).
 

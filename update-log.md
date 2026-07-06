@@ -21,6 +21,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-07-06 | **README positioning: compounding loop + framework comparison.** Intro now leads with the cross-project propagation loop (update-log as auditable history) as the differentiator; new *How ForgeKit compares* section (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) with honest complementarity notes; Origin updated to reflect ~a dozen projects bootstrapped since Exec Foundry. |
 | 2026-07-05 | **Engineering skill library (Exec Foundry):** New **`prompts/engineering-skill-library.md`** — capture a principal-engineer handoff / skill library (audit-first, subsystem deep-dives, debugging playbooks, judgment frameworks) from a mature codebase. **TECHNICAL_REFERENCE** — prompt-injection fencing lesson + new *Model selection and the provider choke point* subsection (tier by output value, one `callLLM` entry point, multi-block responses, thinking-off for JSON, blank env var). **CONTEXT_PROMPT** — new *LLM provider integration* pattern group. **CODE_QUALITY** — injection-guard + LLM response-handling checklist rows. **WORKFLOW** Phase 7 handoff artifact; README prompt tree; INITIAL_PROMPT runAudit list; MCP aliases (`skill-library`, `handoff`); propagate prompts — trigger row + inventory (both copies). |
 | 2026-07-04 | **Panel side-tab navigation model (Exec Foundry):** **DESIGN_SYSTEM** new *Panel navigation model (side-tab rail)* under Layout Patterns (persistent header → responsive rail → single scroll → one pane; ≥3-section threshold; master-detail exception; shared `PanelShell` + `PanelSideNav` primitives). **CONTEXT_PROMPT** — Framework gotcha (Svelte markup imbalance degrades a component's prop types → errors surface in the *consumer*; use `build` for the real message); Patterns to Follow (extract one panel shell + section-rail primitive; keep a panel mounted off-screen via `dockHidden` for background work; sync active section in URL); Anti-Patterns (no nested double-scroll in a panel body; don't reinvent panel chrome per component). |
 | 2026-06-26 | **Assertive product voice + structured eligibility fit (Exec Foundry):** **user-facing-content.mdc** Assertive capability copy; **BRAND_AND_PRODUCT** We say/We don't say table; **CONTEXT_PROMPT** assertive voice + async callback snapshot patterns; **TECHNICAL_REFERENCE** *[Structured eligibility / requirement fit]* stub; **TEST_PLAN** §4.5–4.6; **CODE_QUALITY** pre-launch grep; propagate prompt triggers + Step 3 mapping; MCP **cursor-rules/** mirror. |
@@ -95,6 +96,12 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-07-06 — README positioning: compounding loop + framework comparison
+
+Source: assessment of the 2026 spec-driven development landscape (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) ahead of sharing ForgeKit publicly. The rarest mechanism ForgeKit has is the **cross-project propagation loop with editorial discipline** — previously buried at the bottom of the README.
+
+- **`README.md`** — Intro: new paragraph leading with the compounding loop ("most frameworks gate the work; ForgeKit also compounds the learning") linking the propagate prompt and this log. New **How ForgeKit compares** section after the 7 phases: table contrasting Spec Kit (structural scaffolding vs pre-loaded production lessons), BMAD (persona breadth vs persistent memory + lifecycle state), OpenSpec (per-change governance vs whole-product lifecycle incl. brand/pricing/launch), and retro/memory loops (per-project appends vs generalized, deduplicated, two-track, logged cross-project propagation); closes with honest guidance on when the lighter tools suffice. Origin: notes ~a dozen projects bootstrapped since Exec Foundry, pointing at this log as the record.
 
 ### 2026-07-05 — Engineering skill library (Exec Foundry)
 
