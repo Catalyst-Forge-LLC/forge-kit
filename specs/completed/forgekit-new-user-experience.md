@@ -1,8 +1,8 @@
 # ForgeKit — New user experience (NUX) improvement
 
-**Spec kind:** Draft proposal (ForgeKit product / docs)
+**Spec kind:** Feature delivery (ForgeKit product / docs)
 
-**Status:** Partial — M1 README front-door rewrite in progress/done this pass; Try packaging (M2–M4 artifacts) already shipped. Remaining: cold-reader smoke-test, optional M5 social proof, move to `specs/completed/` when AC1–AC8 verified.
+**Status:** Completed 2026-07-10 — M1–M4 shipped. M5 (link a real public project) deferred as optional social proof.
 
 **Scope:** How a **first-time visitor** understands what ForgeKit is, why it is worth trying, and how to prove it out in under an hour — without cloning MCP, linking a global CLI, or reading the full methodology tree. Primary prove-it path: **Genesis spec prompt + ForgeKit Lite**. Secondary paths (MCP, full install) stay available but must not dominate the front door.
 
@@ -212,3 +212,30 @@ Prefer shipping M2–M4 packaging (TRY doc, sample, flag, issue template) ahead 
 ## 13. Why this spec exists
 
 ForgeKit's depth is a strength for returning builders and a barrier for first contact. Genesis + Lite already form a complete "prove it without MCP" loop; the gap is **presentation and sequencing**, not missing methodology. This document locks that product intent so README and packaging work can be reviewed against explicit acceptance criteria instead of another ad-hoc docs pass.
+
+---
+
+## 14. Implementation summary (completed)
+
+| Milestone | Outcome | Status |
+|-----------|---------|--------|
+| **M1** | README hero + ranked Quickstart (Try → MCP → Full); GitHub About/topics | Done |
+| **M2** | `TRY_FORGEKIT.md` + kickoff line; Lite §1 human pointer | Done |
+| **M3** | Mars sample Genesis; `--with-genesis-stub`; `GENESIS_STUB.md` | Done |
+| **M4** | MCP bootstrap/kickoff/INITIAL_PROMPT/mcp-server README aligned with Try + `docs/GENESIS.md`; issue checklist | Done |
+| **M5** | Real public project link | Deferred (optional) |
+
+**Acceptance criteria**
+
+| AC | Result |
+|----|--------|
+| AC1 | README first screenful: what / who / why / Try link |
+| AC2 | TRY_FORGEKIT.md recipe needs no MCP/CLI |
+| AC3 | Kickoff line forbids scaffold before brief approval; TRY doc says stop agent if it scaffolds early |
+| AC4 | README Quickstart §2 is MCP |
+| AC5 | TRY links to Genesis prompt + Lite; no third full copy |
+| AC6 | TRY + README graduation ladder |
+| AC7 | Verified: stub writes `docs/GENESIS.md`; second run skips without `--force` |
+| AC8 | `.github/ISSUE_TEMPLATE/try-forgekit-checklist.md` |
+
+**Key paths:** `TRY_FORGEKIT.md`, `README.md`, `content/GENESIS_SPEC_PROMPT.md`, `content/GENESIS_STUB.md`, `content/examples/GENESIS_SAMPLE_mars-habitat-roster.md`, `content/NEW_PROJECT_BOOTSTRAP.md`, `content/FORGEKIT_LITE.md` §1, `INITIAL_PROMPT.md`, `mcp-server/README.md`, `mcp-server/src/index.ts` kickoff intro.

@@ -2,7 +2,7 @@
 
 Use alongside **`getChecklist`** section `before-session-1`. That checklist covers *problem, stack, assets, hero flow* at a high level. This document adds **delivery and product-shape** questions so Phase 1 does not miss exports, tenancy, or “how literal is the spec.”
 
-**Already have a written spec (e.g. a `GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** produces a portable spec via an external LLM chat before you run through these questions.
+**Already have a written spec (e.g. `docs/GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** (or human recipe **`TRY_FORGEKIT.md`**) produces a portable spec via an external LLM chat before you run through these questions.
 
 **Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and **`.forgekit/workflow_tracking.json` → `decisions[]`**.
 

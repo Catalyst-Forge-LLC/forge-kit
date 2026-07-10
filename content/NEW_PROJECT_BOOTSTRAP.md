@@ -53,7 +53,10 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 
 ## First actions (in order)
 
-0. **If the user only has an idea, not a written spec** — especially one that wraps or extends an existing app's data/file format — offer **`getGenesisSpecPrompt`**: a copy-paste prompt for an external LLM chat that researches prior art and the underlying file format, then produces a `GENESIS.md` "what, not how" build spec. Feed the result into step 1 via **`ingestPlanArtifact`** before locking the brief. Skip this step if the user already has a spec or wants to go straight to intake questions.
+0. **Pre-written spec or idea only:**
+   - If **`docs/GENESIS.md`** already exists (Try path / human brought a what-not-how spec), call **`ingestPlanArtifact`** with that file’s contents as `planContent`, review the draft brief, then continue intake for gaps only (`getGreenfieldIntakePrompt`). Do **not** re-run a full blank Genesis prompt unless the user asks.
+   - If the user only has an **idea** (no file yet), especially one that wraps an existing app’s data/file format, offer **`getGenesisSpecPrompt`**: they paste it into an **external** LLM chat, save the result as **`docs/GENESIS.md`**, then you ingest as above. Humans without MCP can follow repo-root **`TRY_FORGEKIT.md`** instead.
+   - Skip this step if the user wants straight Lite/MCP intake questions with no Genesis file.
 1. Call **`getNewProjectKickoff`** (`includeCursorRule: false` if not using **Cursor**). It bundles this document, starter **`.forgekit/workflow_tracking.json`**, post-bootstrap user-message guidance, and optionally the Cursor rules (phase status + lessons gate + lessons MCP detail)—**or** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, **`getForgeKitCursorPhaseRule`**, and **`getForgeKitCursorLessonsRules`** separately if you need only one piece. Create **`.forgekit/`**, write files there; the **next message to the user** follows **`getPostBootstrapUserMessage`** (product-facing, no methodology leak).
 2. **Initialize git if needed** (see **Greenfield git** above): after bootstrap files exist, `git init -b main` when `git rev-parse --is-inside-work-tree` fails; minimal `.gitignore`; optional first commit. Do not ask the user to run `git init`.
 3. Call **`getProgressiveDocSchedule`** and keep it in mind for every phase transition.
@@ -70,6 +73,8 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 
 | Need | MCP tool |
 |------|-----------|
+| **Pre-Phase-1 build spec (external LLM chat)** | **`getGenesisSpecPrompt`** → user saves **`docs/GENESIS.md`**; or human recipe **`TRY_FORGEKIT.md`** (no MCP) |
+| **Approved Genesis / plan → brief + decisions** | **`ingestPlanArtifact`** — after plan approval or when `docs/GENESIS.md` exists |
 | **One-call greenfield setup** (bootstrap + tracking JSON + post-bootstrap guidance + optional Cursor rules) | **`getNewProjectKickoff`** — prefer over calling the granular tools separately |
 | **Which docs in which phase** | **`getProgressiveDocSchedule`** (WORKFLOW §1a) |
 | Phase playbooks, entry/exit criteria, patterns | `getPhaseGuidance` (phases 1–7 or keywords like `scaffolding`, `hardening`) |
@@ -81,7 +86,6 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | Keyword search across lesson callouts | `searchLessons` |
 | Consolidated anti-patterns | `getAntiPatterns` |
 | **Native plan mode as Phase 1** | **`getPlanModePatterns`** — use before scaffolding when the host supports plan-before-code |
-| **Approved plan → brief + decisions** | **`ingestPlanArtifact`** — after plan approval, before locking Phase 1 |
 | **Agent-specific integration** (Grok, Cursor, Claude) | **`getAgentIntegrationGuide`** — primitive mappings and session openers |
 | **Installable forgekit skill** (Grok etc.) | **`getForgeKitSkill`** — copy to host skill directory |
 | **Tracking file health check** | **`validateTracking`** — after substantive work or phase transitions |
@@ -101,6 +105,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 **Immediately (greenfield):**
 
 - **`.forgekit/`** — create the directory. Write **`.forgekit/workflow_tracking.json`** inside it (output from **`getInitialWorkflowTracking`**), then fill `project.name`, `project.created`, `project.description`, and update phases as you work. Add **`.forgekit/`** to **`.gitignore`** if the repo may be published.
+- **`docs/GENESIS.md`** (optional but preferred on the Try path) — what-not-how product spec from **`getGenesisSpecPrompt`** / **`TRY_FORGEKIT.md`**. If present at kickoff, ingest with **`ingestPlanArtifact`** before locking the brief.
 - **Git repo** — if `git rev-parse --is-inside-work-tree` fails, **`git init -b main`** after bootstrap files exist (see **Greenfield git**). A failed early `git status` on an empty folder is **not** an error. Add minimal **`.gitignore`** and an optional first commit before Phase 1 intake.
 - **Trailer-ban guardrails — create unconditionally, regardless of current agent.** Users switch tools mid-project. Write **`AGENTS.md`**, **`CLAUDE.md`**, and **`.forgekit/cursor/rules/forgekit-no-trailer.mdc`** under **`.forgekit/`**; **symlink or copy** the `.mdc` into **`.cursor/rules/`**. Core text: no unrequested attribution in commit messages. **`git commit --trailer`** is normal on **Git 2.32+**; pre-2.32 may need a shell hop if the wrapper injects `--trailer` — see **`FORGEKIT_LITE.md` §4.2 step 3, §8.9, §12.5**.
 - **Cursor users:** `.cursor/rules/forgekit-phase-status.mdc` — from **`getForgeKitCursorPhaseRule`**. **`forgekit-lessons-gate.mdc`** + **`forgekit-lessons-mcp.mdc`** — from **`getForgeKitCursorLessonsRules`** or **`getNewProjectKickoff`** (lessons workflow before substantial changes).

@@ -4,7 +4,9 @@ A local MCP server that exposes the ForgeKit methodology to any MCP-compatible A
 
 ## Setup
 
-From the **forge-kit repo root** (recommended):
+**No MCP yet?** Prove ForgeKit with Genesis + Lite first: see repo-root **[TRY_FORGEKIT.md](../TRY_FORGEKIT.md)**.
+
+From the **forge-kit repo root** (MCP path):
 
 ```bash
 pnpm run mcp:build              # install deps + compile dist/ + print Cursor MCP config
@@ -21,6 +23,8 @@ pnpm install
 pnpm run build
 ```
 
+If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ingestPlanArtifact`** (or tell the agent to) before locking Phase 1. To draft a Genesis file, call **`getGenesisSpecPrompt`** or follow TRY_FORGEKIT.md.
+
 ## Tools exposed
 
 | Tool | Description |
@@ -33,7 +37,7 @@ pnpm run build
 | `getNewProjectBootstrap` | **MCP-first onboarding:** same as kickoff bundle’s methodology section alone; maps phases to MCP tools |
 | `getForgeKitLite` | **Portable Lite protocol:** full `FORGEKIT_LITE.md` for drop-in / paste bootstrap (no MCP required in the app repo) |
 | `getForgeKitLiteUpdates` | Starter `.forgekit/FORGEKIT_LITE_UPDATES.md` for local Lite protocol feedback (§1.6) |
-| `getGenesisSpecPrompt` | **Pre-Phase-1:** copy-paste prompt for an external LLM chat — researches prior art + underlying file format, drafts a `GENESIS.md` "what, not how" build spec; feed the result into `ingestPlanArtifact` |
+| `getGenesisSpecPrompt` | **Pre-Phase-1:** copy-paste prompt for an external LLM chat; save as **`docs/GENESIS.md`**. Humans: **TRY_FORGEKIT.md**. Feed into `ingestPlanArtifact` |
 | `getGreenfieldIntakePrompt` | **Phase 1:** exports (PDF/DOCX/PPTX, etc.), tenancy, hybrid vs full spec, compliance, hero flow — complements `getChecklist(before-session-1)` |
 | `getForgeKitCursorPhaseRule` | **Cursor:** optional `.cursor/rules/forgekit-phase-status.mdc` — agents show phase / next actions from `.forgekit/workflow_tracking.json` |
 | `getForgeKitCursorLessonsRules` | **Cursor:** `.cursor/rules/forgekit-lessons-gate.mdc` + `forgekit-lessons-mcp.mdc` — when to call `getAntiPatterns` / `searchLessons` before large work (also bundled in `getNewProjectKickoff`) |

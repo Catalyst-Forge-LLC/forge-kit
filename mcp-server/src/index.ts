@@ -127,6 +127,7 @@ function buildNewProjectKickoff(
       : "") +
     ". Write the files below, then reply to the user per **Post-bootstrap user message** (short; no JSON or tool dump).\n\n" +
     "**Greenfield git:** No `.git` yet is normal. After bootstrap files exist, run **`git init -b main`** if `git rev-parse --is-inside-work-tree` fails — see **Greenfield git** in Bootstrap methodology. Do **not** treat early `git status` / `fatal: not a git repository` as a blocking error.\n\n" +
+    "**Genesis / Try path:** If **`docs/GENESIS.md`** exists, call **`ingestPlanArtifact`** with its contents before locking Phase 1. If the user only has an idea, offer **`getGenesisSpecPrompt`** (save as `docs/GENESIS.md`) or point humans at repo-root **`TRY_FORGEKIT.md`** (no MCP).\n\n" +
     "---\n\n";
 
   let text =
@@ -980,11 +981,11 @@ server.tool(
 
 server.tool(
   "getGenesisSpecPrompt",
-  "Pre-Phase-1 helper: a copy-paste prompt to run in ANY external LLM chat (not this MCP) to produce a GENESIS.md " +
+  "Pre-Phase-1 helper: a copy-paste prompt to run in ANY external LLM chat (not this MCP) to produce docs/GENESIS.md " +
     "'what, not how' build spec — market/prior-art check, underlying data/file-format research, functional + " +
     "non-functional requirements, edge cases, milestones, acceptance criteria. Best for tools that wrap/extend an " +
-    "existing app's data format, but generalizes. Feed the result into ingestPlanArtifact to draft PHASE_1_BRIEF.md, " +
-    "or use alongside getGreenfieldIntakePrompt for delivery questions it doesn't cover.",
+    "existing app's data format, but generalizes. Humans without MCP: see TRY_FORGEKIT.md. Feed the result into " +
+    "ingestPlanArtifact to draft PHASE_1_BRIEF.md, or use alongside getGreenfieldIntakePrompt for delivery gaps.",
   {},
   async () => {
     const path = join(MCP_CONTENT_DIR, "GENESIS_SPEC_PROMPT.md");

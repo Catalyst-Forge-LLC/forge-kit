@@ -13,11 +13,11 @@ This folder holds **ForgeKit methodology and meta-documentation** — not custom
 
 Canonical docs use `**Spec kind:** Canonical reference` in the header and track **catalog/evolution state**, not a delivery lifecycle. They stay in `canonical/` and evolve over time.
 
-## Partial (in flight)
+## Completed
 
 | Document | Summary |
 |----------|---------|
-| `partial/forgekit-new-user-experience.md` | NUX / README front door — Genesis + Lite prove-it path. M1 README rewrite + Try packaging shipped; verify AC1–AC8 then complete |
+| `completed/forgekit-new-user-experience.md` | NUX / README front door — Genesis + Lite prove-it path (M1–M4 done; M5 optional deferred) |
 
 ## Canonical references (current)
 

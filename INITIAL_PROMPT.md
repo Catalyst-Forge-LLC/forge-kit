@@ -10,8 +10,9 @@ If **ForgeKit is connected as an MCP server**, do **not** require a local `_forg
 
 **Before doing anything else:**
 
+0. If **`docs/GENESIS.md`** exists, call **`ingestPlanArtifact`** with its contents and review the draft brief before scaffolding. If the user only has an idea, offer **`getGenesisSpecPrompt`** (they save as `docs/GENESIS.md`) or point them at **TRY_FORGEKIT.md** when MCP is not the entry path.
 1. Call the ForgeKit MCP tool **`getNewProjectKickoff`** (set **`includeCursorRule`** to **false** if not using Cursor). Write **`.forgekit/workflow_tracking.json`** and the Cursor rule when included; keep the **first reply to the user** short per the bundle’s post-bootstrap section (no MCP tool list or raw JSON dump). **Alternatively:** call **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**, and **`getForgeKitCursorPhaseRule`** separately.
-2. In Phase 1, call **`getGreenfieldIntakePrompt`** alongside **`getChecklist`** (`before-session-1`) so exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier, and hero flow are captured early in **`PHASE_1_BRIEF.md`** and **`decisions[]`**.
+2. In Phase 1, call **`getGreenfieldIntakePrompt`** alongside **`getChecklist`** (`before-session-1`) so exports (PDF / DOCX / PPTX, etc.), tenancy (e.g. consultants × clients), hybrid vs full spec, compliance tier, and hero flow are captured early in **`PHASE_1_BRIEF.md`** and **`decisions[]`** (skip questions already answered in Genesis).
 3. Use **`getProgressiveDocSchedule`**, **`getPhaseGuidance`**, **`getChecklist`**, **`getTemplate`** (include **`PHASE_1_BRIEF`** in Phase 1; use `mode: "shell"` or `full` as needed), **`getTrackingSchema`**, **`runAudit`**, **`searchLessons`**, and **`getAntiPatterns`** as that bootstrap describes.
 4. We're starting with Phase 1 (Architecture + Planning).
 
