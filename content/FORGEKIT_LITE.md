@@ -29,13 +29,15 @@ If any of these feel tempting mid-session, stop and re-read the referenced rule.
 
 ## 1. How to use this file
 
-**Option A — drop-in file (preferred).** Save this doc in **`.forgekit/FORGEKIT_LITE.md`** (see §1.5). You may commit `.forgekit/` (same Apache 2.0 license) or gitignore it for a cleaner public app history — see §1.5. Most agents will read it when cited (e.g. *"follow `.forgekit/FORGEKIT_LITE.md`"*). Then save the **AGENTS.md snippet** from §12 as **`.forgekit/AGENTS.md`**. Symlink or copy `.forgekit/cursor/rules/*.mdc` into `.cursor/rules/` so Cursor loads them (§1.5).
+**Humans (first time):** Prefer the repo-root recipe **[TRY_FORGEKIT.md](../TRY_FORGEKIT.md)**: Genesis spec in any chat app, then this Lite file, then one kickoff line to your coding agent. No MCP required.
 
-**Option B — paste into chat.** Paste this whole document as the first message of a fresh chat. Say: *"Follow this document as the project kickoff protocol. Ask me the §5 intake questions before writing any code."*
+**Option A — drop-in file (preferred).** Save this doc in **`.forgekit/FORGEKIT_LITE.md`** (see §1.5). You may commit `.forgekit/` (same Apache 2.0 license) or gitignore it for a cleaner public app history — see §1.5. Most agents will read it when cited (e.g. *"follow `.forgekit/FORGEKIT_LITE.md`"*). Then save the **AGENTS.md snippet** from §12 as **`.forgekit/AGENTS.md`**. Symlink or copy `.forgekit/cursor/rules/*.mdc` into `.cursor/rules/` so Cursor loads them (§1.5). If you already have a product idea, pair this file with **`docs/GENESIS.md`** (see TRY_FORGEKIT.md and `content/GENESIS_SPEC_PROMPT.md`).
+
+**Option B — paste into chat.** Paste this whole document as the first message of a fresh chat. Say: *"Follow this document as the project kickoff protocol. Ask me the §5 intake questions before writing any code."* If `docs/GENESIS.md` exists, add: *"Treat docs/GENESIS.md as the product spec; ask only about gaps."*
 
 **Option C — pin as system/rules.** Put the **Agent rules** block from §8 into your tool's system prompt, rules file, or skill (e.g. Cursor `.cursor/rules/forgekit.mdc`, Claude Code `CLAUDE.md`, Codex `AGENTS.md`).
 
-Any of the three works. A + C together is best.
+Any of the three works. A + C together is best. For a written pre-Phase-1 spec, A + **`docs/GENESIS.md`** is the Try path.
 
 ---
 

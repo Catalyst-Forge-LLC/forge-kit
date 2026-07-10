@@ -2,12 +2,12 @@
 
 **Spec kind:** Draft proposal (ForgeKit product / docs)
 
-**Status:** Draft — decisions locked 2026-07-10; packaging artifacts in progress (TRY doc, sample Genesis, lite flag, issue checklist). README front-door rewrite (M1) still open.
+**Status:** Partial — M1 README front-door rewrite in progress/done this pass; Try packaging (M2–M4 artifacts) already shipped. Remaining: cold-reader smoke-test, optional M5 social proof, move to `specs/completed/` when AC1–AC8 verified.
 
 **Scope:** How a **first-time visitor** understands what ForgeKit is, why it is worth trying, and how to prove it out in under an hour — without cloning MCP, linking a global CLI, or reading the full methodology tree. Primary prove-it path: **Genesis spec prompt + ForgeKit Lite**. Secondary paths (MCP, full install) stay available but must not dominate the front door.
 
 **Related artifacts:**
-- Root [`README.md`](../../README.md) (current front door — too dense for first contact)
+- Root [`README.md`](../../README.md) (Try-first front door)
 - Root [`TRY_FORGEKIT.md`](../../TRY_FORGEKIT.md) (human try recipe — locked name)
 - [`content/GENESIS_SPEC_PROMPT.md`](../../content/GENESIS_SPEC_PROMPT.md)
 - [`content/examples/GENESIS_SAMPLE_mars-habitat-roster.md`](../../content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) (fictional sample)
@@ -15,7 +15,7 @@
 - [`content/NEW_PROJECT_BOOTSTRAP.md`](../../content/NEW_PROJECT_BOOTSTRAP.md)
 - [`.github/ISSUE_TEMPLATE/try-forgekit-checklist.md`](../../.github/ISSUE_TEMPLATE/try-forgekit-checklist.md)
 - [`mcp-server/README.md`](../../mcp-server/README.md)
-- [`specs/canonical/forgekit-modern-agents-evolution.md`](canonical/forgekit-modern-agents-evolution.md)
+- [`specs/canonical/forgekit-modern-agents-evolution.md`](../canonical/forgekit-modern-agents-evolution.md)
 
 ---
 
