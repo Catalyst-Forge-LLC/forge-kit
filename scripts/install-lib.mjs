@@ -13,6 +13,7 @@ export function parseInstallArgs(argv) {
     force: false,
     dryRun: false,
     skipTracking: false,
+    withGenesisStub: false,
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -25,6 +26,8 @@ export function parseInstallArgs(argv) {
       args.dryRun = true;
     } else if (arg === "--skip-tracking") {
       args.skipTracking = true;
+    } else if (arg === "--with-genesis-stub") {
+      args.withGenesisStub = true;
     } else if (arg === "--help" || arg === "-h") {
       args.help = true;
     } else if (!arg.startsWith("-") && !args.target) {

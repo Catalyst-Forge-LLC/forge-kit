@@ -32,12 +32,14 @@ From your forge-kit clone (MCP server):
 
 Install options:
   --lite             Lite protocol only (.forgekit/FORGEKIT_LITE.md)
+  --with-genesis-stub  With --lite: also create docs/GENESIS.md stub
   --force, -f        Overwrite existing files
   --dry-run          Preview without writing
   --skip-tracking    Skip workflow_tracking.json starter
   --path, -p <dir>   Install elsewhere (default: current directory)
   --help, -h         Show help
 
+First-time prove-it (no MCP): see TRY_FORGEKIT.md in the forge-kit repo.
 Run \`forgekit mcp --help\` for all MCP subcommands.
 `.trim();
 

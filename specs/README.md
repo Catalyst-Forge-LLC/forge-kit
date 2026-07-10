@@ -17,7 +17,7 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 | Document | Summary |
 |----------|---------|
-| `forgekit-new-user-experience.md` | NUX / README front door — Genesis + Lite as the prove-it path; ranked Quickstart; graduation ladder |
+| `forgekit-new-user-experience.md` | NUX / README front door — Genesis + Lite prove-it path. Decisions locked; `TRY_FORGEKIT.md`, Mars sample, `--with-genesis-stub`, issue checklist shipped; M1 README rewrite still open |
 
 ## Canonical references (current)
 

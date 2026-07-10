@@ -104,10 +104,20 @@ export function runInstallLite(rawArgv, { defaultToCwd = false } = {}) {
     );
   }
 
+  if (args.withGenesisStub) {
+    const genesisDest = join(target, "docs", "GENESIS.md");
+    ensureDir(join(target, "docs"), args.dryRun);
+    copyPath(join(contentDir, "GENESIS_STUB.md"), genesisDest, opts);
+  }
+
   console.log("\nDone.");
   console.log("  Protocol:  .forgekit/FORGEKIT_LITE.md");
   console.log("  Tracking:  .forgekit/workflow_tracking.json (lite-1 schema)");
-  return { target, mode: "lite" };
+  if (args.withGenesisStub) {
+    console.log("  Genesis:   docs/GENESIS.md (stub — replace with your spec)");
+    console.log("  Next:      see TRY_FORGEKIT.md in the forge-kit repo");
+  }
+  return { target, mode: "lite", withGenesisStub: !!args.withGenesisStub };
 }
 
 export const INSTALL_FULL_HELP = `
@@ -136,10 +146,13 @@ Usage:
   pnpm run install:lite -- [options]
 
 Options:
-  --path, -p <dir>   Target project root (default: current directory for \`forgekit\` CLI)
-  --force, -f        Overwrite existing files
-  --skip-tracking    Do not create workflow_tracking.json starter
-  --dry-run          Print actions only
+  --path, -p <dir>        Target project root (default: current directory for \`forgekit\` CLI)
+  --force, -f             Overwrite existing files
+  --skip-tracking         Do not create workflow_tracking.json starter
+  --with-genesis-stub     Also create docs/GENESIS.md stub (for the Try path)
+  --dry-run               Print actions only
 
 Installs into <target>/.forgekit/ (FORGEKIT_LITE.md, tracking starter, cursor rules).
+With --with-genesis-stub, also writes docs/GENESIS.md from content/GENESIS_STUB.md.
+See TRY_FORGEKIT.md in the forge-kit repo for the no-MCP prove-it recipe.
 `.trim();

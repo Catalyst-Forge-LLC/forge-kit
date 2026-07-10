@@ -12,11 +12,13 @@ Use this **before** Phase 1, in **any** LLM chat — ChatGPT, Claude, Grok, a lo
 
 ## After you have `GENESIS.md`
 
-1. Save it in the project repo (e.g. `docs/GENESIS.md`), or just keep the chat output handy.
-2. Feed it into ForgeKit Phase 1 — pick one:
+1. Save it in the project repo as **`docs/GENESIS.md`** (canonical path).
+2. Follow the human recipe in **`TRY_FORGEKIT.md`** (forge-kit repo root), or feed the spec into ForgeKit Phase 1:
    - **Automatic draft:** call **`ingestPlanArtifact`** with the full `GENESIS.md` text as `planContent`. It maps headings like *Problem statement*, *Goals and non-goals*, *Required background on the data/file format*, *Core domain concepts*, *Edge cases*, *Milestones*, and *Open questions* into `docs/PHASE_1_BRIEF.md` sections, and extracts any `D1.`/`D2.`-style decisions into `decisions[]`. Sections without a clean home (e.g. **Acceptance criteria** — the brief has no dedicated section for it) land in a "Plan sections not auto-mapped" footer — fold that into **§12 Handoff checklist** or its own appendix by hand.
-   - **Manual walkthrough:** read `GENESIS.md` together with the agent as context, then run **`getGreenfieldIntakePrompt`** + `getChecklist(before-session-1)` to confirm delivery details the spec might not cover (tenancy, compliance, live search, content-generation pattern).
+   - **Manual walkthrough:** read `docs/GENESIS.md` together with the agent as context, then run **`getGreenfieldIntakePrompt`** + `getChecklist(before-session-1)` to confirm delivery details the spec might not cover (tenancy, compliance, live search, content-generation pattern).
 3. Either way, **lock `docs/PHASE_1_BRIEF.md`** before Phase 2 scaffolding, per the normal Phase 1 exit criteria.
+
+**Shape reference (fiction):** `content/examples/GENESIS_SAMPLE_mars-habitat-roster.md` — a Mars habitat duty roster (shared shift schedule in a sci-fi skin).
 
 ---
 

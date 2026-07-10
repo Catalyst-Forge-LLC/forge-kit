@@ -12,7 +12,9 @@ Distilled from real-world app development on [Exec Foundry](https://execfoundry.
 
 ## Quickstart
 
-**MCP (recommended):** From your forge-kit clone, build and verify the server, then enable it in Cursor:
+**Try first (no MCP):** Follow [TRY_FORGEKIT.md](TRY_FORGEKIT.md). Paste the Genesis prompt into any AI chat, save `docs/GENESIS.md`, add ForgeKit Lite, and kick off your coding agent. Optional sample shape: [Mars habitat duty roster](content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) (fiction).
+
+**MCP (after you have a forge-kit clone):** From your forge-kit clone, build and verify the server, then enable it in Cursor:
 
 ```bash
 pnpm run mcp:build              # or: forgekit mcp build (prints Cursor MCP config)
@@ -35,6 +37,7 @@ pnpm setup    # then open a new terminal
 # From your project folder (no --path needed):
 cd /path/to/your-app
 forgekit install --lite          # .forgekit/FORGEKIT_LITE.md only
+forgekit install --lite --with-genesis-stub  # Lite + docs/GENESIS.md stub
 forgekit install                 # full _forgekit/ + tracking starter
 
 # Or from the forge-kit clone with an explicit path:
