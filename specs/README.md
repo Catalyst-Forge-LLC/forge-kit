@@ -2,6 +2,8 @@
 
 This folder holds **ForgeKit methodology and meta-documentation** — not customer app feature specs (those live in each product repo's `specs/` per WORKFLOW.md).
 
+**For app projects:** copy **`docs/SPEC_FEATURE_TEMPLATE.md`** (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`) into your app as `specs/[feature-name].md`. Lite ships a short skeleton in **`FORGEKIT_LITE.md` §3.1**. Cursor rules: `content/cursor-rules/specs-and-todo.mdc` + `spec-completion.mdc`.
+
 ## Folder layout
 
 | Path | Purpose |
@@ -27,4 +29,4 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 | `canonical/forgekit-prelaunch-review.md` | Pre-adoption kit review (implemented 2026-06-01) |
 | `canonical/forgekit-as-product.md` | Archived paid-product draft — OSS is the shipping model |
 
-For the full spec lifecycle model (draft → partial → completed vs canonical), see **WORKFLOW.md** §2 (Per-Phase Playbook, spec lifecycle folders).
+For the full spec lifecycle model (draft → partial → completed vs canonical), see **WORKFLOW.md** Phase 4 and **`docs/SPEC_FEATURE_TEMPLATE.md`**.

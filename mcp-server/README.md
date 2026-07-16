@@ -48,7 +48,7 @@ If the app already has **`docs/GENESIS.md`**, after MCP is connected call **`ing
 | `getResumeSessionInstructions` | **MCP-first resume:** session-start steps when ForgeKit is only on MCP |
 | `getPhaseGuidance` | Phase-specific guidance (1-7): entry/exit criteria, playbook, prompt patterns |
 | `searchLessons` | Keyword search across the full lesson database (71+ lessons, anti-patterns, insights) |
-| `getTemplate` | Doc template from `docs/*.md`. `mode: "shell"` strips 💡/📝/🔧 blockquote callouts (single source; no parallel files). `mode: "full"` returns the full file. Default: `FORGEKIT_TEMPLATE_DEFAULT_MODE` or `shell` — see [TEMPLATE_STRIPPING.md](./TEMPLATE_STRIPPING.md) |
+| `getTemplate` | Doc template from `docs/*.md` (includes **`SPEC_FEATURE_TEMPLATE`**, `PHASE_1_BRIEF`, …). `mode: "shell"` strips 💡/📝/🔧 blockquote callouts. Default: `FORGEKIT_TEMPLATE_DEFAULT_MODE` or `shell` |
 | `runAudit` | Get a structured audit prompt (security, pre-launch, marketing, competitor, docs, copy) |
 | `getChecklist` | Project checklist by milestone or in full |
 | `getTrackingSchema` | The `workflow_tracking.json` schema reference (live file: `.forgekit/workflow_tracking.json`) |

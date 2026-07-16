@@ -1,6 +1,6 @@
 # ForgeKit Lite — portable kickoff for any agentic chat
 
-> **ForgeKit Lite v1.4.0**
+> **ForgeKit Lite v1.5.0**
 > © Catalyst Forge, LLC — [www.catalystforge.com](https://www.catalystforge.com)
 > Part of the **ForgeKit** open-source methodology ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) in the upstream `forge-kit` repo).
 >
@@ -137,7 +137,7 @@ Every project flows through these phases. The agent **pauses at every phase tran
 | **1** | **Plan** | user has a rough idea | `docs/PHASE_1_BRIEF.md` is complete and **locked**; stack, hero flow, v1 scope, and major decisions are in `.forgekit/workflow_tracking.json → decisions[]` |
 | **2** | **Build (spine)** | Phase 1 brief is locked | a **runnable end-to-end hero flow** exists in one pass: project init, deps installed, data path working, routes + components + hero journey wired, `CONTEXT_PROMPT.md` written by merging the brief |
 | 3 | Stabilize | spine runs | critical bugs fixed, error paths handled, the happy path + 1–2 known sad paths are reliable |
-| 4 | Iterate | hero flow is solid | secondary features land one at a time; each ships with tests or at least a manual test note |
+| 4 | Iterate | hero flow is solid | secondary features land one at a time; each complex feature has a short **delivery spec** (§3.1) before multi-file work; each ships with tests or at least a manual test note |
 | 5 | Refine | feature set feels complete | refactor for clarity, split modules, remove dead code, tighten types/validation |
 | 6 | Align | code is clean | brand, naming, copy, and UX are coherent; `README.md` matches reality |
 | 7 | Harden | product is coherent | security review, performance pass, deploy pipeline, docs for the next operator |
@@ -153,6 +153,51 @@ Every project flows through these phases. The agent **pauses at every phase tran
 When archetype ≠ `product`, **prune** the non-applicable exit criteria in the tracking file once (and log the pruning in `decisions[]`) instead of annotating them "N/A" forever. If the project outgrows its archetype (a one-shot grows accounts), flag it and propose re-promoting to `product`.
 
 **Wrap (when the project ends):** Finishing a project includes **harvesting** it. When the app ships, is delivered, or is intentionally shelved: sweep `gotchas[]` + `decisions[]` for lessons that generalize beyond this app (framework traps, CLI changes, integration surprises), record them in `FORGEKIT_LITE_UPDATES.md` (§1.6) or propagate to the upstream ForgeKit repo if you have one, set `project.status` to `"wrapped"`, and add a final `sessions[]` entry with the end state (deploy URL, handoff notes). Small projects often surface the freshest tooling gotchas — do not let them die in the repo.
+
+### 3.1 Feature specs (Phase 4+)
+
+**When to write one:** before any change that touches **more than ~3 files**, changes data shape, or will span sessions. Skip for typos and one-file tweaks.
+
+**Where:** `specs/[feature-name].md` (kebab-case). Link it from `TODO.md` as an open checklist item pointing at that path.
+
+**Lifecycle (when you have more than a handful of specs, or from the first multi-file feature):**
+
+- `specs/` — not started
+- `specs/partial/` — work started; move here when implementation begins
+- `specs/completed/` — acceptance criteria met + **Implementation summary** at the end
+- `specs/canonical/` — living references only (no delivery lifecycle)
+
+**Skeleton (Lite cut).** Copy into `specs/[feature-name].md`. For the full skeleton (data/API/UI subsections, milestones, decisions), use ForgeKit **`docs/SPEC_FEATURE_TEMPLATE.md`** or MCP `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`.
+
+```markdown
+# [Feature name]
+
+**Spec kind:** Delivery
+**Status:** Draft
+**Related:** TODO.md — [short title]
+
+## 1. Problem
+
+## 2. Goals
+
+### Non-goals
+
+## 3. Proposed behavior
+
+## 4. Edge cases
+
+## 5. Acceptance criteria
+
+1. Given …, when …, then …
+
+## 6. Open questions
+
+## Implementation summary
+
+(Filled when moving to specs/completed/)
+```
+
+Do **not** scaffold or refactor from a vague chat request when a spec is warranted. Draft the skeleton, get a quick user nod on goals/non-goals/AC, then build. On finish: mark TODO `[x]`, fill Implementation summary, move to `specs/completed/`.
 
 ---
 
@@ -963,7 +1008,7 @@ Save this as `.forgekit/AGENTS.md` so agents that auto-load it (Codex, Cursor, C
 
 ```markdown
 <!--
-  Agent protocol based on ForgeKit Lite v1.4.0.
+  Agent protocol based on ForgeKit Lite v1.5.0.
   © Catalyst Forge, LLC — www.catalystforge.com
   Licensed under Apache License 2.0 (upstream forge-kit repo).
 -->
@@ -1154,4 +1199,4 @@ ForgeKit Lite covers the shape of a project. The full **ForgeKit MCP server** ad
 
 ---
 
-**ForgeKit Lite v1.4.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+**ForgeKit Lite v1.5.0** · © Catalyst Forge, LLC · [www.catalystforge.com](https://www.catalystforge.com) · [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

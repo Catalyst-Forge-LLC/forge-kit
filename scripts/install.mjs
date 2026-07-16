@@ -29,7 +29,12 @@ const LITE_FILES = [
   ["FORGEKIT_LITE_UPDATES.md", "FORGEKIT_LITE_UPDATES.md"],
 ];
 
-const LITE_CURSOR_RULES = ["forgekit-no-trailer.mdc", "forgekit-updates-log.mdc"];
+const LITE_CURSOR_RULES = [
+  "forgekit-no-trailer.mdc",
+  "forgekit-updates-log.mdc",
+  "specs-and-todo.mdc",
+  "spec-completion.mdc",
+];
 
 export function runInstallForgekit(rawArgv, { defaultToCwd = false } = {}) {
   const args = parseInstallArgs(rawArgv);

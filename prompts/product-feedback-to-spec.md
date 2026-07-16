@@ -8,7 +8,7 @@ Turn raw user product feedback (notes, quotes, bullets, or a transcript) into a 
 
 1. Paste this entire file (or from **Instructions** downward) into an AI assistant.
 2. Append the raw feedback under **Input**, or paste it after the prompt in the same message.
-3. Save the resulting spec under `[specs/]` (e.g. `[specs/product_feedback_YYYY-MM-DD_<short-name>.md]`) if you want it tracked in-repo.
+3. Save the resulting spec under `specs/` (e.g. `specs/product-feedback-YYYY-MM-DD_<short-name>.md`) if you want it tracked in-repo. For a full Phase-4 delivery skeleton (data/API/UI, milestones, implementation summary), expand into ForgeKit **`docs/SPEC_FEATURE_TEMPLATE.md`** (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`) instead of stopping at this short form.
 
 ---
 

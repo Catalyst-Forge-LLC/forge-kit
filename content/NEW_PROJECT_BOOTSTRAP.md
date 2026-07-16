@@ -74,6 +74,7 @@ Call **`getProgressiveDocSchedule`** for the canonical phase → doc matrix (WOR
 | Need | MCP tool |
 |------|-----------|
 | **Pre-Phase-1 build spec (external LLM chat)** | **`getGenesisSpecPrompt`** → user saves **`docs/GENESIS.md`**; or human recipe **`TRY_FORGEKIT.md`** (no MCP) |
+| **Feature delivery SPEC template (Phase 4+)** | **`getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`** → write `specs/[feature].md`; lifecycle in WORKFLOW Phase 4 |
 | **Approved Genesis / plan → brief + decisions** | **`ingestPlanArtifact`** — after plan approval or when `docs/GENESIS.md` exists |
 | **One-call greenfield setup** (bootstrap + tracking JSON + post-bootstrap guidance + optional Cursor rules) | **`getNewProjectKickoff`** — prefer over calling the granular tools separately |
 | **Which docs in which phase** | **`getProgressiveDocSchedule`** (WORKFLOW §1a) |

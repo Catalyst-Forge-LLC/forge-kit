@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-07-16 | **Feature SPEC template (full + Lite):** New **`docs/SPEC_FEATURE_TEMPLATE.md`** (delivery skeleton modeled on ForgeKit NUX + Exec Foundry specs). **WORKFLOW** Phase 4 + §1a + doc inventory point at it; MCP `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`. **FORGEKIT_LITE v1.5.0** — new **§3.1** Lite-cut skeleton + lifecycle folders. Cursor rules **`specs-and-todo.mdc`** + **`spec-completion.mdc`** (content/ + forge-kit `.cursor/rules/`; Lite install copies them). **product-feedback-to-spec** expands to full template when needed. |
 | 2026-07-06 | **Lifecycle scaling + lesson harvest (from a one-shot keepsake build):** Project **archetypes** (`product` / `internal-tool` / `one-shot`) chosen in Phase 1 prune tracking exit criteria at bootstrap (**WORKFLOW §1d**, TRACKING_SCHEMA, both starter JSONs, GREENFIELD_INTAKE §0, brief templates, bootstrap/INITIAL_PROMPT). **Wrap protocol** (**WORKFLOW §1e**) — finishing a project includes sweeping `gotchas[]`/`decisions[]` and propagating; `project.status: wrapped`. **Propagate prompt** genericized to any source project + new **Harvest mode** (tracking file as primary discovery source; both copies). **FORGEKIT_LITE v1.4.0** — archetype + wrap in §3/§5/§6/§11; `sv` CLI ~v0.16 may emit no `svelte.config.js` (§4.2 A.2). **CONTEXT_PROMPT** — Svelte 5 `state_referenced_locally` prop-init gotcha + `sv` config-layout gotcha. **update-log** — archiving convention; pre-OSS entries moved to `update-log-archive.md`. |
 | 2026-07-06 | **README positioning: compounding loop + framework comparison.** Intro now leads with the cross-project propagation loop (update-log as auditable history) as the differentiator; new *How ForgeKit compares* section (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) with honest complementarity notes; Origin updated to reflect ~a dozen projects bootstrapped since Exec Foundry. |
 | 2026-07-05 | **Engineering skill library (Exec Foundry):** New **`prompts/engineering-skill-library.md`** — capture a principal-engineer handoff / skill library (audit-first, subsystem deep-dives, debugging playbooks, judgment frameworks) from a mature codebase. **TECHNICAL_REFERENCE** — prompt-injection fencing lesson + new *Model selection and the provider choke point* subsection (tier by output value, one `callLLM` entry point, multi-block responses, thinking-off for JSON, blank env var). **CONTEXT_PROMPT** — new *LLM provider integration* pattern group. **CODE_QUALITY** — injection-guard + LLM response-handling checklist rows. **WORKFLOW** Phase 7 handoff artifact; README prompt tree; INITIAL_PROMPT runAudit list; MCP aliases (`skill-library`, `handoff`); propagate prompts — trigger row + inventory (both copies). |
@@ -44,6 +45,16 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-07-16 — Feature SPEC template (full + Lite)
+
+ForgeKit had lifecycle folders and an inline Phase-4 bullet list, but no copy-paste delivery skeleton. Agents invented structure or imitated Exec Foundry. Added a shared template modeled on `specs/completed/forgekit-new-user-experience.md` and Exec Foundry delivery specs (`companies-people-panel-ux-overhaul`, purpose-tailored-resume conventions).
+
+- **`docs/SPEC_FEATURE_TEMPLATE.md`** — Delivery header (kind/status/related/surfaces); problem; goals/non-goals; background; concepts; design (behavior/data/API/UI/files); edge cases; milestones; acceptance criteria; open questions; decisions; Progress; Implementation summary. Lite-cut note in header.
+- **`WORKFLOW.md`** — Phase 4 playbook + §1a Phase 4 row + document inventory point at the template and lifecycle rules.
+- **`content/FORGEKIT_LITE.md` v1.5.0** — §3.1 when/where/lifecycle + Lite-cut markdown skeleton; Phase 4 exit criterion mentions specs.
+- **`content/cursor-rules/specs-and-todo.mdc`** + **`spec-completion.mdc`** (mirrored into forge-kit `.cursor/rules/`); Lite install copies them via `scripts/install.mjs`.
+- **`prompts/product-feedback-to-spec.md`**, **`content/NEW_PROJECT_BOOTSTRAP.md`**, **`specs/README.md`**, **`mcp-server/README.md`**, **`README.md`** — cross-links.
 
 ### 2026-07-06 — Lifecycle scaling + lesson harvest (from a one-shot keepsake build)
 

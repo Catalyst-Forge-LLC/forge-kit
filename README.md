@@ -157,7 +157,7 @@ forge-kit/
     GENESIS_SPEC_PROMPT.md ← Paste into any LLM chat
     FORGEKIT_LITE.md       ← Portable single-file protocol
     examples/              ← Sample Genesis (Mars roster, fiction)
-  docs/                    ← Phase templates (brief, context, audits, …)
+  docs/                    ← Phase templates (brief, SPEC_FEATURE_TEMPLATE, audits, …)
   prompts/                 ← Audits, marketing, propagate-to-forgekit, …
   mcp-server/              ← MCP server (see mcp-server/README.md)
   specs/                   ← ForgeKit meta-specs (including NUX)

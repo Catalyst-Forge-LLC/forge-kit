@@ -1,0 +1,26 @@
+---
+description: New specs must match ForgeKit conventions and get a TODO.md entry
+alwaysApply: true
+---
+
+# Specs and TODO Backlog
+
+When **creating a new delivery spec** under `specs/`:
+
+1. **Start from the template:** copy `docs/SPEC_FEATURE_TEMPLATE.md` from ForgeKit (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`), or the Lite skeleton in `.forgekit/FORGEKIT_LITE.md` §3.1. Match neighboring specs' naming (`kebab-case.md`).
+2. **Add or update `TODO.md`:** link the new spec with an open `[ ]` checklist item. Do not add a tracked delivery spec without a backlog entry.
+3. **Header:** set `Spec kind: Delivery` (or `Canonical reference`), `Status`, and Related links.
+
+## Where specs live
+
+**Delivery specs** (bounded work with acceptance criteria):
+
+- **`specs/`** — Drafts and **not-yet-started** proposals.
+- **`specs/partial/`** — Implementation **started** or **phased**; not all acceptance criteria met.
+- **`specs/completed/`** — Fully implemented (see each file's Implementation summary).
+
+**Canonical specs** (living reference / methodology, no delivery lifecycle):
+
+- **`specs/canonical/`** — Catalogs and references that **outlive one implementation pass**. Exempt from `partial/` → `completed/` moves. Header: `**Spec kind:** Canonical reference` and a `Status:` line for catalog state, not delivery state.
+
+Moving delivery specs and updating links: **Spec Completion Protocol** (`spec-completion.mdc`).

@@ -1,0 +1,33 @@
+---
+description: Where delivery specs live after implementation — completed vs partial
+alwaysApply: true
+---
+
+# Spec Completion Protocol
+
+Applies to **delivery specs** only. Does **not** apply to **canonical** specs in `specs/canonical/` (they stay put). See `specs-and-todo.mdc`.
+
+After **any substantive implementation pass** tracked by a delivery spec, the file MUST live in **`specs/completed/`** (fully done) or **`specs/partial/`** (work remains). Do not leave in-progress delivery specs in the parent `specs/` folder.
+
+## When the spec is fully implemented
+
+1. Set **Status** to `Implemented` (add a Status line if missing).
+2. Append or fill **Implementation summary** at the end:
+   - `Implemented: YYYY-MM-DD`
+   - What shipped (by area or file), briefly
+   - Verification (tests, checks, manual walkthrough)
+3. Mark the matching **TODO.md** item `[x]` and point at `specs/completed/<file>.md`.
+4. **Move** the file to `specs/completed/` and update links across the repo.
+
+## When work is partial or phased
+
+1. Refresh **Status** (e.g. Partial; what remains).
+2. **Move** to `specs/partial/` if not already there.
+3. Update links to `specs/partial/<file>.md`.
+4. Keep TODO.md accurate and pointing at the partial path.
+
+Optional: short **Progress** notes with dates while partial. Full Implementation summary is required only for `completed/`.
+
+## New specs
+
+Brand-new **delivery** specs stay in **`specs/`** until implementation **starts**, then move to **`specs/partial/`**. Brand-new **canonical** specs go directly into **`specs/canonical/`**.

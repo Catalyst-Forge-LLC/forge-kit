@@ -111,7 +111,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 | **1 — Architecture** | Conversation only — no app code | **`PHASE_1_BRIEF.md`** (structured planning handoff). Log major commitments in **`.forgekit/workflow_tracking.json`** (`decisions[]`, phase notes). |
 | **2 — Scaffolding** | Entire runnable skeleton + hero flow | **`CONTEXT_PROMPT.md`** populated by **merging `PHASE_1_BRIEF.md`** into it (see CONTEXT_PROMPT template “Handoff from Phase 1”), then **`README.md`**, **`TODO.md`**, **`.forgekit/IDEAS.md`**. **Do not** generate the rest of the `docs/` template set in Phase 2 unless the user explicitly needs a file for the spine (rare). |
 | **3 — Stabilization** | Reliability, env, errors | Update **`CONTEXT_PROMPT.md`** / **`README.md`** when behavior, env, or patterns change. No new template types required. |
-| **4 — Feature iteration** | Features, specs | Add **`TECHNICAL_REFERENCE.md`** when the API/data model surface is non-trivial; **`TEST_PLAN.md`** when manual QA paths deserve a written walkthrough; **`DESIGN_SYSTEM.md`** for layout, a11y, and repeated UI patterns as the UI grows. Optional: **`DEV_ESTIMATE.md`**. When a release adds **new user-facing capabilities** (not only refactors), extend **`TECHNICAL_REFERENCE.md` → Feature Documentation** with a stub for each area (routes, data, discovery → import parity) and add **`TEST_PLAN.md`** scenarios — don’t capture the work only as 💡 lesson callouts in **`CONTEXT_PROMPT.md`**. |
+| **4 — Feature iteration** | Features, specs | Per complex feature: write **`specs/[feature].md`** from **`SPEC_FEATURE_TEMPLATE`** before multi-file work (lifecycle: `specs/` → `partial/` → `completed/`). Add **`TECHNICAL_REFERENCE.md`** when the API/data model surface is non-trivial; **`TEST_PLAN.md`** when manual QA paths deserve a written walkthrough; **`DESIGN_SYSTEM.md`** for layout, a11y, and repeated UI patterns as the UI grows. Optional: **`DEV_ESTIMATE.md`**. When a release adds **new user-facing capabilities** (not only refactors), extend **`TECHNICAL_REFERENCE.md` → Feature Documentation** with a stub for each area (routes, data, discovery → import parity) and add **`TEST_PLAN.md`** scenarios — don’t capture the work only as 💡 lesson callouts in **`CONTEXT_PROMPT.md`**. |
 | **5 — Refactoring** | Structure, shared utilities | Update **`CONTEXT_PROMPT.md`** and **`TECHNICAL_REFERENCE.md`** to match the new shape. |
 | **6 — Strategic alignment** | Roadmap vs brand | **`BRAND_AND_PRODUCT.md`**; complete or deepen **`DESIGN_SYSTEM.md`** if not already; **`MARKETING_GROWTH.md`** when go-to-market work is real. Optional: **`NAMING_EXPLORATION.md`** when naming or renaming the product. Restructure **`TODO.md`** by brand pillars. Optional: internal **`FEATURE_CATALOG.md`** (shipped capabilities vs UI entry points) and periodic **`user-facing-content-sync-audit.md`** so landing, Help, and nav stay aligned. |
 | **7 — Hardening** | Production readiness | **`CODE_QUALITY.md`**, **`BLACK_HAT_REPORT.md`** (from security audit), **`DEPLOYMENT.md`**, **`BUGS.md`**; **`BUSINESS_PLAN.md`** if pursuing paid users; run docs-alignment and consolidate. |
@@ -377,20 +377,20 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 **What to ask Claude to do:**
 
 - Plan before building for anything touching >3 files. "Give me a plan before making it."
-- For complex features, write a spec first (`specs/[feature-name].md`) with: problem statement, proposed approach, data model changes, API routes, UI design, edge cases, and open questions. Review the spec before implementing. Specs serve as durable documentation AND conversation anchors — when context resets between sessions, the spec provides continuity.
-- **Spec lifecycle folders (optional but recommended once the repo has >5 specs):** split the `specs/` directory into four homes so drafts, in-flight work, finished work, and living references don't collide on the same shelf.
+- For complex features, write a **delivery spec** first: copy ForgeKit **`docs/SPEC_FEATURE_TEMPLATE.md`** (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`) to `specs/[feature-name].md`. Fill at least problem, goals/non-goals, proposed approach (behavior + any data/API/UI that applies), edge cases, and **testable acceptance criteria**. Review the spec with the user before implementing. Specs are durable documentation and conversation anchors when context resets between sessions.
+- **Spec lifecycle folders (recommended once the repo has >5 specs, or from the first multi-file feature):** split `specs/` so drafts, in-flight work, finished work, and living references do not collide.
   - `specs/` — drafts and **not-yet-started** proposals.
-  - `specs/partial/` — implementation **started or phased**; not all acceptance criteria met. Move in when work starts; link updates happen then.
+  - `specs/partial/` — implementation **started or phased**; not all acceptance criteria met. Move in when work starts; update links then.
   - `specs/completed/` — fully implemented, with an **Implementation summary** at the end of the file.
-  - `specs/canonical/` — **living reference / methodology / invention-disclosure** documents that are *not* time-boxed: A/B variant catalogs, outreach methodology, patent drafts, positioning canon. These are **exempt** from `partial/` → `completed/` moves; they keep evolving in `canonical/`. Header uses `**Spec kind:** Canonical reference` and a `Status:` line that tracks *catalog state* ("Canonical; initial selection implemented 2026-04-16") rather than a delivery lifecycle.
-  - Encode the lifecycle in `.cursor/rules/specs-and-todo.mdc` and `.cursor/rules/spec-completion.mdc` so future sessions respect it without being told.
+  - `specs/canonical/` — **living reference / methodology** documents that are *not* time-boxed. **Exempt** from `partial/` → `completed/` moves. Header: `**Spec kind:** Canonical reference` and a `Status:` line for catalog state.
+  - Encode the lifecycle in `.cursor/rules/specs-and-todo.mdc` and `.cursor/rules/spec-completion.mdc` (ForgeKit ships copies under `content/cursor-rules/`; symlink or copy into the app's `.cursor/rules/`).
 - Build features with the two-tier pattern: basic version by default, advanced version when user provides additional input (e.g., shallow tailoring by default, deep tailoring when tweaks are provided)
 - Use the code-owns-structure/LLM-provides-content pattern for any feature that bridges AI output with structured formats
 
 **Artifacts to create:**
 
 - `TODO.md` (maintained per session, carried across sessions)
-- `specs/[feature].md` for any complex feature (reusable across sessions, serves as implementation reference)
+- `specs/[feature].md` from **`SPEC_FEATURE_TEMPLATE`** for any complex feature (link it from TODO.md)
 - **Progressive docs (§1a):** add or extend **`TECHNICAL_REFERENCE.md`**, **`TEST_PLAN.md`**, and/or **`DESIGN_SYSTEM.md`** when the feature surface warrants — not all at once at phase entry.
 - Update **`CONTEXT_PROMPT.md`** when architecture or patterns change. **Do not** create `BRAND_AND_PRODUCT.md` or hardening-only docs here unless you are explicitly doing that work early.
 
@@ -824,6 +824,7 @@ Full templates for each document live in `_forgekit/docs/` (or ForgeKit MCP `get
 | **TODO.md**                | Phase 2 (scaffolding)              | Every session                  | Feature backlog. Reorganize by brand pillars in Phase 6.              |
 | **README.md**              | Phase 2 (scaffolding)              | When setup changes             | First-time developer setup.                                           |
 | **`.forgekit/IDEAS.md`**    | Phase 2 (scaffolding)              | Anytime (process periodically) | Raw idea intake. Buffer between inspiration and backlog.              |
+| **specs/[feature].md**     | Phase 4+ (complex features)        | Until implemented              | Delivery feature spec from **`SPEC_FEATURE_TEMPLATE`**. Lifecycle folders: `specs/` → `partial/` → `completed/`. |
 | **TECHNICAL_REFERENCE.md** | Phase 4+ (when API/model warrants) | When features change           | How each feature works. API docs, data model, integration patterns.   |
 | **TEST_PLAN.md**           | Phase 4+ (when QA paths warrant)   | When features change           | Manual test walkthrough for major features.                           |
 | **AUTOMATED_TESTING.md**   | Phase 4+ (optional)                | When automation strategy shifts | Vitest / API / Playwright guidance; complements **TEST_PLAN** (not a replacement). |
