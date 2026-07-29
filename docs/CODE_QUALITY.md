@@ -129,6 +129,14 @@ _Run through this list periodically, especially before releases._
 - [ ] Verify that third-party file parsing engines (such as `pdf-parse` or `mammoth`) are isolated behind a centralized server-side file utility boundary (`pbFiles.ts` or similar) to protect route endpoints from library-specific imports.
 - [ ] Check that all ISO timestamp string transformations are standardized using a shared formatter (`formatUtcTimestamp` or similar) rather than repeated ad-hoc string replacements.
 - [ ] Verify that all gated admin-only API endpoints proxying private edge nodes enforce strict admin checks (`requireAdmin`) and implement a short connection timeout to prevent hanging.
+- [ ] **URL host classification:** Grep for `hostname.includes('…com')` / `url.includes('…com')` used as board/ATS allowlists — prefer a shared `hostMatchesDomain` (exact or subdomain suffix match on parsed hostname), not substring checks (CodeQL `js/incomplete-url-substring-sanitization`).
+- [ ] **SSRF boundary:** Outgoing fetch / browser navigation validates http(s) allowlist, rejects userinfo, localhost, private IPs, and `.local`/`.internal` at the handler edge; re-check redirects.
+- [ ] **Scheme allowlist:** Prefer `protocol === 'http:' || protocol === 'https:'` on a parsed `URL`, not only denying `javascript:`.
+- [ ] **GitHub Actions:** Workflows set top-level `permissions:` (least privilege). Never return `err.stack` / raw exception text in client JSON.
+
+> 💡 **Lesson learned:** **Host matching is not string `includes`.** Scrapers and board classifiers that use `hostname.includes('linkedin.com')` match lookalikes and generate dozens of identical CodeQL alerts. One shared helper (`host === domain || host.endsWith('.' + domain)`) plus call-site migration clears the storm and keeps regional subdomains (`uk.linkedin.com`, `boards.greenhouse.io`) working. Keep path checks on `pathname`. Sibling edge services that cannot import the app module should copy the helper with a sync comment.
+>
+> 📝 **Example:** `hostMatchesDomain('www.linkedin.com', 'linkedin.com')` → true; `hostMatchesDomain('evil-linkedin.com', 'linkedin.com')` → false.
 
 > 💡 **Lesson learned:** **Tighten types at boundaries instead of sprinkling `any`.** Unchecked `any` makes refactors expensive: renamed API fields and mapper outputs fail silently until a user hits an edge case. Treat **`catch` clauses**, **`fetch().json()` results**, and **ORM/PocketBase rows passed into mappers** as the main places to invest — use `unknown`, narrow once, or cast to the framework’s record type (`RecordModel`) at the mapper input so greps stay honest. For UI toggles and segmented controls, model allowed values as a string union (or `typeof` existing state) instead of `as any` on click handlers.
 >

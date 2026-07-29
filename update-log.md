@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-07-29 | **URL host matching + SSRF hygiene (Exec Foundry CodeQL pass):** **CODE_QUALITY** checklist + lesson (`hostMatchesDomain`, scheme allowlist, workflow `permissions`, no client stacks). **CONTEXT_PROMPT** pattern + anti-pattern. Cursor rule **`url-host-matching.mdc`** (+ `content/cursor-rules/` mirror). |
 | 2026-07-16 | **Feature SPEC template (full + Lite):** New **`docs/SPEC_FEATURE_TEMPLATE.md`** (delivery skeleton modeled on ForgeKit NUX + Exec Foundry specs). **WORKFLOW** Phase 4 + §1a + doc inventory point at it; MCP `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`. **FORGEKIT_LITE v1.5.0** — new **§3.1** Lite-cut skeleton + lifecycle folders. Cursor rules **`specs-and-todo.mdc`** + **`spec-completion.mdc`** (content/ + forge-kit `.cursor/rules/`; Lite install copies them). **product-feedback-to-spec** expands to full template when needed. |
 | 2026-07-06 | **Lifecycle scaling + lesson harvest (from a one-shot keepsake build):** Project **archetypes** (`product` / `internal-tool` / `one-shot`) chosen in Phase 1 prune tracking exit criteria at bootstrap (**WORKFLOW §1d**, TRACKING_SCHEMA, both starter JSONs, GREENFIELD_INTAKE §0, brief templates, bootstrap/INITIAL_PROMPT). **Wrap protocol** (**WORKFLOW §1e**) — finishing a project includes sweeping `gotchas[]`/`decisions[]` and propagating; `project.status: wrapped`. **Propagate prompt** genericized to any source project + new **Harvest mode** (tracking file as primary discovery source; both copies). **FORGEKIT_LITE v1.4.0** — archetype + wrap in §3/§5/§6/§11; `sv` CLI ~v0.16 may emit no `svelte.config.js` (§4.2 A.2). **CONTEXT_PROMPT** — Svelte 5 `state_referenced_locally` prop-init gotcha + `sv` config-layout gotcha. **update-log** — archiving convention; pre-OSS entries moved to `update-log-archive.md`. |
 | 2026-07-06 | **README positioning: compounding loop + framework comparison.** Intro now leads with the cross-project propagation loop (update-log as auditable history) as the differentiator; new *How ForgeKit compares* section (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) with honest complementarity notes; Origin updated to reflect ~a dozen projects bootstrapped since Exec Foundry. |
@@ -45,6 +46,14 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 ---
 
 ## Detail
+
+### 2026-07-29 — URL host matching + SSRF hygiene (Exec Foundry CodeQL pass)
+
+Source: Exec Foundry CodeQL default-suite remediation (~90 alerts, mostly incomplete URL substring host checks across scraper / Outpost). Prevention lessons only — not app-specific board lists.
+
+- **`docs/CODE_QUALITY.md`** — Checklist rows for host classification, SSRF boundary, scheme allowlist, workflow `permissions` / no client stacks; lesson + example for `hostMatchesDomain`.
+- **`docs/CONTEXT_PROMPT.md`** — Patterns: board/vendor host matching + SSRF allowlist; Anti-Patterns: forbid `hostname.includes('brand.com')` and client-visible stacks.
+- **`content/cursor-rules/url-host-matching.mdc`** (+ forge-kit `.cursor/rules/` mirror) — globs for app/outpost/scripts; shared helper preference.
 
 ### 2026-07-16 — Feature SPEC template (full + Lite)
 
