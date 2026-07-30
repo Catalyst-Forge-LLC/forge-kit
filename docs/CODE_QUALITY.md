@@ -135,6 +135,8 @@ _Run through this list periodically, especially before releases._
 - [ ] **Guards have regression tests:** each blocked input class is asserted in a test that fails against the pre-fix code, and each branch of the guard is proven reachable (a regex that can never match is dead code, not a defense).
 - [ ] **Escaping matches the downstream parser:** compare against the vendor SDK's own escape helper before hand-rolling (e.g. PocketBase filters use backslash escapes, not SQL-style doubled quotes).
 - [ ] **Sanitizers run in one pass:** chained `.replace()` calls re-scan their own output (an entity decoder that expands `&#38;` before named entities still double-decodes); use a single regex pass, or iterate to a fixed point when stripping nested constructs.
+- [ ] **Validate-then-connect is closed, not just narrowed:** the check and the socket must use the same address. In Node, an `undici` `Agent` with a filtering `connect.lookup` removes the rebinding window that a `resolve → validate → fetch` sequence leaves open; honor `options.all` so Happy Eyeballs still works.
+- [ ] **Headless browser navigation is guarded too:** a validated `goto` URL does not constrain 3xx, `<meta refresh>`, or script navigation. Abort navigation requests to blocked hosts via request interception and re-check the landed URL before reading content. Note the residual limit: the browser resolves DNS itself unless routed through a controlled proxy.
 - [ ] **Scheme allowlist:** Prefer `protocol === 'http:' || protocol === 'https:'` on a parsed `URL`, not only denying `javascript:`.
 - [ ] **GitHub Actions:** Workflows set top-level `permissions:` (least privilege). Never return `err.stack` / raw exception text in client JSON.
 
