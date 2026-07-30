@@ -15,6 +15,27 @@ Work systematically through the following audit areas. For each area, read the a
 
 ---
 
+### AREA 0: Fix efficacy — do existing defenses actually block?
+
+Run this area **first** on any codebase that has been audited before. The most dangerous finding is a defense everyone believes in that does not hold. Read the previous report (`docs/BLACK_HAT_REPORT.md`) and treat every "remediated" item as **unverified** until you prove it blocks.
+
+For each guard, sanitizer, escaper, or allowlist: **enumerate concrete bypass inputs and check them against the code line by line.** Where the project has a test runner, write a regression test with those inputs; a fix without a test that fails on the old code is not verified.
+
+Known failure modes to check by name:
+
+- **Exact match where a range is meant.** `host === '127.0.0.1'` leaves the rest of `127.0.0.0/8`; `=== '::1'` leaves `::ffff:127.0.0.1`. Compute ranges numerically instead of prefix-matching strings.
+- **Missing hostname normalization.** Trailing FQDN dot (`localhost.`, `metadata.google.internal.`), uppercase, IPv6 brackets, IPv4-mapped and NAT64-embedded IPv6 (`::ffff:7f00:1`, `64:ff9b::7f00:1`), decimal/hex/short IPv4 (`2130706433`, `0x7f000001`, `127.1`). Check what the platform's URL parser normalizes for you and what it leaves alone.
+- **Dead branches inside the guard.** A regex or condition that can never match the real input format (wrong number of leading colons, wrong case, checked before normalization). Prove each branch fires with a test input.
+- **Escape scheme mismatch.** Verify the escaping matches the **downstream parser**, not a familiar one from another system: SQL-style doubled quotes in a parser that uses backslash escapes will both fail to escape (trailing `\` eats the closing quote) and corrupt legitimate values. Compare against the vendor SDK's own escaping helper.
+- **Chained `.replace()` sanitization.** Sequential replaces re-scan their own output: an entity decoder that expands `&#38;` before named entities still double-decodes. Prefer a single pass over the whole string, and iterate to a fixed point when stripping nested constructs.
+- **Guard exists but call sites skip it.** Grep for the raw sink (`fetch(`, `exec(`, `innerHTML`, raw filter interpolation) and diff that list against the guard's callers. Every unguarded call site is a finding, even when a helper is "the pattern."
+- **Validated value not the one used.** Check the URL/path/ID validated is the exact value passed to the sink (no re-parse, re-concat, or original-string fallback in between).
+- **Check-then-use gaps.** Redirect following, DNS re-resolution, and second reads after a check (TOCTOU). Note which are closed and which are only narrowed.
+
+Report each broken defense as a normal finding at the severity of the **underlying vulnerability it was supposed to close**, not as a documentation nit.
+
+---
+
 ### AREA 1: Authentication & Session Management
 
 Read all auth-related routes (login, signup, logout, password reset, OAuth) and session/cookie handling code (middleware, hooks, interceptors).
@@ -199,6 +220,8 @@ Group fixes into:
 
 - Read actual source code for every finding. Do not hallucinate file paths or code that doesn't exist.
 - Verify each finding. If a defense exists, note it. Don't report mitigated issues as vulnerabilities.
+- A defense counts as effective only when you can name the inputs it rejects. Prefer a regression test (one that fails against the pre-fix code) over prose; cite it in the report.
+- Never mark a prior finding remediated because a fix was committed. Re-read the current code and re-run the bypass inputs.
 - Include severity justification based on exploitability and impact, not just theoretical risk.
 ```
 
