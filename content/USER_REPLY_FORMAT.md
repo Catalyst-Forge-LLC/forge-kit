@@ -1,6 +1,6 @@
 # User-facing replies: lists, options, and “what next”
 
-ForgeKit agents should make **choices and next steps** easy to scan. Use this pattern consistently.
+ForgeTrail agents should make **choices and next steps** easy to scan. Use this pattern consistently.
 
 ---
 
@@ -38,4 +38,4 @@ When you describe a **numbered pipeline** but **implementation order** is flexib
 
 ---
 
-This file is referenced from the ForgeKit Cursor rule **`forgekit-phase-status.mdc`** so agents apply it in all replies, not only post-bootstrap.
+This file is referenced from the ForgeTrail Cursor rule **`forgetrail-phase-status.mdc`** so agents apply it in all replies, not only post-bootstrap.

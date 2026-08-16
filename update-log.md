@@ -1,16 +1,16 @@
-# ForgeKit update log
+# ForgeTrail update log
 
-Chronological record of meaningful changes to **this** ForgeKit repository: propagation passes from live apps, new prompt templates, methodology edits, and doc inventory updates.
+Chronological record of meaningful changes to **this** ForgeTrail repository: propagation passes from live apps, new prompt templates, methodology edits, and doc inventory updates.
 
 **Archive:** Entries before **2026-05-26** (the first open-source release) live in [update-log-archive.md](update-log-archive.md) — private-era development and propagation from real apps, kept for maintainer context and provenance. For the first open-source release, see the git tag or initial commit on [GitHub](https://github.com/Catalyst-Forge-LLC/forge-kit).
 
 **Archiving convention:** This file stays readable, not exhaustive. When it grows past roughly **30 table rows** (or a year boundary rolls over), move the oldest rows **and their Detail sections together** into the archive file (or a new `update-log-<year>.md`), oldest-first, and keep a one-line pointer here. The full history remains greppable across the archive files; this file is the recent, high-signal view a new reader actually opens.
 
-After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the table and a short detail section below.
+After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the table and a short detail section below.
 
 **What belongs in the summary column:** The *generalized* outcome (e.g. “propagate prompt: principle-first lessons, examples secondary”), not a dump of app-specific literals. Use the Detail section for file-level bullets; frame those bullets as *what template behavior changed*, not as a copy-paste of example numbers or strings from the source app.
 
-**FORGEKIT_LITE release checklist** (when editing `content/FORGEKIT_LITE.md`):
+**FORGETRAIL_LITE release checklist** (when editing `content/FORGETRAIL_LITE.md`):
 
 1. **Version strings** — bump every `v#.#.#` in the file: header block (~line 3), `AGENTS.md` snippet in §12, footer. Canonical source is the header; keep all three in sync.
 2. **`schemaVersion`** in §11 starter JSON — bump only when `workflow_tracking.json` shape changes (e.g. `lite-1` → `lite-2`).
@@ -23,11 +23,12 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-08-15 | **Rename: ForgeKit → ForgeTrail.** Product name, identifiers, and copy now use ForgeTrail / forgetrail (domain: forgetrail.dev). Workspace `.forgetrail/`, Lite `FORGETRAIL_LITE.md` v2.0.0, CLI `forgetrail`, MCP tools `getForgeTrail*`. Copy guide: `docs/FORGETRAIL_RENAME.md`. Tagline: Forge the path. Keep the trail. GitHub slug `Catalyst-Forge-LLC/forge-kit` unchanged. |
 | 2026-07-30 | **Fix-efficacy pass for security re-audits, plus SSRF depth rows (Exec Foundry sweep):** **black-hat-audit** gains **AREA 0** — treat every previously "remediated" defense as unverified, enumerate bypass inputs, and name the known failure modes (exact match where a range is meant, missing host normalization, dead guard branches, escape scheme mismatched to the downstream parser, chained `.replace()` sanitizers, guarded helper with unguarded call sites, check-then-use gaps). RULES now require a regression test that fails against pre-fix code. **CODE_QUALITY** — four checklist rows (numeric address ranges, tested guards, SDK-matched escaping, single-pass sanitizers) + lesson. |
 | 2026-07-29 | **URL host matching + SSRF hygiene (Exec Foundry CodeQL pass):** **CODE_QUALITY** checklist + lesson (`hostMatchesDomain`, scheme allowlist, workflow `permissions`, no client stacks). **CONTEXT_PROMPT** pattern + anti-pattern. Cursor rule **`url-host-matching.mdc`** (+ `content/cursor-rules/` mirror). |
-| 2026-07-16 | **Feature SPEC template (full + Lite):** New **`docs/SPEC_FEATURE_TEMPLATE.md`** (delivery skeleton modeled on ForgeKit NUX + Exec Foundry specs). **WORKFLOW** Phase 4 + §1a + doc inventory point at it; MCP `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`. **FORGEKIT_LITE v1.5.0** — new **§3.1** Lite-cut skeleton + lifecycle folders. Cursor rules **`specs-and-todo.mdc`** + **`spec-completion.mdc`** (content/ + forge-kit `.cursor/rules/`; Lite install copies them). **product-feedback-to-spec** expands to full template when needed. |
-| 2026-07-06 | **Lifecycle scaling + lesson harvest (from a one-shot keepsake build):** Project **archetypes** (`product` / `internal-tool` / `one-shot`) chosen in Phase 1 prune tracking exit criteria at bootstrap (**WORKFLOW §1d**, TRACKING_SCHEMA, both starter JSONs, GREENFIELD_INTAKE §0, brief templates, bootstrap/INITIAL_PROMPT). **Wrap protocol** (**WORKFLOW §1e**) — finishing a project includes sweeping `gotchas[]`/`decisions[]` and propagating; `project.status: wrapped`. **Propagate prompt** genericized to any source project + new **Harvest mode** (tracking file as primary discovery source; both copies). **FORGEKIT_LITE v1.4.0** — archetype + wrap in §3/§5/§6/§11; `sv` CLI ~v0.16 may emit no `svelte.config.js` (§4.2 A.2). **CONTEXT_PROMPT** — Svelte 5 `state_referenced_locally` prop-init gotcha + `sv` config-layout gotcha. **update-log** — archiving convention; pre-OSS entries moved to `update-log-archive.md`. |
-| 2026-07-06 | **README positioning: compounding loop + framework comparison.** Intro now leads with the cross-project propagation loop (update-log as auditable history) as the differentiator; new *How ForgeKit compares* section (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) with honest complementarity notes; Origin updated to reflect ~a dozen projects bootstrapped since Exec Foundry. |
+| 2026-07-16 | **Feature SPEC template (full + Lite):** New **`docs/SPEC_FEATURE_TEMPLATE.md`** (delivery skeleton modeled on ForgeTrail NUX + Exec Foundry specs). **WORKFLOW** Phase 4 + §1a + doc inventory point at it; MCP `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`. **FORGETRAIL_LITE v1.5.0** — new **§3.1** Lite-cut skeleton + lifecycle folders. Cursor rules **`specs-and-todo.mdc`** + **`spec-completion.mdc`** (content/ + forgetrail `.cursor/rules/`; Lite install copies them). **product-feedback-to-spec** expands to full template when needed. |
+| 2026-07-06 | **Lifecycle scaling + lesson harvest (from a one-shot keepsake build):** Project **archetypes** (`product` / `internal-tool` / `one-shot`) chosen in Phase 1 prune tracking exit criteria at bootstrap (**WORKFLOW §1d**, TRACKING_SCHEMA, both starter JSONs, GREENFIELD_INTAKE §0, brief templates, bootstrap/INITIAL_PROMPT). **Wrap protocol** (**WORKFLOW §1e**) — finishing a project includes sweeping `gotchas[]`/`decisions[]` and propagating; `project.status: wrapped`. **Propagate prompt** genericized to any source project + new **Harvest mode** (tracking file as primary discovery source; both copies). **FORGETRAIL_LITE v1.4.0** — archetype + wrap in §3/§5/§6/§11; `sv` CLI ~v0.16 may emit no `svelte.config.js` (§4.2 A.2). **CONTEXT_PROMPT** — Svelte 5 `state_referenced_locally` prop-init gotcha + `sv` config-layout gotcha. **update-log** — archiving convention; pre-OSS entries moved to `update-log-archive.md`. |
+| 2026-07-06 | **README positioning: compounding loop + framework comparison.** Intro now leads with the cross-project propagation loop (update-log as auditable history) as the differentiator; new *How ForgeTrail compares* section (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) with honest complementarity notes; Origin updated to reflect ~a dozen projects bootstrapped since Exec Foundry. |
 | 2026-07-05 | **Engineering skill library (Exec Foundry):** New **`prompts/engineering-skill-library.md`** — capture a principal-engineer handoff / skill library (audit-first, subsystem deep-dives, debugging playbooks, judgment frameworks) from a mature codebase. **TECHNICAL_REFERENCE** — prompt-injection fencing lesson + new *Model selection and the provider choke point* subsection (tier by output value, one `callLLM` entry point, multi-block responses, thinking-off for JSON, blank env var). **CONTEXT_PROMPT** — new *LLM provider integration* pattern group. **CODE_QUALITY** — injection-guard + LLM response-handling checklist rows. **WORKFLOW** Phase 7 handoff artifact; README prompt tree; INITIAL_PROMPT runAudit list; MCP aliases (`skill-library`, `handoff`); propagate prompts — trigger row + inventory (both copies). |
 | 2026-07-04 | **Panel side-tab navigation model (Exec Foundry):** **DESIGN_SYSTEM** new *Panel navigation model (side-tab rail)* under Layout Patterns (persistent header → responsive rail → single scroll → one pane; ≥3-section threshold; master-detail exception; shared `PanelShell` + `PanelSideNav` primitives). **CONTEXT_PROMPT** — Framework gotcha (Svelte markup imbalance degrades a component's prop types → errors surface in the *consumer*; use `build` for the real message); Patterns to Follow (extract one panel shell + section-rail primitive; keep a panel mounted off-screen via `dockHidden` for background work; sync active section in URL); Anti-Patterns (no nested double-scroll in a panel body; don't reinvent panel chrome per component). |
 | 2026-06-26 | **Assertive product voice + structured eligibility fit (Exec Foundry):** **user-facing-content.mdc** Assertive capability copy; **BRAND_AND_PRODUCT** We say/We don't say table; **CONTEXT_PROMPT** assertive voice + async callback snapshot patterns; **TECHNICAL_REFERENCE** *[Structured eligibility / requirement fit]* stub; **TEST_PLAN** §4.5–4.6; **CODE_QUALITY** pre-launch grep; propagate prompt triggers + Step 3 mapping; MCP **cursor-rules/** mirror. |
@@ -37,16 +38,24 @@ After each run of **`prompts/propagate-to-forgekit.md`**, append a row to the ta
 | 2026-06-04 | **LLM JSON parse hardening (verbatim upload):** TECH_REF Output Validation lesson + guidance (`parseJsonFromLlmOutput`, `sanitizeJsonControlChars`, prompt escape rule, Support ID); CONTEXT_PROMPT integration pattern; CODE_QUALITY audit item #5; TEST_PLAN resume/cover upload checklist. Source: Exec Foundry onboarding upload fix + PostHog `Bad control character in string literal`. |
 | 2026-06-01 | **Loved-tier UX patterns:** modal focus trap + return focus; board "Start here" recommendation strip; first-artifact orientation overlay; AI section lifecycle vocabulary + stale banner. DESIGN_SYSTEM, CONTEXT_PROMPT, TECHNICAL_REFERENCE (AI lifecycle stub), TEST_PLAN §7.4c–f. |
 | 2026-06-01 | **Prelaunch review — low polish:** TRACKING_SCHEMA phase ID map (Lite vs MCP); WORKFLOW agent-agnostic intro; Lite maintainer triplicate-sync note; propagate prompt + update-log cross-doc anchors; §15 decisions[] shape. Completes prelaunch review spec. |
-| 2026-06-01 | **Prelaunch review — medium fixes:** FORGEKIT_LITE §4 reading order + map; §8 rule 5/6 notation (vs §8.9 subsection); `.forgekit/` git policy (H1 status launcher + H2 commit/gitignore from prior commit); MCP `getForgeKitLite` + `getForgeKitLiteUpdates`; Lite release checklist in update-log; unified `decisions[]` example shape. |
+| 2026-06-01 | **Prelaunch review — medium fixes:** FORGETRAIL_LITE §4 reading order + map; §8 rule 5/6 notation (vs §8.9 subsection); `.forgetrail/` git policy (H1 status launcher + H2 commit/gitignore from prior commit); MCP `getForgeTrailLite` + `getForgeTrailLiteUpdates`; Lite release checklist in update-log; unified `decisions[]` example shape. |
 | 2026-05-29 | **Cohesion-tier UX patterns:** minimal global keyboard set + **safe-Esc layering** + help overlay; **first-load skeletons** (shape over spinner); **canonical empty-state component** with `wrapper`/`centered`/`hero` variants; **unified three-phase save acknowledgement** (`Saving…`/`Saved`/`error`) bubbled from child components to one indicator; **dismissible per-user first-run hints**. DESIGN_SYSTEM sections + CONTEXT_PROMPT pattern/anti-patterns + TEST_PLAN checks. |
 | 2026-05-29 | **New prompt: UX Cohesion Audit** — whole-app, cross-cutting read of where a product confuses, blocks, distracts, or fails to delight; two-lens method (cross-cutting "feels like N apps" themes + surface-by-surface), Step 0 corpus read to point at owned specs instead of re-speccing, Critical/High/Medium/Low + effort with delight first-class. Complements `panel-usability-audit.md` (single surface) and `pre-launch-audit.md` (launch readiness). README prompt tree updated (also added previously-missing `panel-usability-audit.md`). |
 | 2026-05-26 | **Cover letter templates:** drop mailed-letter `[City, State]` guidance — **BRAND_AND_PRODUCT**, **TECHNICAL_REFERENCE** (tailoring), **CONTEXT_PROMPT** voice rules. |
-| 2026-05-26 | **Public repo polish:** `forgekit.html` OSS CTAs (GitHub/MCP); archived `specs/forgekit-as-product.md`; removed internal product `.docx`; update-log intro for pre-OSS entries. |
-| 2026-05-26 | **Open source (Apache 2.0):** `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`; README license/support; reframe closed-distribution wording in **FORGEKIT_LITE v1.3.0**, **NEW_PROJECT_BOOTSTRAP**, **WORKFLOW**, **INITIAL_PROMPT**, **forgekit-workspace-README**; `mcp-server/package.json` license field; public repo published with clean history. |
+| 2026-05-26 | **Public repo polish:** `forgetrail.html` OSS CTAs (GitHub/MCP); archived `specs/forgetrail-as-product.md`; removed internal product `.docx`; update-log intro for pre-OSS entries. |
+| 2026-05-26 | **Open source (Apache 2.0):** `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`; README license/support; reframe closed-distribution wording in **FORGETRAIL_LITE v1.3.0**, **NEW_PROJECT_BOOTSTRAP**, **WORKFLOW**, **INITIAL_PROMPT**, **forgetrail-workspace-README**; `mcp-server/package.json` license field; public repo published with clean history. |
 
 ---
 
 ## Detail
+
+### 2026-08-15 — Rename: ForgeKit → ForgeTrail
+
+Product name is now **ForgeTrail** (domain: forgetrail.dev). Distinctive idea: the work leaves a structured trail (path, decisions, gotchas, resume breadcrumbs, lessons) that improves the next project. Copy guide: `docs/FORGETRAIL_RENAME.md`. Tagline: **Forge the path. Keep the trail.**
+
+- Identifiers: `.forgetrail/`, `_forgetrail/`, CLI `forgetrail`, packages `forgetrail` / `forgetrail-mcp`, MCP tools `getForgeTrail*`, env `FORGETRAIL_*`, Lite `FORGETRAIL_LITE.md` **v2.0.0**.
+- Hero copy (README, WORKFLOW, `forgetrail.html`) leads with category, then the trail metaphor.
+- GitHub slug `Catalyst-Forge-LLC/forge-kit` and the local clone folder are unchanged.
 
 ### 2026-07-30 — Fix-efficacy pass for security re-audits (Exec Foundry sweep)
 
@@ -59,21 +68,21 @@ Source: Exec Foundry CodeQL default-suite remediation (~90 alerts, mostly incomp
 
 - **`docs/CODE_QUALITY.md`** — Checklist rows for host classification, SSRF boundary, scheme allowlist, workflow `permissions` / no client stacks; lesson + example for `hostMatchesDomain`.
 - **`docs/CONTEXT_PROMPT.md`** — Patterns: board/vendor host matching + SSRF allowlist; Anti-Patterns: forbid `hostname.includes('brand.com')` and client-visible stacks.
-- **`content/cursor-rules/url-host-matching.mdc`** (+ forge-kit `.cursor/rules/` mirror) — globs for app/outpost/scripts; shared helper preference.
+- **`content/cursor-rules/url-host-matching.mdc`** (+ forgetrail `.cursor/rules/` mirror) — globs for app/outpost/scripts; shared helper preference.
 
 ### 2026-07-16 — Feature SPEC template (full + Lite)
 
-ForgeKit had lifecycle folders and an inline Phase-4 bullet list, but no copy-paste delivery skeleton. Agents invented structure or imitated Exec Foundry. Added a shared template modeled on `specs/completed/forgekit-new-user-experience.md` and Exec Foundry delivery specs (`companies-people-panel-ux-overhaul`, purpose-tailored-resume conventions).
+ForgeTrail had lifecycle folders and an inline Phase-4 bullet list, but no copy-paste delivery skeleton. Agents invented structure or imitated Exec Foundry. Added a shared template modeled on `specs/completed/forgetrail-new-user-experience.md` and Exec Foundry delivery specs (`companies-people-panel-ux-overhaul`, purpose-tailored-resume conventions).
 
 - **`docs/SPEC_FEATURE_TEMPLATE.md`** — Delivery header (kind/status/related/surfaces); problem; goals/non-goals; background; concepts; design (behavior/data/API/UI/files); edge cases; milestones; acceptance criteria; open questions; decisions; Progress; Implementation summary. Lite-cut note in header.
 - **`WORKFLOW.md`** — Phase 4 playbook + §1a Phase 4 row + document inventory point at the template and lifecycle rules.
-- **`content/FORGEKIT_LITE.md` v1.5.0** — §3.1 when/where/lifecycle + Lite-cut markdown skeleton; Phase 4 exit criterion mentions specs.
-- **`content/cursor-rules/specs-and-todo.mdc`** + **`spec-completion.mdc`** (mirrored into forge-kit `.cursor/rules/`); Lite install copies them via `scripts/install.mjs`.
+- **`content/FORGETRAIL_LITE.md` v1.5.0** — §3.1 when/where/lifecycle + Lite-cut markdown skeleton; Phase 4 exit criterion mentions specs.
+- **`content/cursor-rules/specs-and-todo.mdc`** + **`spec-completion.mdc`** (mirrored into forgetrail `.cursor/rules/`); Lite install copies them via `scripts/install.mjs`.
 - **`prompts/product-feedback-to-spec.md`**, **`content/NEW_PROJECT_BOOTSTRAP.md`**, **`specs/README.md`**, **`mcp-server/README.md`**, **`README.md`** — cross-links.
 
 ### 2026-07-06 — Lifecycle scaling + lesson harvest (from a one-shot keepsake build)
 
-Source: a ForgeKit-bootstrapped **one-shot keepsake app** (a birthday trivia game) exposed three structural gaps: full-product exit criteria (payments, brand pillars, black-hat audit) generate noise for a project with no market; the tracking file's `gotchas[]`/`decisions[]` had no consumer at project end, so small-project lessons died in their repos; and the propagate prompt assumed a flagship app with a journal and full doc set. Two fresh SvelteKit gotchas from that build are propagated in the same pass.
+Source: a ForgeTrail-bootstrapped **one-shot keepsake app** (a birthday trivia game) exposed three structural gaps: full-product exit criteria (payments, brand pillars, black-hat audit) generate noise for a project with no market; the tracking file's `gotchas[]`/`decisions[]` had no consumer at project end, so small-project lessons died in their repos; and the propagate prompt assumed a flagship app with a journal and full doc set. Two fresh SvelteKit gotchas from that build are propagated in the same pass.
 
 - **`WORKFLOW.md`** — New **§1d Project archetypes**: `product` (default, full lifecycle), `internal-tool` (Phase 6 optional; Phase 7 keeps security/deploy/docs, drops payments/business-plan/marketing), `one-shot` (phases 5–7 collapse into one polish-and-ship gate; emotional polish outranks hardening depth). Agent duties: prune criteria once (don't annotate N/A), log the pruning as a decision, escalate on archetype drift. New **§1e Wrap protocol**: sweep `gotchas[]` + `decisions[]` → propagate (Harvest mode) → `project.status: "wrapped"` + final session entry; zero-yield wraps are legitimate. Phase 1 playbook gains the archetype bullet; §1a propagation blurb points at §1e.
 - **`TRACKING_SCHEMA.md`** — `project.archetype` and `project.status` fields with pruning and wrap semantics.
@@ -82,21 +91,21 @@ Source: a ForgeKit-bootstrapped **one-shot keepsake app** (a birthday trivia gam
 - **`docs/PHASE_1_BRIEF.md`** — §1 gains a **Project archetype** row. Lite's embedded brief template (§6) gains the same line.
 - **`content/NEW_PROJECT_BOOTSTRAP.md`** — Progressive-scaffolding archetype bullet; Rules gain the wrap step.
 - **`INITIAL_PROMPT.md`** — Phase 1 archetype block (classify, record, prune) + wrap pointer.
-- **`prompts/propagate-to-forgekit.md`** — Genericized: **any ForgeKit project is a valid source**; new **Harvest mode** section (tracking file as primary discovery source for small projects and wrap; zero-yield is fine); Context inventory reframed as a menu; discovery-scan row for the tracking file; trigger row for project wrap. **Exec Foundry `prompts/Propagate to ForgeKit.md`** — upstream note, matching trigger + discovery rows (parity).
-- **`content/FORGEKIT_LITE.md`** — **v1.4.0** (header, §12 snippet, footer): §3 archetype table + wrap paragraph; §5 intake topic; §6 brief archetype line; §11 starter fields; §4.2 step 10 A.2 — recent **`sv` CLI (~v0.16+) may emit no `svelte.config.js`** (adapter options inside `sveltekit()` in `vite.config.ts`; `export const prerender = true` in `+layout.ts` works under either layout).
+- **`prompts/propagate-to-forgetrail.md`** — Genericized: **any ForgeTrail project is a valid source**; new **Harvest mode** section (tracking file as primary discovery source for small projects and wrap; zero-yield is fine); Context inventory reframed as a menu; discovery-scan row for the tracking file; trigger row for project wrap. **Exec Foundry `prompts/Propagate to ForgeTrail.md`** — upstream note, matching trigger + discovery rows (parity).
+- **`content/FORGETRAIL_LITE.md`** — **v1.4.0** (header, §12 snippet, footer): §3 archetype table + wrap paragraph; §5 intake topic; §6 brief archetype line; §11 starter fields; §4.2 step 10 A.2 — recent **`sv` CLI (~v0.16+) may emit no `svelte.config.js`** (adapter options inside `sveltekit()` in `vite.config.ts`; `export const prerender = true` in `+layout.ts` works under either layout).
 - **`docs/CONTEXT_PROMPT.md`** — Framework gotchas: **Svelte 5 `state_referenced_locally`** — `$state(props.value)` captures only the initial value; initialize empty and populate in an `$effect`, or silence explicitly for intentional snapshots. Plus the `sv` config-layout gotcha above.
 - **`update-log.md`** — New **archiving convention** (move oldest rows + Detail together past ~30 rows or a year boundary); pre-2026-05-26 rows and Detail sections moved to new **`update-log-archive.md`** (private-era provenance; the orphaned v1.1.8 detail block got its heading restored in the move).
 - **`README.md`** — 7-phases section: archetype scaling + wrap paragraph; file tree lists `update-log-archive.md`; "Propagating lessons back" mentions Harvest mode and any-project sources.
 
 ### 2026-07-06 — README positioning: compounding loop + framework comparison
 
-Source: assessment of the 2026 spec-driven development landscape (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) ahead of sharing ForgeKit publicly. The rarest mechanism ForgeKit has is the **cross-project propagation loop with editorial discipline** — previously buried at the bottom of the README.
+Source: assessment of the 2026 spec-driven development landscape (GitHub Spec Kit, BMAD-Method, OpenSpec, per-project retro/memory loops) ahead of sharing ForgeTrail publicly. The rarest mechanism ForgeTrail has is the **cross-project propagation loop with editorial discipline** — previously buried at the bottom of the README.
 
-- **`README.md`** — Intro: new paragraph leading with the compounding loop ("most frameworks gate the work; ForgeKit also compounds the learning") linking the propagate prompt and this log. New **How ForgeKit compares** section after the 7 phases: table contrasting Spec Kit (structural scaffolding vs pre-loaded production lessons), BMAD (persona breadth vs persistent memory + lifecycle state), OpenSpec (per-change governance vs whole-product lifecycle incl. brand/pricing/launch), and retro/memory loops (per-project appends vs generalized, deduplicated, two-track, logged cross-project propagation); closes with honest guidance on when the lighter tools suffice. Origin: notes ~a dozen projects bootstrapped since Exec Foundry, pointing at this log as the record.
+- **`README.md`** — Intro: new paragraph leading with the compounding loop ("most frameworks gate the work; ForgeTrail also compounds the learning") linking the propagate prompt and this log. New **How ForgeTrail compares** section after the 7 phases: table contrasting Spec Kit (structural scaffolding vs pre-loaded production lessons), BMAD (persona breadth vs persistent memory + lifecycle state), OpenSpec (per-change governance vs whole-product lifecycle incl. brand/pricing/launch), and retro/memory loops (per-project appends vs generalized, deduplicated, two-track, logged cross-project propagation); closes with honest guidance on when the lighter tools suffice. Origin: notes ~a dozen projects bootstrapped since Exec Foundry, pointing at this log as the record.
 
 ### 2026-07-05 — Engineering skill library (Exec Foundry)
 
-Source: Exec Foundry produced a 15-document "retiring principal engineer" skill library (`docs/skills/`) capturing architecture rationale, subsystem deep-dives (data layer, auth/delegation, LLM, DOCX, scraping, billing), debugging playbooks, security/testing gates, and judgment frameworks. This pass propagates the **methodology** and the generalizable **lessons** the library surfaced that ForgeKit did not yet carry.
+Source: Exec Foundry produced a 15-document "retiring principal engineer" skill library (`docs/skills/`) capturing architecture rationale, subsystem deep-dives (data layer, auth/delegation, LLM, DOCX, scraping, billing), debugging playbooks, security/testing gates, and judgment frameworks. This pass propagates the **methodology** and the generalizable **lessons** the library surfaced that ForgeTrail did not yet carry.
 
 - **`prompts/engineering-skill-library.md`** (new) — Generalized capture prompt: audit-first process (core modules, convention files, failure record, specs, representative routes), skill-set shape (architecture + per-subsystem + playbooks + security/testing/process + judgment capstone), mentoring-voice rules (WHY + scar per convention, anti-patterns and war stories, write for less context), index + verification steps. Companion note distinguishing it from findings-oriented audits.
 - **`docs/TECHNICAL_REFERENCE.md`** — Prompt Architecture: lesson on **fencing untrusted content** (labeled delimiter blocks + standing guard instruction, helper internal to the one LLM module). New **Model selection and the provider choke point** subsection: one `callLLM()`-style entry point; tier chosen by output value (capable for user-submitted artifacts, mid workhorse, cheap for classification/recovery); model ids in config not identifiers; fallback chains on provider overload. Example block: concatenate **all** text blocks (not `content[0]`), disable extended thinking for JSON tasks, treat blank model env vars as unset.
@@ -106,9 +115,9 @@ Source: Exec Foundry produced a 15-document "retiring principal engineer" skill 
 - **`README.md`** — Prompt tree row for `engineering-skill-library.md`.
 - **`INITIAL_PROMPT.md`** — runAudit prompt list extended.
 - **`mcp-server/src/index.ts`** — `runAudit` aliases `skill-library` and `handoff` (prompt file itself auto-discovered from `prompts/`).
-- **`prompts/propagate-to-forgekit.md`** + Exec Foundry **`prompts/Propagate to ForgeKit.md`** — New trigger row (skill library / handoff docs created or updated) and prompt-library inventory updated in both copies.
+- **`prompts/propagate-to-forgetrail.md`** + Exec Foundry **`prompts/Propagate to ForgeTrail.md`** — New trigger row (skill library / handoff docs created or updated) and prompt-library inventory updated in both copies.
 
-Deliberately not propagated: app-specific content of the 14 skill docs (PocketBase filter helper internals, DOCX run-splitting mechanics, plan-tier tables, scraping vendor chains) — ForgeKit already carries the generalized versions of those lessons from earlier passes; this pass added only the net-new gaps above.
+Deliberately not propagated: app-specific content of the 14 skill docs (PocketBase filter helper internals, DOCX run-splitting mechanics, plan-tier tables, scraping vendor chains) — ForgeTrail already carries the generalized versions of those lessons from earlier passes; this pass added only the net-new gaps above.
 
 ### 2026-07-04 — Panel side-tab navigation model (Exec Foundry)
 
@@ -125,7 +134,7 @@ Source: Exec Foundry rolled a reusable side-tab navigation model across its slid
 - **`docs/TECHNICAL_REFERENCE.md`** — New **`[Structured eligibility / requirement fit (optional)]`** feature stub (taxonomy, extraction, surfaces, PATCH maps).
 - **`docs/TEST_PLAN.md`** — §4.5 assertive copy grep; §4.6 structured eligibility checklist.
 - **`docs/CODE_QUALITY.md`** — Pre-launch copy checklist extended with `\bcan\b` capability-hedge grep.
-- **`prompts/propagate-to-forgekit.md`** + Exec Foundry **`Propagate to ForgeKit.md`** — Trigger rows + Step 3 mapping for assertive voice and structured eligibility.
+- **`prompts/propagate-to-forgetrail.md`** + Exec Foundry **`Propagate to ForgeTrail.md`** — Trigger rows + Step 3 mapping for assertive voice and structured eligibility.
 
 ### 2026-06-15 — Microcopy centralization (Exec Foundry)
 
@@ -138,7 +147,7 @@ Source: Exec Foundry rolled a reusable side-tab navigation model across its slid
 - **`WORKFLOW.md`** — Phase 7 hardening + post-launch re-run cadence for copy audits.
 - **`README.md`** — Prompt tree entry for `microcopy-centralization.md`.
 - **`prompts/user-facing-content-sync-audit.md`** — Cross-link to microcopy centralization prompt.
-- **`prompts/propagate-to-forgekit.md`** — Trigger row + Context inventory for microcopy pass.
+- **`prompts/propagate-to-forgetrail.md`** — Trigger row + Context inventory for microcopy pass.
 - **`.cursor/rules/user-facing-content.mdc`**, **`us-english.mdc`** — App copy tone/locale defaults (also in **`content/cursor-rules/`** for MCP distribution).
 
 ### 2026-06-10 — Anti-self-importance and position-of-strength tone controls

@@ -4,34 +4,34 @@ import { cwd } from "node:process";
 import {
   INSTALL_FULL_HELP,
   INSTALL_LITE_HELP,
-  runInstallForgekit,
+  runInstallForgetrail,
   runInstallLite,
 } from "./install.mjs";
 import { runMcpCommand } from "./mcp-status.mjs";
 
 const CLI_HELP = `
-ForgeKit — bootstrap a project folder and run the MCP server
+ForgeTrail — bootstrap a project folder and run the MCP server
 
 Usage:
-  forgekit install [--lite] [options]
-  forgekit mcp <subcommand>        Build, status, ping, Cursor config
+  forgetrail install [--lite] [options]
+  forgetrail mcp <subcommand>        Build, status, ping, Cursor config
 
-Global link (one-time, from your forge-kit clone):
+Global link (one-time, from your forgetrail clone):
   pnpm run link:global              # pnpm add -g . + PATH shim fix (Windows/Git Bash)
 
 Then from any project folder:
   cd /path/to/your-app
-  forgekit install --lite
-  forgekit install
+  forgetrail install --lite
+  forgetrail install
 
-From your forge-kit clone (MCP server):
-  forgekit mcp build               Install deps + compile dist/
-  forgekit mcp status [--ping]     Static checks + optional live ping
-  forgekit mcp ping                Live ping (JSON)
-  forgekit mcp cursor-config       Print recommended .cursor/mcp.json
+From your forgetrail clone (MCP server):
+  forgetrail mcp build               Install deps + compile dist/
+  forgetrail mcp status [--ping]     Static checks + optional live ping
+  forgetrail mcp ping                Live ping (JSON)
+  forgetrail mcp cursor-config       Print recommended .cursor/mcp.json
 
 Install options:
-  --lite             Lite protocol only (.forgekit/FORGEKIT_LITE.md)
+  --lite             Lite protocol only (.forgetrail/FORGETRAIL_LITE.md)
   --with-genesis-stub  With --lite: also create docs/GENESIS.md stub
   --force, -f        Overwrite existing files
   --dry-run          Preview without writing
@@ -39,8 +39,8 @@ Install options:
   --path, -p <dir>   Install elsewhere (default: current directory)
   --help, -h         Show help
 
-First-time prove-it (no MCP): see TRY_FORGEKIT.md in the forge-kit repo.
-Run \`forgekit mcp --help\` for all MCP subcommands.
+First-time prove-it (no MCP): see TRY_FORGETRAIL.md in the ForgeTrail repo.
+Run \`forgetrail mcp --help\` for all MCP subcommands.
 `.trim();
 
 function main() {
@@ -60,7 +60,7 @@ function main() {
 
   if (cmd !== "install") {
     console.error(`Unknown command: ${cmd ?? "(none)"}`);
-    console.error("Run forgekit --help");
+    console.error("Run forgetrail --help");
     process.exit(1);
   }
 
@@ -78,7 +78,7 @@ function main() {
   if (lite) {
     runInstallLite(passArgv, { defaultToCwd: true });
   } else {
-    runInstallForgekit(passArgv, { defaultToCwd: true });
+    runInstallForgetrail(passArgv, { defaultToCwd: true });
   }
 }
 

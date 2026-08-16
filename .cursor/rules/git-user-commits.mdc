@@ -7,7 +7,7 @@ alwaysApply: true
 
 ## Permission (read this first)
 
-**Running `git commit` is allowed and expected** whenever this rule applies. ForgeKit **ship defaults** assume agents **do not** wait for the user to say “commit,” and **do not** leave completed request work unstaged by default. Individual app repos may tighten or override this in their own `.cursor/rules/` when they explicitly choose a different workflow.
+**Running `git commit` is allowed and expected** whenever this rule applies. ForgeTrail **ship defaults** assume agents **do not** wait for the user to say “commit,” and **do not** leave completed request work unstaged by default. Individual app repos may tighten or override this in their own `.cursor/rules/` when they explicitly choose a different workflow.
 
 What stays restricted: **`git push`** (and merge/rebase/publish) still requires an **explicit** user request. If the user asks to **leave the tree dirty**, skip commits for that work.
 

@@ -147,7 +147,7 @@ _Recurring phrases that reinforce the brand. Use these in UI copy, marketing, an
 
 ## Copy & Messaging Lessons
 
-> 🔧 **Guidance:** These are hard-won lessons about what works and what doesn't in marketing and product copy. Patterns to follow when writing for any ForgeKit-derived product.
+> 🔧 **Guidance:** These are hard-won lessons about what works and what doesn't in marketing and product copy. Patterns to follow when writing for any ForgeTrail-derived product.
 
 ### Microcopy duplication policy
 
@@ -251,7 +251,7 @@ This is **not** the same lesson as "remove internal jargon" (e.g. billing counte
 
 **Acronyms:** Expand once per surface where it helps (**ATS** = applicant tracking systems; **STAR** = Situation, Task, Action, Result). Keep the acronym after the first expansion.
 
-**Propagation:** When you settle terminology in a customer project, capture it in a **project-owned spec** (e.g. `specs/UI_UX_COPY_CONSISTENCY_SPEC.md`) and **lift generalizable rules back into ForgeKit** here so the next product inherits the pattern. Grep periodically for `Generate` / `Generating` in user-visible `*.svelte` strings; API route names and analytics event keys can stay technical.
+**Propagation:** When you settle terminology in a customer project, capture it in a **project-owned spec** (e.g. `specs/UI_UX_COPY_CONSISTENCY_SPEC.md`) and **lift generalizable rules back into ForgeTrail** here so the next product inherits the pattern. Grep periodically for `Generate` / `Generating` in user-visible `*.svelte` strings; API route names and analytics event keys can stay technical.
 
 > 💡 **Lesson learned:** Jargon removal fixes *what* users read (opaque nouns). Verb choice fixes *how* they understand *what the software is doing* and reduces "everything is just generate" fatigue. Do both.
 

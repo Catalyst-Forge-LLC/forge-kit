@@ -2,9 +2,9 @@
 
 Use alongside **`getChecklist`** section `before-session-1`. That checklist covers *problem, stack, assets, hero flow* at a high level. This document adds **delivery and product-shape** questions so Phase 1 does not miss exports, tenancy, or “how literal is the spec.”
 
-**Already have a written spec (e.g. `docs/GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** (or human recipe **`TRY_FORGEKIT.md`**) produces a portable spec via an external LLM chat before you run through these questions.
+**Already have a written spec (e.g. `docs/GENESIS.md`)?** Feed it into **`ingestPlanArtifact`** first, then use this document only to fill gaps (delivery, tenancy, compliance, live search) it may not cover. If the user has only an idea, **`getGenesisSpecPrompt`** (or human recipe **`TRY_FORGETRAIL.md`**) produces a portable spec via an external LLM chat before you run through these questions.
 
-**Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and **`.forgekit/workflow_tracking.json` → `decisions[]`**.
+**Agent:** Walk through these with the user (or infer from context and confirm). Record answers in **`docs/PHASE_1_BRIEF.md`** (§1–3, §6–8 as needed) and **`.forgetrail/workflow_tracking.json` → `decisions[]`**.
 
 ---
 
@@ -46,7 +46,7 @@ Use alongside **`getChecklist`** section `before-session-1`. That checklist cove
 - If **yes**, the human will likely need a **search API** key before the spine can return real data. **Common developer starting points** (verify current free tiers and limits on the vendor site):
   - **[Tavily](https://tavily.com/)** — built for LLM/agent retrieval; [docs](https://docs.tavily.com/) · [pricing](https://tavily.com/pricing)
   - **[Brave Search API](https://api-dashboard.search.brave.com/)** — web, news, and more; [pricing](https://api-dashboard.search.brave.com/documentation/pricing) (renewable **monthly credits** for new accounts — set usage caps in the dashboard)
-- Record **which provider** and **env var names** in `PHASE_1_BRIEF` / `decisions[]`. **ForgeKit Lite** §4.4 mirrors this for copy-paste (`content/FORGEKIT_LITE.md`).
+- Record **which provider** and **env var names** in `PHASE_1_BRIEF` / `decisions[]`. **ForgeTrail Lite** §4.4 mirrors this for copy-paste (`content/FORGETRAIL_LITE.md`).
 
 ## 7. State persistence (web apps only)
 
@@ -55,7 +55,7 @@ Ask this **before** locking PocketBase + auth into the stack. Wrong answer here 
 - **Does any state need to outlive the current browser?** Accounts, cross-device sync, shared data between users, admin/curator editing a catalog multiple users read — **yes**. Personal notes, offline-first tools, a single-user dashboard that reloads the same local data — **no**.
 - If **no** (A-local): drop PocketBase + auth; `localStorage` / `IndexedDB` for persistence; **`adapter-static`** is viable; no runtime secrets; deploy on free static hosts.
 - If **yes** (A-persistent): full Default-A stack — SvelteKit + PocketBase + `adapter-node`; accounts, sessions, server-only writes.
-- Record the choice in **`PHASE_1_BRIEF.md` §4** (`State persistence:` row) and **`decisions[]`**. **ForgeKit Lite** §7 (A-local vs A-persistent) has the longer write-up.
+- Record the choice in **`PHASE_1_BRIEF.md` §4** (`State persistence:` row) and **`decisions[]`**. **ForgeTrail Lite** §7 (A-local vs A-persistent) has the longer write-up.
 
 ## 8. Content-generation pattern (only if content is produced by an LLM)
 
@@ -63,11 +63,11 @@ Skip this section entirely if content is hand-authored or pulled from a conventi
 
 - **Runtime LLM API** — server route (e.g. `src/routes/api/suggest/+server.ts`) calls the provider per request; rate-limit + streaming UX; server runtime required (not `adapter-static`). **Provider choice:**
   - **Cloud** (OpenAI, Anthropic, …) — API key in `.env`; cost scales with traffic.
-  - **Local Ollama** — `OLLAMA_BASE_URL`, `OLLAMA_MODEL`; no cloud key. Phase 2: **`setup-ollama`** / **`test-ollama`** (VRAM-aware pull; default **ibm/granite4.1:8b** or **gemma3:4b** — avoid thinking/reasoning models unless **`OLLAMA_USE_THINKING=1`** and the brief requires it). See **SYSTEM_HEALTH_CHECKS.md**, **FORGEKIT_LITE** §4.8.
+  - **Local Ollama** — `OLLAMA_BASE_URL`, `OLLAMA_MODEL`; no cloud key. Phase 2: **`setup-ollama`** / **`test-ollama`** (VRAM-aware pull; default **ibm/granite4.1:8b** or **gemma3:4b** — avoid thinking/reasoning models unless **`OLLAMA_USE_THINKING=1`** and the brief requires it). See **SYSTEM_HEALTH_CHECKS.md**, **FORGETRAIL_LITE** §4.8.
 - **Build-time LLM generation** — `scripts/seed.ts` via `pnpm run seed` calls the provider once, writes JSON into `data/`, commits it. Zero runtime LLM cost; pairs well with A-local + `adapter-static`. Seed script may use **cloud** or **Ollama** (same env vars; only needed when running seed).
 - **BYO-LLM paste pattern** — prompt in the repo; user runs it in **their own** LLM (ChatGPT, Claude, local Ollama chat, etc.); pastes JSON into e.g. `data/seed.json`; Zod validates at app start. Zero project-level API keys.
 
-Ask which **provider and model** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4o-mini`, or BYO only). Record pattern, provider, env var names, paths, and validator in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. **ForgeKit Lite** §7.1 has skeletons for OpenAI, Ollama, seed, and BYO-LLM.
+Ask which **provider and model** (e.g. `ollama/ibm/granite4.1:8b`, `openai/gpt-4o-mini`, or BYO only). Record pattern, provider, env var names, paths, and validator in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. **ForgeTrail Lite** §7.1 has skeletons for OpenAI, Ollama, seed, and BYO-LLM.
 
 ---
 

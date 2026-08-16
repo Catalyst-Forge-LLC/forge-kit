@@ -1,12 +1,12 @@
-# Try ForgeKit (no MCP required)
+# Try ForgeTrail (no MCP required)
 
-Prove ForgeKit in one sitting: write a **what, not how** spec in any AI chat, drop it next to **ForgeKit Lite**, and let your coding agent run Phase 1.
+Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, drop it next to **ForgeTrail Lite**, and let your coding agent forge the path and keep the trail.
 
 **You need:** any LLM chat (ChatGPT, Claude, Grok, a local Ollama UI, …) and any coding agent that can read files (Cursor, Claude Code, Codex, …).
 
-**You do not need:** Node MCP setup, `pnpm run mcp:build`, or `forgekit` on PATH (those are optional shortcuts below).
+**You do not need:** Node MCP setup, `pnpm run mcp:build`, or `forgetrail` on PATH (those are optional shortcuts below).
 
-**Important:** Use a **new empty project folder**. Do not run this inside a clone of the `forge-kit` methodology repo.
+**Important:** Use a **new empty project folder**. Do not run this inside a clone of the ForgeTrail methodology repo.
 
 ---
 
@@ -21,19 +21,19 @@ Prove ForgeKit in one sitting: write a **what, not how** spec in any AI chat, dr
 3. **Create a new project folder**  
    Example: `mkdir my-app && cd my-app`
 
-4. **Add ForgeKit Lite**  
-   - **Copy:** save [`content/FORGEKIT_LITE.md`](content/FORGEKIT_LITE.md) as `.forgekit/FORGEKIT_LITE.md` in your project, **or**  
-   - **CLI** (if you already linked ForgeKit):  
-     `forgekit install --lite`  
+4. **Add ForgeTrail Lite**  
+   - **Copy:** save [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` in your project, **or**  
+   - **CLI** (if you already linked ForgeTrail):  
+     `forgetrail install --lite`  
      Stub for Genesis too:  
-     `forgekit install --lite --with-genesis-stub`
+     `forgetrail install --lite --with-genesis-stub`
 
 5. **Save your spec as `docs/GENESIS.md`**  
-   Create `docs/` if needed. That path is the canonical handoff for ForgeKit (not the repo root).
+   Create `docs/` if needed. That path is the canonical handoff for ForgeTrail (not the repo root).
 
 6. **Open the folder in your coding agent** and paste this kickoff line:
 
-> Follow `.forgekit/FORGEKIT_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `.forgekit/workflow_tracking.json` and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not scaffold application code until I explicitly approve the Phase 1 brief.
+> Follow `.forgetrail/FORGETRAIL_LITE.md` as the project protocol. Treat `docs/GENESIS.md` as the product spec (what, not how). Create `.forgetrail/workflow_tracking.json` and draft `docs/PHASE_1_BRIEF.md` from the Genesis file, asking me only about gaps. Do not scaffold application code until I explicitly approve the Phase 1 brief.
 
 7. **Approve the Phase 1 brief** before any app scaffold. If the agent starts writing application code early, stop it and paste the kickoff line again.
 
@@ -41,19 +41,19 @@ Prove ForgeKit in one sitting: write a **what, not how** spec in any AI chat, dr
 
 ## What “it worked” looks like
 
-- [ ] `.forgekit/FORGEKIT_LITE.md` is present  
+- [ ] `.forgetrail/FORGETRAIL_LITE.md` is present  
 - [ ] `docs/GENESIS.md` is present  
-- [ ] `.forgekit/workflow_tracking.json` exists  
+- [ ] `.forgetrail/workflow_tracking.json` exists  
 - [ ] `docs/PHASE_1_BRIEF.md` drafted from your Genesis (or clearly in progress)  
 - [ ] The agent asked for approval before scaffolding  
 
-Stuck? Open a [Try ForgeKit checklist](https://github.com/Catalyst-Forge-LLC/forge-kit/issues/new?template=try-forgekit-checklist.md) issue and mark how far you got.
+Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forge-kit/issues/new?template=try-forgetrail-checklist.md) issue and mark how far you got.
 
 ---
 
 ## If you skip Genesis
 
-No written idea yet? Tell the agent: *Follow `.forgekit/FORGEKIT_LITE.md`. Ask me the §5 intake questions before writing any code.* You can add `docs/GENESIS.md` later.
+No written idea yet? Tell the agent: *Follow `.forgetrail/FORGETRAIL_LITE.md`. Ask me the §5 intake questions before writing any code.* You can add `docs/GENESIS.md` later.
 
 Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line above. Optionally run the Genesis prompt only to fill gaps (prior art, file-format research, edge cases).
 
@@ -62,8 +62,8 @@ Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line a
 ## After the try: graduation ladder
 
 1. **Stay on Lite** for small tools and weekend builds. Enough for many projects.  
-2. **Add MCP** when you clone ForgeKit and live in Cursor/Claude: always-current tools, `ingestPlanArtifact`, kickoff bundles. See [mcp-server/README.md](mcp-server/README.md) and `pnpm run mcp:build`.  
-3. **Full `_forgekit/` install** when you need the whole template tree on disk (offline / no MCP). `forgekit install` (without `--lite`).
+2. **Add MCP** when you clone ForgeTrail and live in Cursor/Claude: always-current tools, `ingestPlanArtifact`, kickoff bundles. See [mcp-server/README.md](mcp-server/README.md) and `pnpm run mcp:build`.  
+3. **Full `_forgetrail/` install** when you need the whole template tree on disk (offline / no MCP). `forgetrail install` (without `--lite`).
 
 ---
 
@@ -73,6 +73,6 @@ Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line a
 |------|------|
 | [`content/GENESIS_SPEC_PROMPT.md`](content/GENESIS_SPEC_PROMPT.md) | Prompt to paste into any LLM chat |
 | [`content/examples/GENESIS_SAMPLE_mars-habitat-roster.md`](content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) | Fictional sample Genesis |
-| [`content/FORGEKIT_LITE.md`](content/FORGEKIT_LITE.md) | Portable agent protocol |
+| [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) | Portable agent protocol |
 | [`content/GENESIS_STUB.md`](content/GENESIS_STUB.md) | Stub written by `--with-genesis-stub` |
 | [`README.md`](README.md) | Full methodology overview |

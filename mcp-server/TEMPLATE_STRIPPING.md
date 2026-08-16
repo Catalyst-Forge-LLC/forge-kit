@@ -1,6 +1,6 @@
 # Single-source templates + shell stripping
 
-ForgeKit doc templates live only in `docs/*.md`. There are **no** parallel “lessons” files.
+ForgeTrail doc templates live only in `docs/*.md`. There are **no** parallel “lessons” files.
 
 ## How stripping works
 
@@ -11,11 +11,11 @@ The MCP `getTemplate` tool can return:
 | `full` | The markdown file exactly as authored. |
 | `shell` | Removes **contiguous blockquote runs** whose **first line** matches `> 💡`, `> 📝`, or `> 🔧` (after optional whitespace). |
 
-That matches ForgeKit callouts: **Lesson learned**, **Example**, **Guidance**. The rest of the file (headings, tables, `[BRACKETS]`, italic instructions, non-enrichment blockquotes) is unchanged.
+That matches ForgeTrail callouts: **Lesson learned**, **Example**, **Guidance**. The rest of the file (headings, tables, `[BRACKETS]`, italic instructions, non-enrichment blockquotes) is unchanged.
 
 ## Defaults
 
-- If the tool omits `mode`, the server uses **`FORGEKIT_TEMPLATE_DEFAULT_MODE`** (`full` or `shell`). If unset, **`shell`** (fewer tokens, less lesson text over the wire).
+- If the tool omits `mode`, the server uses **`FORGETRAIL_TEMPLATE_DEFAULT_MODE`** (`full` or `shell`). If unset, **`shell`** (fewer tokens, less lesson text over the wire).
 - Agents that need every callout should call `getTemplate({ name: "CONTEXT_PROMPT", mode: "full" })`.
 
 ## Authoring rules (for agents editing templates)

@@ -4,7 +4,7 @@ _Comprehensive black hat security audit performed against the codebase. White-bo
 
 _For code quality findings (type safety, error handling, consistency), see [CODE_QUALITY.md](CODE_QUALITY.md). For deployment readiness, see [DEPLOYMENT.md](DEPLOYMENT.md)._
 
-_Instructions: Generate this document during Phase 7 (Hardening) by running the black hat audit prompt from `_forgekit/prompts/black-hat-audit.md`. This is separate from CODE_QUALITY.md — that doc covers engineering quality; this doc covers exploitable security vulnerabilities. After generating, triage all findings into TODO.md with P0/P1/P2 priority. Annotate each finding here with its TODO status._
+_Instructions: Generate this document during Phase 7 (Hardening) by running the black hat audit prompt from `_forgetrail/prompts/black-hat-audit.md`. This is separate from CODE_QUALITY.md — that doc covers engineering quality; this doc covers exploitable security vulnerabilities. After generating, triage all findings into TODO.md with P0/P1/P2 priority. Annotate each finding here with its TODO status._
 
 ---
 

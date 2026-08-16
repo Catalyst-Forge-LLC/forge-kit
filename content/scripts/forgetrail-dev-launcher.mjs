@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Reference dev launcher — copy to app repo scripts/forgekit-dev-launcher.mjs
+ * Reference dev launcher — copy to app repo scripts/forgetrail-dev-launcher.mjs
  * Wire repo-root setup.bat / run.bat / status.bat (Windows) and setup.sh / run.sh / status.sh (Mac/Linux).
  *
  * Commands: setup | run | status
@@ -12,8 +12,8 @@ import { spawn } from "node:child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, "..");
-const trackingPath = join(repoRoot, ".forgekit", "workflow_tracking.json");
-const progressPath = join(repoRoot, "docs", "FORGEKIT_PROGRESS.md");
+const trackingPath = join(repoRoot, ".forgetrail", "workflow_tracking.json");
+const progressPath = join(repoRoot, "docs", "FORGETRAIL_PROGRESS.md");
 const isWin = process.platform === "win32";
 
 const PHASE_LABELS = {
@@ -77,7 +77,7 @@ function hasScript(name) {
 }
 
 async function cmdSetup() {
-  console.log("=== ForgeKit setup (first time or refresh) ===\n");
+  console.log("=== ForgeTrail setup (first time or refresh) ===\n");
   if (!existsSync(join(repoRoot, "node_modules"))) {
     console.log("Installing dependencies…");
     await run("pnpm", ["install"]);
@@ -143,7 +143,7 @@ async function cmdRun() {
 
 function renderProgress() {
   if (!existsSync(trackingPath)) {
-    return { text: "No .forgekit/workflow_tracking.json yet — agent bootstrap not finished.", md: null };
+    return { text: "No .forgetrail/workflow_tracking.json yet — agent bootstrap not finished.", md: null };
   }
   const t = JSON.parse(readFileSync(trackingPath, "utf8"));
   const phase = t.currentPhase ?? "?";
@@ -153,7 +153,7 @@ function renderProgress() {
   const status = phaseBlock?.status || "unknown";
   const { met, remaining } = getExitCriteriaStatus(phaseBlock);
   const lines = [
-    `ForgeKit phase: ${label} (${phaseId}) — ${status}`,
+    `ForgeTrail phase: ${label} (${phaseId}) — ${status}`,
     "",
     met.length ? "Done (this phase):" : "",
     ...met.map((k) => `  ✓ ${k}`),
@@ -166,9 +166,9 @@ function renderProgress() {
     lines.push("", `Last session: ${last.date} — ${last.summary || "(no summary)"}`);
   }
   const md = [
-    "# ForgeKit progress",
+    "# ForgeTrail progress",
     "",
-    "_Human-readable snapshot. Source of truth: `.forgekit/workflow_tracking.json`._",
+    "_Human-readable snapshot. Source of truth: `.forgetrail/workflow_tracking.json`._",
     "",
     `**Current phase:** ${label} (\`${phaseId}\`) — **${status}**`,
     "",
@@ -182,7 +182,7 @@ function renderProgress() {
     "",
     "## Refresh",
     "",
-    "Double-click **status.bat** (Windows) or run **./status.sh** / **pnpm run forgekit:status** anytime.",
+    "Double-click **status.bat** (Windows) or run **./status.sh** / **pnpm run forgetrail:status** anytime.",
     "",
   ].join("\n");
   return { text: lines.join("\n"), md };
@@ -203,6 +203,6 @@ if (cmd === "setup") cmdSetup().catch((e) => { console.error(e.message || e); pr
 else if (cmd === "run") cmdRun().catch((e) => { console.error(e.message || e); process.exit(1); });
 else if (cmd === "status") cmdStatus();
 else {
-  console.log("Usage: node scripts/forgekit-dev-launcher.mjs setup|run|status");
+  console.log("Usage: node scripts/forgetrail-dev-launcher.mjs setup|run|status");
   process.exit(1);
 }

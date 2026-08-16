@@ -73,7 +73,7 @@ Document **what actually happens** when users remove data — not only the happy
 
 ## User-facing copy (optional — adopt when copy volume grows)
 
-> 🔧 **Guidance:** Centralize product strings so landing, help, tours, and in-app UI stay aligned. ForgeKit describes the **pattern**; each app implements modules and audit scripts under its own `$lib/content/` (or equivalent).
+> 🔧 **Guidance:** Centralize product strings so landing, help, tours, and in-app UI stay aligned. ForgeTrail describes the **pattern**; each app implements modules and audit scripts under its own `$lib/content/` (or equivalent).
 
 ### Three layers
 
@@ -185,7 +185,7 @@ _[Same structure as above]_
 
 ## AI/LLM Integration
 
-_If your app uses AI, document the integration patterns here. Record the Phase 1 **content-generation pattern** (runtime API, build-time seed, or BYO-LLM paste) and **provider** — including **local Ollama** when used (`OLLAMA_BASE_URL`, `OLLAMA_MODEL`; setup/test via ForgeKit **`setup-ollama`** / **`test-ollama`**). Default local models: **Granite 4.1** or **Gemma 3** instruct — not reasoning/thinking models unless product requirements say otherwise._
+_If your app uses AI, document the integration patterns here. Record the Phase 1 **content-generation pattern** (runtime API, build-time seed, or BYO-LLM paste) and **provider** — including **local Ollama** when used (`OLLAMA_BASE_URL`, `OLLAMA_MODEL`; setup/test via ForgeTrail **`setup-ollama`** / **`test-ollama`**). Default local models: **Granite 4.1** or **Gemma 3** instruct — not reasoning/thinking models unless product requirements say otherwise._
 
 ### LLM Functions
 
@@ -292,7 +292,7 @@ _If your app uses AI, document the integration patterns here. Record the Phase 1
 >
 > **Observability:** Record **per-stage diagnostics** (e.g. fetch vs browser vs recover; approximate description length) for support bundles — without logging full HTML in analytics.
 >
-> 🔧 **Guidance:** Capture shipped behavior in a **delivery spec** (`specs/partial/` until deferred observability or tests are done); link from backlog (`TODO.md`). Full ForgeKit methodology also mirrors scrape/import resilience for Lite-only projects in **`content/FORGEKIT_LITE.md`** §7.2.
+> 🔧 **Guidance:** Capture shipped behavior in a **delivery spec** (`specs/partial/` until deferred observability or tests are done); link from backlog (`TODO.md`). Full ForgeTrail methodology also mirrors scrape/import resilience for Lite-only projects in **`content/FORGETRAIL_LITE.md`** §7.2.
 
 ### Multi-record URL import (bulk paste / spreadsheet)
 

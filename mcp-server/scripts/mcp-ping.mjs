@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Live MCP ping: spawns forgekit-mcp, calls the ping tool, prints result.
+ * Live MCP ping: spawns forgetrail-mcp, calls the ping tool, prints result.
  * Run from mcp-server/ so @modelcontextprotocol/sdk resolves from node_modules.
  */
 
@@ -12,13 +12,13 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const MCP_SERVER_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const FORGEKIT_ROOT = process.env.FORGEKIT_ROOT
-  ? resolve(process.env.FORGEKIT_ROOT)
+const FORGETRAIL_ROOT = process.env.FORGETRAIL_ROOT
+  ? resolve(process.env.FORGETRAIL_ROOT)
   : resolve(MCP_SERVER_ROOT, "..");
 const entry = join(MCP_SERVER_ROOT, "dist", "index.js");
 
 if (!existsSync(entry)) {
-  console.error("Missing mcp-server/dist/index.js — run: forgekit mcp build");
+  console.error("Missing mcp-server/dist/index.js — run: forgetrail mcp build");
   process.exit(1);
 }
 
@@ -27,13 +27,13 @@ const transport = new StdioClientTransport({
   args: [entry],
   env: {
     ...process.env,
-    FORGEKIT_ROOT,
-    FORGEKIT_QUIET: "1",
+    FORGETRAIL_ROOT,
+    FORGETRAIL_QUIET: "1",
   },
   stderr: "pipe",
 });
 
-const client = new Client({ name: "forgekit-cli", version: "1.0.0" }, { capabilities: {} });
+const client = new Client({ name: "forgetrail-cli", version: "1.0.0" }, { capabilities: {} });
 
 try {
   await client.connect(transport);

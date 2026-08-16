@@ -1,6 +1,6 @@
 ---
-name: Try ForgeKit checklist
-about: First-timer feedback after following TRY_FORGEKIT.md
+name: Try ForgeTrail checklist
+about: First-timer feedback after following TRY_FORGETRAIL.md
 title: "Try path: "
 labels: ["nux", "try-path"]
 ---
@@ -13,17 +13,17 @@ labels: ["nux", "try-path"]
 
 Mark what you completed:
 
-- [ ] Read [TRY_FORGEKIT.md](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/TRY_FORGEKIT.md)
+- [ ] Read [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/TRY_FORGETRAIL.md)
 - [ ] Produced or saved a `docs/GENESIS.md` (or used Lite intake only)
-- [ ] Added `.forgekit/FORGEKIT_LITE.md` (copy or `forgekit install --lite`)
+- [ ] Added `.forgetrail/FORGETRAIL_LITE.md` (copy or `forgetrail install --lite`)
 - [ ] Pasted the kickoff line into my coding agent
-- [ ] Got `.forgekit/workflow_tracking.json`
+- [ ] Got `.forgetrail/workflow_tracking.json`
 - [ ] Got a draft `docs/PHASE_1_BRIEF.md`
 - [ ] Agent waited for Phase 1 approval before scaffolding
 
 ## Where I stuck (if anywhere)
 
-<!-- Step number from TRY_FORGEKIT.md, agent name, and what went wrong -->
+<!-- Step number from TRY_FORGETRAIL.md, agent name, and what went wrong -->
 
 ## Environment (optional)
 

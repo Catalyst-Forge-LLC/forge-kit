@@ -2,7 +2,7 @@
 
 _Organized by brand value pillars. See [BRAND_AND_PRODUCT.md](BRAND_AND_PRODUCT.md) for positioning context._
 
-_Instructions: Start this in Session 1 as a flat list. During Phase 6 (Strategic Review), reorganize by brand pillars from BRAND_AND_PRODUCT.md. Use checkboxes for completion tracking, star ratings for leverage/priority. Process `.forgekit/IDEAS.md` entries into this backlog periodically._
+_Instructions: Start this in Session 1 as a flat list. During Phase 6 (Strategic Review), reorganize by brand pillars from BRAND_AND_PRODUCT.md. Use checkboxes for completion tracking, star ratings for leverage/priority. Process `.forgetrail/IDEAS.md` entries into this backlog periodically._
 
 ---
 

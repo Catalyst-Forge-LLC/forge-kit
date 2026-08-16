@@ -10,10 +10,10 @@
 
 Assume the reader is a **product owner**, not a methodology engineer. They should **not** see:
 
-- MCP or ForgeKit server/tool names (`getChecklist`, `getGreenfieldIntakePrompt`, “bundle”, “methodology stays on the MCP side”, etc.)
+- MCP or ForgeTrail server/tool names (`getChecklist`, `getGreenfieldIntakePrompt`, “bundle”, “methodology stays on the MCP side”, etc.)
 - Paths like `.cursor/rules/…` unless they need to edit something themselves
 - Field-by-field descriptions of `workflow_tracking.json` or other “for your reference only” inventories
-- ForgeKit **footers** (phase · exit criteria · “Next: …”)—those are for **agent** orientation in later turns, not for this first message
+- ForgeTrail **footers** (phase · exit criteria · “Next: …”)—those are for **agent** orientation in later turns, not for this first message
 
 Agents keep planning steps **internal** until they turn user answers into `docs/PHASE_1_BRIEF.md`.
 
@@ -34,7 +34,7 @@ Optional closing: invite them to add anything else that would block a wrong arch
 
 **Length:** Aim for **under ~150 words**, no bullet lists of repo files.
 
-If you later offer **multiple** paths or an ordered pipeline in the same conversation, use **`USER_REPLY_FORMAT.md`** (ForgeKit): numbers for sequence, bullets for parallel options, letters for “pick one” / which first.
+If you later offer **multiple** paths or an ordered pipeline in the same conversation, use **`USER_REPLY_FORMAT.md`** (ForgeTrail): numbers for sequence, bullets for parallel options, letters for “pick one” / which first.
 
 ---
 

@@ -338,7 +338,7 @@ export function ingestPlanArtifact(args: {
   const instructions =
     "1. Review `briefMarkdown` — edit every section; remove '_From approved plan artifact_' blocks after merging.\n" +
     "2. Write `docs/PHASE_1_BRIEF.md` and mark **locked** when accurate.\n" +
-    "3. Merge `trackingDecisions` into `.forgekit/workflow_tracking.json` → `decisions[]` (dedupe by id).\n" +
+    "3. Merge `trackingDecisions` into `.forgetrail/workflow_tracking.json` → `decisions[]` (dedupe by id).\n" +
     "4. Update `phases['1-architecture'].notes` with sign-off summary.\n" +
     "5. Run `validateTracking` before advancing to Phase 2.\n" +
     "6. Phase 2: merge brief into CONTEXT_PROMPT per template handoff table.";

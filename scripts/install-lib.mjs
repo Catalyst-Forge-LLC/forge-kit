@@ -5,11 +5,11 @@ import { cpSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const FORGEKIT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+export const FORGETRAIL_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 export function parseInstallArgs(argv) {
   const args = {
-    target: process.env.FORGEKIT_TARGET?.trim() || "",
+    target: process.env.FORGETRAIL_TARGET?.trim() || "",
     force: false,
     dryRun: false,
     skipTracking: false,
@@ -42,9 +42,9 @@ export function resolveTarget(target, { defaultToCwd = false } = {}) {
   const raw = target?.trim() || (defaultToCwd ? cwd() : "");
   if (!raw) {
     console.error("Missing target directory.");
-    console.error("Usage: forgekit install   (from project folder after pnpm run link:global)");
-    console.error("   or: pnpm run install:forgekit -- --path <project-root>");
-    console.error("   or: FORGEKIT_TARGET=<project-root> pnpm run install:forgekit");
+    console.error("Usage: forgetrail install   (from project folder after pnpm run link:global)");
+    console.error("   or: pnpm run install:forgetrail -- --path <project-root>");
+    console.error("   or: FORGETRAIL_TARGET=<project-root> pnpm run install:forgetrail");
     process.exit(1);
   }
 

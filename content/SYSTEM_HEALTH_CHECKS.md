@@ -2,7 +2,7 @@
 
 **Goal:** Verify **one dependency at a time** (PocketBase, Ollama, later Postgres/Redis/etc.) without starting the full app. Non-technical users double-click **`test-*.bat`**; developers run matching **`pnpm`** scripts.
 
-Upstream reference scripts: `content/scripts/` (`test-pocketbase.mjs`, `test-ollama.mjs`, `setup-ollama.mjs`, `forgekit-env.mjs`).
+Upstream reference scripts: `content/scripts/` (`test-pocketbase.mjs`, `test-ollama.mjs`, `setup-ollama.mjs`, `forgetrail-env.mjs`).
 
 ---
 
@@ -11,7 +11,7 @@ Upstream reference scripts: `content/scripts/` (`test-pocketbase.mjs`, `test-oll
 1. Copy reference scripts into the app **`scripts/`** folder when the stack uses that system.
 2. Add **`package.json`** scripts and repo-root launchers (see **ONE_CLICK_DEV_SETUP.md**).
 3. Document in **README** under **“Troubleshooting”** or **“Check services”** — three lines, no command dumps.
-4. **Ollama:** run **`setup:ollama`** when Phase 1 brief §12 chooses **runtime local LLM**; default models are **non-thinking** (Granite 4.1, Gemma 3). See **FORGEKIT_LITE.md** section 4.8.
+4. **Ollama:** run **`setup:ollama`** when Phase 1 brief §12 chooses **runtime local LLM**; default models are **non-thinking** (Granite 4.1, Gemma 3). See **FORGETRAIL_LITE.md** section 4.8.
 
 ---
 
@@ -50,7 +50,7 @@ Upstream reference scripts: `content/scripts/` (`test-pocketbase.mjs`, `test-oll
   - **≥10 GB VRAM:** `ibm/granite4.1:8b` (default) or `gemma3:12b` if `OLLAMA_PREFER_GEMMA=1`
   - **6–10 GB:** `ibm/granite4.1:8b` or `gemma3:4b`
   - **4–6 GB / CPU:** `ibm/granite4.1:3b` or `gemma3:4b`
-- Records choice in **`.forgekit/ollama-model.txt`**
+- Records choice in **`.forgetrail/ollama-model.txt`**
 - **Never** auto-pull DeepSeek-R1, QwQ, or other reasoning-only families
 
 **Test script (`test-ollama.mjs`)**

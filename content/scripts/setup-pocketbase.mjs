@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Reference PocketBase bootstrap — copy to app repo scripts/setup-pocketbase.mjs
- * ForgeKit: never hardcode a PocketBase version in FORGEKIT_LITE or SCAFFOLD_INSTALL alone.
+ * ForgeTrail: never hardcode a PocketBase version in FORGETRAIL_LITE or SCAFFOLD_INSTALL alone.
  *
  * Version resolution (in order):
  * 1. POCKETBASE_VERSION in .env (semver, e.g. 0.26.2) — use when locked after a successful boot
@@ -42,7 +42,7 @@ async function resolveVersion(env) {
   const v = (env.POCKETBASE_VERSION || "latest").trim();
   if (v !== "latest") return v.replace(/^v/, "");
   const res = await fetch("https://api.github.com/repos/pocketbase/pocketbase/releases/latest", {
-    headers: { Accept: "application/vnd.github+json", "User-Agent": "forgekit-setup" },
+    headers: { Accept: "application/vnd.github+json", "User-Agent": "forgetrail-setup" },
   });
   if (!res.ok) throw new Error(`Could not resolve latest PocketBase release (${res.status})`);
   const data = await res.json();

@@ -1,15 +1,15 @@
 {
-  "name": "forgekit",
+  "name": "forgetrail",
   "version": "0.3.0",
   "private": true,
-  "description": "ForgeKit methodology — CLI install and MCP server",
+  "description": "ForgeTrail methodology — CLI install and MCP server",
   "type": "module",
   "bin": {
-    "forgekit": "./scripts/forgekit-cli.mjs"
+    "forgetrail": "./scripts/forgetrail-cli.mjs"
   },
   "scripts": {
-    "install:forgekit": "node scripts/install-forgekit.mjs",
-    "install:lite": "node scripts/install-forgekit-lite.mjs",
+    "install:forgetrail": "node scripts/install-forgetrail.mjs",
+    "install:lite": "node scripts/install-forgetrail-lite.mjs",
     "link:global": "node scripts/link-global.mjs",
     "mcp": "node scripts/mcp-status.mjs dev",
     "mcp:build": "node scripts/mcp-status.mjs build",

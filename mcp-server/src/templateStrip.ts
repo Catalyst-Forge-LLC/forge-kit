@@ -1,8 +1,8 @@
 /**
- * Single-source ForgeKit templates: strip enrichment from markdown on the server.
+ * Single-source ForgeTrail templates: strip enrichment from markdown on the server.
  *
  * Convention (no parallel files): enrichment lives in contiguous blockquote runs
- * whose first line starts with one of the ForgeKit callout emojis after `>`:
+ * whose first line starts with one of the ForgeTrail callout emojis after `>`:
  *   💡 Lesson learned / Also / etc.
  *   📝 Example
  *   🔧 Guidance
@@ -11,10 +11,10 @@
  * placeholders, non-enrichment blockquotes) is kept.
  */
 
-/** First line of a blockquote run signals ForgeKit enrichment to strip in shell mode */
+/** First line of a blockquote run signals ForgeTrail enrichment to strip in shell mode */
 const ENRICHMENT_BLOCKQUOTE = /^\s*>\s*(💡|📝|🔧)/;
 
-export const SHELL_MODE_PREAMBLE = `<!-- forgekit-template-mode: shell — long-form lessons, examples, and guidance callouts were stripped. Use getTemplate with mode \`full\` when you need the complete template. -->
+export const SHELL_MODE_PREAMBLE = `<!-- forgetrail-template-mode: shell — long-form lessons, examples, and guidance callouts were stripped. Use getTemplate with mode \`full\` when you need the complete template. -->
 
 `;
 
@@ -29,7 +29,7 @@ export function isEnrichmentBlockquoteRun(firstLine: string): boolean {
  * Strip enrichment blockquotes from a single markdown document. Single source of truth
  * remains the .md file on disk; this is computed at serve time.
  */
-export function stripForgeKitTemplateToShell(markdown: string): string {
+export function stripForgeTrailTemplateToShell(markdown: string): string {
   const rawLines = markdown.split("\n");
   const lines = rawLines.map((l) => l.replace(/\r$/, ""));
   const out: string[] = [];

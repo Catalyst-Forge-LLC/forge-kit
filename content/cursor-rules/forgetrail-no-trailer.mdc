@@ -1,15 +1,15 @@
 ---
-description: Plain git commits only — no --trailer attribution for ForgeKit projects
+description: Plain git commits only — no --trailer attribution for ForgeTrail projects
 alwaysApply: true
 ---
 
 # Git commit hygiene
 
-This repository uses **ForgeKit**. Commits use plain `-m` or `-F` message files — no platform attribution trailers unless the user explicitly asks.
+This repository uses **ForgeTrail**. Commits use plain `-m` or `-F` message files — no platform attribution trailers unless the user explicitly asks.
 
 ## Git version
 
-**Git 2.32.0+** (2021) includes native `git commit --trailer`. That is normal and supported. Trailer **concerns in ForgeKit are mainly for pre-2.32 Git**, where `--trailer` can trigger `error: unknown option 'trailer'`.
+**Git 2.32.0+** (2021) includes native `git commit --trailer`. That is normal and supported. Trailer **concerns in ForgeTrail are mainly for pre-2.32 Git**, where `--trailer` can trigger `error: unknown option 'trailer'`.
 
 Run `git --version` when commits fail oddly. If the version is below 2.32, upgrade Git or use the legacy workaround below.
 
@@ -31,7 +31,7 @@ If plain `git commit -m "..."` or `git commit -F file` still fails with `unknown
 - `bash -c 'git commit -F path/to/msg.txt'`
 - Windows: `cmd.exe //c "cd /d <repo> && git commit -F path\to\msg.txt"`
 
-Or upgrade to Git 2.32+. Record in `.forgekit/workflow_tracking.json → gotchas[]` if helpful.
+Or upgrade to Git 2.32+. Record in `.forgetrail/workflow_tracking.json → gotchas[]` if helpful.
 
 ## Pre-execution review
 
@@ -46,4 +46,4 @@ git commit -F path/to/msg.txt
 git commit --amend -m "updated subject"   # only your own unpushed commits
 ```
 
-Full rationale: `.forgekit/FORGEKIT_LITE.md` §8.9 or ForgeKit Lite upstream.
+Full rationale: `.forgetrail/FORGETRAIL_LITE.md` §8.9 or ForgeTrail Lite upstream.

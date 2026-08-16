@@ -1,10 +1,10 @@
-# ForgeKit — Genesis spec prompt (pre-Phase 1, external LLM chat)
+# ForgeTrail — Genesis spec prompt (pre-Phase 1, external LLM chat)
 
-Use this **before** Phase 1, in **any** LLM chat — ChatGPT, Claude, Grok, a local Ollama window, whatever you have open — not inside ForgeKit's MCP tools. It produces a **`GENESIS.md`**: a "what, not how" build spec, focused on requirements and behavior rather than implementation, that you can then hand to a coding agent.
+Use this **before** Phase 1, in **any** LLM chat — ChatGPT, Claude, Grok, a local Ollama window, whatever you have open — not inside ForgeTrail's MCP tools. It produces a **`GENESIS.md`**: a "what, not how" build spec, focused on requirements and behavior rather than implementation, that you can then hand to a coding agent.
 
 **Best fit:** ideas that wrap or extend an **existing app's data or file format** (plugins, converters, companion tools, importers/exporters). The shape generalizes to most "point an agent at this and build it" ideas even without that constraint.
 
-**Relationship to ForgeKit's own Phase 1 tools:**
+**Relationship to ForgeTrail's own Phase 1 tools:**
 
 - **`getGreenfieldIntakePrompt`** + `getChecklist(before-session-1)` are for **in-session** Phase 1 intake with the coding agent (exports, tenancy, hero flow, etc.) — use them when you're starting Phase 1 directly with no pre-written spec.
 - **This prompt** runs **earlier and elsewhere** — a separate LLM chat, before you've even opened the coding agent — and produces a **portable artifact** (`GENESIS.md`) instead of an interactive Q&A. Use it when the idea needs upfront market/format research that's better done as its own pass, or when you want a spec you can shop between different coding agents/stacks without rewriting it.
@@ -13,7 +13,7 @@ Use this **before** Phase 1, in **any** LLM chat — ChatGPT, Claude, Grok, a lo
 ## After you have `GENESIS.md`
 
 1. Save it in the project repo as **`docs/GENESIS.md`** (canonical path).
-2. Follow the human recipe in **`TRY_FORGEKIT.md`** (forge-kit repo root), or feed the spec into ForgeKit Phase 1:
+2. Follow the human recipe in **`TRY_FORGETRAIL.md`** (ForgeTrail repo root), or feed the spec into ForgeTrail Phase 1:
    - **Automatic draft:** call **`ingestPlanArtifact`** with the full `GENESIS.md` text as `planContent`. It maps headings like *Problem statement*, *Goals and non-goals*, *Required background on the data/file format*, *Core domain concepts*, *Edge cases*, *Milestones*, and *Open questions* into `docs/PHASE_1_BRIEF.md` sections, and extracts any `D1.`/`D2.`-style decisions into `decisions[]`. Sections without a clean home (e.g. **Acceptance criteria** — the brief has no dedicated section for it) land in a "Plan sections not auto-mapped" footer — fold that into **§12 Handoff checklist** or its own appendix by hand.
    - **Manual walkthrough:** read `docs/GENESIS.md` together with the agent as context, then run **`getGreenfieldIntakePrompt`** + `getChecklist(before-session-1)` to confirm delivery details the spec might not cover (tenancy, compliance, live search, content-generation pattern).
 3. Either way, **lock `docs/PHASE_1_BRIEF.md`** before Phase 2 scaffolding, per the normal Phase 1 exit criteria.

@@ -1,4 +1,4 @@
-/** Structural validation for .forgekit/workflow_tracking.json (MCP full + Lite shapes). */
+/** Structural validation for .forgetrail/workflow_tracking.json (MCP full + Lite shapes). */
 
 const VALID_MCP_PHASES = [
   "1-architecture",

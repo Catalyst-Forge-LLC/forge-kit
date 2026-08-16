@@ -14,15 +14,15 @@ import {
 } from "./mcp-lib.mjs";
 
 const HELP = `
-ForgeKit MCP — build, status, and Cursor setup helpers
+ForgeTrail MCP — build, status, and Cursor setup helpers
 
 Usage:
-  forgekit mcp build              Install deps + compile mcp-server/dist/
-  forgekit mcp status [--ping]    Static checks + optional live ping tool call
-  forgekit mcp ping               Live ping only (JSON)
-  forgekit mcp cursor-config      Print recommended .cursor/mcp.json
-  forgekit mcp dev                Run server on stdio (blocks; for debugging)
-  forgekit mcp inspector          Open MCP Inspector in browser
+  forgetrail mcp build              Install deps + compile mcp-server/dist/
+  forgetrail mcp status [--ping]    Static checks + optional live ping tool call
+  forgetrail mcp ping               Live ping only (JSON)
+  forgetrail mcp cursor-config      Print recommended .cursor/mcp.json
+  forgetrail mcp dev                Run server on stdio (blocks; for debugging)
+  forgetrail mcp inspector          Open MCP Inspector in browser
 
 Note: Cursor starts the MCP server itself. You usually do not run \`mcp dev\`
 for normal use — run \`mcp build\` once, then enable MCP in Cursor settings.
@@ -44,7 +44,7 @@ function runLivePing() {
 }
 
 function runDev() {
-  console.log("Starting ForgeKit MCP on stdio (Ctrl+C to stop)...\n");
+  console.log("Starting ForgeTrail MCP on stdio (Ctrl+C to stop)...\n");
   const r = spawnSync("pnpm", ["run", "dev"], {
     cwd: MCP_SERVER_DIR,
     stdio: "inherit",
@@ -55,7 +55,7 @@ function runDev() {
 
 function runInspector() {
   if (!existsSync(join(MCP_SERVER_DIR, "dist", "index.js"))) {
-    console.error("Build first: forgekit mcp build");
+    console.error("Build first: forgetrail mcp build");
     process.exit(1);
   }
   console.log("Opening MCP Inspector (browser)...\n");
@@ -68,7 +68,7 @@ function runInspector() {
 }
 
 function runStatus({ withPing = false }) {
-  console.log("ForgeKit MCP status\n");
+  console.log("ForgeTrail MCP status\n");
 
   const staticResult = staticMcpChecks();
   console.log("## Server files");
@@ -86,14 +86,14 @@ function runStatus({ withPing = false }) {
   console.log("\n## Cursor MCP config");
   console.log(`  Path: ${cursor.path}`);
   if (cursor.found && cursor.issues.length === 0) {
-    console.log("  ✓ forgekit server entry looks valid");
+    console.log("  ✓ forgetrail server entry looks valid");
   }
   for (const i of cursor.issues) console.log(`  ✗ ${i}`);
   for (const n of cursor.notes) console.log(`  · ${n}`);
 
   console.log("\n## Cursor checklist");
-  console.log("  1. Settings → MCP → forgekit should show connected (green).");
-  console.log("  2. In Agent chat, ask: Call ForgeKit ping");
+  console.log("  1. Settings → MCP → forgetrail should show connected (green).");
+  console.log("  2. In Agent chat, ask: Call ForgeTrail ping");
   console.log("  3. If tools are missing, reload MCP or restart Cursor.");
 
   const failed = staticResult.issues.length + cursor.issues.length;
@@ -105,11 +105,11 @@ function runStatus({ withPing = false }) {
   }
 
   if (failed > 0) {
-    console.log("\nFix issues above, then: forgekit mcp status --ping");
+    console.log("\nFix issues above, then: forgetrail mcp status --ping");
     process.exit(1);
   }
 
-  console.log("\nRun live JSON-RPC ping: forgekit mcp ping");
+  console.log("\nRun live JSON-RPC ping: forgetrail mcp ping");
 }
 
 export function runMcpCommand(argv) {
@@ -142,7 +142,7 @@ export function runMcpCommand(argv) {
       break;
     default:
       console.error(`Unknown mcp subcommand: ${cmd}`);
-      console.error("Run: forgekit mcp --help");
+      console.error("Run: forgetrail mcp --help");
       process.exit(1);
   }
 }

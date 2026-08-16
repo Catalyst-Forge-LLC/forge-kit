@@ -62,7 +62,7 @@ Scope: [optional panel list, or "follow inline audit"].
 
 **Acceptance:** inline audit reaches **0 UI prose not in export** (terms/noise/CSS may remain). Sync audit passes for feature parity.
 
-> 🔧 **Guidance:** Apps adopt these scripts when copy volume justifies them (typically Phase 6–7 or after 10+ panels with product copy). ForgeKit templates describe the **pattern**; copy script implementations from a reference app or build minimal stubs that call your `$lib/content/exportUserFacingCopy` module.
+> 🔧 **Guidance:** Apps adopt these scripts when copy volume justifies them (typically Phase 6–7 or after 10+ panels with product copy). ForgeTrail templates describe the **pattern**; copy script implementations from a reference app or build minimal stubs that call your `$lib/content/exportUserFacingCopy` module.
 
 ---
 
@@ -97,7 +97,7 @@ For each cluster:
 
 - [ ] Remaining 1-hit files from inline audit
 - [ ] Move spec to **completed**; mark TODO done
-- [ ] Propagate lessons to ForgeKit (`propagate-to-forgekit.md`)
+- [ ] Propagate lessons to ForgeTrail (`propagate-to-forgetrail.md`)
 
 ---
 
@@ -123,6 +123,6 @@ Split **prose** (paragraphs, intros, help bodies) from **terms** (labels, toolti
 
 ---
 
-## Propagate to ForgeKit
+## Propagate to ForgeTrail
 
-When your app completes a centralization pass, run **`prompts/propagate-to-forgekit.md`** so templates, `TECHNICAL_REFERENCE`, and `CODE_QUALITY` stay aligned — generalize patterns only, not app-specific strings.
+When your app completes a centralization pass, run **`prompts/propagate-to-forgetrail.md`** so templates, `TECHNICAL_REFERENCE`, and `CODE_QUALITY` stay aligned — generalize patterns only, not app-specific strings.

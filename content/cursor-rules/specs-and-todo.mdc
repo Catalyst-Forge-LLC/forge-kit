@@ -1,5 +1,5 @@
 ---
-description: New specs must match ForgeKit conventions and get a TODO.md entry
+description: New specs must match ForgeTrail conventions and get a TODO.md entry
 alwaysApply: true
 ---
 
@@ -7,7 +7,7 @@ alwaysApply: true
 
 When **creating a new delivery spec** under `specs/`:
 
-1. **Start from the template:** copy `docs/SPEC_FEATURE_TEMPLATE.md` from ForgeKit (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`), or the Lite skeleton in `.forgekit/FORGEKIT_LITE.md` §3.1. Match neighboring specs' naming (`kebab-case.md`).
+1. **Start from the template:** copy `docs/SPEC_FEATURE_TEMPLATE.md` from ForgeTrail (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`), or the Lite skeleton in `.forgetrail/FORGETRAIL_LITE.md` §3.1. Match neighboring specs' naming (`kebab-case.md`).
 2. **Add or update `TODO.md`:** link the new spec with an open `[ ]` checklist item. Do not add a tracked delivery spec without a backlog entry.
 3. **Header:** set `Spec kind: Delivery` (or `Canonical reference`), `Status`, and Related links.
 

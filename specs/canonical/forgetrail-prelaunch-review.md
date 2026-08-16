@@ -1,16 +1,16 @@
-# ForgeKit pre-use review — findings & next steps
+# ForgeTrail pre-use review — findings & next steps
 
 **Spec kind:** Canonical reference (implemented review record)
 
 **Status:** Implemented (2026-06-01) — all findings addressed (H1/H2, M1–M4, L1–L4).
-**Scope:** Whole-kit pass before adopting ForgeKit on a new project, with extra focus on **`content/FORGEKIT_LITE.md`** (the standalone, no-MCP path the maintainer uses most).
-**Reviewer:** agent pass over `FORGEKIT_LITE.md`, `README.md`, `WORKFLOW.md`, `mcp-server/README.md`, and the reference scripts in `content/scripts/`.
+**Scope:** Whole-kit pass before adopting ForgeTrail on a new project, with extra focus on **`content/FORGETRAIL_LITE.md`** (the standalone, no-MCP path the maintainer uses most).
+**Reviewer:** agent pass over `FORGETRAIL_LITE.md`, `README.md`, `WORKFLOW.md`, `mcp-server/README.md`, and the reference scripts in `content/scripts/`.
 
 ---
 
 ## 1. Verdict
 
-ForgeKit is in good shape and **ready for a new project**. The Lite file is unusually complete for a single-file protocol: preflight, phase gates, default stacks, content-generation patterns, one-click launchers, and a strong anti-pattern list. Prelaunch review fixes (2026-06-01) addressed the status-launcher schema bug, `.forgekit/` git policy clarity, §4 navigation, MCP Lite retrieval, and cross-doc maintenance notes.
+ForgeTrail is in good shape and **ready for a new project**. The Lite file is unusually complete for a single-file protocol: preflight, phase gates, default stacks, content-generation patterns, one-click launchers, and a strong anti-pattern list. Prelaunch review fixes (2026-06-01) addressed the status-launcher schema bug, `.forgetrail/` git policy clarity, §4 navigation, MCP Lite retrieval, and cross-doc maintenance notes.
 
 ---
 
@@ -18,15 +18,15 @@ ForgeKit is in good shape and **ready for a new project**. The Lite file is unus
 
 ### H1. The dev launcher's `status` command is broken for Lite projects (schema mismatch)
 
-**Status:** Fixed (2026-06-01) — `forgekit-dev-launcher.mjs` reads Lite `exitCriteria` booleans and MCP array shapes.
+**Status:** Fixed (2026-06-01) — `forgetrail-dev-launcher.mjs` reads Lite `exitCriteria` booleans and MCP array shapes.
 
-**Where:** `content/scripts/forgekit-dev-launcher.mjs` (`renderProgress()`) vs `FORGEKIT_LITE.md` §11 starter tracking.
+**Where:** `content/scripts/forgetrail-dev-launcher.mjs` (`renderProgress()`) vs `FORGETRAIL_LITE.md` §11 starter tracking.
 
 **Problem:** Lite §11 writes `phases["1"].exitCriteria` as an **object of booleans** (`{ phase1BriefLocked: false, ... }`) with `schemaVersion: "lite-1"`. The launcher's `renderProgress()` instead reads:
 - `PHASE_LABELS` keyed `"1-architecture"`, `"2-scaffolding"`, … (the **MCP/full** schema keys), and
 - `phaseBlock.exitCriteriaRemaining` / `exitCriteriaMet` as **arrays**.
 
-For a Lite-bootstrapped repo, `exitCriteriaRemaining`/`exitCriteriaMet` are always `undefined` → empty arrays, so `status.bat` / `pnpm run forgekit:status` **always prints "Exit criteria for this phase look complete (confirm before advancing)"** even in a fresh Phase 1 with nothing done. The phase label only survives by accident via the `phaseBlock?.name` fallback.
+For a Lite-bootstrapped repo, `exitCriteriaRemaining`/`exitCriteriaMet` are always `undefined` → empty arrays, so `status.bat` / `pnpm run forgetrail:status` **always prints "Exit criteria for this phase look complete (confirm before advancing)"** even in a fresh Phase 1 with nothing done. The phase label only survives by accident via the `phaseBlock?.name` fallback.
 
 **Why it matters:** §4.5–§4.6 explicitly target **non-technical operators** who rely on `status.bat` for ground truth. Silently telling them a phase "looks complete" is the worst failure mode for that audience.
 
@@ -36,17 +36,17 @@ For a Lite-bootstrapped repo, `exitCriteriaRemaining`/`exitCriteriaMet` are alwa
 
 The object-shape handling is ~6 lines and makes one script correct for both schemas — preferred.
 
-### H2. `.forgekit/` "must be gitignored" contradicts "you may commit it" — and breaks the bootstrap commit
+### H2. `.forgetrail/` "must be gitignored" contradicts "you may commit it" — and breaks the bootstrap commit
 
 **Status:** Fixed (2026-06-01) — §1.5 commit-vs-gitignore table; §4.2 steps 2 and 5 aligned.
 
-**Where:** Lite §1.5 ("**`.gitignore` must include:** `.forgekit/`"), §4.2 step 2 (minimal `.gitignore` includes `.forgekit/`), §4.2 step 5 (first commit `git add -A && git commit -m "chore: ForgeKit Lite bootstrap"`), and §14 + the "who creates what" table (which say committing `.forgekit/` under Apache 2.0 is fine).
+**Where:** Lite §1.5 ("**`.gitignore` must include:** `.forgetrail/`"), §4.2 step 2 (minimal `.gitignore` includes `.forgetrail/`), §4.2 step 5 (first commit `git add -A && git commit -m "chore: ForgeTrail Lite bootstrap"`), and §14 + the "who creates what" table (which say committing `.forgetrail/` under Apache 2.0 is fine).
 
 **Problem:** Two issues compound:
-1. **Contradiction:** §1.5 states a flat "**must** include `.forgekit/`", while the same section, §14, and the table all say committing `.forgekit/` is an equally valid choice. A first-time reader can't tell which is the rule.
-2. **Ordering bug:** If the agent follows §4.2 step 2 literally (gitignore `.forgekit/` first) and then makes the step-5 "bootstrap" commit, the commit captures **nothing from `.forgekit/`** — the tracking file, `AGENTS.md`, and rule files are all untracked. The commit message implies a bootstrap was saved when effectively only `.gitignore` was.
+1. **Contradiction:** §1.5 states a flat "**must** include `.forgetrail/`", while the same section, §14, and the table all say committing `.forgetrail/` is an equally valid choice. A first-time reader can't tell which is the rule.
+2. **Ordering bug:** If the agent follows §4.2 step 2 literally (gitignore `.forgetrail/` first) and then makes the step-5 "bootstrap" commit, the commit captures **nothing from `.forgetrail/`** — the tracking file, `AGENTS.md`, and rule files are all untracked. The commit message implies a bootstrap was saved when effectively only `.gitignore` was.
 
-**Suggested fix:** Reframe as an explicit either/or up front: "**Decide once:** commit `.forgekit/` (default for a self-contained history) **or** gitignore it (cleaner public repo / MCP-served methodology). If gitignoring, the step-5 bootstrap commit will only contain `.gitignore` + any files you copied to `.cursor/rules/` — that's expected." Remove the absolute "must" or scope it to the gitignore-it branch only. Make step 2 and step 5 consistent with whichever branch is chosen.
+**Suggested fix:** Reframe as an explicit either/or up front: "**Decide once:** commit `.forgetrail/` (default for a self-contained history) **or** gitignore it (cleaner public repo / MCP-served methodology). If gitignoring, the step-5 bootstrap commit will only contain `.gitignore` + any files you copied to `.cursor/rules/` — that's expected." Remove the absolute "must" or scope it to the gitignore-it branch only. Make step 2 and step 5 consistent with whichever branch is chosen.
 
 ---
 
@@ -74,13 +74,13 @@ The object-shape handling is ~6 lines and makes one script correct for both sche
 
 ### M3. Lite is not retrievable through the MCP server
 
-**Status:** Fixed (2026-06-01) — `getForgeKitLite` and `getForgeKitLiteUpdates` MCP tools.
+**Status:** Fixed (2026-06-01) — `getForgeTrailLite` and `getForgeTrailLiteUpdates` MCP tools.
 
-**Where:** `mcp-server/src/index.ts` exposes no `FORGEKIT_LITE` tool (grep: no matches); `mcp-server/README.md` tool table has no Lite entry.
+**Where:** `mcp-server/src/index.ts` exposes no `FORGETRAIL_LITE` tool (grep: no matches); `mcp-server/README.md` tool table has no Lite entry.
 
-**Problem:** This is *mostly* by design (Lite is the no-MCP on-ramp), but an MCP-connected agent that wants the portable single-file protocol must be told to read it from disk; there's no `getForgeKitLite` parity with `getTemplate`. The Lite footer also pitches "graduate to MCP" but there's no symmetric "get Lite from MCP."
+**Problem:** This is *mostly* by design (Lite is the no-MCP on-ramp), but an MCP-connected agent that wants the portable single-file protocol must be told to read it from disk; there's no `getForgeTrailLite` parity with `getTemplate`. The Lite footer also pitches "graduate to MCP" but there's no symmetric "get Lite from MCP."
 
-**Suggested fix (optional):** Add a small `getForgeKitLite` tool (and/or `getForgeKitLiteUpdates` template) so the MCP path can emit the Lite file when a user wants the standalone artifact. Low priority; document the intent either way.
+**Suggested fix (optional):** Add a small `getForgeTrailLite` tool (and/or `getForgeTrailLiteUpdates` template) so the MCP path can emit the Lite file when a user wants the standalone artifact. Low priority; document the intent either way.
 
 ### M4. Version is hand-maintained in 4 places with no single source
 
@@ -97,7 +97,7 @@ The object-shape handling is ~6 lines and makes one script correct for both sche
 ## 4. Findings — Low / polish
 
 - **L1. `decisions[]` shape inconsistency.** **Fixed** — canonical Lite shape: `{ date, phase, decision, why, alternatives }` in §7, §11, §15; brief §9 points at tracking.
-- **L2. Restated content between Lite and README/WORKFLOW.** **Fixed** — maintainer note in Lite header; triplicate checklist in `update-log.md` + `propagate-to-forgekit.md`.
+- **L2. Restated content between Lite and README/WORKFLOW.** **Fixed** — maintainer note in Lite header; triplicate checklist in `update-log.md` + `propagate-to-forgetrail.md`.
 - **L3. Phase-name vocabulary differs by file.** **Fixed** — phase ID map in `TRACKING_SCHEMA.md`; Lite §11 cross-ref; launcher maps both schemas.
 - **L4. WORKFLOW.md still opens "built with Claude."** **Fixed** — intro now "AI coding agents"; `TRACKING_SCHEMA.md` intro agent-agnostic.
 
@@ -118,9 +118,9 @@ The object-shape handling is ~6 lines and makes one script correct for both sche
 All items below are **done** as of 2026-06-01. Use this list as a validation checklist for the next greenfield boot:
 
 1. ~~**Fix H1**~~ — status launcher reads Lite `exitCriteria` booleans and MCP arrays.
-2. ~~**Fix H2**~~ — `.forgekit/` commit-vs-gitignore policy explicit in §1.5 / §4.2.
+2. ~~**Fix H2**~~ — `.forgetrail/` commit-vs-gitignore policy explicit in §1.5 / §4.2.
 3. ~~**M1 + M2**~~ — §4 reading order + §8 rule notation.
 4. ~~**M4 + L1**~~ — release checklist; unified `decisions[]` shape.
 5. ~~**M3 + L2/L3/L4**~~ — MCP Lite tools; cross-doc sync notes; phase ID map; WORKFLOW wording.
 
-**Validation before next project:** bootstrap a throwaway repo from Lite, run `status.bat` in a fresh Phase 1 and confirm it reports open exit criteria (not "looks complete"); confirm the bootstrap commit contains what the chosen `.forgekit/` policy says it should.
+**Validation before next project:** bootstrap a throwaway repo from Lite, run `status.bat` in a fresh Phase 1 and confirm it reports open exit criteria (not "looks complete"); confirm the bootstrap commit contains what the chosen `.forgetrail/` policy says it should.

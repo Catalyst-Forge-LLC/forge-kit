@@ -1,6 +1,6 @@
 # GENESIS.md — Mars Habitat Duty Roster (sample)
 
-> **Fiction.** This is a made-up product for ForgeKit demos. It is not a real NASA/SpaceX tool. The *problem shape* is deliberately ordinary: shared household / shift scheduling, with a Mars habitat skin so it is memorable.
+> **Fiction.** This is a made-up product for ForgeTrail demos. It is not a real NASA/SpaceX tool. The *problem shape* is deliberately ordinary: shared household / shift scheduling, with a Mars habitat skin so it is memorable.
 
 **Status:** sample for shape reference  
 **Canonical path in a real project:** `docs/GENESIS.md`

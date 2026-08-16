@@ -9,7 +9,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
-import { loadEnv, pocketBaseUrlFromEnv, repoRootFromImportMeta } from "./forgekit-env.mjs";
+import { loadEnv, pocketBaseUrlFromEnv, repoRootFromImportMeta } from "./forgetrail-env.mjs";
 
 const repoRoot = repoRootFromImportMeta(import.meta.url);
 const env = loadEnv(repoRoot);

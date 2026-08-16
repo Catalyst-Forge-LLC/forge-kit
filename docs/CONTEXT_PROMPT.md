@@ -8,7 +8,7 @@ _Instructions: Replace all [BRACKETED] placeholders as your project evolves. The
 
 ## Handoff from Phase 1 (`PHASE_1_BRIEF.md`)
 
-_If the project used ForgeKit Phase 1 properly, **`docs/PHASE_1_BRIEF.md`** exists and was **locked** before scaffolding. When you **first** create or populate this file in Phase 2, **merge** the brief into the sections below — do not re-derive architecture from chat alone._
+_If the project used ForgeTrail Phase 1 properly, **`docs/PHASE_1_BRIEF.md`** exists and was **locked** before scaffolding. When you **first** create or populate this file in Phase 2, **merge** the brief into the sections below — do not re-derive architecture from chat alone._
 
 | `PHASE_1_BRIEF.md` section | Merge into this document |
 | -------------------------- | ------------------------ |
@@ -24,7 +24,7 @@ _If the project used ForgeKit Phase 1 properly, **`docs/PHASE_1_BRIEF.md`** exis
 | §10 Out of scope v1 | **Key Architectural Decisions** or short note under **Recent Changes** |
 | §11 First feature batch | Seed **`TODO.md`** |
 
-**After merge:** Keep **`PHASE_1_BRIEF.md`** in `docs/` as a dated audit trail **or** replace its body with one line: `Merged into CONTEXT_PROMPT.md on [date]. Source preserved in git history.` Do **not** delete corresponding entries in **`.forgekit/workflow_tracking.json` → `decisions[]`.**
+**After merge:** Keep **`PHASE_1_BRIEF.md`** in `docs/` as a dated audit trail **or** replace its body with one line: `Merged into CONTEXT_PROMPT.md on [date]. Source preserved in git history.` Do **not** delete corresponding entries in **`.forgetrail/workflow_tracking.json` → `decisions[]`.**
 
 ---
 
@@ -192,7 +192,7 @@ _User experience principles that guide feature decisions. These should align wit
 > 📝 **Example:**
 > - Human-in-the-loop: Every AI feature prepares, drafts, and suggests, then returns control to the user. No auto-submission.
 > - Preparation before materials: Intersections → Selling Points → Resume/Cover Letter. This sequence builds from analysis to positioning to output.
-> - **User-facing verbs, not generic "Generate":** Buttons, tooltips, and progress labels should use specific verbs (Map, Build, Draft, Create, Refresh, Tailor) so users know what artifact or step they get. See **ForgeKit `docs/BRAND_AND_PRODUCT.md` → Copy & Messaging Lessons → Action verbs over generic "Generate"**. For terminology that is product-specific, maintain a **`specs/UI_UX_COPY_CONSISTENCY_SPEC.md`** (or equivalent) in the customer repo and propagate generalizable lessons back to ForgeKit docs after each pass.
+> - **User-facing verbs, not generic "Generate":** Buttons, tooltips, and progress labels should use specific verbs (Map, Build, Draft, Create, Refresh, Tailor) so users know what artifact or step they get. See **ForgeTrail `docs/BRAND_AND_PRODUCT.md` → Copy & Messaging Lessons → Action verbs over generic "Generate"**. For terminology that is product-specific, maintain a **`specs/UI_UX_COPY_CONSISTENCY_SPEC.md`** (or equivalent) in the customer repo and propagate generalizable lessons back to ForgeTrail docs after each pass.
 > - **Landing and in-app story copy stay in sync:** When you have both a public marketing page and an About/Help story surface, align hero framing, section titles, timing claims, and feature marketing names after each landing copy pass. See **`docs/BRAND_AND_PRODUCT.md` → Copy & Messaging Lessons → Keep in-app marketing surfaces aligned with the public landing**.
 > - **Ship a quick UX win alongside a future-phase spec.** When a feature needs a full spec (AI-powered discovery, smart recommendations, etc.), don't let the current UX stagnate while the spec waits. Ship an immediate, low-effort improvement to the existing surface — better search links, smarter defaults, restructured information — then write the spec for the ambitious version. This gives users visible progress now and prevents "we'll get to it" drift.
 

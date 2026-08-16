@@ -12,10 +12,10 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
-import { loadEnv, repoRootFromImportMeta } from "./forgekit-env.mjs";
+import { loadEnv, repoRootFromImportMeta } from "./forgetrail-env.mjs";
 
 const repoRoot = repoRootFromImportMeta(import.meta.url);
-const stampPath = join(repoRoot, ".forgekit", "ollama-model.txt");
+const stampPath = join(repoRoot, ".forgetrail", "ollama-model.txt");
 const isWin = process.platform === "win32";
 
 const THINKING_MODEL_RE =
@@ -193,7 +193,7 @@ async function main() {
   } else {
     console.log(`Pulling ${model}…`);
     await run("ollama", ["pull", model]);
-    mkdirSync(join(repoRoot, ".forgekit"), { recursive: true });
+    mkdirSync(join(repoRoot, ".forgetrail"), { recursive: true });
     writeFileSync(stampPath, model, "utf8");
   }
 

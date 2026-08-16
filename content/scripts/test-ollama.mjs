@@ -5,10 +5,10 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { loadEnv, ollamaBaseUrlFromEnv, repoRootFromImportMeta } from "./forgekit-env.mjs";
+import { loadEnv, ollamaBaseUrlFromEnv, repoRootFromImportMeta } from "./forgetrail-env.mjs";
 
 const repoRoot = repoRootFromImportMeta(import.meta.url);
-const stampPath = join(repoRoot, ".forgekit", "ollama-model.txt");
+const stampPath = join(repoRoot, ".forgetrail", "ollama-model.txt");
 
 function fail(msg) {
   console.error(`Ollama check: FAIL — ${msg}`);

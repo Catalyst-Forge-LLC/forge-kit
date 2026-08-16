@@ -1,4 +1,4 @@
-# ForgeKit update log — archive (pre-open-source era)
+# ForgeTrail update log — archive (pre-open-source era)
 
 Entries from **before 2026-05-26** (the first open-source release). These describe private development and template propagation from real apps (including codenames like ChronoVault, EchoVault, and Exec Foundry). They are kept for **maintainer context and provenance** — the propagation history that seeded today's templates — not as a public product roadmap.
 
@@ -6,50 +6,50 @@ Recent entries live in [update-log.md](update-log.md), which also documents the 
 
 | Date (ISO) | Summary |
 |------------|---------|
-| 2026-05-21 | **FORGEKIT_LITE §4.1.2:** Phase 2 stack-conditional deps table (PocketBase, Ollama, LLM keys, Playwright, native addons, ports); README + NEW_PROJECT_BOOTSTRAP + SCAFFOLD_INSTALL cross-refs. |
-| 2026-05-21 | **FORGEKIT_LITE §4.1 preflight:** explicit **Node.js** + **npm** before **pnpm** (install order, LTS paths, npm as bootstrap only). ONE_CLICK_DEV_SETUP + README prerequisites. |
-| 2026-05-21 | **Git trailers — Git 2.32+ baseline:** `--trailer` native from 2.32.0 (2021); ForgeKit policy = no unrequested attribution on all versions; shell-hop / `unknown option` guidance **pre-2.32 only**. Updated FORGEKIT_LITE §8.9, commit-messages.mdc, forgekit-no-trailer.mdc, bootstrap/INITIAL_PROMPT. |
-| 2026-05-21 | **LLM content patterns + Ollama:** README, WORKFLOW, INITIAL_PROMPT, GREENFIELD_INTAKE, FORGEKIT_LITE §7.1 (Ollama runtime skeleton), §12/.env; docs CONTEXT_PROMPT, TECHNICAL_REFERENCE, PHASE_1_BRIEF §6a. |
-| 2026-05-21 | **FORGEKIT_LITE v1.2.0 — isolated health checks + Ollama:** §4.7 test-pocketbase; §4.8 setup/test Ollama (VRAM, Granite 4.1 / Gemma 3, no thinking default); **`SYSTEM_HEALTH_CHECKS.md`**, reference scripts + launchers. |
-| 2026-05-21 | **FORGEKIT_LITE v1.1.9 — PocketBase latest install, one-click setup, phase status:** §4.2.2 no hardcoded PB version; §4.5 setup/run/status `.bat`/`.sh`; §4.6 `FORGEKIT_PROGRESS.md` + status script; **`ONE_CLICK_DEV_SETUP.md`**, reference **`scripts/*.mjs`**, **`SCAFFOLD_INSTALL.json`** `versionPolicy`. |
-| 2026-05-21 | **FORGEKIT_LITE v1.1.8 — unified `.forgekit/` workspace (Lite + MCP):** rename from `.forgekit-lite/`; all paths use **`.forgekit/workflow_tracking.json`**, **`.forgekit/IDEAS.md`**, platform rules; **`WORKFLOW.md`**, **`README.md`**, **`INITIAL_PROMPT.md`**, **`CONTINUATION_PROMPT.md`**, **`TRACKING_SCHEMA.md`**, templates aligned. Bundled **`forgekit-*.mdc`**, **`forgekit-workspace-README.md`**; MCP kickoff tools updated. |
-| 2026-05-21 | **FORGEKIT_LITE v1.1.7 — fold EchoVault boot lessons into Lite:** **§4.2.1** env (dotenv at Node entry, Vite `loadEnv` merge in monorepos); **§4.1** pnpm `onlyBuiltDependencies`; **§4.2 step 10** pnpm workspace `backend/` + `frontend/`; **§1.6** protocol feedback log; **§13–§14** port health-check, split `.env.example`, README env restart note. **`FORGEKIT_LITE_UPDATES.md`** trimmed to local starter template. |
-| 2026-05-20 | **FORGEKIT_LITE v1.1.6 — `.forgekit-lite/` gitignored workspace (ChronoVault propagation):** **§1.5** local agent workspace; §4.2 / §11 / §12 / §14 path updates; **§4.1.1** GitHub GH007 / noreply email; §13 anti-patterns (public Lite commit, history rewrite). New **`FORGEKIT_LITE_UPDATES.md`** template; **`cursor-rules/forgekit-lite-no-trailer.mdc`** + **`forgekit-lite-updates-log.mdc`**; **`forgekit-lite-workspace-README.md`**. **NEW_PROJECT_BOOTSTRAP** — Lite §1.5 cross-ref for published repos. |
+| 2026-05-21 | **FORGETRAIL_LITE §4.1.2:** Phase 2 stack-conditional deps table (PocketBase, Ollama, LLM keys, Playwright, native addons, ports); README + NEW_PROJECT_BOOTSTRAP + SCAFFOLD_INSTALL cross-refs. |
+| 2026-05-21 | **FORGETRAIL_LITE §4.1 preflight:** explicit **Node.js** + **npm** before **pnpm** (install order, LTS paths, npm as bootstrap only). ONE_CLICK_DEV_SETUP + README prerequisites. |
+| 2026-05-21 | **Git trailers — Git 2.32+ baseline:** `--trailer` native from 2.32.0 (2021); ForgeTrail policy = no unrequested attribution on all versions; shell-hop / `unknown option` guidance **pre-2.32 only**. Updated FORGETRAIL_LITE §8.9, commit-messages.mdc, forgetrail-no-trailer.mdc, bootstrap/INITIAL_PROMPT. |
+| 2026-05-21 | **LLM content patterns + Ollama:** README, WORKFLOW, INITIAL_PROMPT, GREENFIELD_INTAKE, FORGETRAIL_LITE §7.1 (Ollama runtime skeleton), §12/.env; docs CONTEXT_PROMPT, TECHNICAL_REFERENCE, PHASE_1_BRIEF §6a. |
+| 2026-05-21 | **FORGETRAIL_LITE v1.2.0 — isolated health checks + Ollama:** §4.7 test-pocketbase; §4.8 setup/test Ollama (VRAM, Granite 4.1 / Gemma 3, no thinking default); **`SYSTEM_HEALTH_CHECKS.md`**, reference scripts + launchers. |
+| 2026-05-21 | **FORGETRAIL_LITE v1.1.9 — PocketBase latest install, one-click setup, phase status:** §4.2.2 no hardcoded PB version; §4.5 setup/run/status `.bat`/`.sh`; §4.6 `FORGETRAIL_PROGRESS.md` + status script; **`ONE_CLICK_DEV_SETUP.md`**, reference **`scripts/*.mjs`**, **`SCAFFOLD_INSTALL.json`** `versionPolicy`. |
+| 2026-05-21 | **FORGETRAIL_LITE v1.1.8 — unified `.forgetrail/` workspace (Lite + MCP):** rename from `.forgetrail-lite/`; all paths use **`.forgetrail/workflow_tracking.json`**, **`.forgetrail/IDEAS.md`**, platform rules; **`WORKFLOW.md`**, **`README.md`**, **`INITIAL_PROMPT.md`**, **`CONTINUATION_PROMPT.md`**, **`TRACKING_SCHEMA.md`**, templates aligned. Bundled **`forgetrail-*.mdc`**, **`forgetrail-workspace-README.md`**; MCP kickoff tools updated. |
+| 2026-05-21 | **FORGETRAIL_LITE v1.1.7 — fold EchoVault boot lessons into Lite:** **§4.2.1** env (dotenv at Node entry, Vite `loadEnv` merge in monorepos); **§4.1** pnpm `onlyBuiltDependencies`; **§4.2 step 10** pnpm workspace `backend/` + `frontend/`; **§1.6** protocol feedback log; **§13–§14** port health-check, split `.env.example`, README env restart note. **`FORGETRAIL_LITE_UPDATES.md`** trimmed to local starter template. |
+| 2026-05-20 | **FORGETRAIL_LITE v1.1.6 — `.forgetrail-lite/` gitignored workspace (ChronoVault propagation):** **§1.5** local agent workspace; §4.2 / §11 / §12 / §14 path updates; **§4.1.1** GitHub GH007 / noreply email; §13 anti-patterns (public Lite commit, history rewrite). New **`FORGETRAIL_LITE_UPDATES.md`** template; **`cursor-rules/forgetrail-lite-no-trailer.mdc`** + **`forgetrail-lite-updates-log.mdc`**; **`forgetrail-lite-workspace-README.md`**. **NEW_PROJECT_BOOTSTRAP** — Lite §1.5 cross-ref for published repos. |
 | 2026-05-19 | **Deduplication and admin health proxy propagation:** **TECHNICAL_REFERENCE** — Admin health proxy of private edge node, central file parsing isolation. **CONTEXT_PROMPT** — Gated server proxies, micro-button helper wrapping, script-to-form component delegation, standard UTC formatting. **DESIGN_SYSTEM** — Modal form delegation, micro-icon button helpers. **CODE_QUALITY** — PDF-parse isolation, UTC formatters. **TEST_PLAN** — Admin proxy integration, file parsing. |
 | 2026-05-17 | **Exec Foundry propagation:** **git-user-commits** — wrap-up commits (end of each request when files changed; stage only that request); **DESIGN_SYSTEM** — compact hero band for workspace slide-out panels; propagation prompts — git-policy trigger row wording. |
-| 2026-05-16 | **Git workflow rule — proactive commits restored:** `.cursor/rules/git-user-commits.mdc` (ForgeKit + Exec Foundry) again defaults to **commit after substantive work** with descriptive multi-line messages (`commit-messages.mdc`); push remains explicit-only; opt-out when user leaves tree dirty. |
-| 2026-05-15 | **Git workflow rule — explicit commits default:** `.cursor/rules/git-user-commits.mdc` (ForgeKit + Exec Foundry aligned) now defaults to *commit only when the user asks*, notes that Cursor **user rules** override for proactive commits, keeps push explicit and `commit-messages.mdc` workflow. |
+| 2026-05-16 | **Git workflow rule — proactive commits restored:** `.cursor/rules/git-user-commits.mdc` (ForgeTrail + Exec Foundry) again defaults to **commit after substantive work** with descriptive multi-line messages (`commit-messages.mdc`); push remains explicit-only; opt-out when user leaves tree dirty. |
+| 2026-05-15 | **Git workflow rule — explicit commits default:** `.cursor/rules/git-user-commits.mdc` (ForgeTrail + Exec Foundry aligned) now defaults to *commit only when the user asks*, notes that Cursor **user rules** override for proactive commits, keeps push explicit and `commit-messages.mdc` workflow. |
 | 2026-05-12 | **Follow-up propagation:** Long-running generation HTTP boundaries (non-JSON failures); milestone-aligned progress UX; sticky outline + scroll-spy for long generated reads. CONTEXT integration + anti-pattern; TECH_REF AI Output Validation lesson; DESIGN_SYSTEM (progress + new long-form reading section); TEST_PLAN §7.8 + §10 checklist extension. |
 | 2026-05-11 | **Client-side fetch/polling resilience + feature stubs (activity timeline, modal extraction, panel density, admin UI):** CONTEXT_PROMPT new critical patterns group + anti-patterns; TECH_REF activity timeline stub; CODE_QUALITY audit checklist + lesson; TEST_PLAN new sections; DESIGN_SYSTEM modal/density/admin lessons. |
-| 2026-05-06 | **URL scrape propagation — markup drift + optional LLM recover (+ ForgeKit Lite v1.1.5):** TECH_REF subsection (*deterministic extractors vs markup drift*); CONTEXT + TEST_PLAN §2a; **FORGEKIT_LITE** new §7.2; README / WORKFLOW / INITIAL_PROMPT cross-refs; **both** propagate prompts — Context (**FORGEKIT_LITE.md** duty), Step **5** Lite parity, Step **3** mapping row, “when to run” trigger for listing-import pipelines. |
-| 2026-04-30 | **DEV_ESTIMATE iteration density:** Exec Foundry + ForgeKit templates distinguish billable hours vs traditional micro-iteration load (reviews, QA, boundaries); timeline caveat for gate-heavy delivery. |
+| 2026-05-06 | **URL scrape propagation — markup drift + optional LLM recover (+ ForgeTrail Lite v1.1.5):** TECH_REF subsection (*deterministic extractors vs markup drift*); CONTEXT + TEST_PLAN §2a; **FORGETRAIL_LITE** new §7.2; README / WORKFLOW / INITIAL_PROMPT cross-refs; **both** propagate prompts — Context (**FORGETRAIL_LITE.md** duty), Step **5** Lite parity, Step **3** mapping row, “when to run” trigger for listing-import pipelines. |
+| 2026-04-30 | **DEV_ESTIMATE iteration density:** Exec Foundry + ForgeTrail templates distinguish billable hours vs traditional micro-iteration load (reviews, QA, boundaries); timeline caveat for gate-heavy delivery. |
 | 2026-04-30 | **DEV_ESTIMATE template:** reproducible LOC / route-module inventory methodology; expanded inventory + effort rows (optional assistant, demo tooling, prospect flows); US cost formula guidance; complexity drivers include monolithic hotspots and API surface. Propagation prompts — refresh trigger + Exec Foundry discovery-table markdown fix. |
-| 2026-05-02 | **Branded-but-generic UX shapes:** Reusable stubs for **persistent AI dock/rail**, **multi-lens entity detail**, **user-visible identity URLs**, and **admin/support master–detail tables** in **TECH_REF**, **CONTEXT_PROMPT**, **DESIGN_SYSTEM**, **TEST_PLAN**; propagation prompts — **Sounds product-specific** §6 mapping, Discovery scan row, Step **3** table rows + Step **6** second-pass for marketing-named bullets (EF + ForgeKit). |
+| 2026-05-02 | **Branded-but-generic UX shapes:** Reusable stubs for **persistent AI dock/rail**, **multi-lens entity detail**, **user-visible identity URLs**, and **admin/support master–detail tables** in **TECH_REF**, **CONTEXT_PROMPT**, **DESIGN_SYSTEM**, **TEST_PLAN**; propagation prompts — **Sounds product-specific** §6 mapping, Discovery scan row, Step **3** table rows + Step **6** second-pass for marketing-named bullets (EF + ForgeTrail). |
 | 2026-05-02 | **Journal-driven propagation + feature stubs from recent journal backlog:** Expanded **both** propagation prompts with explicit **journal time-window sweep** (Added / Improved / substantive Fixed → TECH_REF + TEST_PLAN). **TECHNICAL_REFERENCE** — apply vs discovery URL; posting **additive merge**; **AI tailoring critique + structural controls**. **CONTEXT** — discovery bulk honors filters; dual URL export parity. **TEST_PLAN** — dual URL checklist; discovery bulk filter parity; §4.2 in-tab critique persistence. **BRAND_AND_PRODUCT** — LLM letter register / density / cross-paragraph dedup guidance. |
-| 2026-05-02 | **Progressive URL import (client) + workflow enum normalization + systemd deploy timing:** TECH_REF subsections for **client reconciliation after stub/finalize** and **stored workflow enums**; CONTEXT critical patterns, patterns, and anti-patterns; TEST_PLAN §2a bullets; DEPLOYMENT **`TimeoutStopSec` vs deploy wall-clock**; propagation prompts — discovery scan rows + systemd/deploy trigger (EF + ForgeKit). |
-| 2026-04-26 | **FORGEKIT_LITE v1.1.4 — §13 opaque backend / SDK–server version drift:** single bullet after CommonJS/ESM — `curl` before SDK archaeology; independent release trains; permissive write vs strict read; `beforeSend` shim; log SDK + server in `gotchas[]`. |
-| 2026-04-25 | **FORGEKIT_LITE v1.1.3 — Windows install/bootstrap shell-outs:** §4.1 after pnpm adds guidance to branch on `process.platform` before `tar`/`curl`/…; §8 new rule 10; §13 Engineering bullet on PATH shadowing, drive-letter-as-host (bsdtar + `Z:\`), GNU vs bsdtar for zip; §11 gotchas[] example. Generalizes to Unix-named tools on Windows. |
-| 2026-04-24 | **PocketBase local port / `.env` alignment (Lite v1.1.2 + regular docs):** document that on a dev machine **several** PocketBase processes may run; default **8090** conflicts; **set URL+port in `.env` / `.env.example`** and keep `serve` / SDK / schema scripts on the same value. **FORGEKIT_LITE** §14 new `.env.example` sub-bullet. **WORKFLOW** Phase 2 artifacts, **INITIAL_PROMPT** Phase 2, **README** new subsection, **NEW_PROJECT_BOOTSTRAP** scripted-PB line, **POCKETBASE_SCHEMA_SCRIPT** step 1, **docs/CONTEXT_PROMPT** example “Database quirks” line. |
-| 2026-04-23 | **FORGEKIT_LITE v1.1 / v1.1.1 propagation pass** — push the Mode A/Mode B commit story, A-local vs A-persistent, §7.1 content-generation patterns, and unconditional platform-rule-file guardrails outward into the surrounding ForgeKit docs so they are reachable without reading all of Lite. **`.cursor/rules/commit-messages.mdc`** now names Mode A vs Mode B explicitly, documents the `bash -c` / `cmd.exe //c` shell hop as the Mode B remedy (not a git upgrade), and warns that git 2.32+ silently accepts injected trailers. **`NEW_PROJECT_BOOTSTRAP.md`** — web-app state-persistence sub-question, content-generation pattern picker (runtime / build-time / BYO-LLM), **trailer-ban guardrails created unconditionally** (`AGENTS.md` + `CLAUDE.md` + `.cursor/rules/forgekit-lite-no-trailer.mdc` regardless of current agent; users switch tools), and a Rules entry covering Mode B git commits. **`GREENFIELD_INTAKE.md`** — new §7 State persistence + §8 Content-generation pattern sections, in the same copy-paste shape as §6 search. **`WORKFLOW.md`** Phase 1 — state-persistence sub-question + content-generation pattern picker in *"What to ask Claude to do"*; Phase 2 — scaffolding bullet for the three patterns. **`INITIAL_PROMPT.md`** — Phase 1 state-persistence + content-generation blocks and a Mode B git-commits awareness block. **`README.md`** — new "LLM-backed content" and "state persistence choice" sections, matching the existing LLM-JSON and web-search optional sections. |
-| 2026-04-23 | **FORGEKIT_LITE v1.1.1** residual-gaps pass on top of v1.1: brief template §6 gains a **State persistence** row (§7 A-local vs A-persistent) and a new **§12 Content-generation pattern** section (pattern / provider / env / paths / validator / prompt). §14 `.env.example` guidance now covers **runtime-LLM / build-time-LLM / BYO-LLM** key policies, not just search. §14 `README.md` guidance **flipped** — manual scaffold at repo root is the default (`pnpm dev`); `cd app && pnpm dev` is the shortcut case. §7.1 gains **minimal reference skeletons** — SvelteKit server route for runtime LLM, `scripts/seed.ts` for build-time, and a `Zod`-at-boundary validator for the BYO-LLM paste. |
-| 2026-04-23 | **FORGEKIT_LITE v1.1** from session feedback: **§8.9 Mode A/Mode B** split — Mode B is **platform argv injection** of `--trailer` below rule-file scope; remedy is a `bash -c` / `cmd.exe //c` shell hop, **not** a git upgrade; §4.1 preflight records git ≥2.32 trade-off (loud failure = feature). **§14 `.gitignore`** — root-only patterns **anchored** (`/build/`, `/dist/`, `/pb_data/`); collision warning (unanchored `build/` silently swallows `src/routes/build/`). **§4.2 step 10** — **manual SvelteKit scaffold is the primary Default-A path**; `sv create` demoted to shortcut (new empty subfolder only, never `.`); extended §13 anti-pattern. **§7** — **A-sub-question** (local-only vs persistent) to skip PocketBase for browser-state apps; **§7.1 content-generation patterns** (runtime API / build-time script / BYO-LLM paste). **§4.2 step 3** — create **`AGENTS.md` + `.cursor/rules/forgekit-lite-no-trailer.mdc` + `CLAUDE.md` unconditionally**. **Minor:** §4.2 step 8 defines *explicit approval*; §8 rule 2 spine-output budget (split into two commits >~30 tool calls); §4.2 step 10 A.3 `pnpm init` cleanup checklist; §11 gotchas[] example for Mode B. |
-| 2026-04-22 | **FORGEKIT_LITE** §4.3–§4.4 (JSON seed prompt; Tavily/Brave search). **`sv create` → `app/` or `web/`** (not `.`) when root has Lite files; **`Directory not empty. Continue?`** hang + no flag; not `src` as outer dir; §8.6, §11 gotchas, §13, §14 README; **WORKFLOW**/**INITIAL_PROMPT**/**NEW_PROJECT_BOOTSTRAP**/**GREENFIELD** cross-refs. |
+| 2026-05-02 | **Progressive URL import (client) + workflow enum normalization + systemd deploy timing:** TECH_REF subsections for **client reconciliation after stub/finalize** and **stored workflow enums**; CONTEXT critical patterns, patterns, and anti-patterns; TEST_PLAN §2a bullets; DEPLOYMENT **`TimeoutStopSec` vs deploy wall-clock**; propagation prompts — discovery scan rows + systemd/deploy trigger (EF + ForgeTrail). |
+| 2026-04-26 | **FORGETRAIL_LITE v1.1.4 — §13 opaque backend / SDK–server version drift:** single bullet after CommonJS/ESM — `curl` before SDK archaeology; independent release trains; permissive write vs strict read; `beforeSend` shim; log SDK + server in `gotchas[]`. |
+| 2026-04-25 | **FORGETRAIL_LITE v1.1.3 — Windows install/bootstrap shell-outs:** §4.1 after pnpm adds guidance to branch on `process.platform` before `tar`/`curl`/…; §8 new rule 10; §13 Engineering bullet on PATH shadowing, drive-letter-as-host (bsdtar + `Z:\`), GNU vs bsdtar for zip; §11 gotchas[] example. Generalizes to Unix-named tools on Windows. |
+| 2026-04-24 | **PocketBase local port / `.env` alignment (Lite v1.1.2 + regular docs):** document that on a dev machine **several** PocketBase processes may run; default **8090** conflicts; **set URL+port in `.env` / `.env.example`** and keep `serve` / SDK / schema scripts on the same value. **FORGETRAIL_LITE** §14 new `.env.example` sub-bullet. **WORKFLOW** Phase 2 artifacts, **INITIAL_PROMPT** Phase 2, **README** new subsection, **NEW_PROJECT_BOOTSTRAP** scripted-PB line, **POCKETBASE_SCHEMA_SCRIPT** step 1, **docs/CONTEXT_PROMPT** example “Database quirks” line. |
+| 2026-04-23 | **FORGETRAIL_LITE v1.1 / v1.1.1 propagation pass** — push the Mode A/Mode B commit story, A-local vs A-persistent, §7.1 content-generation patterns, and unconditional platform-rule-file guardrails outward into the surrounding ForgeTrail docs so they are reachable without reading all of Lite. **`.cursor/rules/commit-messages.mdc`** now names Mode A vs Mode B explicitly, documents the `bash -c` / `cmd.exe //c` shell hop as the Mode B remedy (not a git upgrade), and warns that git 2.32+ silently accepts injected trailers. **`NEW_PROJECT_BOOTSTRAP.md`** — web-app state-persistence sub-question, content-generation pattern picker (runtime / build-time / BYO-LLM), **trailer-ban guardrails created unconditionally** (`AGENTS.md` + `CLAUDE.md` + `.cursor/rules/forgetrail-lite-no-trailer.mdc` regardless of current agent; users switch tools), and a Rules entry covering Mode B git commits. **`GREENFIELD_INTAKE.md`** — new §7 State persistence + §8 Content-generation pattern sections, in the same copy-paste shape as §6 search. **`WORKFLOW.md`** Phase 1 — state-persistence sub-question + content-generation pattern picker in *"What to ask Claude to do"*; Phase 2 — scaffolding bullet for the three patterns. **`INITIAL_PROMPT.md`** — Phase 1 state-persistence + content-generation blocks and a Mode B git-commits awareness block. **`README.md`** — new "LLM-backed content" and "state persistence choice" sections, matching the existing LLM-JSON and web-search optional sections. |
+| 2026-04-23 | **FORGETRAIL_LITE v1.1.1** residual-gaps pass on top of v1.1: brief template §6 gains a **State persistence** row (§7 A-local vs A-persistent) and a new **§12 Content-generation pattern** section (pattern / provider / env / paths / validator / prompt). §14 `.env.example` guidance now covers **runtime-LLM / build-time-LLM / BYO-LLM** key policies, not just search. §14 `README.md` guidance **flipped** — manual scaffold at repo root is the default (`pnpm dev`); `cd app && pnpm dev` is the shortcut case. §7.1 gains **minimal reference skeletons** — SvelteKit server route for runtime LLM, `scripts/seed.ts` for build-time, and a `Zod`-at-boundary validator for the BYO-LLM paste. |
+| 2026-04-23 | **FORGETRAIL_LITE v1.1** from session feedback: **§8.9 Mode A/Mode B** split — Mode B is **platform argv injection** of `--trailer` below rule-file scope; remedy is a `bash -c` / `cmd.exe //c` shell hop, **not** a git upgrade; §4.1 preflight records git ≥2.32 trade-off (loud failure = feature). **§14 `.gitignore`** — root-only patterns **anchored** (`/build/`, `/dist/`, `/pb_data/`); collision warning (unanchored `build/` silently swallows `src/routes/build/`). **§4.2 step 10** — **manual SvelteKit scaffold is the primary Default-A path**; `sv create` demoted to shortcut (new empty subfolder only, never `.`); extended §13 anti-pattern. **§7** — **A-sub-question** (local-only vs persistent) to skip PocketBase for browser-state apps; **§7.1 content-generation patterns** (runtime API / build-time script / BYO-LLM paste). **§4.2 step 3** — create **`AGENTS.md` + `.cursor/rules/forgetrail-lite-no-trailer.mdc` + `CLAUDE.md` unconditionally**. **Minor:** §4.2 step 8 defines *explicit approval*; §8 rule 2 spine-output budget (split into two commits >~30 tool calls); §4.2 step 10 A.3 `pnpm init` cleanup checklist; §11 gotchas[] example for Mode B. |
+| 2026-04-22 | **FORGETRAIL_LITE** §4.3–§4.4 (JSON seed prompt; Tavily/Brave search). **`sv create` → `app/` or `web/`** (not `.`) when root has Lite files; **`Directory not empty. Continue?`** hang + no flag; not `src` as outer dir; §8.6, §11 gotchas, §13, §14 README; **WORKFLOW**/**INITIAL_PROMPT**/**NEW_PROJECT_BOOTSTRAP**/**GREENFIELD** cross-refs. |
 | 2026-04-17 | **Exec Foundry propagation (import + board patterns):** CONTEXT — SSR-safe `onDestroy`/document cleanup; stub→finalize **listing hints** + merge rules so required BaaS fields are not cleared by empty LLM output; native **horizontal drag** auto-scroll + listener teardown. **TECHNICAL_REFERENCE** — URL import subsection *extraction hints and required-field merge*; Product Analytics optional *digest/labs* experiments stub. **TEST_PLAN** — thin-listing-body import check (§2a); horizontal board drag (§2c). |
 | 2026-04-16 | **Canonical specs folder (`specs/canonical/`):** fourth spec-lifecycle home for *living references / methodology / invention disclosures* that outlive any one implementation pass and are exempt from `partial/` → `completed/` moves. **WORKFLOW** “Spec lifecycle folders” subsection; update-log row; pattern encoded via `.cursor/rules/specs-and-todo.mdc` + `spec-completion.mdc` in source app. |
-| 2026-04-16 | **AUTOMATED_TESTING template:** optional ForgeKit doc for Vitest / API / Playwright strategy; pairs with **TEST_PLAN**; propagation Context, **WORKFLOW** inventory row, **README** tree. |
+| 2026-04-16 | **AUTOMATED_TESTING template:** optional ForgeTrail doc for Vitest / API / Playwright strategy; pairs with **TEST_PLAN**; propagation Context, **WORKFLOW** inventory row, **README** tree. |
 | 2026-04-16 | **New prompt: User-Facing Content Sync Audit** — periodic review ensuring all discovery surfaces (landing, features, help, tours, onboarding, nav, exports) stay current with shipped features. |
 | 2026-04-16 | **Exec Foundry propagation (two-track):** TECH_REF stubs (branded discovery elevation, optional LLM vendor browse tools); TEST_PLAN §2b nav/label parity; BRAND profile/priority label lesson; CONTEXT tour skip + trial UI race; pre-launch billing wake check; WORKFLOW Phase 6 + INITIAL_PROMPT (feature catalog + content sync); propagation Context — optional `FEATURE_CATALOG.md`. |
-| 2026-04-15 | **WORKFLOW.md:** §1a — ForgeKit template propagation blurb (two tracks: feature memory vs pattern memory; `update-log.md` append). |
-| 2026-04-15 | **Propagation = two tracks + older journal gaps:** `propagate-to-forgekit.md` — “what propagation means,” Step 3 walk twice, Step 4 **1b** thin stubs, Step 6 journal backlog, incomplete-propagation constraint; `TECHNICAL_REFERENCE` optional stubs for `.ics`, self-service export, first-party analytics proxy; `TEST_PLAN` credential refresh; `CONTEXT_PROMPT` re-auth vs list stores. |
-| 2026-04-15 | **Journal “Added” → feature templates (follow-up):** `TECHNICAL_REFERENCE` stubs for user-intent profile → discovery/variants and trust/plausibility checks; `TEST_PLAN` §2b; `BRAND_AND_PRODUCT` nav hubs; `DESIGN_SYSTEM` focus-visible + FAQ grouping; `WORKFLOW` Phase 4 doc depth; propagation prompts (EF + ForgeKit) — map journal **Added** to feature docs, not only CONTEXT lessons; `pre-launch-audit` nav-hub parity. |
+| 2026-04-15 | **WORKFLOW.md:** §1a — ForgeTrail template propagation blurb (two tracks: feature memory vs pattern memory; `update-log.md` append). |
+| 2026-04-15 | **Propagation = two tracks + older journal gaps:** `propagate-to-forgetrail.md` — “what propagation means,” Step 3 walk twice, Step 4 **1b** thin stubs, Step 6 journal backlog, incomplete-propagation constraint; `TECHNICAL_REFERENCE` optional stubs for `.ics`, self-service export, first-party analytics proxy; `TEST_PLAN` credential refresh; `CONTEXT_PROMPT` re-auth vs list stores. |
+| 2026-04-15 | **Journal “Added” → feature templates (follow-up):** `TECHNICAL_REFERENCE` stubs for user-intent profile → discovery/variants and trust/plausibility checks; `TEST_PLAN` §2b; `BRAND_AND_PRODUCT` nav hubs; `DESIGN_SYSTEM` focus-visible + FAQ grouping; `WORKFLOW` Phase 4 doc depth; propagation prompts (EF + ForgeTrail) — map journal **Added** to feature docs, not only CONTEXT lessons; `pre-launch-audit` nav-hub parity. |
 | 2026-04-15 | **Bulk import, admin archive, deploy blips, support IDs:** multi-record URL import (preview, caps, stub/finalize, CSV symmetry); admin archive vs gated erase; rolling-restart / proxy 502 lesson; user-facing support correlation ids; onboarding + tour UX; discovery→import contract; TEST_PLAN + pre-launch CSV check. |
 | 2026-04-10 | **Transactional email + deletion lifecycle:** app-owned outbound mail (BaaS vs product, env, idempotency, graceful no-op, DNS); data-model **deletion and data lifecycle** (cascade vs soft delete, orphans); TEST_PLAN auth subsection; CONTEXT, DEPLOYMENT, pre-launch-audit, WORKFLOW; propagation triggers. |
 | 2026-04-10 | **PocketBase JS SDK parallel reads:** list routes that fan out `getList` on one client hit auto-cancellation — nested data empty after reload; document `requestKey: null` / alternatives. **Admin vs active account:** session capability flags must follow signed-in user; impersonation needs explicit detection. CONTEXT_PROMPT, TECHNICAL_REFERENCE, TEST_PLAN; propagation prompt discovery row. |
 | 2026-04-08 | **Panel usability audit prompt:** New reusable prompt `panel-usability-audit.md` — six-dimension audit methodology (flow, hierarchy, errors, affordances, consistency, accessibility) producing a phased spec with severity/effort ratings. |
-| 2026-04-08 | **Git commit / `--trailer`:** Agent/IDE shells may inject `git commit --trailer`, which fails on common Git for Windows (`unknown option 'trailer'`). `commit-messages.mdc` (EF + ForgeKit): prefer `git commit -F`; fallback `cmd.exe //c "…git commit -F…"` to bypass the wrapper. |
-| 2026-04-11 | **Commit message rules:** detailed multi-line body by default (subject + blank line + scope/what/why); removed one-line-only habit; `commit-messages.mdc` + `git-user-commits.mdc` in EF + ForgeKit; `git commit -F` note for Windows/Cursor; propagate prompt Context rows. |
-| 2026-04-10 | Cursor rules: **commit after substantive work** with message from session summary **reconciled to staged diff**; new `git-user-commits.mdc`; `commit-messages.mdc` updated; propagation triggers + Exec Foundry `Propagate to ForgeKit.md` Context row. |
-| 2026-04-09 | Propagation prompts: **Discovery scan**; CI/dev-tooling triggers; Step 1 + Step 6 gaps; `prompts/README` + `PHASE_1_BRIEF` note (EF); **parity pass** — `propagate-to-forgekit.md` Step **7** `update-log` append, journal + “major feature” triggers, optional NPS/launch docs, “skim Steps 2–3” intro. |
+| 2026-04-08 | **Git commit / `--trailer`:** Agent/IDE shells may inject `git commit --trailer`, which fails on common Git for Windows (`unknown option 'trailer'`). `commit-messages.mdc` (EF + ForgeTrail): prefer `git commit -F`; fallback `cmd.exe //c "…git commit -F…"` to bypass the wrapper. |
+| 2026-04-11 | **Commit message rules:** detailed multi-line body by default (subject + blank line + scope/what/why); removed one-line-only habit; `commit-messages.mdc` + `git-user-commits.mdc` in EF + ForgeTrail; `git commit -F` note for Windows/Cursor; propagate prompt Context rows. |
+| 2026-04-10 | Cursor rules: **commit after substantive work** with message from session summary **reconciled to staged diff**; new `git-user-commits.mdc`; `commit-messages.mdc` updated; propagation triggers + Exec Foundry `Propagate to ForgeTrail.md` Context row. |
+| 2026-04-09 | Propagation prompts: **Discovery scan**; CI/dev-tooling triggers; Step 1 + Step 6 gaps; `prompts/README` + `PHASE_1_BRIEF` note (EF); **parity pass** — `propagate-to-forgetrail.md` Step **7** `update-log` append, journal + “major feature” triggers, optional NPS/launch docs, “skim Steps 2–3” intro. |
 | 2026-04-08 | Journal + git themes (Apr 7–8): headless PDF/LibreOffice export lessons, duplicate-URL guard before create, Node/CI/`engines` parity, global keyboard shortcuts; TECH_REF, CONTEXT Patterns, DEPLOYMENT, DESIGN_SYSTEM. |
 | 2026-04-06 | TypeScript hygiene at boundaries: `unknown` catches + shared error helpers, PocketBase `RecordModel` at mapper inputs, UI literal unions; CODE_QUALITY checklist and narrative lessons; CONTEXT_PROMPT + TECHNICAL_REFERENCE alignment. |
 | 2026-04-06 | Personal beta outreach: **Alumni / former org** promoted from overlay tag to first-class bucket **E** (A--F); classification, templates, and tracking updated in `personal-beta-outreach.md` prompt. |
@@ -66,37 +66,37 @@ Recent entries live in [update-log.md](update-log.md), which also documents the 
 
 ## Detail
 
-### 2026-05-21 — FORGEKIT_LITE v1.1.8 (unified `.forgekit/` workspace, Lite + MCP)
+### 2026-05-21 — FORGETRAIL_LITE v1.1.8 (unified `.forgetrail/` workspace, Lite + MCP)
 
 Single agent workspace folder for **Lite file bootstrap** and **MCP greenfield**:
 
-- **`content/FORGEKIT_LITE.md`** — **v1.1.8**; §1.5 renamed to **`.forgekit/`** (Lite and MCP).
-- **`content/NEW_PROJECT_BOOTSTRAP.md`** — tracking + guardrails under **`.forgekit/`**; no repo-root split.
+- **`content/FORGETRAIL_LITE.md`** — **v1.1.8**; §1.5 renamed to **`.forgetrail/`** (Lite and MCP).
+- **`content/NEW_PROJECT_BOOTSTRAP.md`** — tracking + guardrails under **`.forgetrail/`**; no repo-root split.
 - **`mcp-server/src/index.ts`** — kickoff bundle and **`getInitialWorkflowTracking`** write path.
-- **`cursor-rules/forgekit-no-trailer.mdc`**, **`forgekit-updates-log.mdc`**, **`forgekit-workspace-README.md`** — renamed from `forgekit-lite-*`.
-- **`WORKFLOW.md`**, **`README.md`**, **`INITIAL_PROMPT.md`**, **`CONTINUATION_PROMPT.md`**, **`TRACKING_SCHEMA.md`**, **`docs/PHASE_1_BRIEF.md`**, **`docs/CONTEXT_PROMPT.md`** — customer paths use **`.forgekit/`**.
-- **`forgekit-phase-status.mdc`**, **`KICKOFF_WITHOUT_MCP.md`**, **`SESSION_RESUME_MCP.md`** — read **`.forgekit/workflow_tracking.json`**.
+- **`cursor-rules/forgetrail-no-trailer.mdc`**, **`forgetrail-updates-log.mdc`**, **`forgetrail-workspace-README.md`** — renamed from `forgetrail-lite-*`.
+- **`WORKFLOW.md`**, **`README.md`**, **`INITIAL_PROMPT.md`**, **`CONTINUATION_PROMPT.md`**, **`TRACKING_SCHEMA.md`**, **`docs/PHASE_1_BRIEF.md`**, **`docs/CONTEXT_PROMPT.md`** — customer paths use **`.forgetrail/`**.
+- **`forgetrail-phase-status.mdc`**, **`KICKOFF_WITHOUT_MCP.md`**, **`SESSION_RESUME_MCP.md`** — read **`.forgetrail/workflow_tracking.json`**.
 
-### 2026-05-21 — FORGEKIT_LITE v1.1.7 (EchoVault / monorepo env fold-in)
+### 2026-05-21 — FORGETRAIL_LITE v1.1.7 (EchoVault / monorepo env fold-in)
 
-Merged **`FORGEKIT_LITE_UPDATES.md`** maintainer notes into upstream Lite:
+Merged **`FORGETRAIL_LITE_UPDATES.md`** maintainer notes into upstream Lite:
 
-- **`content/FORGEKIT_LITE.md`** — **v1.1.7**; **§1.6** feedback log; **§4.2.1** environment variables; **§4.1** native-addon preflight; **§4.2** workspace UI+API layout + updates-log rule in step 3; **§13–§14** anti-patterns and baseline docs for env/port drift.
-- **`content/FORGEKIT_LITE_UPDATES.md`** — empty per-project starter (protocol text now in §1.6).
-- **`prompts/propagate-to-forgekit.md`** — trigger rows for monorepo env / native builds.
+- **`content/FORGETRAIL_LITE.md`** — **v1.1.7**; **§1.6** feedback log; **§4.2.1** environment variables; **§4.1** native-addon preflight; **§4.2** workspace UI+API layout + updates-log rule in step 3; **§13–§14** anti-patterns and baseline docs for env/port drift.
+- **`content/FORGETRAIL_LITE_UPDATES.md`** — empty per-project starter (protocol text now in §1.6).
+- **`prompts/propagate-to-forgetrail.md`** — trigger rows for monorepo env / native builds.
 
-Bundled assets unchanged in role: **`cursor-rules/forgekit-lite-*.mdc`**, **`forgekit-lite-workspace-README.md`**.
+Bundled assets unchanged in role: **`cursor-rules/forgetrail-lite-*.mdc`**, **`forgetrail-lite-workspace-README.md`**.
 
-### 2026-05-20 — FORGEKIT_LITE v1.1.6 (ChronoVault → published repo)
+### 2026-05-20 — FORGETRAIL_LITE v1.1.6 (ChronoVault → published repo)
 
-Lessons from publishing **ChronoVault** after Lite bootstrap had committed ForgeKit workspace files to git history (before optional `.forgekit/` gitignore guidance):
+Lessons from publishing **ChronoVault** after Lite bootstrap had committed ForgeTrail workspace files to git history (before optional `.forgetrail/` gitignore guidance):
 
-- **`content/FORGEKIT_LITE.md`** — **v1.1.6**; new **§1.5** `.forgekit-lite/` gitignored workspace; **§4.1.1** GitHub GH007 / noreply identity; §4.2 / §11 / §12 / §14 path updates; §13 anti-patterns for public Lite commits and history rewrite.
-- **`content/FORGEKIT_LITE_UPDATES.md`** — new feedback-log template (§6–§8 from ChronoVault boot).
-- **`content/cursor-rules/forgekit-lite-no-trailer.mdc`** + **`forgekit-lite-updates-log.mdc`** — bundled for Lite workspace copy.
-- **`content/forgekit-lite-workspace-README.md`** — local setup notes for `.forgekit-lite/`.
+- **`content/FORGETRAIL_LITE.md`** — **v1.1.6**; new **§1.5** `.forgetrail-lite/` gitignored workspace; **§4.1.1** GitHub GH007 / noreply identity; §4.2 / §11 / §12 / §14 path updates; §13 anti-patterns for public Lite commits and history rewrite.
+- **`content/FORGETRAIL_LITE_UPDATES.md`** — new feedback-log template (§6–§8 from ChronoVault boot).
+- **`content/cursor-rules/forgetrail-lite-no-trailer.mdc`** + **`forgetrail-lite-updates-log.mdc`** — bundled for Lite workspace copy.
+- **`content/forgetrail-lite-workspace-README.md`** — local setup notes for `.forgetrail-lite/`.
 - **`content/NEW_PROJECT_BOOTSTRAP.md`** — MCP vs Lite file-bootstrap path split (§1.5 cross-ref).
-- **`prompts/propagate-to-forgekit.md`** — trigger row for published-repo / Lite workspace layout.
+- **`prompts/propagate-to-forgetrail.md`** — trigger row for published-repo / Lite workspace layout.
 
 ### 2026-05-19 — Code deduplication and admin proxy of private edge nodes
 
@@ -112,11 +112,11 @@ Generalized patterns from the recent admin observability and code reusability pa
 
 Generalized patterns shipped recently in the live app: **dense workspace panels** benefit from a **compact hero** (inline icon, blurb + chips + overflow actions on one row, search and filter chips inside the same accent-stripe card, tighter padding) vs a tall **full hero** with a large circle when the panel needs a stronger visual anchor.
 
-- **`.cursor/rules/git-user-commits.mdc`** — Aligns ForgeKit with Exec Foundry: **end of each request**, when the request changed tracked files, **stage only that request’s paths** and **commit** with message from **`git diff --staged`**; user should not need to say “commit”; **push** still explicit-only; Cursor user-rule override called out.
+- **`.cursor/rules/git-user-commits.mdc`** — Aligns ForgeTrail with Exec Foundry: **end of each request**, when the request changed tracked files, **stage only that request’s paths** and **commit** with message from **`git diff --staged`**; user should not need to say “commit”; **push** still explicit-only; Cursor user-rule override called out.
 - **`docs/DESIGN_SYSTEM.md`** — New **Panel interior: compact hero band (workspace panels)** under Layout Patterns (after slide-out width tiers): structure, class tokens, when to use compact vs full hero; separate lesson callout plus existing vertical-density lesson.
-- **`prompts/propagate-to-forgekit.md`** — Git / commit policy trigger row: **wrap-up = stage + commit** wording.
+- **`prompts/propagate-to-forgetrail.md`** — Git / commit policy trigger row: **wrap-up = stage + commit** wording.
 
-**Exec Foundry (source repo):** `prompts/Propagate to ForgeKit.md` — same trigger-row wording for parity on future propagation passes.
+**Exec Foundry (source repo):** `prompts/Propagate to ForgeTrail.md` — same trigger-row wording for parity on future propagation passes.
 
 ### 2026-05-12 — Long-running generation HTTP safety, milestone progress, long-form reading navigation
 
@@ -137,23 +137,23 @@ Exec Foundry shipped: **429 request storm fix** (bulk import triggering N concur
 - **`docs/TEST_PLAN.md`** — New **§10 Client Fetch and Polling Resilience** (9 checklist items: bulk storm, poll suppression, 429 backoff, orphaned timers, stale data on switch, optimistic revert, false saved, delete dialog, code-review check). New **§11 Record-Level Activity / Event Timeline** (6 checklist items).
 - **`docs/DESIGN_SYSTEM.md`** — New lesson under **Modals**: extract inline add/create forms into standalone modals when the form grows or appears in multiple contexts. New lesson under **Slide-Out Panels**: systematic vertical density audit pass (remove redundant headers, collapse copy into placeholders/tooltips, tighten spacing tokens). New lesson under **Admin master–detail tables**: shared badge/chip class for role/status indicators + admin bypass for trial/plan columns.
 
-### 2026-05-06 — External URL scrape: markup drift, optional LLM recover, ForgeKit Lite §7.2
+### 2026-05-06 — External URL scrape: markup drift, optional LLM recover, ForgeTrail Lite §7.2
 
-Exec Foundry shipped **layered listing fetch**, **selector maintenance**, **user-facing classification** when parse yields empty despite fetch success, and an optional **last-resort Haiku-class structured recover** from stripped HTML (`specs/partial/scrape-llm-posting-recover.md`). This pass generalizes the **shape** for greenfield ForgeKit projects and ensures **Lite-only** kickoffs see the same guidance.
+Exec Foundry shipped **layered listing fetch**, **selector maintenance**, **user-facing classification** when parse yields empty despite fetch success, and an optional **last-resort Haiku-class structured recover** from stripped HTML (`specs/partial/scrape-llm-posting-recover.md`). This pass generalizes the **shape** for greenfield ForgeTrail projects and ensures **Lite-only** kickoffs see the same guidance.
 
-- **`docs/TECHNICAL_REFERENCE.md`** — New subsection **URL import: deterministic extractors vs markup drift (and optional LLM recover)** — principle-first: separate **wrong URL** from **layout/extraction failure**; layered pipeline; selector fixes vs optional single **verbatim** small-model recover; diagnostics without full HTML; pointer to **`FORGEKIT_LITE.md` §7.2** + partial specs.
+- **`docs/TECHNICAL_REFERENCE.md`** — New subsection **URL import: deterministic extractors vs markup drift (and optional LLM recover)** — principle-first: separate **wrong URL** from **layout/extraction failure**; layered pipeline; selector fixes vs optional single **verbatim** small-model recover; diagnostics without full HTML; pointer to **`FORGETRAIL_LITE.md` §7.2** + partial specs.
 - **`docs/CONTEXT_PROMPT.md`** — New **Patterns to Follow** bullet: **Scrape pipeline: markup drift vs bad URLs** with TECH_REF cross-link.
 - **`docs/TEST_PLAN.md`** — §2a bullet **Markup drift / empty parse** (outcome-oriented errors; optional recover env gate; diagnostics).
-- **`content/FORGEKIT_LITE.md`** — **v1.1.5**; new **§7.2 External URL → structured record (scrape / import)**; header/footer/`AGENTS` snippet version bumps.
+- **`content/FORGETRAIL_LITE.md`** — **v1.1.5**; new **§7.2 External URL → structured record (scrape / import)**; header/footer/`AGENTS` snippet version bumps.
 - **`README.md`**, **`WORKFLOW.md`**, **`INITIAL_PROMPT.md`** — Cross-references to Lite §7.2 / TECH_REF template (INITIAL already aligned).
-- **`prompts/propagate-to-forgekit.md`** and **`exec-foundry/prompts/Propagate to ForgeKit.md`** — ForgeKit **`content/`** inventory names **`FORGEKIT_LITE.md`** and when to edit §7.2 + version; **Step 5** **ForgeKit Lite parity** checklist; **Step 3** mapping row for external URL scrape; **When to run** trigger row **URL / listing import pipeline**.
+- **`prompts/propagate-to-forgetrail.md`** and **`exec-foundry/prompts/Propagate to ForgeTrail.md`** — ForgeTrail **`content/`** inventory names **`FORGETRAIL_LITE.md`** and when to edit §7.2 + version; **Step 5** **ForgeTrail Lite parity** checklist; **Step 3** mapping row for external URL scrape; **When to run** trigger row **URL / listing import pipeline**.
 
 ### 2026-04-30 — DEV_ESTIMATE methodology (inventory + US cost framing)
 
 Generalized from a mature-app refresh: stakeholders ask “what would this cost to rebuild **traditionally**?” — the template must say **how** LOC and API counts were produced, not only headline numbers.
 
 - **`docs/DEV_ESTIMATE.md`** — New **How to measure the inventory** section (`git ls-files` + summed `wc -l` or equivalent; count route handler modules such as `+server.ts`; server subtree file counts; UI breakdown). Inventory table gains API route modules, server modules, UI splits. Effort table gains optional rows (assistant, demo/anonymization, prospect flows, variants). **Cost ranges** framed as hours × rate with **2026 US rate bands** as guidance and `[TOTAL HOURS RANGE]` placeholder. **Key complexity drivers** explicitly mention monolithic files and route-module security surface.
-- **`prompts/propagate-to-forgekit.md`** and **`exec-foundry/prompts/Propagate to ForgeKit.md`** — New propagation trigger when **`docs/DEV_ESTIMATE.md`** is materially updated; EF copy fixes a broken markdown table (blank line interrupted the discovery scan table).
+- **`prompts/propagate-to-forgetrail.md`** and **`exec-foundry/prompts/Propagate to ForgeTrail.md`** — New propagation trigger when **`docs/DEV_ESTIMATE.md`** is materially updated; EF copy fixes a broken markdown table (blank line interrupted the discovery scan table).
 - **`WORKFLOW.md`** — DEV_ESTIMATE lifecycle cell notes reproducible inventory methodology.
 - **`README.md`** — File tree line for DEV_ESTIMATE mentions inventory methodology note inside the template.
 
@@ -169,11 +169,11 @@ Themes that often ship under **marketing names** but recur across products: conv
 - **`docs/CONTEXT_PROMPT.md`** — **Patterns to Follow** bullets aligned with those three capability areas (record binding + streaming tokens; lenses; URL fields + normalization).
 - **`docs/DESIGN_SYSTEM.md`** — **Admin/internal tools — master–detail tables** — dense readability, expandable rows / slide-over, colspan for linked accounts, impersonation/session labels.
 - **`docs/TEST_PLAN.md`** — §1.8 external identity URLs; §7.5 persistent assistant shell; §7.6 multi-lens detail; §7.7 admin master–detail (numbering shifted with prior §7.x sections).
-- **`prompts/propagate-to-forgekit.md`** and **`exec-foundry/prompts/Propagate to ForgeKit.md`** — **Journal-driven propagation** bullet **§6** (*Sounds branded / product-specific*) → generalized stub targets; **Discovery scan** row for journal lines that sound app-specific; **Step 3** mapping rows for assistant, multi-lens, identity URLs, admin tables; **Step 6** second-pass bullet to re-scan marketing-named **`Added`/`Improved`** for §6 shapes.
+- **`prompts/propagate-to-forgetrail.md`** and **`exec-foundry/prompts/Propagate to ForgeTrail.md`** — **Journal-driven propagation** bullet **§6** (*Sounds branded / product-specific*) → generalized stub targets; **Discovery scan** row for journal lines that sound app-specific; **Step 3** mapping rows for assistant, multi-lens, identity URLs, admin tables; **Step 6** second-pass bullet to re-scan marketing-named **`Added`/`Improved`** for §6 shapes.
 
 ### 2026-05-02 (b) — Journal-driven propagation instructions + journal-backlog feature stubs
 
-**Prompts (Exec Foundry + ForgeKit):** New **Journal-driven propagation** subsection — default **10–14 day** (or since last `update-log` propagation) sweep of **`Added` / `Improved` / substantive `Fixed`**; **Improved** treated as capability expansion unless polish-only; journal **Docs → specs** cross-read. New trigger row: **week+ shipping without propagation** → run journal sweep. **Step 1** / **Step 3** updated to require journal pass for periodic runs and to include **Improved** / contract-changing **Fixed** in the “walk twice” rule.
+**Prompts (Exec Foundry + ForgeTrail):** New **Journal-driven propagation** subsection — default **10–14 day** (or since last `update-log` propagation) sweep of **`Added` / `Improved` / substantive `Fixed`**; **Improved** treated as capability expansion unless polish-only; journal **Docs → specs** cross-read. New trigger row: **week+ shipping without propagation** → run journal sweep. **Step 1** / **Step 3** updated to require journal pass for periodic runs and to include **Improved** / contract-changing **Fixed** in the “walk twice” rule.
 
 **Feature templates (from recent `PRODUCT_JOURNAL` themes, generalized):**
 
@@ -195,30 +195,30 @@ Themes from Exec Foundry recent work (multi-step scrape/import UX, board visibil
   - **Anti-Patterns** — assuming finalize HTTP is the sole success signal; optional external **API key absent**: avoid perpetual “generating” placeholders — complete with a terminal state and user-visible outcome.
 - **`docs/TEST_PLAN.md`** — §2a: finalize failure / reconcile behavior; workflow visibility with legacy or empty status.
 - **`docs/DEPLOYMENT.md`** — **`TimeoutStopSec` vs deploy wall-clock**: longer graceful stop budgets can lengthen `systemctl stop` during blue-green/rolling scripts; graceful app shutdown, middle-ground timeouts, CI step split for attribution.
-- **`prompts/propagate-to-forgekit.md`** and **`exec-foundry/prompts/Propagate to ForgeKit.md`** — Discovery scan rows for progressive-import client paths and workflow enum normalization; propagation trigger row for systemd/deploy script changes (ForgeKit + EF copies).
+- **`prompts/propagate-to-forgetrail.md`** and **`exec-foundry/prompts/Propagate to ForgeTrail.md`** — Discovery scan rows for progressive-import client paths and workflow enum normalization; propagation trigger row for systemd/deploy script changes (ForgeTrail + EF copies).
 
 Deliberately did **not** duplicate existing stub→finalize **server-side** hint/merge lessons; this pass extends **client** and **enum visibility** angles only.
 
-### 2026-04-26 — FORGEKIT_LITE v1.1.4 (opaque backend errors, SDK vs server)
+### 2026-04-26 — FORGETRAIL_LITE v1.1.4 (opaque backend errors, SDK vs server)
 
 Condensed one **Engineering** bullet (placed immediately after the CommonJS/ESM line per user preference): managed / single-binary backends return content-less 400/500s when **wire format** drifts between **server binary** and **client SDK** (independent version trains). Symptom can look like *data not saved* when writes pass and reads fail. **First move:** raw HTTP with `curl`, vary one axis at a time, compare to what the SDK sends. **Follow-up:** `beforeSend` normalization until the SDK matches; log **SDK + server** versions in `gotchas[]` for the next session.
 
-### 2026-04-25 — FORGEKIT_LITE v1.1.3 (Windows: Node scripts vs `tar` / PATH)
+### 2026-04-25 — FORGETRAIL_LITE v1.1.3 (Windows: Node scripts vs `tar` / PATH)
 
-Field lesson: on Windows, shelling out from a Node installer to Unix-style tools without **platform detection** fails in two common ways — **drive-letter-as-host** (bsdtar interprets `Z:\path\file.zip` as remote `host:path` → `Cannot connect to Z: resolve failed`) and **PATH shadowing** (Git Bash’s GNU `tar` ahead of System32 → `tar -xf foo.zip` fails because GNU tar does not read zip like bsdtar). **FORGEKIT_LITE.md** bumped to **v1.1.3**: §4.1 adds a short **Install/bootstrap scripts (Node)** paragraph; §8 adds **rule 10** (branch before `tar`/`unzip`/`curl`/…; PowerShell or `System32\tar.exe` on `win32`); §13 **Engineering** adds a full bullet with sub-bullets for both traps and the “generalizes to curl, sed, awk, openssl…” note; §11 **gotchas[]** copy block gains a fourth example with the distilled errors and fix. AGENTS snippet version comment updated in the same file.
+Field lesson: on Windows, shelling out from a Node installer to Unix-style tools without **platform detection** fails in two common ways — **drive-letter-as-host** (bsdtar interprets `Z:\path\file.zip` as remote `host:path` → `Cannot connect to Z: resolve failed`) and **PATH shadowing** (Git Bash’s GNU `tar` ahead of System32 → `tar -xf foo.zip` fails because GNU tar does not read zip like bsdtar). **FORGETRAIL_LITE.md** bumped to **v1.1.3**: §4.1 adds a short **Install/bootstrap scripts (Node)** paragraph; §8 adds **rule 10** (branch before `tar`/`unzip`/`curl`/…; PowerShell or `System32\tar.exe` on `win32`); §13 **Engineering** adds a full bullet with sub-bullets for both traps and the “generalizes to curl, sed, awk, openssl…” note; §11 **gotchas[]** copy block gains a fourth example with the distilled errors and fix. AGENTS snippet version comment updated in the same file.
 
-### 2026-04-24 — PocketBase local port in `.env` (FORGEKIT_LITE v1.1.2)
+### 2026-04-24 — PocketBase local port in `.env` (FORGETRAIL_LITE v1.1.2)
 
-Users often run **more than one** PocketBase (multiple projects, another clone, a stray process). The binary’s default **8090** is a frequent collision; the app can then fail to connect or talk to the **wrong** process if the URL is implicit or out of sync with `pocketbase serve`. **ForgeKit Lite** is bumped to **v1.1.2** with a new §14 bullet under **`.env.example`**: public API URL+port in env; one source of truth for serve script, SvelteKit client, and admin/schema scripts. The same message is propagated to **WORKFLOW** Phase 2, **INITIAL_PROMPT** (Phase 2 pocketbase sentence), **README** (new “Local PocketBase” subsection), **NEW_PROJECT_BOOTSTRAP** (scripted local services), **POCKETBASE_SCHEMA_SCRIPT** (step 1 and step 2 cross-reference), and **docs/CONTEXT_PROMPT** (example “Database quirks” so merged projects pick it up in session context).
+Users often run **more than one** PocketBase (multiple projects, another clone, a stray process). The binary’s default **8090** is a frequent collision; the app can then fail to connect or talk to the **wrong** process if the URL is implicit or out of sync with `pocketbase serve`. **ForgeTrail Lite** is bumped to **v1.1.2** with a new §14 bullet under **`.env.example`**: public API URL+port in env; one source of truth for serve script, SvelteKit client, and admin/schema scripts. The same message is propagated to **WORKFLOW** Phase 2, **INITIAL_PROMPT** (Phase 2 pocketbase sentence), **README** (new “Local PocketBase” subsection), **NEW_PROJECT_BOOTSTRAP** (scripted local services), **POCKETBASE_SCHEMA_SCRIPT** (step 1 and step 2 cross-reference), and **docs/CONTEXT_PROMPT** (example “Database quirks” so merged projects pick it up in session context).
 
-### 2026-04-23 — FORGEKIT_LITE v1.1 / v1.1.1 propagation pass
+### 2026-04-23 — FORGETRAIL_LITE v1.1 / v1.1.1 propagation pass
 
-After two iterations polished `FORGEKIT_LITE.md`, the v1.1 and v1.1.1 concepts were trapped inside that one file. This pass pushes them outward so the rest of the ForgeKit doc set references the same mental model without requiring a reader to start in Lite.
+After two iterations polished `FORGETRAIL_LITE.md`, the v1.1 and v1.1.1 concepts were trapped inside that one file. This pass pushes them outward so the rest of the ForgeTrail doc set references the same mental model without requiring a reader to start in Lite.
 
-- **`.cursor/rules/commit-messages.mdc`** — workspace rule. Explicit **Mode A vs Mode B** framing. Mode A: the agent typed a trailer → rewrite the command. Mode B: a clean command, and the shell/IDE wrapper injects `--trailer` at argv level below rule-file scope → hop out of the wrapper with `bash -c "git commit -F path/to/msg.txt"` (preferred) or `cmd.exe //c "cd /d <repo> && git commit -F <file>"` (Windows fallback). Notes that `-F` alone does **not** protect against Mode B. Warns against upgrading git to silence `unknown option 'trailer'`: on git 2.32+ the error becomes silent acceptance, which is worse than loud failure. Points back to `FORGEKIT_LITE.md` §8.9 and §4.1.
+- **`.cursor/rules/commit-messages.mdc`** — workspace rule. Explicit **Mode A vs Mode B** framing. Mode A: the agent typed a trailer → rewrite the command. Mode B: a clean command, and the shell/IDE wrapper injects `--trailer` at argv level below rule-file scope → hop out of the wrapper with `bash -c "git commit -F path/to/msg.txt"` (preferred) or `cmd.exe //c "cd /d <repo> && git commit -F <file>"` (Windows fallback). Notes that `-F` alone does **not** protect against Mode B. Warns against upgrading git to silence `unknown option 'trailer'`: on git 2.32+ the error becomes silent acceptance, which is worse than loud failure. Points back to `FORGETRAIL_LITE.md` §8.9 and §4.1.
 - **`content/NEW_PROJECT_BOOTSTRAP.md`** — MCP-first bootstrap.
   - Progressive scaffolding — added a **web-app sub-question** (state outliving browser? → A-local drops PocketBase + auth; A-persistent keeps the full stack), a **content-generation pattern** picker (runtime LLM API / build-time LLM generation / BYO-LLM paste) with the trade-offs that matter at Phase 1, both tied back to `PHASE_1_BRIEF.md` §4 and §12.
-  - Files to create — a new bullet: create `AGENTS.md`, `CLAUDE.md`, and `.cursor/rules/forgekit-lite-no-trailer.mdc` **unconditionally** regardless of current agent. Users switch tools; a CLAUDE-only repo opened in Cursor next week has no guardrail. Caveat: rule files only guard **Mode A**; Mode B needs the shell hop.
+  - Files to create — a new bullet: create `AGENTS.md`, `CLAUDE.md`, and `.cursor/rules/forgetrail-lite-no-trailer.mdc` **unconditionally** regardless of current agent. Users switch tools; a CLAUDE-only repo opened in Cursor next week has no guardrail. Caveat: rule files only guard **Mode A**; Mode B needs the shell hop.
   - Rules — Git commits bullet documenting `-F`, the trailer ban list, Mode B + `bash -c` hop, and the git-version trade-off.
 - **`content/GREENFIELD_INTAKE.md`** — Phase 1 intake helper.
   - New **§7 State persistence** section in the same copy-paste shape as existing §6 web search. "Before locking PocketBase + auth, ask…" → A-local vs A-persistent → deploy/secret consequences → record in `PHASE_1_BRIEF.md` §4.
@@ -230,7 +230,7 @@ After two iterations polished `FORGEKIT_LITE.md`, the v1.1 and v1.1.1 concepts w
 
 What this pass deliberately did **not** do: it did not re-export the long-form content or reference skeletons from Lite into every downstream file. The pattern is "mention the existence of the decision and its consequences at the surface, link back to Lite for the recipe." Each outward file gets enough context for Phase 1 to ask the right question and capture the answer in `PHASE_1_BRIEF.md` / `decisions[]`; Lite remains the single implementation source.
 
-### 2026-04-23 — FORGEKIT_LITE v1.1.1 (residual-gaps pass)
+### 2026-04-23 — FORGETRAIL_LITE v1.1.1 (residual-gaps pass)
 
 Follow-up to v1.1 later the same day, closing the residual gaps that were implicit in the session feedback but not in its explicit priority list. Version bumped to **v1.1.1** in the header, footer, and AGENTS.md snippet comment.
 
@@ -244,9 +244,9 @@ Follow-up to v1.1 later the same day, closing the residual gaps that were implic
   - **Build-time LLM generation:** `scripts/seed.ts` — calls the provider once, Zod-validates, writes to `data/seed-catalog.json`, commits. Wired as `pnpm run seed` in `package.json`. README note: the key is only needed to re-generate seed data.
   - **BYO-LLM paste:** `src/lib/data/catalog.ts` — imports the hand-pasted `catalog.json`, Zod-parses at import time so malformed paste fails loudly at app start rather than shipping broken data. Matches §4.3.
 
-### 2026-04-23 — FORGEKIT_LITE v1.1 (session-feedback pass)
+### 2026-04-23 — FORGETRAIL_LITE v1.1 (session-feedback pass)
 
-Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 — three items that *actually* bit during a live project, plus four that will bite someone else. Version bumped to **v1.1** in the header, footer, and the `AGENTS.md` snippet comment.
+Second revision of **FORGETRAIL_LITE.md** driven by real-session feedback on v1.0 — three items that *actually* bit during a live project, plus four that will bite someone else. Version bumped to **v1.1** in the header, footer, and the `AGENTS.md` snippet comment.
 
 - **Two failure modes for `--trailer`, not one (§0 callout, §8.9, §12.5, §4.1 preflight, AGENTS.md snippet, `CONTEXT_PROMPT.md` scaffolding note):**
   - **Mode A** — the *agent* authored `--trailer` / `Made-with:` / `Co-Authored-By:` / etc. Same as before: rewrite to plain `-m`, do not diagnose the trailer machinery.
@@ -260,7 +260,7 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 - **§7.1 content-generation patterns:** New subsection covering three orthogonal options when the app needs LLM-produced content — **runtime LLM API** (live, pay-per-use, keys required), **build-time LLM generation** (offline `pnpm run seed` writes JSON into repo, zero runtime cost, pairs with `adapter-static`), and the **BYO-LLM paste pattern** from §4.3 (user runs prompt in their own chat, pastes JSON, schema validates — zero keys, ideal for free-hosted hobby/OSS projects). Pattern choice recorded in `decisions[]` alongside stack.
 - **Unconditional platform rule file creation (§4.2 step 3, §12.5 cross-platform notes):** Users switch tools between sessions — Cursor today, Claude Code tomorrow. v1.1 creates all three rule files up front:
   1. `AGENTS.md` (Codex + AGENTS.md-native tools),
-  2. `.cursor/rules/forgekit-lite-no-trailer.mdc` (Cursor Mode-A override),
+  2. `.cursor/rules/forgetrail-lite-no-trailer.mdc` (Cursor Mode-A override),
   3. `CLAUDE.md` (Claude Code Mode-A override).
   Cost is zero, coverage is complete. Remembered that rule files are **not** a complete fix for Mode-B argv injection; the §12.5 preface now says so explicitly and points at the `bash -c` hop.
 - **Minor:** §4.2 step 8 now defines *explicit approval* ("locked", "approved", "go to phase 2", "ship it" — silence/ambiguous nods/questions don't count; when in doubt, ask). §8 rule 2 adds an output-budget escape hatch: if the spine will exceed ~30 tool calls, split into **two commits within the same Phase 2 session** (configs + stubs, then route bodies + hero-flow glue) without pausing for user approval between them — still "one-pass spine," not a deferred wiring.
@@ -280,17 +280,17 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 ### 2026-04-16 — AUTOMATED_TESTING template + inventory
 
 - **`docs/AUTOMATED_TESTING.md`** — New optional template: automated test layers (unit, API, browser/E2E), complements manual **TEST_PLAN** (not a replacement).
-- **`prompts/propagate-to-forgekit.md`** — Both Context bullet lists include **`docs/AUTOMATED_TESTING.md`** after **TEST_PLAN**; discovery table row maps “testing strategy” to **TEST_PLAN** and/or **AUTOMATED_TESTING**.
+- **`prompts/propagate-to-forgetrail.md`** — Both Context bullet lists include **`docs/AUTOMATED_TESTING.md`** after **TEST_PLAN**; discovery table row maps “testing strategy” to **TEST_PLAN** and/or **AUTOMATED_TESTING**.
 - **`README.md`** — Docs tree lists **AUTOMATED_TESTING.md** next to **TEST_PLAN.md**.
 - **`WORKFLOW.md`** — Progressive doc table: **AUTOMATED_TESTING.md** row (Phase 4+, optional).
 
 ### 2026-04-15 — WORKFLOW propagation blurb
 
-- **`WORKFLOW.md`** — After **§1a** progressive doc **Agent rule**: short **ForgeKit template propagation (two tracks)** note — `TECHNICAL_REFERENCE` / `TEST_PLAN` for named capabilities vs lesson callouts elsewhere; `update-log.md` after each pass.
+- **`WORKFLOW.md`** — After **§1a** progressive doc **Agent rule**: short **ForgeTrail template propagation (two tracks)** note — `TECHNICAL_REFERENCE` / `TEST_PLAN` for named capabilities vs lesson callouts elsewhere; `update-log.md` after each pass.
 
 ### 2026-04-15 — Propagation semantics (feature memory vs pattern memory) + journal backlog templates
 
-- **`prompts/propagate-to-forgekit.md`** — Opening “two parallel deliverables”; periodic backlog review; Instructions on **both tracks**; Step 3 **twice** (feature home, then lessons); Step 4 **1b** thin feature-area stubs; Step 6 **journal backlog**; Constraints **incomplete propagation** when only lesson callouts ship for a new capability.
+- **`prompts/propagate-to-forgetrail.md`** — Opening “two parallel deliverables”; periodic backlog review; Instructions on **both tracks**; Step 3 **twice** (feature home, then lessons); Step 4 **1b** thin feature-area stubs; Step 6 **journal backlog**; Constraints **incomplete propagation** when only lesson callouts ship for a new capability.
 - **`docs/TECHNICAL_REFERENCE.md`** — Optional **Feature Documentation** stubs: calendar / `.ics` exports; user **data export & portability**; **first-party / reverse-proxy** analytics ingest under Product Analytics.
 - **`docs/TEST_PLAN.md`** — **§1.7** credential refresh / password change: lists and parallel loads must not render empty after re-auth.
 - **`docs/CONTEXT_PROMPT.md`** — **Credential change vs in-memory SPA state:** refetch / invalidate after auth rotation to avoid empty pipeline UX.
@@ -302,7 +302,7 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 - **`docs/BRAND_AND_PRODUCT.md`** — **New primary hubs and navigation pillars** (landing/Help/FAQ alignment when IA adds a top-level area).
 - **`docs/DESIGN_SYSTEM.md`** — **Focus-visible and composite widgets**; **FAQ** structure note for category tabs / shareable categories.
 - **`WORKFLOW.md`** — Phase **4** row: new capabilities need TECH_REF feature stubs + TEST_PLAN scenarios, not only lesson callouts in CONTEXT.
-- **`prompts/propagate-to-forgekit.md`** + **Exec Foundry `prompts/Propagate to ForgeKit.md`** — Intro + discovery scan + periodic review: journal **`Added`** / major **`Improved`** → Step 3 feature documentation, not lessons only.
+- **`prompts/propagate-to-forgetrail.md`** + **Exec Foundry `prompts/Propagate to ForgeTrail.md`** — Intro + discovery scan + periodic review: journal **`Added`** / major **`Improved`** → Step 3 feature documentation, not lessons only.
 - **`prompts/pre-launch-audit.md`** — Checklist: **primary nav hub** changes vs landing / About / Help / FAQ groupings.
 
 ### 2026-04-15 — Exec Foundry journal themes (Apr 8–15)
@@ -321,14 +321,14 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 - **`docs/CONTEXT_PROMPT.md`** — Integration patterns: transactional email module, observability, idempotency, PII-safe logging; pointer to TECHNICAL_REFERENCE Configuration and deletion lifecycle.
 - **`prompts/pre-launch-audit.md`** — Authentication: app-owned mail credentials and sending-domain DNS when applicable.
 - **`WORKFLOW.md`** — Embedded TECHNICAL_REFERENCE lesson bullets: deletion lifecycle documentation; app-owned email pattern.
-- **`prompts/propagate-to-forgekit.md`** + **`prompts/Propagate to ForgeKit.md` (Exec Foundry)** — Propagation triggers + discovery scan: transactional email and delete semantics.
+- **`prompts/propagate-to-forgetrail.md`** + **`prompts/Propagate to ForgeTrail.md` (Exec Foundry)** — Propagation triggers + discovery scan: transactional email and delete semantics.
 
 ### 2026-04-10 — PocketBase parallel requests + admin session shape
 
 - **`docs/CONTEXT_PROMPT.md`** — Critical Patterns (Database quirks): PocketBase JS SDK auto-cancellation when parallel same-collection reads share one client; fix via opt-out key, unique keys, serialization, or separate instances. Patterns to Follow: capability flags (`isAdmin`, etc.) must reflect authenticated identity; impersonation via explicit signal not shared delegation fields. Anti-Patterns: parallel same-collection SDK reads without handling auto-cancellation.
 - **`docs/TECHNICAL_REFERENCE.md`** — Schema Notes: lesson on list endpoints enriching parents with per-row related `getList` and aborted/empty nested payloads.
 - **`docs/TEST_PLAN.md`** — §8.6 manual checks for list APIs + nested BaaS reads (reload + log sanity).
-- **`prompts/propagate-to-forgekit.md`** + **`prompts/Propagate to ForgeKit.md` (EF)** — Discovery scan table: parallel BaaS/SDK list enrichment row.
+- **`prompts/propagate-to-forgetrail.md`** + **`prompts/Propagate to ForgeTrail.md` (EF)** — Discovery scan table: parallel BaaS/SDK list enrichment row.
 
 ### 2026-04-08 — Panel usability audit prompt
 
@@ -336,24 +336,24 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 
 ### 2026-04-08 — Git commit (`--trailer`)
 
-- **`.cursor/rules/commit-messages.mdc`** (EF + ForgeKit) — Expanded **Multi-line on Windows / Cursor**: do not rely on flows that inject `--trailer`; prefer `-F` message file; if the shell still injects, run `git` via `cmd.exe //c` (adjust path) or the user’s normal terminal.
+- **`.cursor/rules/commit-messages.mdc`** (EF + ForgeTrail) — Expanded **Multi-line on Windows / Cursor**: do not rely on flows that inject `--trailer`; prefer `-F` message file; if the shell still injects, run `git` via `cmd.exe //c` (adjust path) or the user’s normal terminal.
 
 ### 2026-04-11
 
-- **`.cursor/rules/commit-messages.mdc`** (EF + ForgeKit) — Default **multi-line** commits: subject line, blank line, body with scope, per-file or grouped what changed (added/changed/removed), light justification when useful; trivial commits may stay subject-only; note on `git commit -F` when shell/Git wrapper breaks multi-line; professional tone (no joke suffixes); opening line that **committing is allowed** when `git-user-commits` criteria are met (message rules do not forbid commits).
-- **`.cursor/rules/git-user-commits.mdc`** (EF + ForgeKit) — Explicit pointer to detailed body by default; new **Permission** section: `git commit` **allowed and expected** after substantive work without the user having to say “commit”; revokes older “only commit if explicitly asked” habit; push still explicit-only.
-- **`prompts/propagate-to-forgekit.md`** + **`prompts/Propagate to ForgeKit.md` (EF)** — Trigger row mentions detailed multi-line commit body.
+- **`.cursor/rules/commit-messages.mdc`** (EF + ForgeTrail) — Default **multi-line** commits: subject line, blank line, body with scope, per-file or grouped what changed (added/changed/removed), light justification when useful; trivial commits may stay subject-only; note on `git commit -F` when shell/Git wrapper breaks multi-line; professional tone (no joke suffixes); opening line that **committing is allowed** when `git-user-commits` criteria are met (message rules do not forbid commits).
+- **`.cursor/rules/git-user-commits.mdc`** (EF + ForgeTrail) — Explicit pointer to detailed body by default; new **Permission** section: `git commit` **allowed and expected** after substantive work without the user having to say “commit”; revokes older “only commit if explicitly asked” habit; push still explicit-only.
+- **`prompts/propagate-to-forgetrail.md`** + **`prompts/Propagate to ForgeTrail.md` (EF)** — Trigger row mentions detailed multi-line commit body.
 
 ### 2026-04-10
 
 - **`.cursor/rules/git-user-commits.mdc`** (new) — Default: create a commit when substantive work completes; message grounded in session summary but verified against `git diff --staged`; push still only when user asks; skip if user opts out or nothing to commit.
 - **`.cursor/rules/commit-messages.mdc`** — Session summary may structure the message, but must reconcile with staged diff; TODO/IDEAS wording unchanged.
-- **`prompts/propagate-to-forgekit.md`** — Propagation triggers table: `.cursor/rules` git/commit policy row.
+- **`prompts/propagate-to-forgetrail.md`** — Propagation triggers table: `.cursor/rules` git/commit policy row.
 
 ### 2026-04-09
 
-- **`prompts/propagate-to-forgekit.md`** — Discovery scan; triggers for CI, dev-tooling, **journal automation**, **major feature**; intro “skim Steps 2–3”; optional Context bullets (NPS / launch / checklist); Step **7** part 2 **append `update-log.md`** (was missing vs EF mirror).
-- **`prompts/Propagate to ForgeKit.md`** — `PHASE_1_BRIEF` + `prompts/README.md` maintenance note in Context.
+- **`prompts/propagate-to-forgetrail.md`** — Discovery scan; triggers for CI, dev-tooling, **journal automation**, **major feature**; intro “skim Steps 2–3”; optional Context bullets (NPS / launch / checklist); Step **7** part 2 **append `update-log.md`** (was missing vs EF mirror).
+- **`prompts/Propagate to ForgeTrail.md`** — `PHASE_1_BRIEF` + `prompts/README.md` maintenance note in Context.
 
 ### 2026-04-08
 
@@ -377,20 +377,20 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 - **`docs/CONTEXT_PROMPT.md`** — Patterns to Follow: nested hover flyouts (stable id, cancel timers on same id, reset when parent menu closes); flex shell below nav. Anti-patterns: bulk reset on every `mouseenter`; fixed horizontal offsets that drift from sibling `absolute` flyouts.
 - **`docs/SPEC_UI_CHROME_NAV_TEMPLATE.md`** — New optional template for apps to copy when nav/chrome rules stabilize.
 - **`README.md`** — File tree lists `SPEC_UI_CHROME_NAV_TEMPLATE.md`.
-- **`prompts/propagate-to-forgekit.md`** — Context lists the new spec template in both “your app” and ForgeKit inventories.
+- **`prompts/propagate-to-forgetrail.md`** — Context lists the new spec template in both “your app” and ForgeTrail inventories.
 
 ### 2026-03-26
 
 - **`docs/CONTEXT_PROMPT.md`** — Patterns to Follow: centralize trial length, billing-period windows, tier caps, rate limits, trial export caps, and UI urgency thresholds in named modules; single `MS_PER_DAY` (or equivalent) for calendar math; wire marketing copy from the same constants. Anti-pattern: duplicated policy numbers across hooks, entitlements, and export routes.
 - **`docs/TECHNICAL_REFERENCE.md`** — Billing / Entitlements: named constants for tier limits (`planLimitValues`-style module feeding `PLAN_LIMITS`); shared modules for product limits and rate limits; setup-script sync comment pattern.
 - **`prompts/product-feedback-to-spec.md`** — New template: turn raw user feedback into an implementation-ready spec (structured headings + rules).
-- **`prompts/propagate-to-forgekit.md`** — Context lists `update-log.md`; Step 7 requires appending to this file; README parity note.
+- **`prompts/propagate-to-forgetrail.md`** — Context lists `update-log.md`; Step 7 requires appending to this file; README parity note.
 - **`README.md`** — Root file tree includes `update-log.md` and the new prompt.
 
 ### 2026-03-26 (follow-up)
 
-- **`prompts/propagate-to-forgekit.md`** — After **Instructions**, added **Generalization first**: lead with reusable principle; examples (e.g. duplicated numeric literals, magic strings, copy aligned with enforcement) are illustrative only. **Step 4** renumbered: new rule **Principle before examples**; `📝 **Example:**` callout explicitly for concrete literals/paths; concise lesson rule now item 7.
-- **Mirror prompt** (where a live app keeps a copy, e.g. `Propagate to ForgeKit.md`) — Same **Generalization first** block and Step 4 rules; Step 3 mapping row for `update-log.md` if missing.
+- **`prompts/propagate-to-forgetrail.md`** — After **Instructions**, added **Generalization first**: lead with reusable principle; examples (e.g. duplicated numeric literals, magic strings, copy aligned with enforcement) are illustrative only. **Step 4** renumbered: new rule **Principle before examples**; `📝 **Example:**` callout explicitly for concrete literals/paths; concise lesson rule now item 7.
+- **Mirror prompt** (where a live app keeps a copy, e.g. `Propagate to ForgeTrail.md`) — Same **Generalization first** block and Step 4 rules; Step 3 mapping row for `update-log.md` if missing.
 - **`update-log.md`** (this file) — Intro paragraph: table summaries should state generalized outcomes; Detail bullets describe template changes, not app-specific trivia.
 
 ### 2026-04-16
@@ -404,7 +404,7 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 - **`prompts/pre-launch-audit.md`** — Billing: cold load / sleep wake / fast onboarding navigation — trial UI matches server (no false "trial ended").
 - **`WORKFLOW.md`** — Phase 6 progressive table: optional `FEATURE_CATALOG.md` + periodic `user-facing-content-sync-audit.md`.
 - **`INITIAL_PROMPT.md`** — Phase 2 doc note: Phase 6 optional feature catalog + content sync; audit prompt list includes user-facing content sync.
-- **`prompts/propagate-to-forgekit.md`** + Exec Foundry **`Propagate to ForgeKit.md`** — Context: optional `docs/FEATURE_CATALOG.md` paired with content-sync audits.
+- **`prompts/propagate-to-forgetrail.md`** + Exec Foundry **`Propagate to ForgeTrail.md`** — Context: optional `docs/FEATURE_CATALOG.md` paired with content-sync audits.
 
 ### 2026-03-27
 
@@ -419,9 +419,9 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 
 ### 2026-03-30
 
-- **`docs/NAMING_EXPLORATION.md`** — New template: structured methodology for naming or renaming a product. 9 sections (why rename, criteria, theme extraction from brand docs, candidate generation, brand copy stress tests, domain/handle availability with DNS batch-check script, weighted evaluation framework, decision process, what doesn't change) + appendix of 7 naming anti-patterns. Follows ForgeKit blockquote conventions (9 enrichment markers for shell-mode stripping). Designed to run after `BRAND_AND_PRODUCT.md` exists so themes are grounded in real brand language.
+- **`docs/NAMING_EXPLORATION.md`** — New template: structured methodology for naming or renaming a product. 9 sections (why rename, criteria, theme extraction from brand docs, candidate generation, brand copy stress tests, domain/handle availability with DNS batch-check script, weighted evaluation framework, decision process, what doesn't change) + appendix of 7 naming anti-patterns. Follows ForgeTrail blockquote conventions (9 enrichment markers for shell-mode stripping). Designed to run after `BRAND_AND_PRODUCT.md` exists so themes are grounded in real brand language.
 - **`WORKFLOW.md`** — Progressive doc schedule table: Phase 6 row now includes optional `NAMING_EXPLORATION.md`. Phase 6 playbook artifacts list: added `NAMING_EXPLORATION.md` with timing note.
-- **`prompts/propagate-to-forgekit.md`** — Context section: added `docs/NAMING_EXPLORATION.md` to ForgeKit file inventory.
+- **`prompts/propagate-to-forgetrail.md`** — Context section: added `docs/NAMING_EXPLORATION.md` to ForgeTrail file inventory.
 
 ### 2026-04-05
 
@@ -437,11 +437,11 @@ Second revision of **FORGEKIT_LITE.md** driven by real-session feedback on v1.0 
 - **`docs/CONTEXT_PROMPT.md`** — Critical Patterns: SSR/browser `Date` agreement for rotation keys; store hydration from layout via `$effect`; Integration: HTTPS base URL construction from env without wrong port append (pointer to TECH_REF).
 - **`docs/TECHNICAL_REFERENCE.md`** — Configuration: new *Service base URLs (HTTPS and ports)* lesson (parse origin; avoid appending dev default port to production HTTPS).
 - **`prompts/pre-launch-audit.md`** — SEO & Social: checklist items for shared module-driven meta/schema and ICP language parity across tags and visible copy.
-- **`prompts/Propagate to ForgeKit.md`** (PC copy) — Context section: added `docs/NAMING_EXPLORATION.md` to ForgeKit file inventory.
+- **`prompts/Propagate to ForgeTrail.md`** (PC copy) — Context section: added `docs/NAMING_EXPLORATION.md` to ForgeTrail file inventory.
 
 ### 2026-05-16
 
-- **`.cursor/rules/git-user-commits.mdc`** (ForgeKit + Exec Foundry) — Default restored to **commit substantive/bounded work** without requiring the user to say “commit”; emphasizes **descriptive messages** and multi-line bodies per `commit-messages.mdc`; **push** still explicit-only; **opt-out** when the user wants a dirty tree; notes this project rule overrides conflicting global “don’t commit” guidance unless the user overrides in-chat.
+- **`.cursor/rules/git-user-commits.mdc`** (ForgeTrail + Exec Foundry) — Default restored to **commit substantive/bounded work** without requiring the user to say “commit”; emphasizes **descriptive messages** and multi-line bodies per `commit-messages.mdc`; **push** still explicit-only; **opt-out** when the user wants a dirty tree; notes this project rule overrides conflicting global “don’t commit” guidance unless the user overrides in-chat.
 
 ### 2026-05-15
 

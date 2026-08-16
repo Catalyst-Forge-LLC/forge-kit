@@ -1,33 +1,33 @@
-# ForgeKit evolution for modern agent systems (Grok, subagents, skills, MCP)
+# ForgeTrail evolution for modern agent systems (Grok, subagents, skills, MCP)
 
 **Spec kind:** Canonical reference
 
 **Status:** Canonical; initial ideas captured 2026-06-15 during direct session with author using Grok Build. Living document — append proposals, experiments, and outcomes here rather than scattering across chat history.
 
-**Scope:** Improvements and extensions to ForgeKit itself (methodology, tracking, MCP server, prompts/templates, documentation practices) to better leverage and integrate with powerful contemporary AI coding agents that support rich tool use, parallel subagents, structured plan modes, reusable skills, native MCP, and persistent session/todo state.
+**Scope:** Improvements and extensions to ForgeTrail itself (methodology, tracking, MCP server, prompts/templates, documentation practices) to better leverage and integrate with powerful contemporary AI coding agents that support rich tool use, parallel subagents, structured plan modes, reusable skills, native MCP, and persistent session/todo state.
 
 **Related artifacts:**
 - `WORKFLOW.md` (especially § on specs lifecycle and gstack complementarity)
 - `mcp-server/src/index.ts` and `content/`
 - Existing meta-specs in this folder
 - `TRACKING_SCHEMA.md`
-- `prompts/propagate-to-forgekit.md`
+- `prompts/propagate-to-forgetrail.md`
 
 ---
 
 ## 1. Context and Motivation
 
-ForgeKit has proven "extremely powerful, even if used partially" across multiple real projects for the author. Its core strengths — the 7-phase lifecycle with explicit exit criteria, the machine-readable `.forgekit/workflow_tracking.json` as cross-session state, progressive single-source templates, the rich lessons/anti-patterns database, and the MCP-first design that keeps methodology server-side — create durable discipline that general-purpose agents otherwise lack.
+ForgeTrail has proven "extremely powerful, even if used partially" across multiple real projects for the author. Its core strengths — the 7-phase lifecycle with explicit exit criteria, the machine-readable `.forgetrail/workflow_tracking.json` as cross-session state, progressive single-source templates, the rich lessons/anti-patterns database, and the MCP-first design that keeps methodology server-side — create durable discipline that general-purpose agents otherwise lack.
 
-Modern agents (Grok Build, advanced Claude setups, Cursor with heavy agentic use, future systems) bring new primitives that ForgeKit can exploit rather than treat as black boxes:
+Modern agents (Grok Build, advanced Claude setups, Cursor with heavy agentic use, future systems) bring new primitives that ForgeTrail can exploit rather than treat as black boxes:
 - Native plan modes that map directly to Phase 1.
 - First-class subagent spawning with isolation (worktrees), capability modes, personas, and background execution.
-- Skills / prompt packages that can embed ForgeKit rules persistently (similar to but more structured than gstack slash commands).
+- Skills / prompt packages that can embed ForgeTrail rules persistently (similar to but more structured than gstack slash commands).
 - Strong MCP support (already the recommended path; see browsermcp precedent).
 - Built-in todo tracking, session persistence, and structured artifacts (plan.md, etc.).
 - Headless/automation modes + media/document generation capabilities.
 
-The opportunity is to evolve ForgeKit from "excellent prompt + template + tracking system for file-reading agents" into "the canonical lifecycle + memory layer that supercharges the best agentic engines."
+The opportunity is to evolve ForgeTrail from "excellent prompt + template + tracking system for file-reading agents" into "the canonical lifecycle + memory layer that supercharges the best agentic engines."
 
 This spec catalogs concrete, prioritized ideas. Many can be implemented incrementally without breaking Lite or existing MCP clients.
 
@@ -36,7 +36,7 @@ This spec catalogs concrete, prioritized ideas. Many can be implemented incremen
 ## 2. High-Value Opportunity Areas
 
 ### 2.1 Plan Mode as Native Phase 1
-Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_plan_mode` tool + the generated `plan.md` inside the session directory is already a close structural match for Phase 1. It forces exploration before edits, produces a reviewable artifact, and gates on explicit user approval — exactly what ForgeKit Phase 1 demands before any code or heavy docs are produced.
+Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_plan_mode` tool + the generated `plan.md` inside the session directory is already a close structural match for Phase 1. It forces exploration before edits, produces a reviewable artifact, and gates on explicit user approval — exactly what ForgeTrail Phase 1 demands before any code or heavy docs are produced.
 
 **Problem today:** Agents often jump into scaffolding or require the user to paste "use plan mode" instructions manually. The approved plan is not automatically turned into the durable `docs/PHASE_1_BRIEF.md` + `decisions[]` entries that let Phase 2 start "cold."
 
@@ -51,7 +51,7 @@ Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_pla
      3. On user approval (`exit_plan_mode`), immediately:
         - Write `docs/PHASE_1_BRIEF.md` using `getTemplate({ name: "PHASE_1_BRIEF", mode: "full" })` as base.
         - Merge the approved plan content into the brief using the "Handoff from Phase 1" mapping in the CONTEXT_PROMPT template.
-        - Log every major commitment as an entry in `.forgekit/workflow_tracking.json` → `decisions[]` (id, timestamp, phase: "1-architecture", decision, rationale, alternatives_considered).
+        - Log every major commitment as an entry in `.forgetrail/workflow_tracking.json` → `decisions[]` (id, timestamp, phase: "1-architecture", decision, rationale, alternatives_considered).
      ```
    - Update `WORKFLOW.md` Phase 1 "What to ask the agent" section with a new subsection "Using Native Plan Modes".
 
@@ -60,7 +60,7 @@ Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_pla
      ```ts
      server.tool(
        "ingestPlanArtifact",
-       "Take the content of a native plan.md (or similar approved planning artifact) and produce a filled PHASE_1_BRIEF.md skeleton plus decision entries ready to write to .forgekit/workflow_tracking.json.",
+       "Take the content of a native plan.md (or similar approved planning artifact) and produce a filled PHASE_1_BRIEF.md skeleton plus decision entries ready to write to .forgetrail/workflow_tracking.json.",
        {
          planContent: z.string().describe("Full text of the approved plan.md or equivalent artifact"),
          projectName: z.string().optional(),
@@ -84,10 +84,10 @@ Grok's `/plan` (or Shift+Tab to enter plan mode) + `enter_plan_mode` / `exit_pla
 - Updates to `NEW_PROJECT_BOOTSTRAP.md`, `WORKFLOW.md` §1 (Phase 1), and `getPhaseGuidance`
 - New file: `content/PLAN_MODE_PATTERNS.md`
 
-**Value:** Makes ForgeKit feel native to the agent's best planning UX. The plan artifact becomes the durable handoff instead of chat history.
+**Value:** Makes ForgeTrail feel native to the agent's best planning UX. The plan artifact becomes the durable handoff instead of chat history.
 
 ### 2.2 Subagents for Parallel Execution Inside Phases
-ForgeKit's audits (black-hat, UX-cohesion, docs-alignment, competitor-deep-dive) and research tasks (lessons search, stabilize root-cause, feature spikes) are perfect for parallel subagents. Grok's `spawn_subagent` supports `subagent_type` (`explore`, `plan`, `general-purpose`), `capability_mode` (`read-only`, `read-write`, `execute`, `all`), `isolation: "worktree"`, `background`, `personas`, and `resume_from`.
+ForgeTrail's audits (black-hat, UX-cohesion, docs-alignment, competitor-deep-dive) and research tasks (lessons search, stabilize root-cause, feature spikes) are perfect for parallel subagents. Grok's `spawn_subagent` supports `subagent_type` (`explore`, `plan`, `general-purpose`), `capability_mode` (`read-only`, `read-write`, `execute`, `all`), `isolation: "worktree"`, `background`, `personas`, and `resume_from`.
 
 **Problem today:** These tasks are described in prompts and run serially in the main thread, consuming context and time.
 
@@ -123,7 +123,7 @@ ForgeKit's audits (black-hat, UX-cohesion, docs-alignment, competitor-deep-dive)
      - Phase 1: Main agent only (or one explore subagent for competitive research).
      - Phase 4/5: Main agent plans; spawn 2-3 `explore` subagents for parallel feature research or refactor analysis.
      - Phase 7: Spawn one subagent per audit type (black-hat, code-quality, deployment) using `capability_mode: "read-only" | "execute"`, then main agent synthesizes into `BLACK_HAT_REPORT.md` + `CODE_QUALITY.md`.
-   - Key rule: "After subagent results return, the parent must update `.forgekit/workflow_tracking.json` (gotchas, decisions) and relevant progressive docs."
+   - Key rule: "After subagent results return, the parent must update `.forgetrail/workflow_tracking.json` (gotchas, decisions) and relevant progressive docs."
 
 4. **Bootstrap and phase guidance updates**
    - Add examples in `NEW_PROJECT_BOOTSTRAP.md` and `getPhaseGuidance`.
@@ -139,20 +139,20 @@ ForgeKit's audits (black-hat, UX-cohesion, docs-alignment, competitor-deep-dive)
 - Update several `server.tool` descriptions + bootstrap content.
 - Optionally add `getSubagentPersona` tool.
 
-**Value:** Directly multiplies throughput on the parts of ForgeKit that are most context-heavy and parallelizable. Addresses the "long sessions hit context limits" anti-pattern repeatedly called out in WORKFLOW.md.
+**Value:** Directly multiplies throughput on the parts of ForgeTrail that are most context-heavy and parallelizable. Addresses the "long sessions hit context limits" anti-pattern repeatedly called out in WORKFLOW.md.
 
-### 2.3 Skills / Persistent Prompt Packages as ForgeKit Delivery
-Grok skills (see `~/.grok/skills/<name>/SKILL.md` with YAML frontmatter) are activated by description match or `/skill-name`. They are the perfect vehicle for "always-on" ForgeKit discipline.
+### 2.3 Skills / Persistent Prompt Packages as ForgeTrail Delivery
+Grok skills (see `~/.grok/skills/<name>/SKILL.md` with YAML frontmatter) are activated by description match or `/skill-name`. They are the perfect vehicle for "always-on" ForgeTrail discipline.
 
 **Detailed Implementation Approach**
 
-1. **Canonical forgekit skill definition**
-   - Add `content/skills/forgekit/SKILL.md` (a ready-to-copy file).
+1. **Canonical forgetrail skill definition**
+   - Add `content/skills/forgetrail/SKILL.md` (a ready-to-copy file).
    - Frontmatter example:
      ```yaml
      ---
-     name: forgekit
-     description: "Enforce ForgeKit 7-phase lifecycle, maintain .forgekit/workflow_tracking.json, pause at phase transitions, use subagents for audits, follow progressive documentation. Use for any non-trivial app development project."
+     name: forgetrail
+     description: "Enforce ForgeTrail 7-phase lifecycle, maintain .forgetrail/workflow_tracking.json, pause at phase transitions, use subagents for audits, follow progressive documentation. Use for any non-trivial app development project."
      user-invocable: true
      argument-hint: "start new project | resume | phase 4 feature work | run black-hat audit"
      allowed-tools: "todo_write, spawn_subagent, read_file, search_replace, run_terminal_command, getPhaseGuidance, runAudit, searchLessons"
@@ -164,8 +164,8 @@ Grok skills (see `~/.grok/skills/<name>/SKILL.md` with YAML frontmatter) are act
    - New tool:
      ```ts
      server.tool(
-       "getForgeKitSkill",
-       "Returns the canonical forgekit SKILL.md definition (with optional agent-specific variants).",
+       "getForgeTrailSkill",
+       "Returns the canonical forgetrail SKILL.md definition (with optional agent-specific variants).",
        { agent: z.string().optional().describe("grok | claude | generic") },
        async () => { return the content }
      );
@@ -177,12 +177,12 @@ Grok skills (see `~/.grok/skills/<name>/SKILL.md` with YAML frontmatter) are act
    - Document how to compose: user skill + project-local rules.
 
 4. **Grok-specific packaging**
-   - Provide instructions + a small generator so users can drop it into `~/.grok/skills/forgekit/`.
+   - Provide instructions + a small generator so users can drop it into `~/.grok/skills/forgetrail/`.
 
-**Value:** Turns ForgeKit from "instructions the user must remember to paste" into persistent, automatically activated context — exactly like the existing `.cursor/rules/` files but for any skill-capable agent.
+**Value:** Turns ForgeTrail from "instructions the user must remember to paste" into persistent, automatically activated context — exactly like the existing `.cursor/rules/` files but for any skill-capable agent.
 
 ### 2.4 MCP Server Enhancements for Rich Agents
-Current implementation (McpServer + `server.tool` with Zod schemas, text returns, `FORGEKIT_ROOT` resolution, template stripping, lesson extraction) is solid.
+Current implementation (McpServer + `server.tool` with Zod schemas, text returns, `FORGETRAIL_ROOT` resolution, template stripping, lesson extraction) is solid.
 
 **Detailed Proposals & Code Sketches**
 
@@ -196,7 +196,7 @@ Current implementation (McpServer + `server.tool` with Zod schemas, text returns
     "...",
     {
       trackingJson: z.string().optional(),
-      path: z.string().optional().describe("Path to .forgekit/workflow_tracking.json (server will read if possible)"),
+      path: z.string().optional().describe("Path to .forgetrail/workflow_tracking.json (server will read if possible)"),
     },
     async (args) => {
       // Load schema from TRACKING_SCHEMA_PATH or in-memory
@@ -221,8 +221,8 @@ Current implementation (McpServer + `server.tool` with Zod schemas, text returns
 - Make `ping` also report "subagent support recommended: true" or list known complementary primitives.
 
 **Packaging & discovery:**
-- Update `mcp-server/package.json` bin and README with `npx forgekit-mcp` and one-line registration examples for Grok (`grok mcp add forgekit -- node ...`).
-- Consider a thin `forgekit-mcp` wrapper that sets sensible `FORGEKIT_ROOT`.
+- Update `mcp-server/package.json` bin and README with `npx forgetrail-mcp` and one-line registration examples for Grok (`grok mcp add forgetrail -- node ...`).
+- Consider a thin `forgetrail-mcp` wrapper that sets sensible `FORGETRAIL_ROOT`.
 
 **Files to touch:**
 - `mcp-server/src/index.ts` (add tools + metadata support)
@@ -254,13 +254,13 @@ Current implementation (McpServer + `server.tool` with Zod schemas, text returns
 - `validateTracking` tool (above) + a small Node CLI in `mcp-server/bin/` or a script in `content/scripts/`.
 - Sync convention: after important work, the agent should run `todo_write` for open exit criteria + update tracking.
 
-**Visualization:** Extend `forgekit.html` or add a `getProgressHtml` tool.
+**Visualization:** Extend `forgetrail.html` or add a `getProgressHtml` tool.
 
 ### 2.6 Agent-Agnosticism, Propagation, and Other Polish
 - Make all bootstrap and phase guidance default to "your agent" / "the host agent".
-- Strengthen `prompts/propagate-to-forgekit.md` with a Grok-specific example that uses `spawn_subagent` + `todo_write` to analyze a project before contributing lessons.
-- **Spec folder hygiene:** Create `specs/canonical/` now and move the three meta-specs (or symlink). Update `forgekit-prelaunch-review.md` and the new file with full canonical headers. Add a short `specs/README.md`.
-- **Headless support:** Add structured JSON variants to key tools and a section in `WORKFLOW.md` "Using ForgeKit in headless/CI pipelines".
+- Strengthen `prompts/propagate-to-forgetrail.md` with a Grok-specific example that uses `spawn_subagent` + `todo_write` to analyze a project before contributing lessons.
+- **Spec folder hygiene:** Create `specs/canonical/` now and move the three meta-specs (or symlink). Update `forgetrail-prelaunch-review.md` and the new file with full canonical headers. Add a short `specs/README.md`.
+- **Headless support:** Add structured JSON variants to key tools and a section in `WORKFLOW.md` "Using ForgeTrail in headless/CI pipelines".
 - **Media & exports:** Add patterns in Phase 1 guidance and a small `content/EXPORT_PATTERNS.md` that references agents with strong docx/pptx generation (Grok skills, etc.).
 - **Dogfooding:** Add a `scripts/dogfood-cycle.mjs` that can be run against a throwaway repo using different agents.
 
@@ -274,9 +274,9 @@ Recommended order of addition:
 1. `validateTracking` (quick to implement, high immediate value for all users)
 2. `suggestSubagentDecomposition` (leverages Grok's strengths immediately)
 3. `getAgentIntegrationGuide` + supporting content files
-4. `getForgeKitSkill` + `ingestPlanArtifact`
+4. `getForgeTrailSkill` + `ingestPlanArtifact`
 
-All new tools should follow existing patterns: text-first returns for human/agent readability, optional structured modes, good error messages when `FORGEKIT_ROOT` is wrong.
+All new tools should follow existing patterns: text-first returns for human/agent readability, optional structured modes, good error messages when `FORGETRAIL_ROOT` is wrong.
 
 ---
 
@@ -287,7 +287,7 @@ All new tools should follow existing patterns: text-first returns for human/agen
 - **content/**: Several new `.md` files (PLAN_MODE_PATTERNS, AGENT_INTEGRATION_*, SKILL template, EXPORT_PATTERNS).
 - **mcp-server/src/index.ts** + new helper modules: 3–5 new tools + metadata support.
 - **Root README + mcp-server/README**: Mention new capabilities and registration for Grok.
-- **prompts/propagate-to-forgekit.md**: Add a "modern agent analysis" variant.
+- **prompts/propagate-to-forgetrail.md**: Add a "modern agent analysis" variant.
 
 All changes must keep the Lite path and existing MCP clients fully working.
 
@@ -295,18 +295,18 @@ All changes must keep the Lite path and existing MCP clients fully working.
 
 ## 5. Grok Build Skill Template (Deliverable)
 
-Create `content/skills/forgekit/SKILL.md` (copyable to `~/.grok/skills/forgekit/SKILL.md`).
+Create `content/skills/forgetrail/SKILL.md` (copyable to `~/.grok/skills/forgetrail/SKILL.md`).
 
 Include:
 - Frontmatter as shown in 2.3
 - Body containing:
   - 7-phase one-paragraph summary + link to phases via `getPhaseGuidance`
-  - Mandatory: read `.forgekit/workflow_tracking.json` at start of session
+  - Mandatory: read `.forgetrail/workflow_tracking.json` at start of session
   - "Call `suggestSubagentDecomposition` or `runAudit` for audits"
   - Phase transition protocol
   - Reply format rules
 
-A `getForgeKitSkill` tool can emit the latest version.
+A `getForgeTrailSkill` tool can emit the latest version.
 
 ---
 
@@ -315,7 +315,7 @@ A `getForgeKitSkill` tool can emit the latest version.
 **P0 (do in next 1-2 sessions):**
 - `validateTracking` tool + schema extension
 - Subagent guidance in WORKFLOW.md + `suggestSubagentDecomposition` tool
-- Creation of the Grok skill definition file + `getForgeKitSkill` tool
+- Creation of the Grok skill definition file + `getForgeTrailSkill` tool
 
 **P1:**
 - Plan artifact ingestion tool + PLAN_MODE_PATTERNS.md
@@ -338,9 +338,9 @@ A `getForgeKitSkill` tool can emit the latest version.
 
 ## 8. Next Steps (Immediate)
 
-1. Review this expanded spec using ForgeKit process (Phase 1 on the highest-value item).
+1. Review this expanded spec using ForgeTrail process (Phase 1 on the highest-value item).
 2. Implement `validateTracking` and `suggestSubagentDecomposition` (self-contained in the MCP server).
-3. Create the initial Grok skill file and wire the local ForgeKit MCP into a Grok session for dogfooding.
+3. Create the initial Grok skill file and wire the local ForgeTrail MCP into a Grok session for dogfooding.
 4. Update WORKFLOW.md and bootstrap content with the new subagent + plan mode sections.
 5. Append experiment results back into this spec.
 
@@ -353,11 +353,11 @@ This remains a living canonical reference. Append dated notes, implementation PR
 (See previous version + these mappings)
 
 - Plan mode directly implements Phase 1 gates.
-- `spawn_subagent` + personas + worktree = parallel ForgeKit audits and research.
-- `todo_write` + sessions = natural sync target for `.forgekit/workflow_tracking.json`.
-- Skills = persistent ForgeKit "personality".
+- `spawn_subagent` + personas + worktree = parallel ForgeTrail audits and research.
+- `todo_write` + sessions = natural sync target for `.forgetrail/workflow_tracking.json`.
+- Skills = persistent ForgeTrail "personality".
 - Native MCP consumption pattern (already used by this Grok instance with browsermcp).
-- Headless + JSON = great for CI automation of ForgeKit status checks.
+- Headless + JSON = great for CI automation of ForgeTrail status checks.
 - docx/pptx/xlsx + imagine = direct support for Phase 1 export/landing needs and Phase 6/7 deliverables.
 
 Use these primitives to execute the methodology instead of working around the agent.
@@ -389,29 +389,29 @@ This pattern generalizes across phases.
    - Updated `printStartupHintsToStderr()` to list the new tools.  
    Tools follow existing patterns and are additive (no breakage to Lite or prior MCP clients).
 
-2. **ForgeKit skill definition created**  
-   - `content/skills/forgekit/SKILL.md`  
+2. **ForgeTrail skill definition created**  
+   - `content/skills/forgetrail/SKILL.md`  
    Full SKILL.md with YAML frontmatter (name, description, user-invocable, allowed-tools) + detailed body covering:  
    - 7-phase core rules  
    - Session start discipline (read tracking + CONTEXT_PROMPT)  
    - Phase transition protocol  
    - Native plan mode + subagent preferences  
    - Reply format, audits/lessons, key tools to call proactively  
-   Ready to copy to `~/.grok/skills/forgekit/SKILL.md` (or equivalent) for persistent activation.
+   Ready to copy to `~/.grok/skills/forgetrail/SKILL.md` (or equivalent) for persistent activation.
 
 3. **WORKFLOW.md §1c — planned, not yet landed**  
-   The P0 sketch called for "1c. Using Subagents with Modern Agents" after §1b (gstack). That section is **not** in `WORKFLOW.md` yet; subagent guidance currently lives in this spec, `AGENT_INTEGRATION_grok.md`, and the forgekit skill. Land §1c in a follow-up pass.
+   The P0 sketch called for "1c. Using Subagents with Modern Agents" after §1b (gstack). That section is **not** in `WORKFLOW.md` yet; subagent guidance currently lives in this spec, `AGENT_INTEGRATION_grok.md`, and the forgetrail skill. Land §1c in a follow-up pass.
 
 4. **Supporting content files created**  
    - `content/PLAN_MODE_PATTERNS.md`: Detailed recommended flow for using native plan modes as Phase 1 implementation, Grok-specific steps, cross-agent equivalents, required artifacts.  
-   - `content/AGENT_INTEGRATION_grok.md`: Mapping table (Grok primitives → ForgeKit phases), recommended session openers, subagent patterns, tracking sync, skills usage, headless tips, local MCP registration command, and dogfooding guidance.
+   - `content/AGENT_INTEGRATION_grok.md`: Mapping table (Grok primitives → ForgeTrail phases), recommended session openers, subagent patterns, tracking sync, skills usage, headless tips, local MCP registration command, and dogfooding guidance.
 
 **Files changed/added (relative to repo root):**
 - mcp-server/src/index.ts (new tools + hints)
-- content/skills/forgekit/SKILL.md (new, with directory)
+- content/skills/forgetrail/SKILL.md (new, with directory)
 - content/PLAN_MODE_PATTERNS.md (new)
 - content/AGENT_INTEGRATION_grok.md (new)
-- specs/canonical/forgekit-modern-agents-evolution.md (this spec)
+- specs/canonical/forgetrail-modern-agents-evolution.md (this spec)
 
 **Notes on what worked:**
 - The implementations stayed lightweight and text-first (matching existing MCP tool style).
@@ -423,7 +423,7 @@ This pattern generalizes across phases.
 
 **Next actions (per updated Next Steps):**
 - Rebuild/test the MCP tools in a live Grok session.
-- Wire the local ForgeKit MCP server into this environment for dogfooding.
+- Wire the local ForgeTrail MCP server into this environment for dogfooding.
 - Consider further appends after real usage (e.g. "what actually worked in subagent audits").
 - Update other bootstrap content (e.g. NEW_PROJECT_BOOTSTRAP.md) with references to the new tools/sections if desired.
 
@@ -448,7 +448,7 @@ See AGENT_INTEGRATION_grok.md for full registration example.
 
 1. **WORKFLOW.md §1c** — "Using Subagents with Modern Agents" added after §1b (gstack), with phase-by-phase guidance, recommended pattern, Phase 7 example, and key rule. Phase 1 playbook updated with native plan mode + `getPlanModePatterns` cross-ref.
 
-2. **MCP content tools** — `getPlanModePatterns`, `getAgentIntegrationGuide` (grok | claude | cursor | generic), `getForgeKitSkill` registered in `index.ts`; startup hints updated.
+2. **MCP content tools** — `getPlanModePatterns`, `getAgentIntegrationGuide` (grok | claude | cursor | generic), `getForgeTrailSkill` registered in `index.ts`; startup hints updated.
 
 3. **Agent integration guides** — `AGENT_INTEGRATION_generic.md`, `AGENT_INTEGRATION_cursor.md`, `AGENT_INTEGRATION_claude.md` (grok guide already present).
 
@@ -468,7 +468,7 @@ See AGENT_INTEGRATION_grok.md for full registration example.
 
 1. **`ingestPlanArtifact`** — `mcp-server/src/planIngest.ts` + MCP tool: rule-based plan section → PHASE_1_BRIEF mapping, D# / bullet decision extraction, `decisions[]` JSON, `format=json` support. Cross-refs in PLAN_MODE_PATTERNS, bootstrap, skill, `getPhaseGuidance("1")`.
 
-2. **Spec folder canonical reorganization** — `specs/canonical/` created; `forgekit-modern-agents-evolution.md`, `forgekit-as-product.md`, `forgekit-prelaunch-review.md` moved; canonical headers updated; `specs/README.md` added.
+2. **Spec folder canonical reorganization** — `specs/canonical/` created; `forgetrail-modern-agents-evolution.md`, `forgetrail-as-product.md`, `forgetrail-prelaunch-review.md` moved; canonical headers updated; `specs/README.md` added.
 
 3. **Structured JSON tool outputs** — `mcp-server/src/mcpFormat.ts`; `format=json` on `ping`, `validateTracking`, `suggestSubagentDecomposition`, `ingestPlanArtifact`; `getTemplate` / `runAudit` add `format` + `includeMetadata` (recommendedSubagentPersona on audits). `ping` reports subagent/plan-mode recommendations.
 

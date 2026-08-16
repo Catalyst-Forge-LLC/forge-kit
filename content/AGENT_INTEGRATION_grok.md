@@ -1,30 +1,30 @@
-# ForgeKit Integration Guide for Grok Build
+# ForgeTrail Integration Guide for Grok Build
 
-Grok Build (the agentic TUI/CLI from xAI) has excellent native primitives that map extremely well to ForgeKit. Treat ForgeKit as the **lifecycle + persistent memory layer** and Grok primitives as the **execution engine**.
+Grok Build (the agentic TUI/CLI from xAI) has excellent native primitives that map extremely well to ForgeTrail. Treat ForgeTrail as the **lifecycle + persistent memory layer** and Grok primitives as the **execution engine**.
 
-## Key Grok Primitives and ForgeKit Mapping
+## Key Grok Primitives and ForgeTrail Mapping
 
-| Grok Primitive              | ForgeKit Phase(s)          | How to Use |
+| Grok Primitive              | ForgeTrail Phase(s)          | How to Use |
 |-----------------------------|----------------------------|------------|
 | `/plan` + enter/exit_plan_mode + plan.md | Phase 1 (Architecture)    | Use native plan mode for all Phase 1 work. On approval, export to `PHASE_1_BRIEF.md` + `decisions[]`. See `PLAN_MODE_PATTERNS.md`. |
 | `spawn_subagent` (explore/plan/general, capability_mode, isolation: worktree, background, resume_from, personas) | All phases, especially 4, 5, 7 | Use for parallel audits (black-hat, UX, code quality), research, stabilize debugging, and exploratory spikes. Call `suggestSubagentDecomposition` first. Prefer read-only for analysis subagents. |
-| `todo_write` + TODO panel   | All phases                 | Mirror open exit criteria and next actions from `.forgekit/workflow_tracking.json`. Use as the visible "what's next" while tracking.json is the durable record. |
-| Skills (`/create-skill`, SKILL.md) | All sessions             | Install the `forgekit` skill (see `SKILL.md` in content/skills/forgekit). It keeps phase discipline, tracking rules, and subagent patterns always active. |
-| Native MCP (search_tool + use_tool) | Methodology delivery    | Register the ForgeKit MCP server. Tools appear as `forgekit__*`. Use `getNewProjectKickoff`, `getPhaseGuidance`, `runAudit`, `searchLessons`, `validateTracking`, etc. |
+| `todo_write` + TODO panel   | All phases                 | Mirror open exit criteria and next actions from `.forgetrail/workflow_tracking.json`. Use as the visible "what's next" while tracking.json is the durable record. |
+| Skills (`/create-skill`, SKILL.md) | All sessions             | Install the `forgetrail` skill (see `SKILL.md` in content/skills/forgetrail). It keeps phase discipline, tracking rules, and subagent patterns always active. |
+| Native MCP (search_tool + use_tool) | Methodology delivery    | Register the ForgeTrail MCP server. Tools appear as `forgetrail__*`. Use `getNewProjectKickoff`, `getPhaseGuidance`, `runAudit`, `searchLessons`, `validateTracking`, etc. |
 | Headless (`grok -p ... --output-format json`) | Automation / CI       | Call kickoff/resume tools and have the agent produce structured phase state. Add exit-criteria validation in pipelines. |
 | `docx` / `pptx` / `xlsx` skills + image/video gen | Phase 1 intake, Phase 6/7 deliverables | Use for exports (PDF/DOCX/PPTX), landing pages, brand assets, and marketing materials called out in greenfield intake. |
-| Sessions + memory + AGENTS.md | Cross-session continuity | `.forgekit/workflow_tracking.json` + `CONTEXT_PROMPT.md` are the ForgeKit equivalents. Update them at session end. |
+| Sessions + memory + AGENTS.md | Cross-session continuity | `.forgetrail/workflow_tracking.json` + `CONTEXT_PROMPT.md` are the ForgeTrail equivalents. Update them at session end. |
 
 ## Recommended Session Openers in Grok
 
 For a new project:
 ```
-Call ForgeKit getNewProjectKickoff (includeCursorRule false), write the tracking file, then start Phase 1 using native /plan mode. Read the generated plan on approval and produce PHASE_1_BRIEF.md + decisions.
+Call ForgeTrail getNewProjectKickoff (includeCursorRule false), write the tracking file, then start Phase 1 using native /plan mode. Read the generated plan on approval and produce PHASE_1_BRIEF.md + decisions.
 ```
 
 For resuming:
 ```
-Call ForgeKit getResumeSessionInstructions. Read .forgekit/workflow_tracking.json and CONTEXT_PROMPT.md. Continue from current phase.
+Call ForgeTrail getResumeSessionInstructions. Read .forgetrail/workflow_tracking.json and CONTEXT_PROMPT.md. Continue from current phase.
 ```
 
 ## Subagent Patterns (Grok-specific)
@@ -45,38 +45,38 @@ Use `background: true` for long-running subagents and retrieve with `get_command
 ## Tracking Sync
 
 After meaningful work (especially subagent results or feature completion):
-- Update `.forgekit/workflow_tracking.json` (exit criteria, decisions, gotchas, sessions).
+- Update `.forgetrail/workflow_tracking.json` (exit criteria, decisions, gotchas, sessions).
 - Use `todo_write` to surface the next 3–5 open items from the tracking file.
 - Update `CONTEXT_PROMPT.md` when patterns or architecture change.
 
 ## Skills Usage
 
-Install the forgekit skill (copy from content/skills/forgekit/SKILL.md to ~/.grok/skills/forgekit/SKILL.md).
+Install the forgetrail skill (copy from content/skills/forgetrail/SKILL.md to ~/.grok/skills/forgetrail/SKILL.md).
 
 Then simply say things like:
-- "/forgekit kickoff new project"
-- "Use forgekit discipline for this feature"
+- "/forgetrail kickoff new project"
+- "Use forgetrail discipline for this feature"
 
 The skill will remind you of phases, tracking, subagents, etc.
 
 ## Headless / Automation Tips
 
 ```bash
-grok -p "Call ForgeKit getNewProjectKickoff and set up the project per the bundle. Then begin Phase 1." --output-format json --always-approve
+grok -p "Call ForgeTrail getNewProjectKickoff and set up the project per the bundle. Then begin Phase 1." --output-format json --always-approve
 ```
 
 Parse the JSON and continue sessions with `--resume` or named `--session-id`.
 
-## Dogfooding ForgeKit on ForgeKit
+## Dogfooding ForgeTrail on ForgeTrail
 
-Use this very repo as a test case. Run a full cycle or slices with Grok Build + the local MCP server registered. Capture results back into `specs/canonical/forgekit-modern-agents-evolution.md`.
+Use this very repo as a test case. Run a full cycle or slices with Grok Build + the local MCP server registered. Capture results back into `specs/canonical/forgetrail-modern-agents-evolution.md`.
 
 ## Registration (local dev)
 
 ```bash
-grok mcp add forgekit -- node "Z:\workspace\forge-kit\mcp-server\dist\index.js" --env FORGEKIT_ROOT="Z:\workspace\forge-kit"
+grok mcp add forgetrail -- node "Z:\workspace\forge-kit\mcp-server\dist\index.js" --env FORGETRAIL_ROOT="Z:\workspace\forge-kit"
 ```
 
-Or via `~/.grok/config.toml` under `[mcp_servers.forgekit]`.
+Or via `~/.grok/config.toml` under `[mcp_servers.forgetrail]`.
 
 After registration, tools are discoverable via the normal MCP search/use flow in Grok.

@@ -2,7 +2,7 @@
 
 Use this prompt with an AI coding assistant that has full access to a project workspace. Paste or feed it as-is. The assistant will perform a comprehensive manual code review and produce a structured security report.
 
-Save the output to `docs/BLACK_HAT_REPORT.md` using the template from `_forgekit/docs/BLACK_HAT_REPORT.md`. After generating, triage all findings into `docs/TODO.md` with P0/P1/P2 priority.
+Save the output to `docs/BLACK_HAT_REPORT.md` using the template from `_forgetrail/docs/BLACK_HAT_REPORT.md`. After generating, triage all findings into `docs/TODO.md` with P0/P1/P2 priority.
 
 ---
 

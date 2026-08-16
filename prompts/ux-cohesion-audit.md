@@ -162,4 +162,4 @@ After completing the audit:
 
 - Add a backlog entry (e.g. `TODO.md`, open `[ ]`): title **`UX cohesion audit`**, a one-line summary of the cross-cutting themes + top pre-beta items, and a link to the spec.
 - A brand-new audit spec lands in `specs/` (drafts). Once any finding is implemented, move it to `specs/partial/` per your spec-lifecycle convention.
-- If this run produced a generally-reusable lesson (a new cross-cutting pattern worth enforcing), consider running `propagate-to-forgekit.md`.
+- If this run produced a generally-reusable lesson (a new cross-cutting pattern worth enforcing), consider running `propagate-to-forgetrail.md`.

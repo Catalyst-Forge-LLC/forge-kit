@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Register the forgekit CLI on PATH for pnpm global installs.
+ * Register the forgetrail CLI on PATH for pnpm global installs.
  *
  * pnpm 10: prefer `pnpm add -g .` over deprecated `pnpm link --global`.
  * Linked packages get shims under global/.../node_modules/.bin with paths
@@ -12,19 +12,19 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
-import { FORGEKIT_ROOT } from "./install-lib.mjs";
+import { FORGETRAIL_ROOT } from "./install-lib.mjs";
 
-const CLI_ENTRY = join(FORGEKIT_ROOT, "scripts", "forgekit-cli.mjs");
-const BIN_NAME = "forgekit";
+const CLI_ENTRY = join(FORGETRAIL_ROOT, "scripts", "forgetrail-cli.mjs");
+const BIN_NAME = "forgetrail";
 
-function run(cmd, args, { cwd = FORGEKIT_ROOT } = {}) {
+function run(cmd, args, { cwd = FORGETRAIL_ROOT } = {}) {
   const r = spawnSync(cmd, args, { cwd, stdio: "inherit", shell: true, env: process.env });
   if (r.status !== 0) process.exit(r.status ?? 1);
 }
 
 function pnpmPath(args) {
   const r = spawnSync("pnpm", args, {
-    cwd: FORGEKIT_ROOT,
+    cwd: FORGETRAIL_ROOT,
     encoding: "utf-8",
     shell: true,
     env: process.env,
@@ -86,7 +86,7 @@ function verify(globalBinDir) {
   console.log(`\n✓ ${BIN_NAME} is available (${globalBinDir})`);
 }
 
-console.log("Registering forgekit globally (pnpm add -g .)…\n");
+console.log("Registering forgetrail globally (pnpm add -g .)…\n");
 run("pnpm", ["add", "-g", "."]);
 
 console.log("\nWriting PATH shims (absolute paths)…");
@@ -96,5 +96,5 @@ console.log("\nVerifying…");
 verify(globalBinDir);
 
 console.log("\nFrom any project folder:");
-console.log("  forgekit install --lite");
-console.log("  forgekit install");
+console.log("  forgetrail install --lite");
+console.log("  forgetrail install");

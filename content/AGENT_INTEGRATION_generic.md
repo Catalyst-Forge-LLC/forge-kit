@@ -1,27 +1,27 @@
-# ForgeKit Integration Guide (generic agents)
+# ForgeTrail Integration Guide (generic agents)
 
-Use this when no agent-specific guide is available. ForgeKit is **agent-agnostic** — the lifecycle, tracking file, and MCP tools work with any capable coding agent.
+Use this when no agent-specific guide is available. ForgeTrail is **agent-agnostic** — the lifecycle, tracking file, and MCP tools work with any capable coding agent.
 
 ## Core integration model
 
 | Layer | Responsibility |
 |-------|----------------|
-| **ForgeKit** | 7-phase lifecycle, `.forgekit/workflow_tracking.json`, progressive docs, audits, lessons |
+| **ForgeTrail** | 7-phase lifecycle, `.forgetrail/workflow_tracking.json`, progressive docs, audits, lessons |
 | **Host agent** | Tool use, file edits, terminal, optional subagents/plan modes |
 
-ForgeKit owns **what** and **when**. The host agent owns **execution**.
+ForgeTrail owns **what** and **when**. The host agent owns **execution**.
 
 ## Session openers
 
 **New project:**
 ```
-Call ForgeKit getNewProjectKickoff, write .forgekit/workflow_tracking.json, then getPhaseGuidance("1").
+Call ForgeTrail getNewProjectKickoff, write .forgetrail/workflow_tracking.json, then getPhaseGuidance("1").
 Lock architecture in docs/PHASE_1_BRIEF.md before any app code.
 ```
 
 **Resume:**
 ```
-Call getResumeSessionInstructions. Read .forgekit/workflow_tracking.json and CONTEXT_PROMPT.md.
+Call getResumeSessionInstructions. Read .forgetrail/workflow_tracking.json and CONTEXT_PROMPT.md.
 Continue from currentPhase.
 ```
 
@@ -29,7 +29,7 @@ Continue from currentPhase.
 
 1. Call **`suggestSubagentDecomposition`** with phase + task.
 2. Spawn parallel workers for audits (Phase 7), research (Phase 4), or spikes (Phase 5).
-3. Parent synthesizes into ForgeKit docs and updates tracking.
+3. Parent synthesizes into ForgeTrail docs and updates tracking.
 
 Prefer **read-only** subagents for analysis; parent or a single write-capable worker for implementation.
 
@@ -39,12 +39,12 @@ Use native plan mode for **Phase 1** only. On approval, export to `PHASE_1_BRIEF
 
 ## Persistent discipline
 
-- Install **`.cursor/rules/`** from kickoff (Cursor), or copy **`getForgeKitSkill`** output to your agent's skill directory (Grok, etc.).
+- Install **`.cursor/rules/`** from kickoff (Cursor), or copy **`getForgeTrailSkill`** output to your agent's skill directory (Grok, etc.).
 - Call **`validateTracking`** after substantive work.
 - Call **`getAntiPatterns`** + **`searchLessons`** before large feature work.
 
 ## MCP registration
 
-Point `FORGEKIT_ROOT` at the ForgeKit repo root. Run `mcp-server/dist/index.js` via stdio. Tools include `getPhaseGuidance`, `getTemplate`, `runAudit`, `validateTracking`, `suggestSubagentDecomposition`, and `getAgentIntegrationGuide`.
+Point `FORGETRAIL_ROOT` at the ForgeTrail repo root. Run `mcp-server/dist/index.js` via stdio. Tools include `getPhaseGuidance`, `getTemplate`, `runAudit`, `validateTracking`, `suggestSubagentDecomposition`, and `getAgentIntegrationGuide`.
 
 Call **`getAgentIntegrationGuide({ agent: "grok" })`** (or `cursor`, `claude`) when using a supported host for tailored syntax.

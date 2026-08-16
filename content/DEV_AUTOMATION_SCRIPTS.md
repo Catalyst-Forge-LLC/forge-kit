@@ -66,20 +66,20 @@ Collection/schema apply from **`.env` admin credentials** is covered in **`POCKE
 
 ## Ollama (local LLM — runtime or build-time seed)
 
-When the brief uses **runtime LLM API** or **build-time LLM generation** with Ollama (see **FORGEKIT_LITE** §7.1, README “LLM-backed content”):
+When the brief uses **runtime LLM API** or **build-time LLM generation** with Ollama (see **FORGETRAIL_LITE** §7.1, README “LLM-backed content”):
 
 | Script | Purpose |
 |--------|---------|
 | `pnpm run setup:ollama` | Install Ollama if missing, detect VRAM, pull Granite 4.1 / Gemma 3 (non-thinking default) |
 | `pnpm run test:ollama` | Version + one completion — proves inference works |
 
-**`.env`:** `OLLAMA_BASE_URL`, `OLLAMA_MODEL`. Use **`OLLAMA_USE_THINKING=1`** only when the product needs reasoning models. See **FORGEKIT_LITE.md** §4.8.
+**`.env`:** `OLLAMA_BASE_URL`, `OLLAMA_MODEL`. Use **`OLLAMA_USE_THINKING=1`** only when the product needs reasoning models. See **FORGETRAIL_LITE.md** §4.8.
 
 ---
 
 ## 0. One-click launchers (non-technical operators)
 
-Before the terminal-heavy block below, agents should create **setup.bat** / **setup.sh**, **run.bat** / **run.sh**, **status.bat** / **status.sh** per **`ONE_CLICK_DEV_SETUP.md`** and **FORGEKIT_LITE.md** §4.5–§4.6.
+Before the terminal-heavy block below, agents should create **setup.bat** / **setup.sh**, **run.bat** / **run.sh**, **status.bat** / **status.sh** per **`ONE_CLICK_DEV_SETUP.md`** and **FORGETRAIL_LITE.md** §4.5–§4.6.
 
 **README “Quick start (no terminal)”** — three double-clicks: setup → run → status.
 
@@ -96,8 +96,8 @@ Document a **single “first time” block** for contributors who prefer the she
 5. `pnpm run env:check`  
 6. `pnpm run db:seed` (optional)  
 7. `pnpm run dev` (or **run.bat**)  
-8. `pnpm run forgekit:status` — phase progress  
+8. `pnpm run forgetrail:status` — phase progress  
 9. `pnpm run test:pocketbase` — PocketBase only (troubleshooting)  
 10. `pnpm run setup:ollama` → `pnpm run test:ollama` — when local LLM is in scope  
 
-Adjust order to match your stack; link to **`ONE_CLICK_DEV_SETUP.md`**, **`SYSTEM_HEALTH_CHECKS.md`**, **`POCKETBASE_SCHEMA_SCRIPT.md`**, and **`FORGEKIT_LITE.md`** §4.2.2–§4.8 from **`CONTEXT_PROMPT.md`** so agents don’t invent one-off instructions or hardcode old PocketBase versions.
+Adjust order to match your stack; link to **`ONE_CLICK_DEV_SETUP.md`**, **`SYSTEM_HEALTH_CHECKS.md`**, **`POCKETBASE_SCHEMA_SCRIPT.md`**, and **`FORGETRAIL_LITE.md`** §4.2.2–§4.8 from **`CONTEXT_PROMPT.md`** so agents don’t invent one-off instructions or hardcode old PocketBase versions.

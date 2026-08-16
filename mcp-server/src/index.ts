@@ -5,29 +5,29 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { stripForgeKitTemplateToShell } from "./templateStrip.js";
+import { stripForgeTrailTemplateToShell } from "./templateStrip.js";
 import { validateTrackingData, formatValidationResult } from "./trackingValidate.js";
 import { ingestPlanArtifact } from "./planIngest.js";
 import { toolResult } from "./mcpFormat.js";
 
 // ---------------------------------------------------------------------------
-// Resolve the ForgeKit content root (one level up from mcp-server/)
-// Allow override via FORGEKIT_ROOT env var for custom installs.
+// Resolve the ForgeTrail content root (one level up from mcp-server/)
+// Allow override via FORGETRAIL_ROOT env var for custom installs.
 // ---------------------------------------------------------------------------
-const FORGEKIT_ROOT = process.env.FORGEKIT_ROOT
-  ? resolve(process.env.FORGEKIT_ROOT)
+const FORGETRAIL_ROOT = process.env.FORGETRAIL_ROOT
+  ? resolve(process.env.FORGETRAIL_ROOT)
   : resolve(import.meta.dirname, "..", "..");
 
-const DOCS_DIR = join(FORGEKIT_ROOT, "docs");
-const PROMPTS_DIR = join(FORGEKIT_ROOT, "prompts");
-const WORKFLOW_PATH = join(FORGEKIT_ROOT, "WORKFLOW.md");
-const TRACKING_SCHEMA_PATH = join(FORGEKIT_ROOT, "TRACKING_SCHEMA.md");
-const WORKFLOW_TRACKING_PATH = join(FORGEKIT_ROOT, "workflow_tracking.json");
-const MCP_CONTENT_DIR = join(FORGEKIT_ROOT, "content");
+const DOCS_DIR = join(FORGETRAIL_ROOT, "docs");
+const PROMPTS_DIR = join(FORGETRAIL_ROOT, "prompts");
+const WORKFLOW_PATH = join(FORGETRAIL_ROOT, "WORKFLOW.md");
+const TRACKING_SCHEMA_PATH = join(FORGETRAIL_ROOT, "TRACKING_SCHEMA.md");
+const WORKFLOW_TRACKING_PATH = join(FORGETRAIL_ROOT, "workflow_tracking.json");
+const MCP_CONTENT_DIR = join(FORGETRAIL_ROOT, "content");
 
-/** Default getTemplate mode: `shell` (IP-safe) unless FORGEKIT_TEMPLATE_DEFAULT_MODE=full */
+/** Default getTemplate mode: `shell` (IP-safe) unless FORGETRAIL_TEMPLATE_DEFAULT_MODE=full */
 function defaultTemplateMode(): "full" | "shell" {
-  const v = process.env.FORGEKIT_TEMPLATE_DEFAULT_MODE?.toLowerCase();
+  const v = process.env.FORGETRAIL_TEMPLATE_DEFAULT_MODE?.toLowerCase();
   if (v === "full") return "full";
   if (v === "shell") return "shell";
   return "shell";
@@ -64,7 +64,7 @@ function listDir(dir: string, ext = ".md"): string[] {
   }
 }
 
-/** Starter tracking JSON with _forgekit/ paths rewritten for MCP-only repos */
+/** Starter tracking JSON with _forgetrail/ paths rewritten for MCP-only repos */
 function workflowTrackingJsonForMcp(): string {
   const raw = readFile(WORKFLOW_TRACKING_PATH);
   if (!raw) {
@@ -72,16 +72,16 @@ function workflowTrackingJsonForMcp(): string {
   }
   return raw
     .replace(
-      / \(from _forgekit\/docs\/ template\)/g,
-      " (via ForgeKit MCP getTemplate — use the template name matching the doc, e.g. CONTEXT_PROMPT)"
+      / \(from _forgetrail\/docs\/ template\)/g,
+      " (via ForgeTrail MCP getTemplate — use the template name matching the doc, e.g. CONTEXT_PROMPT)"
     )
     .replace(
-      / \(from _forgekit\/prompts\/black-hat-audit\.md\)/g,
-      " (via ForgeKit MCP runAudit with type black-hat)"
+      / \(from _forgetrail\/prompts\/black-hat-audit\.md\)/g,
+      " (via ForgeTrail MCP runAudit with type black-hat)"
     )
     .replace(
-      / \(_forgekit\/prompts\/docs-alignment-audit\.md\)/g,
-      " (ForgeKit MCP runAudit with type docs-alignment)"
+      / \(_forgetrail\/prompts\/docs-alignment-audit\.md\)/g,
+      " (ForgeTrail MCP runAudit with type docs-alignment)"
     );
 }
 
@@ -95,9 +95,9 @@ function buildNewProjectKickoff(
 ): { ok: true; text: string } | { ok: false; text: string } {
   const bootstrapPath = join(MCP_CONTENT_DIR, "NEW_PROJECT_BOOTSTRAP.md");
   const postPath = join(MCP_CONTENT_DIR, "POST_BOOTSTRAP_USER_MESSAGE.md");
-  const cursorPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgekit-phase-status.mdc");
-  const lessonsGatePath = join(MCP_CONTENT_DIR, "cursor-rules", "forgekit-lessons-gate.mdc");
-  const lessonsMcpPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgekit-lessons-mcp.mdc");
+  const cursorPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-phase-status.mdc");
+  const lessonsGatePath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-lessons-gate.mdc");
+  const lessonsMcpPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-lessons-mcp.mdc");
 
   const bootstrap = readFile(bootstrapPath);
   const postBoot = readFile(postPath);
@@ -106,28 +106,28 @@ function buildNewProjectKickoff(
   if (!bootstrap) {
     return {
       ok: false,
-      text: "NEW_PROJECT_BOOTSTRAP.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+      text: "NEW_PROJECT_BOOTSTRAP.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
     };
   }
   if (!postBoot) {
     return {
       ok: false,
-      text: "POST_BOOTSTRAP_USER_MESSAGE.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+      text: "POST_BOOTSTRAP_USER_MESSAGE.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
     };
   }
   if (!json) {
-    return { ok: false, text: "workflow_tracking.json not found under FORGEKIT_ROOT." };
+    return { ok: false, text: "workflow_tracking.json not found under FORGETRAIL_ROOT." };
   }
 
   const intro =
-    "# ForgeKit — new project kickoff (bundled)\n\n" +
+    "# ForgeTrail — new project kickoff (bundled)\n\n" +
     "This **single** response replaces separate calls to **`getNewProjectBootstrap`**, **`getInitialWorkflowTracking`**, **`getPostBootstrapUserMessage`**" +
     (includeCursorRule
-      ? ", **`getForgeKitCursorPhaseRule`**, and **`getForgeKitCursorLessonsRules`**"
+      ? ", **`getForgeTrailCursorPhaseRule`**, and **`getForgeTrailCursorLessonsRules`**"
       : "") +
     ". Write the files below, then reply to the user per **Post-bootstrap user message** (short; no JSON or tool dump).\n\n" +
     "**Greenfield git:** No `.git` yet is normal. After bootstrap files exist, run **`git init -b main`** if `git rev-parse --is-inside-work-tree` fails — see **Greenfield git** in Bootstrap methodology. Do **not** treat early `git status` / `fatal: not a git repository` as a blocking error.\n\n" +
-    "**Genesis / Try path:** If **`docs/GENESIS.md`** exists, call **`ingestPlanArtifact`** with its contents before locking Phase 1. If the user only has an idea, offer **`getGenesisSpecPrompt`** (save as `docs/GENESIS.md`) or point humans at repo-root **`TRY_FORGEKIT.md`** (no MCP).\n\n" +
+    "**Genesis / Try path:** If **`docs/GENESIS.md`** exists, call **`ingestPlanArtifact`** with its contents before locking Phase 1. If the user only has an idea, offer **`getGenesisSpecPrompt`** (save as `docs/GENESIS.md`) or point humans at repo-root **`TRY_FORGETRAIL.md`** (no MCP).\n\n" +
     "---\n\n";
 
   let text =
@@ -135,8 +135,8 @@ function buildNewProjectKickoff(
     "## Bootstrap methodology\n\n" +
     bootstrap.trim() +
     "\n\n---\n\n" +
-    "## `.forgekit/workflow_tracking.json`\n\n" +
-    "Create **`.forgekit/`** if missing. Adjust `project` fields. Maintain per `getTrackingSchema`. Do **not** paste this JSON to the user.\n\n" +
+    "## `.forgetrail/workflow_tracking.json`\n\n" +
+    "Create **`.forgetrail/`** if missing. Adjust `project` fields. Maintain per `getTrackingSchema`. Do **not** paste this JSON to the user.\n\n" +
     "```json\n" +
     json.trim() +
     "\n```\n\n---\n\n" +
@@ -149,13 +149,13 @@ function buildNewProjectKickoff(
       return {
         ok: false,
         text:
-          "cursor-rules/forgekit-phase-status.mdc not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          "cursor-rules/forgetrail-phase-status.mdc not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
       };
     }
     text +=
       "\n\n---\n\n" +
       "## Cursor rules — phase status (skip section if not using Cursor)\n\n" +
-      "Write the following to `.cursor/rules/forgekit-phase-status.mdc` (create directories if needed).\n\n" +
+      "Write the following to `.cursor/rules/forgetrail-phase-status.mdc` (create directories if needed).\n\n" +
       cursor.trim();
 
     const lessonsGate = readFile(lessonsGatePath);
@@ -164,10 +164,10 @@ function buildNewProjectKickoff(
       text +=
         "\n\n---\n\n" +
         "## Cursor rules — lessons gate + MCP detail (recommended)\n\n" +
-        "Write the following to `.cursor/rules/forgekit-lessons-gate.mdc`:\n\n" +
+        "Write the following to `.cursor/rules/forgetrail-lessons-gate.mdc`:\n\n" +
         lessonsGate.trim() +
         "\n\n---\n\n" +
-        "Write the following to `.cursor/rules/forgekit-lessons-mcp.mdc`. Adjust **globs** in the frontmatter if your layout differs (e.g. not `src/routes` / `src/lib`).\n\n" +
+        "Write the following to `.cursor/rules/forgetrail-lessons-mcp.mdc`. Adjust **globs** in the frontmatter if your layout differs (e.g. not `src/routes` / `src/lib`).\n\n" +
         lessonsMcp.trim();
     }
   }
@@ -277,7 +277,7 @@ lessonIndex.push(...extractLessons(workflow, "WORKFLOW.md"));
 // ---------------------------------------------------------------------------
 
 const server = new McpServer({
-  name: "forgekit",
+  name: "forgetrail",
   version: "0.1.0",
 });
 
@@ -285,7 +285,7 @@ const server = new McpServer({
 
 server.tool(
   "ping",
-  "Connectivity check: returns ok, package version, FORGEKIT_ROOT, and whether WORKFLOW.md was found. " +
+  "Connectivity check: returns ok, package version, FORGETRAIL_ROOT, and whether WORKFLOW.md was found. " +
     "Use format=json for headless pipelines. Lists complementary agent primitives (subagents, plan mode).",
   {
     format: z
@@ -304,13 +304,13 @@ server.tool(
     }
     const workflowOk = Boolean(readFile(WORKFLOW_PATH));
     const text = [
-      "ForgeKit MCP: ok",
-      `forgekit-mcp version: ${pkgVersion}`,
-      `FORGEKIT_ROOT: ${FORGEKIT_ROOT}`,
-      `WORKFLOW.md: ${workflowOk ? "readable" : "missing (check FORGEKIT_ROOT)"}`,
+      "ForgeTrail MCP: ok",
+      `forgetrail-mcp version: ${pkgVersion}`,
+      `FORGETRAIL_ROOT: ${FORGETRAIL_ROOT}`,
+      `WORKFLOW.md: ${workflowOk ? "readable" : "missing (check FORGETRAIL_ROOT)"}`,
       "subagentSupportRecommended: true (use suggestSubagentDecomposition when host supports parallel workers)",
       "planModeRecommended: true for Phase 1 (getPlanModePatterns, ingestPlanArtifact on approval)",
-      "Greenfield kickoff (forgekit-mcp ≥0.2.1): tools register as getNewProjectKickoff, kickoffGreenfield, kickoffGreenfieldNoCursor — ping does not enumerate tools; it only confirms this process, version, and paths. If your client does not show those names, reconnect MCP or read content/KICKOFF_WITHOUT_MCP.md.",
+      "Greenfield kickoff (forgetrail-mcp ≥0.2.1): tools register as getNewProjectKickoff, kickoffGreenfield, kickoffGreenfieldNoCursor — ping does not enumerate tools; it only confirms this process, version, and paths. If your client does not show those names, reconnect MCP or read content/KICKOFF_WITHOUT_MCP.md.",
     ].join("\n");
 
     return toolResult(format, {
@@ -318,7 +318,7 @@ server.tool(
       json: {
         ok: true,
         version: pkgVersion,
-        forgekitRoot: FORGEKIT_ROOT,
+        forgetrailRoot: FORGETRAIL_ROOT,
         workflowReadable: workflowOk,
         subagentSupportRecommended: true,
         planModeRecommended: true,
@@ -344,7 +344,7 @@ server.tool(
 
 server.tool(
   "getPhaseGuidance",
-  "Get ForgeKit methodology guidance for a specific development phase (1-7). " +
+  "Get ForgeTrail methodology guidance for a specific development phase (1-7). " +
     "Returns entry/exit criteria, playbook, prompt patterns, and anti-patterns.",
   { phase: z.string().describe("Phase number (1-7) or keyword like 'architecture', 'scaffolding', 'hardening'") },
   async ({ phase }) => {
@@ -401,7 +401,7 @@ server.tool(
 
 server.tool(
   "searchLessons",
-  "Search ForgeKit's lesson database by keyword. Returns battle-tested lessons, " +
+  "Search ForgeTrail's lesson database by keyword. Returns battle-tested lessons, " +
     "anti-patterns, and insights from real production development.",
   {
     query: z.string().describe("Search keywords (e.g. 'PocketBase auth', 'silent failures', 'DOCX', 'billing')"),
@@ -446,10 +446,10 @@ server.tool(
 
 server.tool(
   "getTemplate",
-  "Get a ForgeKit document template from the single-source docs/*.md files. " +
-    "mode 'shell' strips blockquote callouts that start with ForgeKit enrichment markers (💡 📝 🔧) " +
+  "Get a ForgeTrail document template from the single-source docs/*.md files. " +
+    "mode 'shell' strips blockquote callouts that start with ForgeTrail enrichment markers (💡 📝 🔧) " +
     "so structure and placeholders remain without long lessons/examples; use mode 'full' for the complete file. " +
-    "Default mode follows FORGEKIT_TEMPLATE_DEFAULT_MODE (shell if unset). " +
+    "Default mode follows FORGETRAIL_TEMPLATE_DEFAULT_MODE (shell if unset). " +
     "Pass format=json or includeMetadata=true for structured headless output.",
   {
     name: z.string().describe(
@@ -461,7 +461,7 @@ server.tool(
       .optional()
       .describe(
         "'shell' = structure + instructions, enrichment blockquotes removed. 'full' = entire markdown as authored. " +
-          "Omit to use FORGEKIT_TEMPLATE_DEFAULT_MODE env (defaults to shell)."
+          "Omit to use FORGETRAIL_TEMPLATE_DEFAULT_MODE env (defaults to shell)."
       ),
     format: z
       .enum(["text", "json"])
@@ -478,7 +478,7 @@ server.tool(
       const def = defaultTemplateMode();
       const listText =
         `Available templates (${templates.length}):\n\n${templates.map((t) => `- ${t}`).join("\n")}\n\n` +
-        `Default getTemplate mode: \`${def}\` (set FORGEKIT_TEMPLATE_DEFAULT_MODE=full or shell). ` +
+        `Default getTemplate mode: \`${def}\` (set FORGETRAIL_TEMPLATE_DEFAULT_MODE=full or shell). ` +
         `Pass mode explicitly to override.`;
       return toolResult(format, {
         text: listText,
@@ -504,7 +504,7 @@ server.tool(
 
     const resolvedMode = mode ?? defaultTemplateMode();
     const out =
-      resolvedMode === "shell" ? stripForgeKitTemplateToShell(content) : content;
+      resolvedMode === "shell" ? stripForgeTrailTemplateToShell(content) : content;
 
     const text = out;
     const json: Record<string, unknown> = {
@@ -532,7 +532,7 @@ server.tool(
 
 server.tool(
   "runAudit",
-  "Get a ForgeKit audit prompt to run against the current project. " +
+  "Get a ForgeTrail audit prompt to run against the current project. " +
     "Returns the full structured prompt for security, pre-launch, brand copy, or other audits. " +
     "Pass format=json or includeMetadata=true for structured headless output.",
   {
@@ -577,7 +577,7 @@ server.tool(
       copy: "brand-copy-edit-pass",
       landing: "landing-page-rewrite",
       "landing-page": "landing-page-rewrite",
-      propagate: "propagate-to-forgekit",
+      propagate: "propagate-to-forgetrail",
       "skill-library": "engineering-skill-library",
       handoff: "engineering-skill-library",
     };
@@ -633,7 +633,7 @@ server.tool(
 
 server.tool(
   "getChecklist",
-  "Get the ForgeKit project checklist for a specific milestone or the full checklist. " +
+  "Get the ForgeTrail project checklist for a specific milestone or the full checklist. " +
     "Covers everything from pre-session-1 through post-launch.",
   {
     section: z.string().optional().describe(
@@ -686,7 +686,7 @@ server.tool(
 
 server.tool(
   "getTrackingSchema",
-  "Get the workflow_tracking.json schema reference (customer path: `.forgekit/workflow_tracking.json`). Use this to understand how to " +
+  "Get the workflow_tracking.json schema reference (customer path: `.forgetrail/workflow_tracking.json`). Use this to understand how to " +
     "read and update the project tracking file (phases, decisions, gotchas, sessions).",
   {},
   async () => {
@@ -701,7 +701,7 @@ server.tool(
 
 server.tool(
   "getAntiPatterns",
-  "Get all documented anti-patterns from the ForgeKit methodology. " +
+  "Get all documented anti-patterns from the ForgeTrail methodology. " +
     "These are common failure modes with explanations of what went wrong and how to avoid them.",
   {},
   async () => {
@@ -721,8 +721,8 @@ server.tool(
 
 server.tool(
   "getProgressiveDocSchedule",
-  "Returns WORKFLOW.md §1a: which ForgeKit doc templates to create in each phase. " +
-    "Phase 1 = PHASE_1_BRIEF + `.forgekit/workflow_tracking.json` decisions; Phase 2 = merge brief into CONTEXT_PROMPT + README + TODO + `.forgekit/IDEAS.md` + full app spine; later phases add templates when warranted.",
+  "Returns WORKFLOW.md §1a: which ForgeTrail doc templates to create in each phase. " +
+    "Phase 1 = PHASE_1_BRIEF + `.forgetrail/workflow_tracking.json` decisions; Phase 2 = merge brief into CONTEXT_PROMPT + README + TODO + `.forgetrail/IDEAS.md` + full app spine; later phases add templates when warranted.",
   {},
   async () => {
     const section = extractWorkflowSection(workflow, PROGRESSIVE_DOCS_HEADING);
@@ -742,9 +742,9 @@ server.tool(
 
 server.tool(
   "getNewProjectKickoff",
-  "One-call greenfield setup: bootstrap + starter .forgekit/workflow_tracking.json + post-bootstrap user-message guidance + optional Cursor rules " +
+  "One-call greenfield setup: bootstrap + starter .forgetrail/workflow_tracking.json + post-bootstrap user-message guidance + optional Cursor rules " +
     "(phase status + lessons gate + lessons MCP detail). " +
-    "Prefer this over calling getNewProjectBootstrap, getInitialWorkflowTracking, getPostBootstrapUserMessage, getForgeKitCursorPhaseRule, and getForgeKitCursorLessonsRules separately. " +
+    "Prefer this over calling getNewProjectBootstrap, getInitialWorkflowTracking, getPostBootstrapUserMessage, getForgeTrailCursorPhaseRule, and getForgeTrailCursorLessonsRules separately. " +
     "If your client does not list this tool, call kickoffGreenfield (identical bundle, no parameters).",
   {
     includeCursorRule: z
@@ -792,9 +792,9 @@ server.tool(
 
 server.tool(
   "getNewProjectBootstrap",
-  "MCP-first: full instructions to start a greenfield project WITHOUT copying ForgeKit into the repo. " +
+  "MCP-first: full instructions to start a greenfield project WITHOUT copying ForgeTrail into the repo. " +
     "Tells the agent which phases to run, which MCP tools to call for templates/checklists/scaffolding, " +
-    "and what files belong in the customer project (`.forgekit/workflow_tracking.json`, docs). " +
+    "and what files belong in the customer project (`.forgetrail/workflow_tracking.json`, docs). " +
     "For a single bundled response, use getNewProjectKickoff or kickoffGreenfield instead.",
   {},
   async () => {
@@ -804,7 +804,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "NEW_PROJECT_BOOTSTRAP.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "NEW_PROJECT_BOOTSTRAP.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -812,22 +812,22 @@ server.tool(
   }
 );
 
-// -- Tool: getForgeKitLite -------------------------------------------------
+// -- Tool: getForgeTrailLite -------------------------------------------------
 
 server.tool(
-  "getForgeKitLite",
-  "Returns the full FORGEKIT_LITE.md portable kickoff protocol (no MCP required in the target project). " +
-    "Use when the user wants the single-file Lite artifact: save to `.forgekit/FORGEKIT_LITE.md` or paste into chat. " +
+  "getForgeTrailLite",
+  "Returns the full FORGETRAIL_LITE.md portable kickoff protocol (no MCP required in the target project). " +
+    "Use when the user wants the single-file Lite artifact: save to `.forgetrail/FORGETRAIL_LITE.md` or paste into chat. " +
     "Complements getNewProjectKickoff (MCP-first greenfield).",
   {},
   async () => {
-    const path = join(MCP_CONTENT_DIR, "FORGEKIT_LITE.md");
+    const path = join(MCP_CONTENT_DIR, "FORGETRAIL_LITE.md");
     const content = readFile(path);
     if (!content) {
       return {
         content: [{
           type: "text" as const,
-          text: "FORGEKIT_LITE.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "FORGETRAIL_LITE.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -835,7 +835,7 @@ server.tool(
       content: [{
         type: "text" as const,
         text:
-          "ForgeKit Lite — portable kickoff protocol. Save to `.forgekit/FORGEKIT_LITE.md` in the app repo " +
+          "ForgeTrail Lite — portable kickoff protocol. Save to `.forgetrail/FORGETRAIL_LITE.md` in the app repo " +
           "(or paste into chat). See §1 for drop-in vs paste vs rules options.\n\n" +
           content,
       }],
@@ -843,21 +843,21 @@ server.tool(
   }
 );
 
-// -- Tool: getForgeKitLiteUpdates ------------------------------------------
+// -- Tool: getForgeTrailLiteUpdates ------------------------------------------
 
 server.tool(
-  "getForgeKitLiteUpdates",
-  "Returns the FORGEKIT_LITE_UPDATES.md starter for logging Lite protocol gaps in `.forgekit/` (§1.6). " +
-    "Optional local feedback file — merge accepted entries back into upstream FORGEKIT_LITE.md.",
+  "getForgeTrailLiteUpdates",
+  "Returns the FORGETRAIL_LITE_UPDATES.md starter for logging Lite protocol gaps in `.forgetrail/` (§1.6). " +
+    "Optional local feedback file — merge accepted entries back into upstream FORGETRAIL_LITE.md.",
   {},
   async () => {
-    const path = join(MCP_CONTENT_DIR, "FORGEKIT_LITE_UPDATES.md");
+    const path = join(MCP_CONTENT_DIR, "FORGETRAIL_LITE_UPDATES.md");
     const content = readFile(path);
     if (!content) {
       return {
         content: [{
           type: "text" as const,
-          text: "FORGEKIT_LITE_UPDATES.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "FORGETRAIL_LITE_UPDATES.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -865,7 +865,7 @@ server.tool(
       content: [{
         type: "text" as const,
         text:
-          "Write the following to `.forgekit/FORGEKIT_LITE_UPDATES.md` when bootstrapping a project " +
+          "Write the following to `.forgetrail/FORGETRAIL_LITE_UPDATES.md` when bootstrapping a project " +
           "that may feed protocol feedback upstream (§1.6).\n\n" +
           content,
       }],
@@ -873,21 +873,21 @@ server.tool(
   }
 );
 
-// -- Tool: getForgeKitCursorPhaseRule --------------------------------------
+// -- Tool: getForgeTrailCursorPhaseRule --------------------------------------
 
 server.tool(
-  "getForgeKitCursorPhaseRule",
-  "Returns the optional Cursor IDE rule (`.mdc`) so agents show ForgeKit phase / next actions from `.forgekit/workflow_tracking.json`. " +
-    "Agent should write the output to `.cursor/rules/forgekit-phase-status.mdc` when setting up a new project (Phase 1). Skip if not using Cursor.",
+  "getForgeTrailCursorPhaseRule",
+  "Returns the optional Cursor IDE rule (`.mdc`) so agents show ForgeTrail phase / next actions from `.forgetrail/workflow_tracking.json`. " +
+    "Agent should write the output to `.cursor/rules/forgetrail-phase-status.mdc` when setting up a new project (Phase 1). Skip if not using Cursor.",
   {},
   async () => {
-    const path = join(MCP_CONTENT_DIR, "cursor-rules", "forgekit-phase-status.mdc");
+    const path = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-phase-status.mdc");
     const content = readFile(path);
     if (!content) {
       return {
         content: [{
           type: "text" as const,
-          text: "cursor-rules/forgekit-phase-status.mdc not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "cursor-rules/forgetrail-phase-status.mdc not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -895,25 +895,25 @@ server.tool(
       content: [{
         type: "text" as const,
         text:
-          "Write the following to `.cursor/rules/forgekit-phase-status.mdc` (create directories if needed). " +
-          "This rule is always-on (`alwaysApply: true`) and nudges the agent to append a compact phase footer from `.forgekit/workflow_tracking.json`.\n\n" +
+          "Write the following to `.cursor/rules/forgetrail-phase-status.mdc` (create directories if needed). " +
+          "This rule is always-on (`alwaysApply: true`) and nudges the agent to append a compact phase footer from `.forgetrail/workflow_tracking.json`.\n\n" +
           content,
       }],
     };
   }
 );
 
-// -- Tool: getForgeKitCursorLessonsRules ------------------------------------
+// -- Tool: getForgeTrailCursorLessonsRules ------------------------------------
 
 server.tool(
-  "getForgeKitCursorLessonsRules",
-  "Returns two Cursor rules: forgekit-lessons-gate.mdc (always-on: when to call getAntiPatterns + searchLessons before large work) " +
-    "and forgekit-lessons-mcp.mdc (optional globs + tool reminders). " +
+  "getForgeTrailCursorLessonsRules",
+  "Returns two Cursor rules: forgetrail-lessons-gate.mdc (always-on: when to call getAntiPatterns + searchLessons before large work) " +
+    "and forgetrail-lessons-mcp.mdc (optional globs + tool reminders). " +
     "Bundled in getNewProjectKickoff when includeCursorRule is true; use this tool alone when adding lessons workflow to an existing project.",
   {},
   async () => {
-    const gatePath = join(MCP_CONTENT_DIR, "cursor-rules", "forgekit-lessons-gate.mdc");
-    const mcpPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgekit-lessons-mcp.mdc");
+    const gatePath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-lessons-gate.mdc");
+    const mcpPath = join(MCP_CONTENT_DIR, "cursor-rules", "forgetrail-lessons-mcp.mdc");
     const gate = readFile(gatePath);
     const mcp = readFile(mcpPath);
     if (!gate || !mcp) {
@@ -921,7 +921,7 @@ server.tool(
         content: [{
           type: "text" as const,
           text:
-            "cursor-rules/forgekit-lessons-gate.mdc or forgekit-lessons-mcp.mdc not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+            "cursor-rules/forgetrail-lessons-gate.mdc or forgetrail-lessons-mcp.mdc not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -930,12 +930,12 @@ server.tool(
         type: "text" as const,
         text:
           "Write the following two files under `.cursor/rules/` (create directories if needed). " +
-          "Adjust **globs** in `forgekit-lessons-mcp.mdc` frontmatter to match your repo.\n\n" +
+          "Adjust **globs** in `forgetrail-lessons-mcp.mdc` frontmatter to match your repo.\n\n" +
           "---\n\n" +
-          "## `.cursor/rules/forgekit-lessons-gate.mdc`\n\n" +
+          "## `.cursor/rules/forgetrail-lessons-gate.mdc`\n\n" +
           gate.trim() +
           "\n\n---\n\n" +
-          "## `.cursor/rules/forgekit-lessons-mcp.mdc`\n\n" +
+          "## `.cursor/rules/forgetrail-lessons-mcp.mdc`\n\n" +
           mcp.trim(),
       }],
     };
@@ -956,7 +956,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "SCAFFOLD_INSTALL.json not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "SCAFFOLD_INSTALL.json not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -984,7 +984,7 @@ server.tool(
   "Pre-Phase-1 helper: a copy-paste prompt to run in ANY external LLM chat (not this MCP) to produce docs/GENESIS.md " +
     "'what, not how' build spec — market/prior-art check, underlying data/file-format research, functional + " +
     "non-functional requirements, edge cases, milestones, acceptance criteria. Best for tools that wrap/extend an " +
-    "existing app's data format, but generalizes. Humans without MCP: see TRY_FORGEKIT.md. Feed the result into " +
+    "existing app's data format, but generalizes. Humans without MCP: see TRY_FORGETRAIL.md. Feed the result into " +
     "ingestPlanArtifact to draft PHASE_1_BRIEF.md, or use alongside getGreenfieldIntakePrompt for delivery gaps.",
   {},
   async () => {
@@ -994,7 +994,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "GENESIS_SPEC_PROMPT.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "GENESIS_SPEC_PROMPT.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1008,7 +1008,7 @@ server.tool(
   "getGreenfieldIntakePrompt",
   "Phase 1 helper: structured questions about exports (PDF/DOCX/PPTX, etc.), tenancy (e.g. consultants with many clients), " +
     "hybrid vs full spec, compliance tier, and hero flow. Complements getChecklist(before-session-1). " +
-    "Agent should capture answers in PHASE_1_BRIEF.md and .forgekit/workflow_tracking.json decisions[]. " +
+    "Agent should capture answers in PHASE_1_BRIEF.md and .forgetrail/workflow_tracking.json decisions[]. " +
     "For a pre-written portable spec instead of in-session Q&A, see getGenesisSpecPrompt.",
   {},
   async () => {
@@ -1018,7 +1018,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "GREENFIELD_INTAKE.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "GREENFIELD_INTAKE.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1030,7 +1030,7 @@ server.tool(
 
 server.tool(
   "getResumeSessionInstructions",
-  "MCP-first: instructions for continuing work in a later session when ForgeKit is MCP-only (no _forgekit/ folder). " +
+  "MCP-first: instructions for continuing work in a later session when ForgeTrail is MCP-only (no _forgetrail/ folder). " +
     "Call at the start of a session after the user describes what to focus on.",
   {},
   async () => {
@@ -1040,7 +1040,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "SESSION_RESUME_MCP.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "SESSION_RESUME_MCP.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1052,8 +1052,8 @@ server.tool(
 
 server.tool(
   "getInitialWorkflowTracking",
-  "Returns starter .forgekit/workflow_tracking.json for a new repo, with exit-criteria strings rewritten for MCP " +
-    "(no _forgekit/ paths). The agent should write this to `.forgekit/workflow_tracking.json` and fill project metadata.",
+  "Returns starter .forgetrail/workflow_tracking.json for a new repo, with exit-criteria strings rewritten for MCP " +
+    "(no _forgetrail/ paths). The agent should write this to `.forgetrail/workflow_tracking.json` and fill project metadata.",
   {},
   async () => {
     const json = workflowTrackingJsonForMcp();
@@ -1061,7 +1061,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "workflow_tracking.json not found under FORGEKIT_ROOT.",
+          text: "workflow_tracking.json not found under FORGETRAIL_ROOT.",
         }],
       };
     }
@@ -1069,7 +1069,7 @@ server.tool(
       content: [{
         type: "text" as const,
         text:
-          "Write the following JSON to `.forgekit/workflow_tracking.json` (create `.forgekit/` if needed; adjust `project` fields). " +
+          "Write the following JSON to `.forgetrail/workflow_tracking.json` (create `.forgetrail/` if needed; adjust `project` fields). " +
           "Maintain this file for the life of the project per getTrackingSchema. " +
           "Do not paste this JSON or MCP tool names to the user; after the file exists, call **getPostBootstrapUserMessage** (or use **getNewProjectKickoff**, which bundles this) for the first user-facing reply.\n\n```json\n" +
           json.trim() +
@@ -1083,7 +1083,7 @@ server.tool(
 
 server.tool(
   "getPostBootstrapUserMessage",
-  "After `.forgekit/workflow_tracking.json` (and optional Cursor phase rule) is written: canonical guidance for a SHORT first reply to the user. " +
+  "After `.forgetrail/workflow_tracking.json` (and optional Cursor phase rule) is written: canonical guidance for a SHORT first reply to the user. " +
     "Suppresses noisy 'Completed setup' dumps (no raw JSON, no MCP tool list, no bootstrap section paste).",
   {},
   async () => {
@@ -1093,7 +1093,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "POST_BOOTSTRAP_USER_MESSAGE.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "POST_BOOTSTRAP_USER_MESSAGE.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1106,7 +1106,7 @@ server.tool(
 server.tool(
   "getUserReplyFormat",
   "How to format options and next steps for users: numbered lists for ordered pipelines, bullets for parallel items, letters for pick-one. " +
-    "Baked into forgekit-phase-status.mdc for Cursor; use this tool when the rule is not loaded.",
+    "Baked into forgetrail-phase-status.mdc for Cursor; use this tool when the rule is not loaded.",
   {},
   async () => {
     const path = join(MCP_CONTENT_DIR, "USER_REPLY_FORMAT.md");
@@ -1115,7 +1115,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "USER_REPLY_FORMAT.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "USER_REPLY_FORMAT.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1127,10 +1127,10 @@ server.tool(
 
 server.tool(
   "validateTracking",
-  "Validate a .forgekit/workflow_tracking.json file (or supplied JSON) against the schema and ForgeKit phase rules. Returns issues + suggested fixes. Safe to call often. Pass format=json for structured output.",
+  "Validate a .forgetrail/workflow_tracking.json file (or supplied JSON) against the schema and ForgeTrail phase rules. Returns issues + suggested fixes. Safe to call often. Pass format=json for structured output.",
   {
     trackingJson: z.string().optional().describe("Raw JSON string of the tracking file (if not supplying path)"),
-    path: z.string().optional().describe("Filesystem path to .forgekit/workflow_tracking.json (server will attempt to read)"),
+    path: z.string().optional().describe("Filesystem path to .forgetrail/workflow_tracking.json (server will attempt to read)"),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
   },
   async ({ trackingJson, path, format }) => {
@@ -1145,7 +1145,7 @@ server.tool(
     }
     if (!jsonText) {
       try {
-        const defaultPath = join(FORGEKIT_ROOT, "workflow_tracking.json");
+        const defaultPath = join(FORGETRAIL_ROOT, "workflow_tracking.json");
         const fs = await import("node:fs");
         jsonText = fs.readFileSync(defaultPath, "utf-8");
       } catch {}
@@ -1188,7 +1188,7 @@ server.tool(
   "suggestSubagentDecomposition",
   "Given a phase and task, returns recommended subagent spawn parameters (type, capability_mode, isolation, persona hints, and prompt seeds) plus a parent synthesis step. Designed for agents like Grok that support spawn_subagent. Pass format=json for structured output.",
   {
-    phase: z.string().describe("Current ForgeKit phase (1-7 or name like 'hardening')"),
+    phase: z.string().describe("Current ForgeTrail phase (1-7 or name like 'hardening')"),
     taskDescription: z.string().describe("What the subagents should accomplish"),
     maxSubagents: z.number().optional().default(3),
     format: z.enum(["text", "json"]).optional().describe("text (default) or json"),
@@ -1214,7 +1214,7 @@ server.tool(
       );
     }
 
-    const synthesis = "Parent: Collect all subagent outputs. Update .forgekit/workflow_tracking.json (gotchas, decisions). Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
+    const synthesis = "Parent: Collect all subagent outputs. Update .forgetrail/workflow_tracking.json (gotchas, decisions). Synthesize into the appropriate doc (BLACK_HAT_REPORT.md, etc.). Present prioritized next actions to user.";
 
     const text =
       `Recommended decomposition for Phase ${phase} — task: "${taskDescription}"\n\n` +
@@ -1242,7 +1242,7 @@ server.tool(
 
 server.tool(
   "ingestPlanArtifact",
-  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decisions[] entries for .forgekit/workflow_tracking.json. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
+  "Map an approved native plan artifact (plan.md, a GENESIS.md from getGenesisSpecPrompt, etc.) into a PHASE_1_BRIEF.md draft plus decisions[] entries for .forgetrail/workflow_tracking.json. Call after exit_plan_mode / user approval. Agent should review and lock the brief before Phase 2.",
   {
     planContent: z.string().describe("Full text of the approved plan.md or equivalent planning artifact"),
     projectName: z.string().optional().describe("App/project name for the brief title"),
@@ -1256,7 +1256,7 @@ server.tool(
     const templatePath = join(DOCS_DIR, "PHASE_1_BRIEF.md");
     const fullTemplate = readFile(templatePath);
     const briefTemplateShell = fullTemplate
-      ? stripForgeKitTemplateToShell(fullTemplate)
+      ? stripForgeTrailTemplateToShell(fullTemplate)
       : "# Phase 1 architecture brief\n\n## 1. Problem and outcome\n";
 
     const result = ingestPlanArtifact({
@@ -1275,7 +1275,7 @@ server.tool(
       `## Section mapping (plan → brief)\n\n${Object.entries(result.sectionMapping)
         .map(([k, v]) => `- ${k} → ${v}`)
         .join("\n")}\n\n` +
-      `## decisions[] (merge into .forgekit/workflow_tracking.json)\n\n` +
+      `## decisions[] (merge into .forgetrail/workflow_tracking.json)\n\n` +
       "```json\n" +
       JSON.stringify(result.trackingDecisions, null, 2) +
       "\n```\n\n" +
@@ -1301,7 +1301,7 @@ server.tool(
 
 server.tool(
   "getPlanModePatterns",
-  "Returns guidance for using native agent plan modes as ForgeKit Phase 1 (architecture). Covers Grok, Cursor, Claude, and generic plan-before-code flows.",
+  "Returns guidance for using native agent plan modes as ForgeTrail Phase 1 (architecture). Covers Grok, Cursor, Claude, and generic plan-before-code flows.",
   {},
   async () => {
     const path = join(MCP_CONTENT_DIR, "PLAN_MODE_PATTERNS.md");
@@ -1310,7 +1310,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: "PLAN_MODE_PATTERNS.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "PLAN_MODE_PATTERNS.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1322,7 +1322,7 @@ server.tool(
 
 server.tool(
   "getAgentIntegrationGuide",
-  "Returns tailored ForgeKit bootstrap + primitive mappings for a specific agent host (Grok, Cursor, Claude, or generic).",
+  "Returns tailored ForgeTrail bootstrap + primitive mappings for a specific agent host (Grok, Cursor, Claude, or generic).",
   {
     agent: z
       .enum(["grok", "claude", "cursor", "generic"])
@@ -1346,7 +1346,7 @@ server.tool(
       return {
         content: [{
           type: "text" as const,
-          text: `AGENT_INTEGRATION_${agent}.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.`,
+          text: `AGENT_INTEGRATION_${agent}.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.`,
         }],
       };
     }
@@ -1354,11 +1354,11 @@ server.tool(
   }
 );
 
-// -- Tool: getForgeKitSkill ------------------------------------------------
+// -- Tool: getForgeTrailSkill ------------------------------------------------
 
 server.tool(
-  "getForgeKitSkill",
-  "Returns the canonical forgekit SKILL.md for skill-capable agents (Grok ~/.grok/skills/, etc.). Copy to the host skill directory for persistent ForgeKit discipline.",
+  "getForgeTrailSkill",
+  "Returns the canonical forgetrail SKILL.md for skill-capable agents (Grok ~/.grok/skills/, etc.). Copy to the host skill directory for persistent ForgeTrail discipline.",
   {
     agent: z
       .string()
@@ -1366,13 +1366,13 @@ server.tool(
       .describe("Optional hint (grok | claude | cursor | generic) — currently returns the same canonical skill"),
   },
   async () => {
-    const path = join(MCP_CONTENT_DIR, "skills", "forgekit", "SKILL.md");
+    const path = join(MCP_CONTENT_DIR, "skills", "forgetrail", "SKILL.md");
     const content = readFile(path);
     if (!content) {
       return {
         content: [{
           type: "text" as const,
-          text: "skills/forgekit/SKILL.md not found. Ensure FORGEKIT_ROOT points at the ForgeKit repo root.",
+          text: "skills/forgetrail/SKILL.md not found. Ensure FORGETRAIL_ROOT points at the ForgeTrail repo root.",
         }],
       };
     }
@@ -1380,7 +1380,7 @@ server.tool(
       content: [{
         type: "text" as const,
         text:
-          "ForgeKit skill — copy to your agent's skill directory (e.g. ~/.grok/skills/forgekit/SKILL.md). " +
+          "ForgeTrail skill — copy to your agent's skill directory (e.g. ~/.grok/skills/forgetrail/SKILL.md). " +
           "For Cursor, prefer getNewProjectKickoff Cursor rules unless you use global skills.\n\n" +
           content,
       }],
@@ -1394,41 +1394,41 @@ server.tool(
 
 /** Hints for humans (stderr only — stdout is reserved for MCP JSON-RPC). */
 function printStartupHintsToStderr(): void {
-  const quiet = process.env.FORGEKIT_QUIET;
+  const quiet = process.env.FORGETRAIL_QUIET;
   if (quiet === "1" || quiet === "true") return;
 
   const lines = [
     "",
-    "[ForgeKit MCP] Server listening on stdio (JSON-RPC on stdout). Content root:",
-    `  FORGEKIT_ROOT=${FORGEKIT_ROOT}`,
+    "[ForgeTrail MCP] Server listening on stdio (JSON-RPC on stdout). Content root:",
+    `  FORGETRAIL_ROOT=${FORGETRAIL_ROOT}`,
     "",
     "Cursor starts this process when MCP is configured — you do not run a separate server.",
-    "Client setup JSON: forgekit mcp build  or  forgekit mcp cursor-config",
+    "Client setup JSON: forgetrail mcp build  or  forgetrail mcp cursor-config",
     "",
     "Tell your agent — new project (easiest):",
-    '  "Call ForgeKit getNewProjectKickoff or kickoffGreenfield, then set up the project per that bundle."',
-    "  (Granular: getNewProjectBootstrap + getInitialWorkflowTracking + getPostBootstrapUserMessage + getForgeKitCursorPhaseRule + getForgeKitCursorLessonsRules.)",
+    '  "Call ForgeTrail getNewProjectKickoff or kickoffGreenfield, then set up the project per that bundle."',
+    "  (Granular: getNewProjectBootstrap + getInitialWorkflowTracking + getPostBootstrapUserMessage + getForgeTrailCursorPhaseRule + getForgeTrailCursorLessonsRules.)",
     "",
     "Tell your agent — resume a session:",
-    '  "Call ForgeKit getResumeSessionInstructions and continue using .forgekit/workflow_tracking.json."',
+    '  "Call ForgeTrail getResumeSessionInstructions and continue using .forgetrail/workflow_tracking.json."',
     "",
     "Other useful tool calls:",
-    "  getForgeKitCursorPhaseRule (Cursor: phase status rule for new projects)",
-    "  getForgeKitCursorLessonsRules (Cursor: lessons gate + MCP reminder rules)",
+    "  getForgeTrailCursorPhaseRule (Cursor: phase status rule for new projects)",
+    "  getForgeTrailCursorLessonsRules (Cursor: lessons gate + MCP reminder rules)",
     "  getScaffoldInstallParams (Phase 2: PocketBase scripted install defaults)",
     "  getGenesisSpecPrompt (pre-Phase-1: copy-paste prompt for an external LLM chat to draft a GENESIS.md build spec)",
     "  getGreenfieldIntakePrompt (Phase 1: exports, tenancy, hybrid spec, hero flow)",
     '  getPhaseGuidance (phase "1"–"7" or e.g. "scaffolding")',
     '  getTemplate with name "list", then a template name (e.g. PHASE_1_BRIEF)',
     '  searchLessons with a keyword',
-    "  validateTracking (check .forgekit/workflow_tracking.json health)",
+    "  validateTracking (check .forgetrail/workflow_tracking.json health)",
     "  suggestSubagentDecomposition (parallel audits/research for spawn_subagent hosts)",
     "  ingestPlanArtifact (approved plan → PHASE_1_BRIEF + decisions[])",
     "  getPlanModePatterns (native plan mode as Phase 1)",
     "  getAgentIntegrationGuide (grok | cursor | claude | generic)",
-    "  getForgeKitSkill (installable skill definition)",
+    "  getForgeTrailSkill (installable skill definition)",
     "",
-    "Suppress this banner: FORGEKIT_QUIET=1",
+    "Suppress this banner: FORGETRAIL_QUIET=1",
     "",
   ];
   console.error(lines.join("\n"));

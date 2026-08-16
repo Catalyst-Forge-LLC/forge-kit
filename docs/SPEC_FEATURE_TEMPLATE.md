@@ -8,7 +8,7 @@ _Copy into your app repo as `specs/[feature-name].md` (kebab-case). Fill bracket
 **Related:** `[TODO.md item, PHASE_1_BRIEF, other specs, issues]`  
 **Surfaces (optional):** `[components, routes, scripts this touches]`
 
-> 🔧 **Guidance:** Use **Delivery** for time-boxed feature work (lifecycle: `specs/` → `partial/` → `completed/`). Use **Canonical reference** only for living catalogs that stay in `specs/canonical/` and never move for “done.” See ForgeKit WORKFLOW.md Phase 4 and `.cursor/rules/specs-and-todo.mdc` when present.
+> 🔧 **Guidance:** Use **Delivery** for time-boxed feature work (lifecycle: `specs/` → `partial/` → `completed/`). Use **Canonical reference** only for living catalogs that stay in `specs/canonical/` and never move for “done.” See ForgeTrail WORKFLOW.md Phase 4 and `.cursor/rules/specs-and-todo.mdc` when present.
 
 > 🔧 **Lite cut:** For a small change, keep header + §1–§3 + §5 (proposed behavior only) + §8 + §9. Skip data/API/UI subsections that do not apply. Still require testable acceptance criteria.
 
@@ -124,7 +124,7 @@ _Testable. Prefer “Given / when / then” or checkbox style. The feature is no
 
 ## 10. Decisions (optional)
 
-_Lock choices here (and mirror major ones into `.forgekit/workflow_tracking.json` → `decisions[]` when they are architectural)._
+_Lock choices here (and mirror major ones into `.forgetrail/workflow_tracking.json` → `decisions[]` when they are architectural)._
 
 **D1.**
 

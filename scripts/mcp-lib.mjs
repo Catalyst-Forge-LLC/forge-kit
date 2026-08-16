@@ -5,10 +5,10 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-export const FORGEKIT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-export const MCP_SERVER_DIR = join(FORGEKIT_ROOT, "mcp-server");
+export const FORGETRAIL_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+export const MCP_SERVER_DIR = join(FORGETRAIL_ROOT, "mcp-server");
 export const MCP_ENTRY = join(MCP_SERVER_DIR, "dist", "index.js");
-export const WORKFLOW_PATH = join(FORGEKIT_ROOT, "WORKFLOW.md");
+export const WORKFLOW_PATH = join(FORGETRAIL_ROOT, "WORKFLOW.md");
 
 export function readJson(path) {
   try {
@@ -33,7 +33,7 @@ export function findCursorMcpJson(startDir = process.cwd()) {
     if (parent === dir) break;
     dir = parent;
   }
-  return join(FORGEKIT_ROOT, ".cursor", "mcp.json");
+  return join(FORGETRAIL_ROOT, ".cursor", "mcp.json");
 }
 
 export function analyzeCursorMcpConfig(mcpJsonPath) {
@@ -43,10 +43,10 @@ export function analyzeCursorMcpConfig(mcpJsonPath) {
     return {
       path: mcpJsonPath,
       found: false,
-      issues: ["No .cursor/mcp.json found (checked cwd ancestors and forge-kit root)."],
+      issues: ["No .cursor/mcp.json found (checked cwd ancestors and forgetrail root)."],
       notes: [
-        "Create .cursor/mcp.json with a forgekit server entry pointing at mcp-server/dist/index.js.",
-        "See mcp-server/README.md or run: forgekit mcp cursor-config",
+        "Create .cursor/mcp.json with a forgetrail server entry pointing at mcp-server/dist/index.js.",
+        "See mcp-server/README.md or run: forgetrail mcp cursor-config",
       ],
     };
   }
@@ -56,39 +56,39 @@ export function analyzeCursorMcpConfig(mcpJsonPath) {
     return { path: mcpJsonPath, found: true, issues: ["Invalid mcp.json: missing mcpServers."], notes: [] };
   }
 
-  const forgekit =
-    raw.mcpServers.forgekit ??
-    raw.mcpServers["forgekit-mcp"] ??
-    Object.entries(raw.mcpServers).find(([k]) => /forgekit/i.test(k))?.[1];
+  const forgetrail =
+    raw.mcpServers.forgetrail ??
+    raw.mcpServers["forgetrail-mcp"] ??
+    Object.entries(raw.mcpServers).find(([k]) => /forgetrail/i.test(k))?.[1];
 
-  if (!forgekit) {
-    issues.push('No "forgekit" entry under mcpServers.');
-    notes.push('Add a server named "forgekit" (Cursor shows this name in MCP settings).');
+  if (!forgetrail) {
+    issues.push('No "forgetrail" entry under mcpServers.');
+    notes.push('Add a server named "forgetrail" (Cursor shows this name in MCP settings).');
     return { path: mcpJsonPath, found: true, issues, notes, config: raw };
   }
 
-  const args = forgekit.args ?? [];
+  const args = forgetrail.args ?? [];
   const entryArg = args.find((a) => typeof a === "string" && a.endsWith("index.js"));
   if (!entryArg) {
-    issues.push("forgekit MCP args should include mcp-server/dist/index.js");
+    issues.push("forgetrail MCP args should include mcp-server/dist/index.js");
   } else if (!existsSync(entryArg)) {
     issues.push(`Configured server path does not exist: ${entryArg}`);
-    notes.push("Run: forgekit mcp build");
+    notes.push("Run: forgetrail mcp build");
   } else if (normalizePath(entryArg) !== normalizePath(MCP_ENTRY)) {
     notes.push(`Configured entry: ${entryArg}`);
     notes.push(`This repo build:   ${MCP_ENTRY}`);
   }
 
-  if (forgekit.command && forgekit.command !== "node") {
-    notes.push(`command is "${forgekit.command}" (node is typical).`);
+  if (forgetrail.command && forgetrail.command !== "node") {
+    notes.push(`command is "${forgetrail.command}" (node is typical).`);
   }
 
-  const envRoot = forgekit.env?.FORGEKIT_ROOT;
-  if (envRoot && normalizePath(envRoot) !== normalizePath(FORGEKIT_ROOT)) {
-    notes.push(`FORGEKIT_ROOT in mcp.json: ${envRoot}`);
+  const envRoot = forgetrail.env?.FORGETRAIL_ROOT;
+  if (envRoot && normalizePath(envRoot) !== normalizePath(FORGETRAIL_ROOT)) {
+    notes.push(`FORGETRAIL_ROOT in mcp.json: ${envRoot}`);
   } else if (!envRoot) {
     notes.push(
-      "Optional: set env.FORGEKIT_ROOT in mcp.json if the server lives outside the default parent-of-mcp-server layout."
+      "Optional: set env.FORGETRAIL_ROOT in mcp.json if the server lives outside the default parent-of-mcp-server layout."
     );
   }
 
@@ -104,19 +104,19 @@ export function staticMcpChecks() {
   }
 
   if (!existsSync(join(MCP_SERVER_DIR, "node_modules"))) {
-    issues.push("mcp-server/node_modules missing — run: forgekit mcp build");
+    issues.push("mcp-server/node_modules missing — run: forgetrail mcp build");
   }
 
   if (!existsSync(MCP_ENTRY)) {
-    issues.push("mcp-server/dist/index.js missing — run: forgekit mcp build");
+    issues.push("mcp-server/dist/index.js missing — run: forgetrail mcp build");
   }
 
   const pkg = readJson(join(MCP_SERVER_DIR, "package.json"));
   if (pkg?.version) {
-    notes.push(`forgekit-mcp package version: ${pkg.version}`);
+    notes.push(`forgetrail-mcp package version: ${pkg.version}`);
   }
 
-  notes.push(`FORGEKIT_ROOT (default): ${FORGEKIT_ROOT}`);
+  notes.push(`FORGETRAIL_ROOT (default): ${FORGETRAIL_ROOT}`);
 
   return { issues, notes };
 }
@@ -128,16 +128,16 @@ export function posixPath(p) {
 export function mcpClientConfigObject() {
   return {
     mcpServers: {
-      forgekit: {
+      forgetrail: {
         command: "node",
         args: [posixPath(MCP_ENTRY)],
-        env: { FORGEKIT_ROOT: posixPath(FORGEKIT_ROOT) },
+        env: { FORGETRAIL_ROOT: posixPath(FORGETRAIL_ROOT) },
       },
     },
   };
 }
 
-/** Copy-paste MCP client setup — shown after `forgekit mcp build`. */
+/** Copy-paste MCP client setup — shown after `forgetrail mcp build`. */
 export function printMcpClientSetupBanner({ showBuildComplete = true } = {}) {
   const entry = posixPath(MCP_ENTRY);
 
@@ -145,22 +145,22 @@ export function printMcpClientSetupBanner({ showBuildComplete = true } = {}) {
     console.log("\n✓ Build complete.\n");
   }
 
-  console.log("Connect ForgeKit MCP (Cursor starts the server for you — no `mcp dev` needed):\n");
+  console.log("Connect ForgeTrail MCP (Cursor starts the server for you — no `mcp dev` needed):\n");
   console.log("  Cursor — project .cursor/mcp.json or Settings → MCP → add server:");
   console.log(JSON.stringify(mcpClientConfigObject(), null, 2));
   console.log("");
   console.log("  Claude Desktop — %APPDATA%\\Claude\\claude_desktop_config.json (same mcpServers block)");
-  console.log(`  Claude Code — claude mcp add forgekit node ${entry}`);
+  console.log(`  Claude Code — claude mcp add forgetrail node ${entry}`);
   console.log("");
   console.log("  Then reload MCP in Cursor (Settings → MCP) or restart Cursor.");
-  console.log("  Verify: forgekit mcp ping   |   Reprint: forgekit mcp cursor-config");
+  console.log("  Verify: forgetrail mcp ping   |   Reprint: forgetrail mcp cursor-config");
   console.log("");
-  console.log('  First agent prompt: "Call ForgeKit getNewProjectKickoff and set up the project."');
+  console.log('  First agent prompt: "Call ForgeTrail getNewProjectKickoff and set up the project."');
   console.log("");
 }
 
 export function runMcpBuild() {
-  console.log("Building ForgeKit MCP server...\n");
+  console.log("Building ForgeTrail MCP server...\n");
   const install = spawnSync("pnpm", ["install"], { cwd: MCP_SERVER_DIR, stdio: "inherit", shell: true });
   if (install.status !== 0) {
     process.exit(install.status ?? 1);

@@ -1,10 +1,10 @@
 # [App Name] — Phase 1 architecture brief
 
-_Structured capture of planning and architecture **before** code scaffolding. Goal: Phase 2 (or a new agent/session) can start from this file + `.forgekit/workflow_tracking.json` without re-reading the whole Phase 1 chat._
+_Structured capture of planning and architecture **before** code scaffolding. Goal: Phase 2 (or a new agent/session) can start from this file + `.forgetrail/workflow_tracking.json` without re-reading the whole Phase 1 chat._
 
 **Status:** `[draft | locked]`  
 **Last updated:** `[ISO date]`  
-**Phase 1 exit:** Do not mark Phase 1 complete in `.forgekit/workflow_tracking.json` until this brief is **locked** and major commitments are in `decisions[]`.
+**Phase 1 exit:** Do not mark Phase 1 complete in `.forgetrail/workflow_tracking.json` until this brief is **locked** and major commitments are in `decisions[]`.
 
 ---
 
@@ -96,7 +96,7 @@ _Skip if content is hand-authored or from a non-LLM API._
 | **Ollama launchers** (local runtime) | _setup-ollama.bat, test-ollama.bat after Phase 2 scaffold_ |
 | **Validator / paths** | _e.g. Zod at `src/lib/...`, `data/seed.json`, prompt in `prompts/seed.md`_ |
 
-> 💡 **Lesson learned:** **Local Ollama** fits the same three patterns as cloud — runtime routes call `/api/generate`; build-time seed calls Ollama once; BYO-LLM can mean the user runs a prompt in the Ollama desktop app and pastes JSON. Prefer **Granite 4.1** or **Gemma 3** for general product features; avoid reasoning-only models unless v1 explicitly needs chain-of-thought. See **ForgeKit Lite** §7.1 and §4.8.
+> 💡 **Lesson learned:** **Local Ollama** fits the same three patterns as cloud — runtime routes call `/api/generate`; build-time seed calls Ollama once; BYO-LLM can mean the user runs a prompt in the Ollama desktop app and pastes JSON. Prefer **Granite 4.1** or **Gemma 3** for general product features; avoid reasoning-only models unless v1 explicitly needs chain-of-thought. See **ForgeTrail Lite** §7.1 and §4.8.
 
 ---
 
@@ -112,7 +112,7 @@ _What could blow schedule or architecture — honest list._
 
 ## 8. Architectural decisions (numbered)
 
-_Each decision should include **WHY** and what was rejected. **Also** add each major commitment to `.forgekit/workflow_tracking.json` → `decisions[]` (id, timestamp, phase, decision, rationale, alternatives_considered)._
+_Each decision should include **WHY** and what was rejected. **Also** add each major commitment to `.forgetrail/workflow_tracking.json` → `decisions[]` (id, timestamp, phase, decision, rationale, alternatives_considered)._
 
 **D1.**
 
@@ -155,7 +155,7 @@ _Ordered list of what to build after the spine runs — aligns with initial `TOD
 
 - [ ] User has confirmed stack, folder shape, data sketch, hero flow, and v1 boundaries
 - [ ] This brief is **locked** (no `[draft]` ambiguity) or remaining items are only in §9 Open questions
-- [ ] `.forgekit/workflow_tracking.json` updated: `decisions[]` for each major D#; `phases["1-architecture"]` notes summarize sign-off
-- [ ] Phase 2 opener will read **this file** + `.forgekit/workflow_tracking.json` first
+- [ ] `.forgetrail/workflow_tracking.json` updated: `decisions[]` for each major D#; `phases["1-architecture"]` notes summarize sign-off
+- [ ] Phase 2 opener will read **this file** + `.forgetrail/workflow_tracking.json` first
 
 > 💡 **Lesson learned:** Treat the brief and `decisions[]` as a pair: JSON is great for machine-structured history; the brief is great for the next human or agent to read in one pass. Duplicated rationale is OK — drift between them is not. After Phase 2 starts, **merge** this content into `CONTEXT_PROMPT.md` per the mapping in that template’s “Handoff from Phase 1” section.

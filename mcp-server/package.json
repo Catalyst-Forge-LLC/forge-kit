@@ -1,12 +1,12 @@
 {
-  "name": "forgekit-mcp",
+  "name": "forgetrail-mcp",
   "version": "0.2.2",
-  "description": "ForgeKit MCP server — structured development methodology for AI coding agents",
+  "description": "ForgeTrail MCP server: a persistent development system for building software with AI agents",
   "license": "Apache-2.0",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "forgekit-mcp": "dist/index.js"
+    "forgetrail-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

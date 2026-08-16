@@ -6,7 +6,7 @@ _For exploitable security vulnerabilities (attacker-focused), see [BLACK_HAT_REP
 
 _Instructions: Ask Claude to produce this document by running a systematic audit: "Audit the codebase for production readiness. Organize findings by category, rate them Critical/Major/Minor, and include specific file:line references with remediation steps." Update it as findings are fixed._
 
-_Note: This document covers **engineering quality** (type safety, error handling, consistency, maintainability). For **security vulnerabilities** (injection, IDOR, auth bypass, SSRF), use the black hat audit prompt (`_forgekit/prompts/black-hat-audit.md`) and save results to [BLACK_HAT_REPORT.md](BLACK_HAT_REPORT.md). The two reports complement each other — some findings may appear in both with different framing._
+_Note: This document covers **engineering quality** (type safety, error handling, consistency, maintainability). For **security vulnerabilities** (injection, IDOR, auth bypass, SSRF), use the black hat audit prompt (`_forgetrail/prompts/black-hat-audit.md`) and save results to [BLACK_HAT_REPORT.md](BLACK_HAT_REPORT.md). The two reports complement each other — some findings may appear in both with different framing._
 
 ---
 

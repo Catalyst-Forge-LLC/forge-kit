@@ -71,5 +71,5 @@ List the documents you created, one line each, and call out: the biggest design 
 ## Notes
 
 - This library is **teaching material, not a spec or a findings report.** Don't turn it into a TODO backlog; link to the backlog instead.
-- It pairs naturally with `propagate-to-forgekit.md`: once the library exists, the *generalizable* lessons inside it are strong propagation candidates for ForgeKit templates.
+- It pairs naturally with `propagate-to-forgetrail.md`: once the library exists, the *generalizable* lessons inside it are strong propagation candidates for ForgeTrail templates.
 - Revisit after major architectural shifts. A stale handoff library is worse than none, because it teaches confidently wrong things — treat drift as a bug, same as any doc.

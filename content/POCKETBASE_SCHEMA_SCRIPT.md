@@ -6,7 +6,7 @@ Manual admin-UI collection setup (click-through wizards) does not scale across m
 
 ## What the human does (high level)
 
-**Prefer one-click launchers** (ForgeKit **ONE_CLICK_DEV_SETUP.md** / **FORGEKIT_LITE.md** §4.5) — not a list of terminal commands.
+**Prefer one-click launchers** (ForgeTrail **ONE_CLICK_DEV_SETUP.md** / **FORGETRAIL_LITE.md** §4.5) — not a list of terminal commands.
 
 1. **`cp .env.example .env`** — set **base URL including port** (e.g. `PUBLIC_POCKETBASE_URL=http://127.0.0.1:8096` or your app’s convention) and **admin** credentials used only for local/dev automation:
    - `POCKETBASE_ADMIN_EMAIL`
@@ -17,8 +17,8 @@ Manual admin-UI collection setup (click-through wizards) does not scale across m
 3. **Double-click `run.bat`** / **`run.sh`** — starts PocketBase if needed, then the app. First PocketBase run may require completing superuser setup in the browser URL shown in the console.
 4. **Schema (agent or one terminal):** `pnpm run pocketbase:schema` after PocketBase is up — idempotent; replaces manual Admin UI collection wizards.
 5. **PocketBase broken?** double-click **`test-pocketbase.bat`** / **`pnpm run test:pocketbase`** — isolated health check (**`SYSTEM_HEALTH_CHECKS.md`**).
-6. **Check progress:** double-click **`status.bat`** / **`status.sh`** or open **`docs/FORGEKIT_PROGRESS.md`**.
-7. Walk the hero flow; tick Phase 2 exit items in `.forgekit/workflow_tracking.json` when dev runs, data appears, CRUD works, and the full journey passes.
+6. **Check progress:** double-click **`status.bat`** / **`status.sh`** or open **`docs/FORGETRAIL_PROGRESS.md`**.
+7. Walk the hero flow; tick Phase 2 exit items in `.forgetrail/workflow_tracking.json` when dev runs, data appears, CRUD works, and the full journey passes.
 
 ---
 

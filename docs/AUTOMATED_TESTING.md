@@ -1,6 +1,6 @@
 # Automated Testing — Specification
 
-**Status:** Draft for implementation (ForgeKit template — child projects adapt paths and stack lines.)  
+**Status:** Draft for implementation (ForgeTrail template — child projects adapt paths and stack lines.)  
 **Related:** [TEST_PLAN.md](TEST_PLAN.md) (manual QA walkthrough)  
 **Provenance:** Generalized from Exec Foundry `specs/automated-testing.md` (2026-04-16).  
 **Stack context (example — adjust per app):** SvelteKit 2, Vite, TypeScript, a BaaS (e.g. PocketBase), Zod validation, payments webhooks, optional LLM providers. Many apps already depend on `playwright` for scraping or screenshots without a dedicated `@playwright/test` app-QA config — this spec describes how to add one deliberately.
@@ -266,4 +266,4 @@ prime-contender/
 
 ## 12. Summary
 
-The best combination for most ForgeKit-derived apps is **many fast unit tests** on validation and entitlements (or equivalent business rules), **targeted API/integration tests** for auth and error contracts, and **a small Playwright smoke suite** for regressions that only appear in a real browser. **Coverage is not a goal.** The manual **TEST_PLAN** remains essential for LLM quality, billing, OAuth, and third-party integrations. This division maximizes future development speed and deployment confidence without gaming metrics.
+The best combination for most ForgeTrail-derived apps is **many fast unit tests** on validation and entitlements (or equivalent business rules), **targeted API/integration tests** for auth and error contracts, and **a small Playwright smoke suite** for regressions that only appear in a real browser. **Coverage is not a goal.** The manual **TEST_PLAN** remains essential for LLM quality, billing, OAuth, and third-party integrations. This division maximizes future development speed and deployment confidence without gaming metrics.

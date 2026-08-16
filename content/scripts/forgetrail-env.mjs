@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Shared env + repo root helpers for ForgeKit reference scripts.
- * Copy to app repo scripts/forgekit-env.mjs alongside other forgekit scripts.
+ * Shared env + repo root helpers for ForgeTrail reference scripts.
+ * Copy to app repo scripts/forgetrail-env.mjs alongside other forgetrail scripts.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";

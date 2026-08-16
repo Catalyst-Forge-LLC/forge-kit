@@ -1,6 +1,6 @@
-# ForgeKit progress
+# ForgeTrail progress
 
-_Human-readable snapshot for non-technical operators. **Source of truth:** `.forgekit/workflow_tracking.json` — the agent updates that file; this doc is refreshed when you run **status.bat** / **status.sh** or **pnpm run forgekit:status**._
+_Human-readable snapshot for non-technical operators. **Source of truth:** `.forgetrail/workflow_tracking.json` — the agent updates that file; this doc is refreshed when you run **status.bat** / **status.sh** or **pnpm run forgetrail:status**._
 
 ## Current phase
 
@@ -21,6 +21,6 @@ _(Populated from exit criteria still false.)_
 |----------|--------|
 | **Windows** | Double-click **`status.bat`** at the repo root |
 | **Mac / Linux** | Double-click **`status.sh`** or run `./status.sh` in Terminal |
-| **Terminal** | `pnpm run forgekit:status` (after Phase 2 setup) |
+| **Terminal** | `pnpm run forgetrail:status` (after Phase 2 setup) |
 
-Cursor users also get phase footers from **`.cursor/rules/forgekit-phase-status.mdc`** when using an agent.
+Cursor users also get phase footers from **`.cursor/rules/forgetrail-phase-status.mdc`** when using an agent.

@@ -1,14 +1,14 @@
 ---
-name: forgekit
-description: "Enforce the ForgeKit 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain .forgekit/workflow_tracking.json as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
+name: forgetrail
+description: "Enforce the ForgeTrail 7-phase lifecycle (Plan → Build → Stabilize → Iterate → Refine → Align → Harden), maintain .forgetrail/workflow_tracking.json as the system of record, pause at explicit phase transitions for user approval, prefer native plan modes when available, and use subagents for parallel audits/research where the host agent supports it. Activate for any non-trivial full-stack app development. Follow progressive documentation rules and propagate lessons back."
 user-invocable: true
 argument-hint: "kickoff new project | resume session | Phase 4 feature work | run black-hat audit | stabilize current issues"
 allowed-tools: "read_file, search_replace, run_terminal_command, todo_write, spawn_subagent, getPhaseGuidance, runAudit, searchLessons, validateTracking, suggestSubagentDecomposition, getTemplate, getNewProjectKickoff, getResumeSessionInstructions"
 ---
 
-# ForgeKit Skill — Lifecycle + Memory Layer
+# ForgeTrail Skill — Lifecycle + Memory Layer
 
-You are operating under the ForgeKit methodology. Your primary job is to give the user a disciplined, experienced build partner instead of a generic coding assistant.
+You are operating under the ForgeTrail methodology. Your primary job is to give the user a disciplined, experienced build partner instead of a generic coding assistant.
 
 ## Core Rules (always active)
 
@@ -24,7 +24,7 @@ You are operating under the ForgeKit methodology. Your primary job is to give th
    Phases 4 and 5 commonly alternate. Update `currentPhase` and exit criteria in tracking.
 
 2. **At the start of every session or major turn**:
-   - Read `.forgekit/workflow_tracking.json` (create `.forgekit/` if missing).
+   - Read `.forgetrail/workflow_tracking.json` (create `.forgetrail/` if missing).
    - Read `CONTEXT_PROMPT.md` and `TODO.md` if they exist.
    - Call `getPhaseGuidance` for the current phase if needed.
    - Summarize current phase, exit criteria met/remaining, and recent decisions to the user briefly.
@@ -33,7 +33,7 @@ You are operating under the ForgeKit methodology. Your primary job is to give th
    - When you believe exit criteria for the current phase are met, explicitly tell the user: "I think we have completed Phase X because [reasons]. The remaining exit criteria are [list]. Ready to move to Phase Y?"
    - Wait for explicit user approval before advancing `currentPhase` in tracking.
 
-4. **Maintain the tracking file** (`.forgekit/workflow_tracking.json`):
+4. **Maintain the tracking file** (`.forgetrail/workflow_tracking.json`):
    - Log every major decision with rationale and alternatives_considered.
    - Move items from `exitCriteriaRemaining` to `exitCriteriaMet`.
    - Add to `gotchas[]` immediately when something surprising or painful happens.
@@ -48,7 +48,7 @@ You are operating under the ForgeKit methodology. Your primary job is to give th
 6. **Progressive documentation**:
    - Only create docs when the current phase requires them (see `getProgressiveDocSchedule`).
    - Phase 1: `PHASE_1_BRIEF.md` + decisions.
-   - Phase 2: Merge brief into `CONTEXT_PROMPT.md`, plus `README.md`, `TODO.md`, `.forgekit/IDEAS.md`.
+   - Phase 2: Merge brief into `CONTEXT_PROMPT.md`, plus `README.md`, `TODO.md`, `.forgetrail/IDEAS.md`.
    - Later phases add `TECHNICAL_REFERENCE.md`, audits, etc. only when needed.
 
 7. **Reply format** (when offering options):
@@ -71,7 +71,7 @@ When ready to advance:
 
 ## For New Projects (Greenfield)
 
-Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. Write the returned `.forgekit/workflow_tracking.json`, optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
+Prefer calling `getNewProjectKickoff` (or `kickoffGreenfield`) at the very beginning. Write the returned `.forgetrail/workflow_tracking.json`, optional Cursor rules, and follow the post-bootstrap instructions exactly. Then start with Phase 1.
 
 ## For Resuming
 

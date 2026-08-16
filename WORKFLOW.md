@@ -1,6 +1,8 @@
-# ForgeKit
+# ForgeTrail
 
-A structured development workflow for solo developers building non-trivial full-stack apps with AI coding agents. Derived from 7 sessions and ~78,000 lines of real-world app development.
+**Forge the path. Keep the trail.**
+
+A persistent development system for building software with AI agents. A structured 7-phase workflow for solo developers building non-trivial full-stack apps with coding agents. Derived from 7 sessions and ~78,000 lines of real-world app development.
 
 ---
 
@@ -14,7 +16,7 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Entry criteria:** You have a clear problem to solve and know your preferred tech stack.
 
-**Exit criteria:** You've confirmed tech choices, folder structure, data model shape, and the first batch of features to build. Claude has summarized its understanding back to you, and you've corrected any misunderstandings. **`PHASE_1_BRIEF.md` is complete and locked** (see §1a), and major commitments are in **`.forgekit/workflow_tracking.json` → `decisions[]`** so Phase 2 can start without chat context.
+**Exit criteria:** You've confirmed tech choices, folder structure, data model shape, and the first batch of features to build. Claude has summarized its understanding back to you, and you've corrected any misunderstandings. **`PHASE_1_BRIEF.md` is complete and locked** (see §1a), and major commitments are in **`.forgetrail/workflow_tracking.json` → `decisions[]`** so Phase 2 can start without chat context.
 
 **What actually happened:** Session 1 opened with full context (existing job search system, 44 jobs, DOCX templates, preferred stack). Claude proposed Playwright over Puppeteer, docxtemplater for Word preservation, Kanban UI, filesystem-based storage, and an import migration path. All confirmed in a single exchange before any code was written.
 
@@ -100,74 +102,74 @@ These phases emerged from the actual build sequence across all sessions. They're
 
 **Principle:** **Phase 2** still means the **full app spine** in one pass — project init, dependencies, data path, routes, components, import/migration if needed, **hero flow end-to-end**. That spine should not be deferred.
 
-**ForgeKit workspace:** All lifecycle/agent artifacts live in **`.forgekit/`** at the repo root — **`.forgekit/workflow_tracking.json`**, **`.forgekit/IDEAS.md`**, platform rules (`AGENTS.md`, `CLAUDE.md`, optional `FORGEKIT_LITE.md`). Product docs (`docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `README.md`, `TODO.md`, **`docs/FORGEKIT_PROGRESS.md`**) stay outside `.forgekit/`. Optionally gitignore `.forgekit/` for a cleaner public repo or MCP-only boots (no vendored Lite). See **`FORGEKIT_LITE.md` §1.5** and **`NEW_PROJECT_BOOTSTRAP.md`**.
+**ForgeTrail workspace:** All lifecycle/agent artifacts live in **`.forgetrail/`** at the repo root — **`.forgetrail/workflow_tracking.json`**, **`.forgetrail/IDEAS.md`**, platform rules (`AGENTS.md`, `CLAUDE.md`, optional `FORGETRAIL_LITE.md`). Product docs (`docs/PHASE_1_BRIEF.md`, `CONTEXT_PROMPT.md`, `README.md`, `TODO.md`, **`docs/FORGETRAIL_PROGRESS.md`**) stay outside `.forgetrail/`. Optionally gitignore `.forgetrail/` for a cleaner public repo or MCP-only boots (no vendored Lite). See **`FORGETRAIL_LITE.md` §1.5** and **`NEW_PROJECT_BOOTSTRAP.md`**.
 
 **Non-technical operators:** Phase 2 should add **setup/run/status** launchers (**`ONE_CLICK_DEV_SETUP.md`**) and **test-*** launchers per dependency (**`SYSTEM_HEALTH_CHECKS.md`**). Avoid hardcoded PocketBase versions (**§4.2.2**). Local Ollama: Granite 4.1 / Gemma 3 defaults, not thinking models unless required (**§4.8**).
 
-**Project documentation** from ForgeKit templates is **progressive**: create files when the phase that needs them begins — not as an empty library on day one. This reduces boilerplate, token load, and stale placeholders.
+**Project documentation** from ForgeTrail templates is **progressive**: create files when the phase that needs them begins — not as an empty library on day one. This reduces boilerplate, token load, and stale placeholders.
 
-| Phase | App / code | Docs to create or substantially extend (from ForgeKit templates — or MCP `getTemplate`) |
+| Phase | App / code | Docs to create or substantially extend (from ForgeTrail templates — or MCP `getTemplate`) |
 | ----- | ---------- | ------------------------------------------------------------------------------------------- |
-| **1 — Architecture** | Conversation only — no app code | **`PHASE_1_BRIEF.md`** (structured planning handoff). Log major commitments in **`.forgekit/workflow_tracking.json`** (`decisions[]`, phase notes). |
-| **2 — Scaffolding** | Entire runnable skeleton + hero flow | **`CONTEXT_PROMPT.md`** populated by **merging `PHASE_1_BRIEF.md`** into it (see CONTEXT_PROMPT template “Handoff from Phase 1”), then **`README.md`**, **`TODO.md`**, **`.forgekit/IDEAS.md`**. **Do not** generate the rest of the `docs/` template set in Phase 2 unless the user explicitly needs a file for the spine (rare). |
+| **1 — Architecture** | Conversation only — no app code | **`PHASE_1_BRIEF.md`** (structured planning handoff). Log major commitments in **`.forgetrail/workflow_tracking.json`** (`decisions[]`, phase notes). |
+| **2 — Scaffolding** | Entire runnable skeleton + hero flow | **`CONTEXT_PROMPT.md`** populated by **merging `PHASE_1_BRIEF.md`** into it (see CONTEXT_PROMPT template “Handoff from Phase 1”), then **`README.md`**, **`TODO.md`**, **`.forgetrail/IDEAS.md`**. **Do not** generate the rest of the `docs/` template set in Phase 2 unless the user explicitly needs a file for the spine (rare). |
 | **3 — Stabilization** | Reliability, env, errors | Update **`CONTEXT_PROMPT.md`** / **`README.md`** when behavior, env, or patterns change. No new template types required. |
 | **4 — Feature iteration** | Features, specs | Per complex feature: write **`specs/[feature].md`** from **`SPEC_FEATURE_TEMPLATE`** before multi-file work (lifecycle: `specs/` → `partial/` → `completed/`). Add **`TECHNICAL_REFERENCE.md`** when the API/data model surface is non-trivial; **`TEST_PLAN.md`** when manual QA paths deserve a written walkthrough; **`DESIGN_SYSTEM.md`** for layout, a11y, and repeated UI patterns as the UI grows. Optional: **`DEV_ESTIMATE.md`**. When a release adds **new user-facing capabilities** (not only refactors), extend **`TECHNICAL_REFERENCE.md` → Feature Documentation** with a stub for each area (routes, data, discovery → import parity) and add **`TEST_PLAN.md`** scenarios — don’t capture the work only as 💡 lesson callouts in **`CONTEXT_PROMPT.md`**. |
 | **5 — Refactoring** | Structure, shared utilities | Update **`CONTEXT_PROMPT.md`** and **`TECHNICAL_REFERENCE.md`** to match the new shape. |
 | **6 — Strategic alignment** | Roadmap vs brand | **`BRAND_AND_PRODUCT.md`**; complete or deepen **`DESIGN_SYSTEM.md`** if not already; **`MARKETING_GROWTH.md`** when go-to-market work is real. Optional: **`NAMING_EXPLORATION.md`** when naming or renaming the product. Restructure **`TODO.md`** by brand pillars. Optional: internal **`FEATURE_CATALOG.md`** (shipped capabilities vs UI entry points) and periodic **`user-facing-content-sync-audit.md`** so landing, Help, and nav stay aligned. |
 | **7 — Hardening** | Production readiness | **`CODE_QUALITY.md`**, **`BLACK_HAT_REPORT.md`** (from security audit), **`DEPLOYMENT.md`**, **`BUGS.md`**; **`BUSINESS_PLAN.md`** if pursuing paid users; run docs-alignment and consolidate. |
 
-**Agent rule:** Pull a template with **`getTemplate`** (or copy from `_forgekit/docs/`) **when entering the work that needs it**, not earlier. Use `mode: "shell"` when you only need structure; `mode: "full"` when you need embedded lessons for that doc.
+**Agent rule:** Pull a template with **`getTemplate`** (or copy from `_forgetrail/docs/`) **when entering the work that needs it**, not earlier. Use `mode: "shell"` when you only need structure; `mode: "full"` when you need embedded lessons for that doc.
 
-**ForgeKit template propagation (two tracks):** When a customer app ships meaningful features or durable doc insights, run **`prompts/propagate-to-forgekit.md`** (or the project-local mirror). Treat it as **two parallel deliverables**: **(1) Feature memory** — extend **`TECHNICAL_REFERENCE.md`** (Feature Documentation) and **`TEST_PLAN.md`** for each new **named capability** (journal **`Added`** lines are a good checklist), not only prose in **`CONTEXT_PROMPT.md`**; **(2) Pattern memory** — generalized lessons and anti-patterns in **`CONTEXT_PROMPT.md`**, **`CODE_QUALITY.md`**, and other templates as appropriate. Callouts without a feature-area home are an incomplete pass. **Append `update-log.md`** (table + Detail) after every propagation round. When a project **ends** (shipped, delivered, shelved), the **wrap protocol (§1e)** makes this harvest mandatory rather than opportunistic.
+**ForgeTrail template propagation (two tracks):** When a customer app ships meaningful features or durable doc insights, run **`prompts/propagate-to-forgetrail.md`** (or the project-local mirror). Treat it as **two parallel deliverables**: **(1) Feature memory** — extend **`TECHNICAL_REFERENCE.md`** (Feature Documentation) and **`TEST_PLAN.md`** for each new **named capability** (journal **`Added`** lines are a good checklist), not only prose in **`CONTEXT_PROMPT.md`**; **(2) Pattern memory** — generalized lessons and anti-patterns in **`CONTEXT_PROMPT.md`**, **`CODE_QUALITY.md`**, and other templates as appropriate. Callouts without a feature-area home are an incomplete pass. **Append `update-log.md`** (table + Detail) after every propagation round. When a project **ends** (shipped, delivered, shelved), the **wrap protocol (§1e)** makes this harvest mandatory rather than opportunistic.
 
 ---
 
-## 1b. Using ForgeKit with gstack (optional)
+## 1b. Using ForgeTrail with gstack (optional)
 
-If the project repo has [gstack](https://github.com/garrytan/gstack) installed (slash-command skills for Claude Code), ForgeKit and gstack are **complementary layers** rather than competing systems. They solve different problems:
+If the project repo has [gstack](https://github.com/garrytan/gstack) installed (slash-command skills for Claude Code), ForgeTrail and gstack are **complementary layers** rather than competing systems. They solve different problems:
 
-- **ForgeKit** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgekit/workflow_tracking.json`, business/brand strategy, lessons, and audits.
+- **ForgeTrail** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgetrail/workflow_tracking.json`, business/brand strategy, lessons, and audits.
 - **gstack** = **sprint execution + automation.** Slash-command skills that act as virtual team roles (engineering review, QA, security, deploy) within the current coding session.
 
-**The integration model:** ForgeKit owns the *what* and *when* (which phase, which docs, which exit criteria). gstack skills accelerate the *how* (build faster, review better, test more thoroughly, deploy safely). After every meaningful gstack sprint, persist outcomes in ForgeKit's tracking system — gstack has no cross-session memory.
+**The integration model:** ForgeTrail owns the *what* and *when* (which phase, which docs, which exit criteria). gstack skills accelerate the *how* (build faster, review better, test more thoroughly, deploy safely). After every meaningful gstack sprint, persist outcomes in ForgeTrail's tracking system — gstack has no cross-session memory.
 
 ### Phase-by-phase integration
 
 **Phase 1 — Plan:**
-Use gstack's `/office-hours` for product framing conversations and `/plan-ceo-review` for scope validation. Capture all outputs in **`PHASE_1_BRIEF.md`** and `.forgekit/workflow_tracking.json → decisions[]` — these are ForgeKit artifacts that gstack doesn't produce. Example: after `/office-hours` surfaces a risk, add it to the brief's §8 (Risks & Mitigations) and log the decision in tracking.
+Use gstack's `/office-hours` for product framing conversations and `/plan-ceo-review` for scope validation. Capture all outputs in **`PHASE_1_BRIEF.md`** and `.forgetrail/workflow_tracking.json → decisions[]` — these are ForgeTrail artifacts that gstack doesn't produce. Example: after `/office-hours` surfaces a risk, add it to the brief's §8 (Risks & Mitigations) and log the decision in tracking.
 
 **Phase 2 — Build:**
-Use `/plan-eng-review` to validate the technical spine before committing. After building the skeleton, run `/review` on the initial commit to catch structural issues early. ForgeKit handles the brief → `CONTEXT_PROMPT.md` merge and progressive doc creation (`README`, `TODO`, `.forgekit/IDEAS.md`).
+Use `/plan-eng-review` to validate the technical spine before committing. After building the skeleton, run `/review` on the initial commit to catch structural issues early. ForgeTrail handles the brief → `CONTEXT_PROMPT.md` merge and progressive doc creation (`README`, `TODO`, `.forgetrail/IDEAS.md`).
 
 **Phase 3 — Stabilize:**
-Use `/investigate` for systematic root-cause debugging when errors are non-obvious. Log every gotcha found in `.forgekit/workflow_tracking.json → gotchas[]` and update `CONTEXT_PROMPT.md` — gstack fixes the bug but ForgeKit ensures the lesson persists so the next session doesn't repeat it.
+Use `/investigate` for systematic root-cause debugging when errors are non-obvious. Log every gotcha found in `.forgetrail/workflow_tracking.json → gotchas[]` and update `CONTEXT_PROMPT.md` — gstack fixes the bug but ForgeTrail ensures the lesson persists so the next session doesn't repeat it.
 
 **Phase 4 — Iterate:**
-This is where gstack's inner loop shines. Per feature: `/plan-eng-review` (design) → build → `/review` (code quality) → `/qa` (browser-based testing with Playwright) → `/ship` (commit + changelog). After each shipped feature, update `TODO.md` (mark done), `CONTEXT_PROMPT.md` (if patterns changed), and `.forgekit/workflow_tracking.json` (exit criteria progress, session notes). For complex features, write a ForgeKit `specs/[feature].md` *before* starting the gstack build cycle.
+This is where gstack's inner loop shines. Per feature: `/plan-eng-review` (design) → build → `/review` (code quality) → `/qa` (browser-based testing with Playwright) → `/ship` (commit + changelog). After each shipped feature, update `TODO.md` (mark done), `CONTEXT_PROMPT.md` (if patterns changed), and `.forgetrail/workflow_tracking.json` (exit criteria progress, session notes). For complex features, write a ForgeTrail `specs/[feature].md` *before* starting the gstack build cycle.
 
 **Phase 5 — Refine:**
 Use `/review` on refactor branches to verify no regressions. After refactoring, update `CONTEXT_PROMPT.md` and `TECHNICAL_REFERENCE.md` to reflect the new file structure — gstack's review catches broken imports but doesn't update your documentation.
 
 **Phase 6 — Align:**
-Use `/design-consultation` for design system decisions and `/plan-ceo-review` for scope checks against the product vision. ForgeKit provides the `BRAND_AND_PRODUCT.md` and `MARKETING_GROWTH.md` templates and the strategic TODO restructuring — gstack has no brand/strategy tooling.
+Use `/design-consultation` for design system decisions and `/plan-ceo-review` for scope checks against the product vision. ForgeTrail provides the `BRAND_AND_PRODUCT.md` and `MARKETING_GROWTH.md` templates and the strategic TODO restructuring — gstack has no brand/strategy tooling.
 
 **Phase 7 — Harden:**
-Run **both** ForgeKit's `runAudit("black-hat")` and gstack's `/cso` — they're complementary. ForgeKit's audit produces a persistent `BLACK_HAT_REPORT.md` document with categorized findings; gstack's `/cso` catches runtime exploits through active probing. Use `/qa` for full regression testing, then `/ship` → `/land-and-deploy` → `/canary` for the production deploy pipeline. Document the deploy process in ForgeKit's `DEPLOYMENT.md` template so the next deploy doesn't depend on chat history.
+Run **both** ForgeTrail's `runAudit("black-hat")` and gstack's `/cso` — they're complementary. ForgeTrail's audit produces a persistent `BLACK_HAT_REPORT.md` document with categorized findings; gstack's `/cso` catches runtime exploits through active probing. Use `/qa` for full regression testing, then `/ship` → `/land-and-deploy` → `/canary` for the production deploy pipeline. Document the deploy process in ForgeTrail's `DEPLOYMENT.md` template so the next deploy doesn't depend on chat history.
 
 ### Key rule
 
-After every gstack sprint that completes meaningful work, **update `.forgekit/workflow_tracking.json`** (advance exit criteria, add decisions/gotchas, update session notes). gstack does persist some sprint-level artifacts — design docs from `/office-hours` live in `~/.gstack/projects/`, retro snapshots in `.context/retros/`, review gate overrides per branch, and skill usage analytics. But gstack has **no lifecycle state** (what phase are we in?), **no decision rationale log** (why did we choose PocketBase over Supabase?), **no gotcha capture** (what burned us and how did we fix it?), and **no architecture context document** (what does the file tree look like, what patterns do we use?). ForgeKit's `.forgekit/workflow_tracking.json` + `CONTEXT_PROMPT.md` fill exactly this gap — they are the system of record that lets the next session pick up where this one left off without replaying context from chat history.
+After every gstack sprint that completes meaningful work, **update `.forgetrail/workflow_tracking.json`** (advance exit criteria, add decisions/gotchas, update session notes). gstack does persist some sprint-level artifacts — design docs from `/office-hours` live in `~/.gstack/projects/`, retro snapshots in `.context/retros/`, review gate overrides per branch, and skill usage analytics. But gstack has **no lifecycle state** (what phase are we in?), **no decision rationale log** (why did we choose PocketBase over Supabase?), **no gotcha capture** (what burned us and how did we fix it?), and **no architecture context document** (what does the file tree look like, what patterns do we use?). ForgeTrail's `.forgetrail/workflow_tracking.json` + `CONTEXT_PROMPT.md` fill exactly this gap — they are the system of record that lets the next session pick up where this one left off without replaying context from chat history.
 
 ---
 
 ## 1c. Using Subagents with Modern Agents (optional)
 
-When the host agent supports **parallel subagents** (Grok Build `spawn_subagent`, Cursor Task/subagents, Claude agent teams, etc.), ForgeKit and subagents are **complementary layers** — same relationship as ForgeKit + gstack in §1b:
+When the host agent supports **parallel subagents** (Grok Build `spawn_subagent`, Cursor Task/subagents, Claude agent teams, etc.), ForgeTrail and subagents are **complementary layers** — same relationship as ForgeTrail + gstack in §1b:
 
-- **ForgeKit** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgekit/workflow_tracking.json`, audits, and lessons.
+- **ForgeTrail** = **lifecycle methodology + project memory.** Phases, exit criteria, progressive docs, `.forgetrail/workflow_tracking.json`, audits, and lessons.
 - **Subagents** = **parallel, context-isolated execution** within a phase — audits, research, spikes, and deep exploration without bloating the parent thread.
 
-**The integration model:** ForgeKit owns the *what* and *when* (which phase, which docs, which exit criteria). Subagents multiply throughput on the parts of ForgeKit that are most context-heavy and parallelizable. The **parent agent** always synthesizes subagent output into ForgeKit artifacts and updates tracking — subagents have no cross-session memory.
+**The integration model:** ForgeTrail owns the *what* and *when* (which phase, which docs, which exit criteria). Subagents multiply throughput on the parts of ForgeTrail that are most context-heavy and parallelizable. The **parent agent** always synthesizes subagent output into ForgeTrail artifacts and updates tracking — subagents have no cross-session memory.
 
 ### Phase-by-phase integration
 
@@ -178,7 +180,7 @@ Main agent only (or one **read-only** explore subagent for competitive/market re
 Main agent builds the full spine in one pass. Optional: one read-only subagent to research integration edge cases — do not split the hero-flow build across subagents unless the host explicitly supports coordinated merge.
 
 **Phase 3 — Stabilize:**
-Optional read-only explore subagent for stubborn root-cause analysis; parent logs every gotcha in `.forgekit/workflow_tracking.json → gotchas[]` and updates `CONTEXT_PROMPT.md`.
+Optional read-only explore subagent for stubborn root-cause analysis; parent logs every gotcha in `.forgetrail/workflow_tracking.json → gotchas[]` and updates `CONTEXT_PROMPT.md`.
 
 **Phase 4 — Iterate:**
 Strong fit. Call **`suggestSubagentDecomposition`** then spawn parallel explore subagents for feature research and tradeoff analysis; optional **worktree-isolated** spike for prototyping. Parent picks the approach and implements (or delegates to a single write-capable subagent).
@@ -187,7 +189,7 @@ Strong fit. Call **`suggestSubagentDecomposition`** then spawn parallel explore 
 Worktree-isolated subagents for exploratory refactors; parent reviews, merges, and updates `CONTEXT_PROMPT.md` + `TECHNICAL_REFERENCE.md`.
 
 **Phase 6 — Align:**
-Optional read-only subagents for market/competitor research; synthesis targets ForgeKit templates (`BRAND_AND_PRODUCT`, strategic `TODO`).
+Optional read-only subagents for market/competitor research; synthesis targets ForgeTrail templates (`BRAND_AND_PRODUCT`, strategic `TODO`).
 
 **Phase 7 — Harden:**
 Strong fit. Spawn parallel **read-only** subagents per audit type (security/black-hat, UX cohesion, code quality). Each subagent runs **`runAudit`** + **`searchLessons`** as appropriate. Parent synthesizes into `BLACK_HAT_REPORT.md`, `CODE_QUALITY.md`, triages into `TODO.md`, and updates tracking.
@@ -196,7 +198,7 @@ Strong fit. Spawn parallel **read-only** subagents per audit type (security/blac
 
 1. Call **`suggestSubagentDecomposition`** with current phase + task description.
 2. Spawn subagents with **`background: true`** (or equivalent) when the host supports it.
-3. Parent collects outputs → progressive docs + `.forgekit/workflow_tracking.json`.
+3. Parent collects outputs → progressive docs + `.forgetrail/workflow_tracking.json`.
 4. Run **`validateTracking`** after synthesis.
 
 ### Concrete example (Phase 7 — Grok-style hosts)
@@ -216,15 +218,15 @@ Hosts differ in spawn syntax — call **`getAgentIntegrationGuide`** (`grok`, `c
 
 ### Key rule
 
-After subagent results return, the **parent must** update `.forgekit/workflow_tracking.json` (advance exit criteria, add decisions/gotchas, update session notes) and relevant progressive docs. Subagents fix or explore in isolation but **do not** replace ForgeKit as the system of record for lifecycle state, decision rationale, or gotcha capture.
+After subagent results return, the **parent must** update `.forgetrail/workflow_tracking.json` (advance exit criteria, add decisions/gotchas, update session notes) and relevant progressive docs. Subagents fix or explore in isolation but **do not** replace ForgeTrail as the system of record for lifecycle state, decision rationale, or gotcha capture.
 
 ---
 
 ## 1d. Project archetypes (scaling the lifecycle down)
 
-The 7 phases were extracted from a commercial SaaS build, and the default exit criteria assume one — payments, brand pillars, business plan, security audit. Many ForgeKit projects are **not** that: a gift app for a birthday, an internal dashboard, a weekend tool. Forcing a one-time-use trivia game through "Payment flow works end to end" produces noise (endless `N/A` annotations) and, worse, teaches agents to rubber-stamp criteria instead of reading them.
+The 7 phases were extracted from a commercial SaaS build, and the default exit criteria assume one — payments, brand pillars, business plan, security audit. Many ForgeTrail projects are **not** that: a gift app for a birthday, an internal dashboard, a weekend tool. Forcing a one-time-use trivia game through "Payment flow works end to end" produces noise (endless `N/A` annotations) and, worse, teaches agents to rubber-stamp criteria instead of reading them.
 
-**Fix: choose an archetype in Phase 1 and prune the tracking template at bootstrap.** The archetype is a product-shape question, same class as state persistence — ask it early, record it in **`PHASE_1_BRIEF.md`** (§1 or §3) and **`decisions[]`**, and store it as **`project.archetype`** in **`.forgekit/workflow_tracking.json`** (see `TRACKING_SCHEMA.md`).
+**Fix: choose an archetype in Phase 1 and prune the tracking template at bootstrap.** The archetype is a product-shape question, same class as state persistence — ask it early, record it in **`PHASE_1_BRIEF.md`** (§1 or §3) and **`decisions[]`**, and store it as **`project.archetype`** in **`.forgetrail/workflow_tracking.json`** (see `TRACKING_SCHEMA.md`).
 
 | Archetype | What it is | Phase adjustments |
 |-----------|-----------|-------------------|
@@ -238,22 +240,22 @@ The 7 phases were extracted from a commercial SaaS build, and the default exit c
 2. **Log the pruning as a decision** (`decisions[]`) so a later session knows the missing criteria were removed intentionally, not lost.
 3. **Escalate on drift.** If a `one-shot` starts growing accounts, or an `internal-tool` gets external users, say so explicitly and propose re-promoting to `product` — restoring the pruned criteria for the phases still ahead. Archetypes scale the lifecycle down; they are not a permanent exemption.
 
-For quick throwaway spikes (an experiment you may delete tomorrow), consider skipping ForgeKit entirely — a tracking file for a two-hour prototype is overhead, not discipline. The archetypes above are for projects that will be **finished**, however small.
+For quick throwaway spikes (an experiment you may delete tomorrow), consider skipping ForgeTrail entirely — a tracking file for a two-hour prototype is overhead, not discipline. The archetypes above are for projects that will be **finished**, however small.
 
 ---
 
 ## 1e. Wrap protocol (closing a project and harvesting its lessons)
 
-ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project long — but nothing consumed them systematically at the end. A small project could log two genuinely reusable gotchas and have them die in the repo because no propagation pass ever ran. The wrap protocol closes that loop: **finishing a project includes harvesting it.**
+ForgeTrail's tracking schema collects `gotchas[]` and `decisions[]` all project long — but nothing consumed them systematically at the end. A small project could log two genuinely reusable gotchas and have them die in the repo because no propagation pass ever ran. The wrap protocol closes that loop: **finishing a project includes harvesting it.**
 
-**When to run:** the project is done (shipped, delivered, handed off) or being intentionally shelved. For `one-shot` projects this is a natural, expected step — the project ends, ForgeKit keeps the lessons. For long-lived products, run the same harvest step at major milestones (launch, ownership change) rather than waiting for a "wrap" that may never come.
+**When to run:** the project is done (shipped, delivered, handed off) or being intentionally shelved. For `one-shot` projects this is a natural, expected step — the project ends, ForgeTrail keeps the lessons. For long-lived products, run the same harvest step at major milestones (launch, ownership change) rather than waiting for a "wrap" that may never come.
 
 **Steps:**
 
 1. **Sweep the tracking file.** Read every `gotchas[]` and `decisions[]` entry plus `CONTEXT_PROMPT.md`'s gotcha/pattern sections. For each, ask: *is this generalizable beyond this app?* Framework traps, CLI behavior changes, and integration surprises usually are; app-specific content decisions usually are not.
-2. **Run the propagation prompt** (`prompts/propagate-to-forgekit.md`) with the harvest list as input — see its **Harvest mode** section, designed for exactly this sweep. Small projects without a product journal or full doc set use the tracking file as the primary discovery source.
+2. **Run the propagation prompt** (`prompts/propagate-to-forgetrail.md`) with the harvest list as input — see its **Harvest mode** section, designed for exactly this sweep. Small projects without a product journal or full doc set use the tracking file as the primary discovery source.
 3. **Close the tracking file.** Set `project.status` to `"wrapped"` (see `TRACKING_SCHEMA.md`), add a final `sessions[]` entry summarizing end state and where things live (deploy URL, handoff notes), and make a final commit. Optionally tag the repo (`v1.0`, `shipped`).
-4. **Log the propagation** in ForgeKit's `update-log.md` as usual. A wrap with zero propagable lessons is legitimate — note "wrapped, nothing to propagate" in the final session entry and skip steps 2 and 4.
+4. **Log the propagation** in ForgeTrail's `update-log.md` as usual. A wrap with zero propagable lessons is legitimate — note "wrapped, nothing to propagate" in the final session entry and skip steps 2 and 4.
 
 **Why this is a protocol and not a suggestion:** the compounding loop (README) only compounds if lessons actually flow back. One flagship project propagating regularly plus a dozen small projects propagating never is a leak — the small projects are often where the freshest scaffolding and framework gotchas surface, because they exercise the newest tool versions.
 
@@ -278,25 +280,25 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 - Recommend what to skip for v1
 - **If your agent supports a native plan mode** (Grok `/plan`, Cursor Plan mode, extended plan-before-code): use it for all Phase 1 work. Include **`getGreenfieldIntakePrompt`** questions in the plan context. Do **not** write app code or heavy docs until the user approves the plan. On approval, map the plan into **`PHASE_1_BRIEF.md`** (`getTemplate`) and log commitments in **`decisions[]`**. See **`getPlanModePatterns`** (MCP) or WORKFLOW §1c for handoff details.
 - **Classify the project archetype** (`product` | `internal-tool` | `one-shot`) per **§1d** and prune the tracking template's exit criteria to match. Record it in **`PHASE_1_BRIEF.md`**, **`decisions[]`**, and **`project.archetype`** in the tracking file. Default to `product` when unsure.
-- **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and **`decisions[]`**. See **ForgeKit Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
+- **If this is a web app**, answer the state-persistence sub-question **before** locking PocketBase + auth: *"Does any state need to outlive this browser — accounts, cross-device sync, shared data — or is state per-user local?"* If local-only → drop PocketBase + auth, target `adapter-static`, persist via `localStorage` / `IndexedDB`. If persistent → full backend stack. Record the answer in **`PHASE_1_BRIEF.md` §4 (`State persistence:`)** and **`decisions[]`**. See **ForgeTrail Lite** §7 (A-local vs A-persistent) and **GREENFIELD_INTAKE.md** §7.
 - **If any content is produced by an LLM** (not hand-authored, not from a conventional non-LLM API), pick one of three content-generation patterns **in Phase 1** — it drives deploy model, cost, and secret management:
   - **Runtime LLM API** — server route calls the provider per request; needs rate-limit + streaming UX. **Cloud** (OpenAI, Anthropic, …): API keys in `.env`. **Local Ollama:** `OLLAMA_BASE_URL` + `OLLAMA_MODEL`; Phase 2 **`setup:ollama`** / **`test:ollama`** (see **SYSTEM_HEALTH_CHECKS.md**, Lite §4.8) — default **Granite 4.1** / **Gemma 3**, not thinking models unless required.
   - **Build-time LLM generation** — `scripts/seed.ts` calls the provider once, writes JSON into `data/`, commits it; no runtime cost; pairs well with A-local + `adapter-static`. Seed may use cloud APIs or the same Ollama env as local dev.
   - **BYO-LLM paste** — ship a prompt in the repo; the user runs it in their own LLM chat (including a local Ollama UI) and pastes JSON into `data/seed.json`; Zod validates at app start; zero project-level keys.
 
-  Record pattern, provider, and env vars in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. See **ForgeKit Lite** §7.1 for minimal reference skeletons.
+  Record pattern, provider, and env vars in **`PHASE_1_BRIEF.md`** (content-generation section) and **`decisions[]`**. See **ForgeTrail Lite** §7.1 for minimal reference skeletons.
 
 **Artifacts to create:**
 
-- **`PHASE_1_BRIEF.md`** in `docs/` (from `_forgekit/docs/PHASE_1_BRIEF.md` template or ForgeKit MCP `getTemplate({ name: "PHASE_1_BRIEF" })`). Fill every section; mark **locked** when accurate.
-- **`.forgekit/workflow_tracking.json`**: append **`decisions[]`** entries for each major architectural commitment (with rationale); update **`phases["1-architecture"].notes`** with sign-off summary.
+- **`PHASE_1_BRIEF.md`** in `docs/` (from `_forgetrail/docs/PHASE_1_BRIEF.md` template or ForgeTrail MCP `getTemplate({ name: "PHASE_1_BRIEF" })`). Fill every section; mark **locked** when accurate.
+- **`.forgetrail/workflow_tracking.json`**: append **`decisions[]`** entries for each major architectural commitment (with rationale); update **`phases["1-architecture"].notes`** with sign-off summary.
 
 **Verify before moving on:**
 
 - You've confirmed or rejected every architectural suggestion
 - Claude has acknowledged your tech stack preferences (not just its defaults)
 - The data model handles your existing data, not just new data
-- **`PHASE_1_BRIEF.md` is complete and locked** — Phase 2 can start from this file + `.forgekit/workflow_tracking.json` without the Phase 1 chat
+- **`PHASE_1_BRIEF.md` is complete and locked** — Phase 2 can start from this file + `.forgetrail/workflow_tracking.json` without the Phase 1 chat
 
 **Example prompt (this worked):**
 
@@ -308,10 +310,10 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 
 - Confirmed architecture decisions from Phase 1
 - Access to any existing data/templates that need importing
-- **Optional — JSON from another LLM chat:** If you are generating **seed, fixture, or import data** as JSON, you can use any LLM (ChatGPT, Claude, Gemini, etc.) with a **structured prompt**, save the reply to a file in the repo (e.g. `data/seed-catalog.json`), then hand it to the coding agent. You can do this **multiple times** for different datasets or iterations. The agent should **validate** the JSON at the boundary (e.g. Zod / JSON Schema) before import — same caution as any LLM-produced structured content. A ready-to-customize prompt template lives in **ForgeKit Lite** (`content/FORGEKIT_LITE.md` §4.3) for copy-paste use.
-- **Optional — web search for live internet data:** If the product needs **current web results** (not only static seed JSON), the human typically **signs up** for a search API, adds a key to **`.env`**, and hands off to the agent. Common developer-friendly options include **[Tavily](https://tavily.com/)** and the **[Brave Search API](https://api-dashboard.search.brave.com/)** (both offer **entry-level or free monthly credits** — verify on [Tavily pricing](https://tavily.com/pricing) and [Brave API pricing](https://api-dashboard.search.brave.com/documentation/pricing)). See **ForgeKit Lite** §4.4; record provider and env var names in **`decisions[]`** and **`CONTEXT_PROMPT.md`**.
-- **Content-generation pattern (if the Phase 1 choice applies):** scaffold whichever of the three patterns was locked — **Runtime LLM API** (server route + provider config: cloud keys or **Ollama** `OLLAMA_*` + **`setup-ollama`** / **`test-ollama`** launchers), **Build-time LLM generation** (`scripts/seed.ts` + `data/*.json` committed; seed may call Ollama or cloud), or **BYO-LLM paste** (prompt file in repo + `data/seed.json` + Zod validator). **ForgeKit Lite** §7.1 has minimal reference skeletons (OpenAI route, Ollama route, seed script, import-time validator) to copy. Validate all LLM-produced JSON at the boundary; treat the model's output as untrusted.
-- **External URL → record (if applicable):** When the hero flow imports from **listing or article URLs**, follow **ForgeKit Lite** §7.2 — layered fetch/parse, honest failure typing when **DOM drift** empties extraction, optional single **verbatim** LLM recover behind an env gate — and mirror detail in **`docs/TECHNICAL_REFERENCE.md`** as the project grows.
+- **Optional — JSON from another LLM chat:** If you are generating **seed, fixture, or import data** as JSON, you can use any LLM (ChatGPT, Claude, Gemini, etc.) with a **structured prompt**, save the reply to a file in the repo (e.g. `data/seed-catalog.json`), then hand it to the coding agent. You can do this **multiple times** for different datasets or iterations. The agent should **validate** the JSON at the boundary (e.g. Zod / JSON Schema) before import — same caution as any LLM-produced structured content. A ready-to-customize prompt template lives in **ForgeTrail Lite** (`content/FORGETRAIL_LITE.md` §4.3) for copy-paste use.
+- **Optional — web search for live internet data:** If the product needs **current web results** (not only static seed JSON), the human typically **signs up** for a search API, adds a key to **`.env`**, and hands off to the agent. Common developer-friendly options include **[Tavily](https://tavily.com/)** and the **[Brave Search API](https://api-dashboard.search.brave.com/)** (both offer **entry-level or free monthly credits** — verify on [Tavily pricing](https://tavily.com/pricing) and [Brave API pricing](https://api-dashboard.search.brave.com/documentation/pricing)). See **ForgeTrail Lite** §4.4; record provider and env var names in **`decisions[]`** and **`CONTEXT_PROMPT.md`**.
+- **Content-generation pattern (if the Phase 1 choice applies):** scaffold whichever of the three patterns was locked — **Runtime LLM API** (server route + provider config: cloud keys or **Ollama** `OLLAMA_*` + **`setup-ollama`** / **`test-ollama`** launchers), **Build-time LLM generation** (`scripts/seed.ts` + `data/*.json` committed; seed may call Ollama or cloud), or **BYO-LLM paste** (prompt file in repo + `data/seed.json` + Zod validator). **ForgeTrail Lite** §7.1 has minimal reference skeletons (OpenAI route, Ollama route, seed script, import-time validator) to copy. Validate all LLM-produced JSON at the boundary; treat the model's output as untrusted.
+- **External URL → record (if applicable):** When the hero flow imports from **listing or article URLs**, follow **ForgeTrail Lite** §7.2 — layered fetch/parse, honest failure typing when **DOM drift** empties extraction, optional single **verbatim** LLM recover behind an env gate — and mirror detail in **`docs/TECHNICAL_REFERENCE.md`** as the project grows.
 
 **What to ask Claude to do:**
 
@@ -321,10 +323,10 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 
 **Artifacts to create:**
 
-- `.env.example` with all required variables (for **PocketBase** stacks: include the **public API URL and port** — e.g. `PUBLIC_POCKETBASE_URL=…` — so local dev does not assume default **8090** when other PocketBase servers or projects are already using it; the serve script, app client, and schema tools must all agree on the same value. See **ForgeKit Lite** §14 and **`POCKETBASE_SCHEMA_SCRIPT.md`**.)
+- `.env.example` with all required variables (for **PocketBase** stacks: include the **public API URL and port** — e.g. `PUBLIC_POCKETBASE_URL=…` — so local dev does not assume default **8090** when other PocketBase servers or projects are already using it; the serve script, app client, and schema tools must all agree on the same value. See **ForgeTrail Lite** §14 and **`POCKETBASE_SCHEMA_SCRIPT.md`**.)
 - `.gitignore`
-- **Phase 2 doc set only** (see **§1a Progressive documentation**): First read **`PHASE_1_BRIEF.md`** and **`.forgekit/workflow_tracking.json`**. Create **`CONTEXT_PROMPT.md`** and **merge** the brief into it using the mapping in the CONTEXT_PROMPT template (“Handoff from Phase 1”). Then **`README.md`**, **`TODO.md`** (seed from brief §11), **`.forgekit/IDEAS.md`** from `_forgekit/docs/` templates (or ForgeKit MCP `getTemplate` name `IDEAS`).
-- **Do not** create the rest of the ForgeKit doc templates in Phase 2 (e.g. `BRAND_AND_PRODUCT`, `CODE_QUALITY`, `DEPLOYMENT`) unless the user explicitly requires one to complete the spine.
+- **Phase 2 doc set only** (see **§1a Progressive documentation**): First read **`PHASE_1_BRIEF.md`** and **`.forgetrail/workflow_tracking.json`**. Create **`CONTEXT_PROMPT.md`** and **merge** the brief into it using the mapping in the CONTEXT_PROMPT template (“Handoff from Phase 1”). Then **`README.md`**, **`TODO.md`** (seed from brief §11), **`.forgetrail/IDEAS.md`** from `_forgetrail/docs/` templates (or ForgeTrail MCP `getTemplate` name `IDEAS`).
+- **Do not** create the rest of the ForgeTrail doc templates in Phase 2 (e.g. `BRAND_AND_PRODUCT`, `CODE_QUALITY`, `DEPLOYMENT`) unless the user explicitly requires one to complete the spine.
 
 **Verify before moving on:**
 
@@ -355,7 +357,7 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 - No **new** doc files. However:
   - Update **`CONTEXT_PROMPT.md`** with any patterns, env quirks, or workarounds discovered during stabilization.
   - Update **`README.md`** if setup steps changed (new env vars, revised install, required services).
-  - Add **`gotchas[]`** entries to **`.forgekit/workflow_tracking.json`** for every surprise (env, path, auth, integration) so the same mistake is never repeated.
+  - Add **`gotchas[]`** entries to **`.forgetrail/workflow_tracking.json`** for every surprise (env, path, auth, integration) so the same mistake is never repeated.
 
 **Verify before moving on:**
 
@@ -377,13 +379,13 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 **What to ask Claude to do:**
 
 - Plan before building for anything touching >3 files. "Give me a plan before making it."
-- For complex features, write a **delivery spec** first: copy ForgeKit **`docs/SPEC_FEATURE_TEMPLATE.md`** (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`) to `specs/[feature-name].md`. Fill at least problem, goals/non-goals, proposed approach (behavior + any data/API/UI that applies), edge cases, and **testable acceptance criteria**. Review the spec with the user before implementing. Specs are durable documentation and conversation anchors when context resets between sessions.
+- For complex features, write a **delivery spec** first: copy ForgeTrail **`docs/SPEC_FEATURE_TEMPLATE.md`** (MCP: `getTemplate({ name: "SPEC_FEATURE_TEMPLATE" })`) to `specs/[feature-name].md`. Fill at least problem, goals/non-goals, proposed approach (behavior + any data/API/UI that applies), edge cases, and **testable acceptance criteria**. Review the spec with the user before implementing. Specs are durable documentation and conversation anchors when context resets between sessions.
 - **Spec lifecycle folders (recommended once the repo has >5 specs, or from the first multi-file feature):** split `specs/` so drafts, in-flight work, finished work, and living references do not collide.
   - `specs/` — drafts and **not-yet-started** proposals.
   - `specs/partial/` — implementation **started or phased**; not all acceptance criteria met. Move in when work starts; update links then.
   - `specs/completed/` — fully implemented, with an **Implementation summary** at the end of the file.
   - `specs/canonical/` — **living reference / methodology** documents that are *not* time-boxed. **Exempt** from `partial/` → `completed/` moves. Header: `**Spec kind:** Canonical reference` and a `Status:` line for catalog state.
-  - Encode the lifecycle in `.cursor/rules/specs-and-todo.mdc` and `.cursor/rules/spec-completion.mdc` (ForgeKit ships copies under `content/cursor-rules/`; symlink or copy into the app's `.cursor/rules/`).
+  - Encode the lifecycle in `.cursor/rules/specs-and-todo.mdc` and `.cursor/rules/spec-completion.mdc` (ForgeTrail ships copies under `content/cursor-rules/`; symlink or copy into the app's `.cursor/rules/`).
 - Build features with the two-tier pattern: basic version by default, advanced version when user provides additional input (e.g., shallow tailoring by default, deep tailoring when tweaks are provided)
 - Use the code-owns-structure/LLM-provides-content pattern for any feature that bridges AI output with structured formats
 
@@ -479,7 +481,7 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 **What to ask Claude to do:**
 
 - Produce a CODE_QUALITY.md with categorized findings (Critical/Major/Minor)
-- Run the black hat security audit prompt (`_forgekit/prompts/black-hat-audit.md`) and save results to BLACK_HAT_REPORT.md
+- Run the black hat security audit prompt (`_forgetrail/prompts/black-hat-audit.md`) and save results to BLACK_HAT_REPORT.md
 - Audit all LLM function calls for output size vs. field limits
 - Check for silent failures (functions that catch errors and return empty results)
 - Consolidate documentation (eliminate duplicates, update cross-references)
@@ -505,7 +507,7 @@ ForgeKit's tracking schema collects `gotchas[]` and `decisions[]` all project lo
 - Auth flow works end to end
 - Payment flow works end to end (if applicable)
 - No silent failures in core workflows
-- Docs alignment audit passed (MCP `runAudit({ type: "docs-alignment" })` or `_forgekit/prompts/docs-alignment-audit.md`)
+- Docs alignment audit passed (MCP `runAudit({ type: "docs-alignment" })` or `_forgetrail/prompts/docs-alignment-audit.md`)
 
 ---
 
@@ -740,7 +742,7 @@ Print this and work through it sequentially for each new project.
 
 - [ ] Open with full context + "summarize your understanding and make suggestions before building"
 - [ ] Create and complete **`PHASE_1_BRIEF.md`**; lock it before treating Phase 1 as done
-- [ ] Record major decisions in **`.forgekit/workflow_tracking.json`** (`decisions[]` + phase 1 notes)
+- [ ] Record major decisions in **`.forgetrail/workflow_tracking.json`** (`decisions[]` + phase 1 notes)
 - [ ] Confirm or reject every architectural suggestion explicitly
 - [ ] Say "Make it so" only after all decisions are locked
 - [ ] Verify the app runs and shows real data
@@ -748,7 +750,7 @@ Print this and work through it sequentially for each new project.
 - [ ] Set up git with .gitignore and .env.example
 - [ ] Test the core workflow end to end with real data
 - [ ] Create initial TODO.md (flat list for now)
-- [ ] **Phase 2 doc set only (§1a):** `README.md`, `CONTEXT_PROMPT.md`, `TODO.md`, `.forgekit/IDEAS.md` from templates — **not** the full ForgeKit docs library yet
+- [ ] **Phase 2 doc set only (§1a):** `README.md`, `CONTEXT_PROMPT.md`, `TODO.md`, `.forgetrail/IDEAS.md` from templates — **not** the full ForgeTrail docs library yet
 
 ### Session 2: Stabilize + deepen context
 
@@ -763,16 +765,16 @@ Print this and work through it sequentially for each new project.
 - [ ] For each bug: provide the exact error message or exact wrong output
 - [ ] After each feature: test with real data, check edge cases (empty state, missing data)
 - [ ] At natural breaks: update TODO.md with completed and new items
-- [ ] Dump stray ideas into `.forgekit/IDEAS.md` (process later)
+- [ ] Dump stray ideas into `.forgetrail/IDEAS.md` (process later)
 - [ ] Watch for session length; start a new session around 4K lines
 
 ### Mid-Project: Strategic Review
 
-- [ ] Create BRAND_AND_PRODUCT.md from `_forgekit/docs/` template
+- [ ] Create BRAND_AND_PRODUCT.md from `_forgetrail/docs/` template
 - [ ] Ask Claude to cross-reference TODO.md against the brand doc
 - [ ] Reorganize TODO.md by brand value pillars, not recency
 - [ ] Deprecate features that don't serve the brand promise
-- [ ] Process `.forgekit/IDEAS.md` into TODO.md (evaluate, accept, or reject each idea)
+- [ ] Process `.forgetrail/IDEAS.md` into TODO.md (evaluate, accept, or reject each idea)
 
 ### Refactoring (When Needed)
 
@@ -784,8 +786,8 @@ Print this and work through it sequentially for each new project.
 
 ### Pre-Launch: Hardening
 
-- [ ] Ask Claude for a CODE_QUALITY.md audit (use template from `_forgekit/docs/`)
-- [ ] Run black hat security audit (`_forgekit/prompts/black-hat-audit.md`) → save to BLACK_HAT_REPORT.md
+- [ ] Ask Claude for a CODE_QUALITY.md audit (use template from `_forgetrail/docs/`)
+- [ ] Run black hat security audit (`_forgetrail/prompts/black-hat-audit.md`) → save to BLACK_HAT_REPORT.md
 - [ ] Triage all findings into TODO.md with P0/P1/P2 priority
 - [ ] Audit all LLM function calls for output size vs. field limits
 - [ ] Check for silent failures (grep for catch blocks that swallow errors)
@@ -795,7 +797,7 @@ Print this and work through it sequentially for each new project.
 - [ ] Create DEPLOYMENT.md from template (go-live checklist, monitoring, costs)
 - [ ] Create BUSINESS_PLAN.md from template (if pursuing paid users)
 - [ ] Consolidate documentation (eliminate duplicates, update cross-references)
-- [ ] Run docs alignment audit (`_forgekit/prompts/docs-alignment-audit.md`)
+- [ ] Run docs alignment audit (`_forgetrail/prompts/docs-alignment-audit.md`)
 - [ ] Test auth flow end to end
 - [ ] Test payment flow end to end (if applicable)
 - [ ] Update CONTEXT_PROMPT.md with final architecture state
@@ -807,13 +809,13 @@ Print this and work through it sequentially for each new project.
 - [ ] Use "paste the error" for debugging
 - [ ] Update CONTEXT_PROMPT.md before ending (especially decisions and their WHY)
 - [ ] Mark completed TODOs, add new ones
-- [ ] Update .forgekit/workflow_tracking.json with session notes, decisions, gotchas
+- [ ] Update .forgetrail/workflow_tracking.json with session notes, decisions, gotchas
 
 ---
 
 ## 7. Project Documentation System
 
-Full templates for each document live in `_forgekit/docs/` (or ForgeKit MCP `getTemplate`). Each template includes embedded instructions, lessons learned from Exec Foundry, and structural guidance. **Introduce templates progressively** per **§1a** — do not copy the entire library at scaffold time.
+Full templates for each document live in `_forgetrail/docs/` (or ForgeTrail MCP `getTemplate`). Each template includes embedded instructions, lessons learned from Exec Foundry, and structural guidance. **Introduce templates progressively** per **§1a** — do not copy the entire library at scaffold time.
 
 ### Document Inventory
 
@@ -823,7 +825,7 @@ Full templates for each document live in `_forgekit/docs/` (or ForgeKit MCP `get
 | **CONTEXT_PROMPT.md**      | Phase 2 (scaffolding)              | Every session end              | Session continuity. Populate by merging PHASE_1_BRIEF first.          |
 | **TODO.md**                | Phase 2 (scaffolding)              | Every session                  | Feature backlog. Reorganize by brand pillars in Phase 6.              |
 | **README.md**              | Phase 2 (scaffolding)              | When setup changes             | First-time developer setup.                                           |
-| **`.forgekit/IDEAS.md`**    | Phase 2 (scaffolding)              | Anytime (process periodically) | Raw idea intake. Buffer between inspiration and backlog.              |
+| **`.forgetrail/IDEAS.md`**    | Phase 2 (scaffolding)              | Anytime (process periodically) | Raw idea intake. Buffer between inspiration and backlog.              |
 | **specs/[feature].md**     | Phase 4+ (complex features)        | Until implemented              | Delivery feature spec from **`SPEC_FEATURE_TEMPLATE`**. Lifecycle folders: `specs/` → `partial/` → `completed/`. |
 | **TECHNICAL_REFERENCE.md** | Phase 4+ (when API/model warrants) | When features change           | How each feature works. API docs, data model, integration patterns.   |
 | **TEST_PLAN.md**           | Phase 4+ (when QA paths warrant)   | When features change           | Manual test walkthrough for major features.                           |
@@ -840,13 +842,13 @@ Full templates for each document live in `_forgekit/docs/` (or ForgeKit MCP `get
 
 ### Document Lifecycle
 
-**Phase 1 (Architecture):** Complete and lock **`PHASE_1_BRIEF.md`**; mirror commitments in **`.forgekit/workflow_tracking.json`**.
+**Phase 1 (Architecture):** Complete and lock **`PHASE_1_BRIEF.md`**; mirror commitments in **`.forgetrail/workflow_tracking.json`**.
 
-**Phase 2 (Scaffold):** Full **app spine** in one pass. **Docs:** Merge brief → **`CONTEXT_PROMPT.md`**, then **`TODO.md`**, **`README.md`**, **`.forgekit/IDEAS.md`** only (§1a). Minimal extra prose at first beyond the merge.
+**Phase 2 (Scaffold):** Full **app spine** in one pass. **Docs:** Merge brief → **`CONTEXT_PROMPT.md`**, then **`TODO.md`**, **`README.md`**, **`.forgetrail/IDEAS.md`** only (§1a). Minimal extra prose at first beyond the merge.
 
-**Phase 3-4 (Stabilization + Features):** `CONTEXT_PROMPT.md` grows; `TODO.md` grows. Add `TECHNICAL_REFERENCE.md`, `TEST_PLAN.md`, and/or `DESIGN_SYSTEM.md` when warranted — not all at phase entry. `.forgekit/IDEAS.md` captures stray thoughts.
+**Phase 3-4 (Stabilization + Features):** `CONTEXT_PROMPT.md` grows; `TODO.md` grows. Add `TECHNICAL_REFERENCE.md`, `TEST_PLAN.md`, and/or `DESIGN_SYSTEM.md` when warranted — not all at phase entry. `.forgetrail/IDEAS.md` captures stray thoughts.
 
-**Phase 6 (Strategic Review):** Create `BRAND_AND_PRODUCT.md`. Reorganize `TODO.md` by brand pillars. Cross-reference TODO against brand doc. Process `.forgekit/IDEAS.md` into TODO. Complete or deepen `DESIGN_SYSTEM.md`. Add `MARKETING_GROWTH.md` when growth planning is real.
+**Phase 6 (Strategic Review):** Create `BRAND_AND_PRODUCT.md`. Reorganize `TODO.md` by brand pillars. Cross-reference TODO against brand doc. Process `.forgetrail/IDEAS.md` into TODO. Complete or deepen `DESIGN_SYSTEM.md`. Add `MARKETING_GROWTH.md` when growth planning is real.
 
 **Phase 7 (Hardening):** Create `CODE_QUALITY.md`, `BLACK_HAT_REPORT.md`, `DEPLOYMENT.md`, `BUGS.md`; `BUSINESS_PLAN.md` if pursuing paid users. Finish or extend `TEST_PLAN.md` if not already mature. Optional `DEV_ESTIMATE.md`. Run pre-launch audit (see `prompts/pre-launch-audit.md`). If the app uses centralized copy modules, run **`export:copy`** + **`audit:inline-copy`** (target: 0 UI prose not in export) and **`user-facing-content-sync-audit.md`** before launch marketing. Consolidate and cross-reference all docs. Run docs alignment audit. **Optional handoff artifact:** when the project has real conventions and scars worth preserving — before a beta, an ownership change, or handing continued work to another engineer or a cheaper AI model — run **`prompts/engineering-skill-library.md`** to generate a mentoring-style skill library (architecture rationale, subsystem deep-dives, debugging playbooks, judgment frameworks) under `docs/skills/`. It captures the *why* that reference docs omit.
 
@@ -886,7 +888,7 @@ The documents form an interconnected system:
 ```
 BRAND_AND_PRODUCT.md ──→ TODO.md (organized by brand pillars)
          │                   ↑
-         │              .forgekit/IDEAS.md (raw ideas processed into TODO)
+         │              .forgetrail/IDEAS.md (raw ideas processed into TODO)
          ↓
 TECHNICAL_REFERENCE.md ──→ CODE_QUALITY.md (audit against tech reference)
          │                        │
