@@ -3,20 +3,43 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { readFileSync, readdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { createRequire } from "node:module";
+import { dirname, join, resolve } from "node:path";
 import { stripForgeTrailTemplateToShell } from "./templateStrip.js";
 import { validateTrackingData, formatValidationResult } from "./trackingValidate.js";
 import { ingestPlanArtifact } from "./planIngest.js";
 import { toolResult } from "./mcpFormat.js";
 
 // ---------------------------------------------------------------------------
-// Resolve the ForgeTrail content root (one level up from mcp-server/)
-// Allow override via FORGETRAIL_ROOT env var for custom installs.
+// Resolve the ForgeTrail content root.
+// 1. FORGETRAIL_ROOT
+// 2. Parent of mcp-server/ (clone or nested forgetrail package)
+// 3. Installed `forgetrail` package (when this server is forgetrail-mcp alone)
 // ---------------------------------------------------------------------------
-const FORGETRAIL_ROOT = process.env.FORGETRAIL_ROOT
-  ? resolve(process.env.FORGETRAIL_ROOT)
-  : resolve(import.meta.dirname, "..", "..");
+function looksLikeForgetrailRoot(dir: string): boolean {
+  return existsSync(join(dir, "WORKFLOW.md")) && existsSync(join(dir, "content"));
+}
+
+function resolveForgetrailRoot(): string {
+  if (process.env.FORGETRAIL_ROOT) return resolve(process.env.FORGETRAIL_ROOT);
+
+  const fromNestedDist = resolve(import.meta.dirname, "..", "..");
+  if (looksLikeForgetrailRoot(fromNestedDist)) return fromNestedDist;
+
+  try {
+    const req = createRequire(import.meta.url);
+    const pkgJson = req.resolve("forgetrail/package.json");
+    const fromPkg = dirname(pkgJson);
+    if (looksLikeForgetrailRoot(fromPkg)) return fromPkg;
+  } catch {
+    // forgetrail is not a sibling install
+  }
+
+  return fromNestedDist;
+}
+
+const FORGETRAIL_ROOT = resolveForgetrailRoot();
 
 const DOCS_DIR = join(FORGETRAIL_ROOT, "docs");
 const PROMPTS_DIR = join(FORGETRAIL_ROOT, "prompts");

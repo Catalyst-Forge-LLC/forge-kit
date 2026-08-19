@@ -22,7 +22,7 @@ The marketing site lives in **`site/`** (FilePress + Wrangler, same pattern as I
 
 - `pnpm ship` + attach forgetrail.dev (Pages project and DNS not live yet).
 - anticonfab workspace folder is now `.forgetrail/` (lock cleared 2026-08-19).
-- npm publish under `forgetrail` (if/when public).
+- npm: packages are public-ready (`forgetrail`, `forgetrail-mcp`). You publish. See [docs/NPM.md](docs/NPM.md) and `pnpm run pack:check`.
 
 ## Do not
 

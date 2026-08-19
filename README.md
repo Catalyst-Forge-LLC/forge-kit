@@ -48,6 +48,16 @@ See [mcp-server/README.md](mcp-server/README.md). First chat: *"Call `getNewProj
 
 Need the whole template tree on disk (offline, no MCP):
 
+From npm (after publish):
+
+```bash
+npm install -g forgetrail
+# or: pnpm add -g forgetrail
+forgetrail install --lite --with-genesis-stub
+```
+
+From a clone:
+
 ```bash
 # One-time from this clone:
 pnpm run link:global            # registers `forgetrail` on PATH

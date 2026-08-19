@@ -8,10 +8,43 @@
   "bin": {
     "forgetrail-mcp": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "prepack": "node -e \"import('node:fs').then(fs=>fs.copyFileSync('../LICENSE','LICENSE'))\"",
+    "prepublishOnly": "pnpm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "forgetrail",
+    "mcp",
+    "ai-agents",
+    "cursor",
+    "claude"
+  ],
+  "author": {
+    "name": "Catalyst Forge LLC",
+    "url": "https://catalystforge.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Catalyst-Forge-LLC/forgetrail.git",
+    "directory": "mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/Catalyst-Forge-LLC/forgetrail/issues"
+  },
+  "homepage": "https://forgetrail.dev",
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",

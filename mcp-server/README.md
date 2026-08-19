@@ -6,6 +6,8 @@ A local MCP server that exposes the ForgeTrail methodology to any MCP-compatible
 
 **No MCP yet?** Prove ForgeTrail with Genesis + Lite first: see repo-root **[TRY_FORGETRAIL.md](../TRY_FORGETRAIL.md)**.
 
+After npm publish: `npx -y forgetrail-mcp` (set `FORGETRAIL_ROOT` to a `forgetrail` install, or install `forgetrail` beside it).
+
 From the **ForgeTrail repo root** (MCP path):
 
 ```bash

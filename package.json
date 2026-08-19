@@ -1,12 +1,27 @@
 {
   "name": "forgetrail",
   "version": "0.3.0",
-  "private": true,
-  "description": "ForgeTrail methodology — CLI install and MCP server",
+  "private": false,
+  "description": "ForgeTrail: a persistent development system for building software with AI agents. CLI, Lite protocol, and methodology templates.",
+  "license": "Apache-2.0",
   "type": "module",
   "bin": {
     "forgetrail": "./scripts/forgetrail-cli.mjs"
   },
+  "files": [
+    "scripts/",
+    "content/",
+    "docs/",
+    "prompts/",
+    "WORKFLOW.md",
+    "TRACKING_SCHEMA.md",
+    "workflow_tracking.json",
+    "INITIAL_PROMPT.md",
+    "CONTINUATION_PROMPT.md",
+    "TRY_FORGETRAIL.md",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "install:forgetrail": "node scripts/install-forgetrail.mjs",
     "install:lite": "node scripts/install-forgetrail-lite.mjs",
@@ -20,18 +35,35 @@
     "ship": "pnpm --dir site run ship",
     "site:dev": "pnpm --dir site dev",
     "site:build": "pnpm --dir site run build",
-    "site:deploy": "pnpm --dir site run ship"
+    "site:deploy": "pnpm --dir site run ship",
+    "pack:check": "node scripts/publish-gate.mjs",
+    "prepublishOnly": "node scripts/publish-gate.mjs"
   },
-  "files": [
-    "scripts/",
-    "content/",
-    "docs/",
-    "prompts/",
-    "WORKFLOW.md",
-    "TRACKING_SCHEMA.md",
-    "workflow_tracking.json",
-    "INITIAL_PROMPT.md",
-    "CONTINUATION_PROMPT.md",
-    "LICENSE"
-  ]
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "forgetrail",
+    "mcp",
+    "ai-agents",
+    "cursor",
+    "claude",
+    "methodology",
+    "lite"
+  ],
+  "author": {
+    "name": "Catalyst Forge LLC",
+    "url": "https://catalystforge.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Catalyst-Forge-LLC/forgetrail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Catalyst-Forge-LLC/forgetrail/issues"
+  },
+  "homepage": "https://forgetrail.dev",
+  "publishConfig": {
+    "access": "public"
+  }
 }

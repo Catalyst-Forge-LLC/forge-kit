@@ -63,5 +63,5 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 
 - ~~GitHub repository rename and URL redirects.~~ Done (`Catalyst-Forge-LLC/forgetrail`).
 - forgetrail.dev first Wrangler ship and custom-domain DNS (FilePress site lives in `site/`).
-- npm publish under `forgetrail` (if/when public).
+- npm publish under `forgetrail` / `forgetrail-mcp` (packages are public-ready; you run `pnpm publish`). See [docs/NPM.md](../../docs/NPM.md).
 - ~~anticonfab `.forgekit/` directory rename.~~ Done 2026-08-19 (`.forgetrail/`).

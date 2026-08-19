@@ -20,6 +20,7 @@ ForgeTrail is maintained as **open source on a best-effort basis**. There is no 
 - Ground commit messages in the actual diff (see `.cursor/rules/commit-messages.mdc` in this repo).
 - If you change **FORGETRAIL_LITE.md**, bump the version in the header, footer, and §12 `AGENTS.md` snippet reference when the change is substantive.
 - Run `pnpm install && pnpm run build` in `mcp-server/` when you touch TypeScript.
+- npm releases: [docs/NPM.md](docs/NPM.md). Run `pnpm run pack:check` before you publish. Do not commit `.npmrc` tokens.
 
 ## Doc and lesson changes
 
