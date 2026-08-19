@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "filepress dev",
+		"dev": "node ../scripts/ensure-lease.mjs forgetrail-site 5195 && filepress dev",
 		"build": "filepress build",
 		"preview": "filepress preview",
 		"check": "filepress check",
@@ -12,10 +12,14 @@
 		"deploy": "pnpm ship"
 	},
 	"devDependencies": {
-		"getfilepress": "^0.1.4",
+		"getfilepress": "^0.1.6",
 		"wrangler": "^4.120.1"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": ["esbuild", "getfilepress", "workerd"]
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"getfilepress",
+			"workerd"
+		]
 	}
 }
