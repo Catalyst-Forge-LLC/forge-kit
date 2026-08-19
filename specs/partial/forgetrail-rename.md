@@ -1,7 +1,7 @@
 # ForgeTrail naming pass — delivery spec
 
 **Spec kind:** Delivery  
-**Status:** Partial; naming pass landed. Remaining: GitHub slug, anticonfab folder lock, DNS/site  
+**Status:** Partial; naming pass landed. Remaining: GitHub slug, anticonfab folder lock, first Wrangler ship + DNS  
 **Date:** 2026-08-15  
 **Related:** [TODO.md](../TODO.md), [docs/FORGETRAIL_RENAME.md](../docs/FORGETRAIL_RENAME.md)  
 **Surfaces:** docs, README, Lite, MCP, CLI, Cursor rules, sibling consumer repos
@@ -10,7 +10,7 @@
 
 ## 1. Problem
 
-The product is now **ForgeTrail** (domain: forgetrail.dev). The repo, CLI, MCP tools, workspace folder, and consumer projects still say ForgeTrail. Mixed names will confuse first-time readers and break the trail metaphor in copy.
+The product is now **ForgeTrail** (domain: forgetrail.dev). The repo, CLI, MCP tools, workspace folder, and consumer projects still said **ForgeKit**. Mixed names confuse first-time readers and break the trail metaphor in copy.
 
 ## 2. Goals
 
@@ -36,7 +36,7 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 - Workspace: `.forgetrail/`. Vendored tree: `_forgetrail/`.
 - CLI / packages / MCP key: `forgetrail`.
 - Lite and progress files: `FORGETRAIL_LITE.md`, `FORGETRAIL_PROGRESS.md`.
-- MCP tools: `getForgeTrail*` (was `getForgeTrail*`).
+- MCP tools: `getForgeTrail*` (was `getForgeKit*`).
 - Env: `FORGETRAIL_ROOT`, `FORGETRAIL_TARGET`, `FORGETRAIL_TEMPLATE_DEFAULT_MODE`.
 
 ## 8. Acceptance criteria
@@ -53,9 +53,13 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 - Sibling consumers updated (aegis, curator, deal-dashboard, engram, filepress, first-shift, gui4cli, nerdy, temper-pass, exec-foundry, catalyst-forge, and others).
 - **anticonfab:** file contents and rule names updated; Windows file lock blocked renaming `.forgekit/` to `.forgetrail/`. Retry when nothing has that folder open.
 
+### Progress (2026-08-19)
+
+- Marketing site lives in **`site/`** (FilePress + Wrangler, IngotVault `/site` pattern). Domain registered; Pages project and DNS not live yet.
+
 ## 9. Out of scope / follow-ups
 
 - GitHub repository rename and URL redirects.
-- forgetrail.dev site and DNS cutover.
+- forgetrail.dev first Wrangler ship and custom-domain DNS (FilePress site lives in `site/`).
 - npm publish under `forgetrail` (if/when public).
 - anticonfab `.forgekit/` directory rename (file lock).

@@ -73,9 +73,9 @@ Add to your Cursor MCP settings (`.cursor/mcp.json` in the project root, or glob
   "mcpServers": {
     "forgetrail": {
       "command": "node",
-      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"],
+      "args": ["Z:/workspace/forgetrail/mcp-server/dist/index.js"],
       "env": {
-        "FORGETRAIL_ROOT": "Z:/workspace/forge-kit"
+        "FORGETRAIL_ROOT": "Z:/workspace/forgetrail"
       }
     }
   }
@@ -93,7 +93,7 @@ Add to `claude_desktop_config.json` (on Windows: `%APPDATA%\Claude\claude_deskto
   "mcpServers": {
     "forgetrail": {
       "command": "node",
-      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"]
+      "args": ["Z:/workspace/forgetrail/mcp-server/dist/index.js"]
     }
   }
 }
@@ -102,7 +102,7 @@ Add to `claude_desktop_config.json` (on Windows: `%APPDATA%\Claude\claude_deskto
 ## Configure in Claude Code
 
 ```bash
-claude mcp add forgetrail node Z:/workspace/forge-kit/mcp-server/dist/index.js
+claude mcp add forgetrail node Z:/workspace/forgetrail/mcp-server/dist/index.js
 ```
 
 ## Custom ForgeTrail location
@@ -114,9 +114,9 @@ If your ForgeTrail repo lives somewhere other than the parent of `mcp-server/`, 
   "mcpServers": {
     "forgetrail": {
       "command": "node",
-      "args": ["Z:/workspace/forge-kit/mcp-server/dist/index.js"],
+      "args": ["/path/to/forgetrail/mcp-server/dist/index.js"],
       "env": {
-        "FORGETRAIL_ROOT": "/path/to/your/forgetrail"
+        "FORGETRAIL_ROOT": "/path/to/forgetrail"
       }
     }
   }

@@ -1,11 +1,11 @@
 # ForgeTrail rename and copy guide
 
 **Status:** Name selected. Domain: [forgetrail.dev](https://forgetrail.dev)  
-**Former name:** ForgeTrail  
+**Former name:** ForgeKit  
 **Canonical spelling:** `ForgeTrail` (one word, camel case). Folder and CLI form: `forgetrail`.  
 **Related:** [BRAND_AND_PRODUCT.md](BRAND_AND_PRODUCT.md), [README.md](../README.md)
 
-This document is the source of truth for the rename. Use it when changing identifiers, rewriting copy, or updating a project that still says ForgeTrail.
+This document is the source of truth for the rename. Use it when changing identifiers, rewriting copy, or updating a project that still says ForgeKit.
 
 ---
 
@@ -109,10 +109,10 @@ Do not invent a new tagline for a one-off surface if one of these fits.
 | remember decisions across sessions | keep the trail of decisions across sessions |
 | compounding loop | compounding trail / leave a better trail |
 | the kit | ForgeTrail, the trail, or the system (pick one; do not say "the kit") |
-| Try ForgeTrail | Try ForgeTrail |
-| ForgeTrail Lite | ForgeTrail Lite |
-| `_forgetrail/` vendored tree | `_forgetrail/` vendored tree |
-| `.forgetrail/` workspace | `.forgetrail/` workspace |
+| Try ForgeKit | Try ForgeTrail |
+| ForgeKit Lite | ForgeTrail Lite |
+| `_forgekit/` vendored tree | `_forgetrail/` vendored tree |
+| `.forgekit/` workspace | `.forgetrail/` workspace |
 
 ---
 
@@ -122,26 +122,26 @@ Use this table for mechanical renames. Do not leave mixed old/new identifiers in
 
 | Kind | Old | New |
 |------|-----|-----|
-| Product name | ForgeTrail | ForgeTrail |
+| Product name | ForgeKit | ForgeTrail |
 | Domain | (none owned) | forgetrail.dev |
-| CLI / npm bin | `forgetrail` | `forgetrail` |
-| Package | `forgetrail`, `forgetrail-mcp` | `forgetrail`, `forgetrail-mcp` |
-| MCP server key | `forgetrail` | `forgetrail` |
-| Env | `FORGETRAIL_ROOT`, `FORGETRAIL_TARGET`, `FORGETRAIL_TEMPLATE_DEFAULT_MODE` | `FORGETRAIL_ROOT`, `FORGETRAIL_TARGET`, `FORGETRAIL_TEMPLATE_DEFAULT_MODE` |
-| App workspace | `.forgetrail/` | `.forgetrail/` |
-| Vendored tree | `_forgetrail/` | `_forgetrail/` |
-| Lite file | `FORGETRAIL_LITE.md` | `FORGETRAIL_LITE.md` |
-| Progress doc | `FORGETRAIL_PROGRESS.md` | `FORGETRAIL_PROGRESS.md` |
-| Skill | `content/skills/forgetrail/` | `content/skills/forgetrail/` |
-| Cursor rules | `forgetrail-*.mdc` | `forgetrail-*.mdc` |
-| MCP tools | `getForgeTrailLite`, `getForgeTrailSkill`, … | `getForgeTrailLite`, `getForgeTrailSkill`, … |
-| pnpm scripts | `forgetrail:status`, `install:forgetrail` | `forgetrail:status`, `install:forgetrail` |
+| CLI / npm bin | `forgekit` | `forgetrail` |
+| Package | `forgekit`, `forgekit-mcp` | `forgetrail`, `forgetrail-mcp` |
+| MCP server key | `forgekit` | `forgetrail` |
+| Env | `FORGEKIT_ROOT`, `FORGEKIT_TARGET`, `FORGEKIT_TEMPLATE_DEFAULT_MODE` | `FORGETRAIL_ROOT`, `FORGETRAIL_TARGET`, `FORGETRAIL_TEMPLATE_DEFAULT_MODE` |
+| App workspace | `.forgekit/` | `.forgetrail/` |
+| Vendored tree | `_forgekit/` | `_forgetrail/` |
+| Lite file | `FORGEKIT_LITE.md` | `FORGETRAIL_LITE.md` |
+| Progress doc | `FORGEKIT_PROGRESS.md` | `FORGETRAIL_PROGRESS.md` |
+| Skill | `content/skills/forgekit/` | `content/skills/forgetrail/` |
+| Cursor rules | `forgekit-*.mdc` | `forgetrail-*.mdc` |
+| MCP tools | `getForgeKitLite`, `getForgeKitSkill`, … | `getForgeTrailLite`, `getForgeTrailSkill`, … |
+| pnpm scripts | `forgekit:status`, `install:forgekit` | `forgetrail:status`, `install:forgetrail` |
+| GitHub slug | `Catalyst-Forge-LLC/forge-kit` | `Catalyst-Forge-LLC/forgetrail` (old URL redirects) |
 
-**Leave unchanged unless the host is actually renamed:**
+**Leave unchanged:**
 
-- GitHub repo path `Catalyst-Forge-LLC/forge-kit` (repo slug is a separate publish step)
-- Local clone folder `forgetrail` on disk
-- Historical dates and quotations that are explicitly about the former name (say "formerly ForgeTrail" once, then use ForgeTrail)
+- Historical dates and quotations that are explicitly about the former name (say "formerly ForgeKit" once, then use ForgeTrail)
+- The archive remote `Catalyst-Forge-LLC/forge-kit-original` if you still keep a private snapshot
 
 When you mention the old name, do it once as provenance, not as a parallel brand.
 
@@ -162,7 +162,7 @@ Run this list for the methodology repo and for every consumer project.
 - [ ] Sibling / dependent repos that copy Lite, rules, or scripts
 - [ ] In-app or site listings that describe this product
 
-After a copy pass, grep for `ForgeTrail`, `forgetrail`, `FORGETRAIL`, `.forgetrail`, `_forgetrail`, and `forgetrail` (except the GitHub slug and local folder).
+After a copy pass, grep for `ForgeKit`, `forgekit`, `FORGEKIT`, `.forgekit`, `_forgekit`, and `forge-kit` (except explicit former-name provenance and the archive remote).
 
 ---
 

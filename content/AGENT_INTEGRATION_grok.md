@@ -74,7 +74,7 @@ Use this very repo as a test case. Run a full cycle or slices with Grok Build + 
 ## Registration (local dev)
 
 ```bash
-grok mcp add forgetrail -- node "Z:\workspace\forge-kit\mcp-server\dist\index.js" --env FORGETRAIL_ROOT="Z:\workspace\forge-kit"
+grok mcp add forgetrail -- node "Z:\workspace\forgetrail\mcp-server\dist\index.js" --env FORGETRAIL_ROOT="Z:\workspace\forgetrail"
 ```
 
 Or via `~/.grok/config.toml` under `[mcp_servers.forgetrail]`.

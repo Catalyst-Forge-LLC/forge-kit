@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-08-19 | **Marketing site in `site/`:** FilePress + Wrangler, same `/site` pattern as IngotVault. Preview `pnpm site:dev`; publish `pnpm ship` to Pages project `forgetrail`. Domain registered; custom DNS not live yet. |
 | 2026-08-15 | **Rename: ForgeKit → ForgeTrail.** Product name, identifiers, and copy now use ForgeTrail / forgetrail (domain: forgetrail.dev). Workspace `.forgetrail/`, Lite `FORGETRAIL_LITE.md` v2.0.0, CLI `forgetrail`, MCP tools `getForgeTrail*`. Copy guide: `docs/FORGETRAIL_RENAME.md`. Tagline: Forge the path. Keep the trail. GitHub slug `Catalyst-Forge-LLC/forge-kit` unchanged. |
 | 2026-07-30 | **Fix-efficacy pass for security re-audits, plus SSRF depth rows (Exec Foundry sweep):** **black-hat-audit** gains **AREA 0** — treat every previously "remediated" defense as unverified, enumerate bypass inputs, and name the known failure modes (exact match where a range is meant, missing host normalization, dead guard branches, escape scheme mismatched to the downstream parser, chained `.replace()` sanitizers, guarded helper with unguarded call sites, check-then-use gaps). RULES now require a regression test that fails against pre-fix code. **CODE_QUALITY** — four checklist rows (numeric address ranges, tested guards, SDK-matched escaping, single-pass sanitizers) + lesson. |
 | 2026-07-29 | **URL host matching + SSRF hygiene (Exec Foundry CodeQL pass):** **CODE_QUALITY** checklist + lesson (`hostMatchesDomain`, scheme allowlist, workflow `permissions`, no client stacks). **CONTEXT_PROMPT** pattern + anti-pattern. Cursor rule **`url-host-matching.mdc`** (+ `content/cursor-rules/` mirror). |
@@ -48,6 +49,10 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-08-19 — Marketing site in `site/`
+
+forgetrail.dev is registered but not live. The marketing site now lives in this repo at **`site/`**, matching IngotVault: FilePress content (`filepress.config.ts`, `pages/`, `posts/`, `theme.css`) plus Wrangler Pages (`wrangler.jsonc`, `pnpm ship`). Root scripts: `site:dev`, `site:build`, `ship`. First publish still needs Wrangler login, Pages project `forgetrail`, and registrar DNS to Cloudflare.
 
 ### 2026-08-15 — Rename: ForgeKit → ForgeTrail
 

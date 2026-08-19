@@ -1,0 +1,13 @@
+{
+	// Cloudflare Pages — static output only (no Worker script).
+	// Deploy:  pnpm ship   (= build + wrangler pages deploy build --project-name=forgetrail)
+	//
+	// Prefer one pipeline until Pages Git is wired (root directory: site).
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "forgetrail",
+	"compatibility_date": "2026-08-19",
+	"pages_build_output_dir": "build",
+	"observability": {
+		"enabled": true
+	}
+}

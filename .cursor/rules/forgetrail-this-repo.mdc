@@ -1,0 +1,14 @@
+---
+description: This clone is the ForgeTrail methodology repo, not an app that uses it
+alwaysApply: true
+---
+
+# This repository is ForgeTrail
+
+You are editing the **ForgeTrail** source repo (methodology, Lite, MCP, templates). You are not bootstrapping or resuming a consumer app.
+
+- **Resume work here from** `RESUME.md` and `TODO.md`.
+- **Do not** follow `INITIAL_PROMPT.md` or `CONTINUATION_PROMPT.md` as this repo’s kickoff or session start. Those are product files for **app** projects that adopt ForgeTrail.
+- **Do not** call `getNewProjectKickoff` or write `.forgetrail/workflow_tracking.json` for *this* repo.
+- **Do not** treat `docs/TODO.md`, `docs/IDEAS.md`, `docs/BUGS.md`, or other `[App Name]` files as this project’s backlog. They are templates. Root `TODO.md` is the methodology-repo backlog.
+- After a folder rename, keep `.cursor/mcp.json` `args` and `FORGETRAIL_ROOT` pointed at this clone (currently `Z:/workspace/forgetrail`).

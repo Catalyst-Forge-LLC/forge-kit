@@ -150,11 +150,13 @@ Later phases add docs only when needed (`TECHNICAL_REFERENCE`, `DESIGN_SYSTEM`, 
 ## What's in the box
 
 ```
-forge-kit/                   ← clone folder; product name is ForgeTrail
+forgetrail/                  ← clone folder; product name is ForgeTrail
+  RESUME.md                ← Resume *this* methodology repo (not an app)
   TRY_FORGETRAIL.md          ← Human prove-it path (start here)
   WORKFLOW.md              ← 7-phase lifecycle
-  INITIAL_PROMPT.md        ← Starter prompt (MCP + local)
-  CONTINUATION_PROMPT.md   ← Resume prompt
+  INITIAL_PROMPT.md        ← App starter prompt (do not use on this repo)
+  CONTINUATION_PROMPT.md   ← App resume prompt (do not use on this repo)
+  site/                    ← forgetrail.dev (FilePress + Wrangler)
   TRACKING_SCHEMA.md
   update-log.md
   content/

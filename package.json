@@ -16,7 +16,11 @@
     "mcp:status": "node scripts/mcp-status.mjs status",
     "mcp:ping": "node scripts/mcp-status.mjs ping",
     "mcp:cursor-config": "node scripts/mcp-status.mjs cursor-config",
-    "mcp:inspector": "node scripts/mcp-status.mjs inspector"
+    "mcp:inspector": "node scripts/mcp-status.mjs inspector",
+    "ship": "pnpm --dir site run ship",
+    "site:dev": "pnpm --dir site dev",
+    "site:build": "pnpm --dir site run build",
+    "site:deploy": "pnpm --dir site run ship"
   },
   "files": [
     "scripts/",

@@ -1,3 +1,6 @@
+> **App projects only.** Paste this file into a coding-agent chat to **start an app** that uses ForgeTrail.
+> If you are working in the **ForgeTrail methodology repo** itself, stop and read `RESUME.md` (and `TODO.md`). Do not follow the steps below here.
+
 ## Instructions
 
 You are helping me build a full-stack web application. I use ForgeTrail, a structured phase-based development workflow refined across multiple projects. Your job is to follow this workflow, track progress, and pause at phase transitions for my approval before advancing.
