@@ -21,7 +21,7 @@ The marketing site lives in **`site/`** (FilePress + Wrangler, same pattern as I
 ## Remaining
 
 - `pnpm ship` + attach forgetrail.dev (Pages project and DNS not live yet).
-- anticonfab: contents renamed; retry `.forgekit/` → `.forgetrail/` if the folder is still locked.
+- anticonfab workspace folder is now `.forgetrail/` (lock cleared 2026-08-19).
 - npm publish under `forgetrail` (if/when public).
 
 ## Do not

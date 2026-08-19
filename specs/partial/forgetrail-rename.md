@@ -57,10 +57,11 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 
 - Marketing site lives in **`site/`** (FilePress + Wrangler, IngotVault `/site` pattern). Domain registered; Pages project and DNS not live yet.
 - GitHub slug renamed to **`Catalyst-Forge-LLC/forgetrail`**. Public links updated.
+- anticonfab workspace folder renamed `.forgekit/` → `.forgetrail/`.
 
 ## 9. Out of scope / follow-ups
 
 - ~~GitHub repository rename and URL redirects.~~ Done (`Catalyst-Forge-LLC/forgetrail`).
 - forgetrail.dev first Wrangler ship and custom-domain DNS (FilePress site lives in `site/`).
 - npm publish under `forgetrail` (if/when public).
-- anticonfab `.forgekit/` directory rename (file lock).
+- ~~anticonfab `.forgekit/` directory rename.~~ Done 2026-08-19 (`.forgetrail/`).
