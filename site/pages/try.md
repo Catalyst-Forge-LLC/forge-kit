@@ -15,16 +15,16 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 ## 15-minute recipe
 
 1. **Get the Genesis prompt**  
-   Open [GENESIS_SPEC_PROMPT.md](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/content/GENESIS_SPEC_PROMPT.md). Copy the **Copy-paste prompt** section.
+   Open [GENESIS_SPEC_PROMPT.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/GENESIS_SPEC_PROMPT.md). Copy the **Copy-paste prompt** section.
 
 2. **Iterate a spec in your favorite chat app**  
-   Fill the bracketed parts, send it, and refine until you trust the markdown. Optional shape reference: [Mars habitat duty roster](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) (fiction).
+   Fill the bracketed parts, send it, and refine until you trust the markdown. Optional shape reference: [Mars habitat duty roster](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) (fiction).
 
 3. **Create a new project folder**  
    Example: `mkdir my-app && cd my-app`
 
 4. **Add ForgeTrail Lite**  
-   Save [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` in your project.  
+   Save [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` in your project.  
    If you already linked the CLI: `forgetrail install --lite` (add `--with-genesis-stub` if you want a `docs/GENESIS.md` stub).
 
 5. **Save your spec as `docs/GENESIS.md`**  
@@ -44,8 +44,8 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 - `docs/PHASE_1_BRIEF.md` drafted from your Genesis (or clearly in progress)
 - The agent asked for approval before scaffolding
 
-Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forge-kit/issues/new?template=try-forgetrail-checklist.md) issue and mark how far you got.
+Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forgetrail/issues/new?template=try-forgetrail-checklist.md) issue and mark how far you got.
 
 ## MCP (optional, later)
 
-When you have cloned the [ForgeTrail repo](https://github.com/Catalyst-Forge-LLC/forge-kit) and want always-current tools in the IDE, see [MCP setup](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/mcp-server/README.md). First chat: *Call `getNewProjectKickoff` and set up the project.*
+When you have cloned the [ForgeTrail repo](https://github.com/Catalyst-Forge-LLC/forgetrail) and want always-current tools in the IDE, see [MCP setup](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/mcp-server/README.md). First chat: *Call `getNewProjectKickoff` and set up the project.*

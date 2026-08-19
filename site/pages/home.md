@@ -31,6 +31,6 @@ Distilled from building real production apps. Every pattern earned its place by 
 
 1. **[Try ForgeTrail](/try):** Genesis spec plus ForgeTrail Lite. No MCP required.
 2. **[How it works](/how-it-works):** the seven phases, from plan to harden.
-3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forge-kit):** clone, MCP server, and issue checklist.
+3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail):** clone, MCP server, and issue checklist.
 
-Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/LICENSE). Built by [Catalyst Forge](https://catalystforge.com).
+Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/LICENSE). Built by [Catalyst Forge](https://catalystforge.com).

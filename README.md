@@ -31,7 +31,7 @@ Follow **[TRY_FORGETRAIL.md](TRY_FORGETRAIL.md)** (~15 minutes of setup, plus ti
 
 Optional shape reference (fiction): [Mars habitat duty roster](content/examples/GENESIS_SAMPLE_mars-habitat-roster.md).
 
-Stuck? Use the [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forge-kit/issues/new?template=try-forgetrail-checklist.md) issue template.
+Stuck? Use the [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forgetrail/issues/new?template=try-forgetrail-checklist.md) issue template.
 
 ### 2. MCP (Cursor / Claude power users)
 
@@ -186,4 +186,4 @@ Doc templates use `[BRACKETED]` placeholders and callouts (💡 lesson, 📝 exa
 
 **Apache License 2.0.** See [LICENSE](LICENSE). Contribute via [CONTRIBUTING.md](CONTRIBUTING.md). Security: [SECURITY.md](SECURITY.md).
 
-**Support:** community best-effort via GitHub issues (including the [Try checklist](https://github.com/Catalyst-Forge-LLC/forge-kit/issues/new?template=try-forgetrail-checklist.md)). No SLA or paid support bundled with the license.
+**Support:** community best-effort via GitHub issues (including the [Try checklist](https://github.com/Catalyst-Forge-LLC/forgetrail/issues/new?template=try-forgetrail-checklist.md)). No SLA or paid support bundled with the license.

@@ -13,7 +13,7 @@ labels: ["nux", "try-path"]
 
 Mark what you completed:
 
-- [ ] Read [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/TRY_FORGETRAIL.md)
+- [ ] Read [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md)
 - [ ] Produced or saved a `docs/GENESIS.md` (or used Lite intake only)
 - [ ] Added `.forgetrail/FORGETRAIL_LITE.md` (copy or `forgetrail install --lite`)
 - [ ] Pasted the kickoff line into my coding agent

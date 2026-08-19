@@ -18,7 +18,7 @@ The leverage is not in the model. It is in the structure you give it. Same model
 6. **Align:** Features pressure-tested against the product vision. Cut what does not serve it.
 7. **Harden:** Security, performance, documentation. Production-grade, not demo-grade.
 
-Phases 4 and 5 often alternate. Full playbooks live in [WORKFLOW.md](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/WORKFLOW.md).
+Phases 4 and 5 often alternate. Full playbooks live in [WORKFLOW.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/WORKFLOW.md).
 
 ## What stays in the repo
 

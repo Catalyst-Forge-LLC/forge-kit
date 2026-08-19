@@ -18,7 +18,7 @@
   },
   "oneClickDev": {
     "purpose": "Non-technical operators double-click setup/run/status; agents create these in Phase 2.",
-    "forgeKitGuide": "content/ONE_CLICK_DEV_SETUP.md",
+    "forgetrailGuide": "content/ONE_CLICK_DEV_SETUP.md",
     "referenceScripts": [
       "content/scripts/forgetrail-dev-launcher.mjs",
       "content/scripts/setup-pocketbase.mjs",
@@ -55,7 +55,7 @@
   },
   "systemHealthChecks": {
     "purpose": "Isolated pass/fail scripts per dependency — not full app start.",
-    "forgeKitGuide": "content/SYSTEM_HEALTH_CHECKS.md",
+    "forgetrailGuide": "content/SYSTEM_HEALTH_CHECKS.md",
     "pocketBase": {
       "script": "scripts/test-pocketbase.mjs",
       "launcherBat": "test-pocketbase.bat"
@@ -71,7 +71,7 @@
   },
   "devAutomation": {
     "purpose": "Optional scripts in the app repo so setup is repeatable (env check, codegen, seed, E2E browsers, git hooks). Not part of the PocketBase binary install.",
-    "forgeKitGuide": "content/DEV_AUTOMATION_SCRIPTS.md (in ForgeTrail repo)",
+    "forgetrailGuide": "content/DEV_AUTOMATION_SCRIPTS.md (in ForgeTrail repo)",
     "examples": {
       "envCheck": "pnpm run env:check",
       "codegen": "pnpm run gen:types",
@@ -92,7 +92,7 @@
       "scripts/ensure-pocketbase-schema.ts (or .mjs) — admin auth + upsert collections",
       "package.json script e.g. pocketbase:schema"
     ],
-    "forgeKitGuide": "content/POCKETBASE_SCHEMA_SCRIPT.md (in ForgeTrail repo)"
+    "forgetrailGuide": "content/POCKETBASE_SCHEMA_SCRIPT.md (in ForgeTrail repo)"
   },
   "notes": [
     "Prefer one-click setup.bat / setup.sh for humans; pnpm scripts for agents.",

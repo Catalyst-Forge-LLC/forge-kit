@@ -13,7 +13,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 ## 15-minute recipe
 
 1. **Get the Genesis prompt**  
-   Open [`content/GENESIS_SPEC_PROMPT.md`](content/GENESIS_SPEC_PROMPT.md) (or the [raw file on GitHub](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/content/GENESIS_SPEC_PROMPT.md)). Copy the **Copy-paste prompt** section.
+   Open [`content/GENESIS_SPEC_PROMPT.md`](content/GENESIS_SPEC_PROMPT.md) (or the [raw file on GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/GENESIS_SPEC_PROMPT.md)). Copy the **Copy-paste prompt** section.
 
 2. **Iterate a spec in your favorite chat app**  
    Fill the bracketed parts, send it, and refine until you trust the markdown. Optional shape reference: [`content/examples/GENESIS_SAMPLE_mars-habitat-roster.md`](content/examples/GENESIS_SAMPLE_mars-habitat-roster.md) (fictional Mars duty roster; relatable shared-schedule problem).
@@ -47,7 +47,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 - [ ] `docs/PHASE_1_BRIEF.md` drafted from your Genesis (or clearly in progress)  
 - [ ] The agent asked for approval before scaffolding  
 
-Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forge-kit/issues/new?template=try-forgetrail-checklist.md) issue and mark how far you got.
+Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forgetrail/issues/new?template=try-forgetrail-checklist.md) issue and mark how far you got.
 
 ---
 

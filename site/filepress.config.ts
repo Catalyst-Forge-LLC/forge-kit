@@ -1,6 +1,6 @@
 import { defineFilepressConfig } from 'getfilepress';
 
-const github = 'https://github.com/Catalyst-Forge-LLC/forge-kit';
+const github = 'https://github.com/Catalyst-Forge-LLC/forgetrail';
 
 export default defineFilepressConfig({
 	title: 'ForgeTrail',

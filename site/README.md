@@ -1,6 +1,6 @@
 # forgetrail.dev
 
-Marketing site for [ForgeTrail](https://github.com/Catalyst-Forge-LLC/forge-kit), built with [FilePress](https://getfilepress.com) ([`getfilepress`](https://www.npmjs.com/package/getfilepress) on npm). Same `/site` pattern as IngotVault.
+Marketing site for [ForgeTrail](https://github.com/Catalyst-Forge-LLC/forgetrail), built with [FilePress](https://getfilepress.com) ([`getfilepress`](https://www.npmjs.com/package/getfilepress) on npm). Same `/site` pattern as IngotVault.
 
 ```bash
 # from the ForgeTrail repo root

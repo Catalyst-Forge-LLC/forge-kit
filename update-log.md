@@ -2,7 +2,7 @@
 
 Chronological record of meaningful changes to **this** ForgeTrail repository: propagation passes from live apps, new prompt templates, methodology edits, and doc inventory updates.
 
-**Archive:** Entries before **2026-05-26** (the first open-source release) live in [update-log-archive.md](update-log-archive.md) — private-era development and propagation from real apps, kept for maintainer context and provenance. For the first open-source release, see the git tag or initial commit on [GitHub](https://github.com/Catalyst-Forge-LLC/forge-kit).
+**Archive:** Entries before **2026-05-26** (the first open-source release) live in [update-log-archive.md](update-log-archive.md) — private-era development and propagation from real apps, kept for maintainer context and provenance. For the first open-source release, see the git tag or initial commit on [GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail).
 
 **Archiving convention:** This file stays readable, not exhaustive. When it grows past roughly **30 table rows** (or a year boundary rolls over), move the oldest rows **and their Detail sections together** into the archive file (or a new `update-log-<year>.md`), oldest-first, and keep a one-line pointer here. The full history remains greppable across the archive files; this file is the recent, high-signal view a new reader actually opens.
 
@@ -23,7 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
-| 2026-08-19 | **Marketing site in `site/`:** FilePress + Wrangler, same `/site` pattern as IngotVault. Preview `pnpm site:dev`; publish `pnpm ship` to Pages project `forgetrail`. Domain registered; custom DNS not live yet. |
+| 2026-08-19 | **GitHub slug `Catalyst-Forge-LLC/forgetrail`:** repo renamed (old `forge-kit` URL redirects). Public links, site GitHub nav, and homepage `forgetrail.dev` updated. Marketing site in `site/` (FilePress + Wrangler). |
 | 2026-08-15 | **Rename: ForgeKit → ForgeTrail.** Product name, identifiers, and copy now use ForgeTrail / forgetrail (domain: forgetrail.dev). Workspace `.forgetrail/`, Lite `FORGETRAIL_LITE.md` v2.0.0, CLI `forgetrail`, MCP tools `getForgeTrail*`. Copy guide: `docs/FORGETRAIL_RENAME.md`. Tagline: Forge the path. Keep the trail. GitHub slug `Catalyst-Forge-LLC/forge-kit` unchanged. |
 | 2026-07-30 | **Fix-efficacy pass for security re-audits, plus SSRF depth rows (Exec Foundry sweep):** **black-hat-audit** gains **AREA 0** — treat every previously "remediated" defense as unverified, enumerate bypass inputs, and name the known failure modes (exact match where a range is meant, missing host normalization, dead guard branches, escape scheme mismatched to the downstream parser, chained `.replace()` sanitizers, guarded helper with unguarded call sites, check-then-use gaps). RULES now require a regression test that fails against pre-fix code. **CODE_QUALITY** — four checklist rows (numeric address ranges, tested guards, SDK-matched escaping, single-pass sanitizers) + lesson. |
 | 2026-07-29 | **URL host matching + SSRF hygiene (Exec Foundry CodeQL pass):** **CODE_QUALITY** checklist + lesson (`hostMatchesDomain`, scheme allowlist, workflow `permissions`, no client stacks). **CONTEXT_PROMPT** pattern + anti-pattern. Cursor rule **`url-host-matching.mdc`** (+ `content/cursor-rules/` mirror). |
@@ -50,9 +50,11 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 ## Detail
 
-### 2026-08-19 — Marketing site in `site/`
+### 2026-08-19 — Marketing site in `site/` and GitHub slug
 
-forgetrail.dev is registered but not live. The marketing site now lives in this repo at **`site/`**, matching IngotVault: FilePress content (`filepress.config.ts`, `pages/`, `posts/`, `theme.css`) plus Wrangler Pages (`wrangler.jsonc`, `pnpm ship`). Root scripts: `site:dev`, `site:build`, `ship`. First publish still needs Wrangler login, Pages project `forgetrail`, and registrar DNS to Cloudflare.
+GitHub repo is **`Catalyst-Forge-LLC/forgetrail`** (old `forge-kit` URL redirects). Homepage is set to forgetrail.dev. Public links, site GitHub nav, and the Try checklist template use the new slug.
+
+forgetrail.dev is registered but not live. The marketing site lives in this repo at **`site/`**, matching IngotVault: FilePress content (`filepress.config.ts`, `pages/`, `posts/`, `theme.css`) plus Wrangler Pages (`wrangler.jsonc`, `pnpm ship`). Root scripts: `site:dev`, `site:build`, `ship`. First publish still needs Wrangler login, Pages project `forgetrail`, and registrar DNS to Cloudflare.
 
 ### 2026-08-15 — Rename: ForgeKit → ForgeTrail
 

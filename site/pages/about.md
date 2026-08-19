@@ -20,4 +20,4 @@ order: 3
 
 Distilled from [Exec Foundry](https://execfoundry.com) and refined across about a dozen further projects. Built by [Catalyst Forge](https://catalystforge.com).
 
-Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forge-kit/blob/main/LICENSE). Community support via GitHub issues (best-effort, no SLA). Commercial help: [catalystforge.com](https://catalystforge.com).
+Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/LICENSE). Community support via GitHub issues (best-effort, no SLA). Commercial help: [catalystforge.com](https://catalystforge.com).
