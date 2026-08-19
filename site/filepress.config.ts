@@ -17,18 +17,13 @@ export default defineFilepressConfig({
 		{ label: 'Home', href: '/' },
 		{ label: 'Try', href: '/try' },
 		{ label: 'How it works', href: '/how-it-works' },
-		{ label: 'Writing', href: '/writing' },
 		{ label: 'About', href: '/about' },
 		{ label: 'GitHub', href: github, icon: 'github' }
 	],
 	footerLinks: [
 		{ label: 'Try', href: '/try' },
-		{ label: 'RSS', href: '/rss.xml' },
 		{ label: 'GitHub', href: github, icon: 'github' },
 		{ label: 'Catalyst Forge', href: 'https://catalystforge.com' }
 	],
-	topics: [
-		{ label: 'Getting started', tag: 'getting-started' },
-		{ label: 'Methodology', tag: 'methodology' }
-	]
+	topics: []
 });

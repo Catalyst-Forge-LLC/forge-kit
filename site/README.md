@@ -1,6 +1,6 @@
 # forgetrail.dev
 
-Marketing + notes site for [ForgeTrail](https://github.com/Catalyst-Forge-LLC/forge-kit), built with [FilePress](https://getfilepress.com) ([`getfilepress`](https://www.npmjs.com/package/getfilepress) on npm). Same `/site` pattern as IngotVault.
+Marketing site for [ForgeTrail](https://github.com/Catalyst-Forge-LLC/forge-kit), built with [FilePress](https://getfilepress.com) ([`getfilepress`](https://www.npmjs.com/package/getfilepress) on npm). Same `/site` pattern as IngotVault.
 
 ```bash
 # from the ForgeTrail repo root
@@ -50,4 +50,4 @@ Dependency is the public npm package:
 
 ## Content sync
 
-**Site** = product narrative (home, Try, How it works, About, posts). **Root README** = methodology / CLI / MCP reference. Keep the tagline, category line, and try-path steps aligned. When behavior changes, update root README + `TRY_FORGETRAIL.md` + `site/pages/*`.
+**Site** = product narrative (home, Try, How it works, About). **Root README** = methodology / CLI / MCP reference. Keep the tagline, category line, and try-path steps aligned. When behavior changes, update root README + `TRY_FORGETRAIL.md` + `site/pages/*`. Add a post under `posts/` only when there is something to publish; then put Writing back in the header.
