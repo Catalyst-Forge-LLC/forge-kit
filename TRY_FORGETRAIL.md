@@ -2,6 +2,8 @@
 
 Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, drop it next to **ForgeTrail Lite**, and let your coding agent forge the path and keep the trail.
 
+**Docs:** [forgetrail.dev/docs](https://forgetrail.dev/docs) (same recipe, plus CLI and MCP).
+
 **You need:** any LLM chat (ChatGPT, Claude, Grok, a local Ollama UI, …) and any coding agent that can read files (Cursor, Claude Code, Codex, …).
 
 **You do not need:** Node MCP setup, `pnpm run mcp:build`, or `forgetrail` on PATH (those are optional shortcuts below).

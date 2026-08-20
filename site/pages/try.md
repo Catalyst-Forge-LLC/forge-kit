@@ -48,4 +48,4 @@ Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/f
 
 ## MCP (optional, later)
 
-When you want always-current tools in the IDE, register `npx -y forgetrail-mcp` (see [MCP setup](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/mcp-server/README.md)). First chat: *Call `getNewProjectKickoff` and set up the project.*
+When you want always-current tools in the IDE, register `npx -y forgetrail-mcp`. First chat: *Call `getNewProjectKickoff` and set up the project.* CLI flags and Cursor JSON live in the [docs](/docs).

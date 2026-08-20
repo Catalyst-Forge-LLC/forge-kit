@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-08-20 | **`/docs` mount:** FilePress path mount (LocalBerth/ollanet shell). Root README trimmed to install + docs link. |
 | 2026-08-20 | **npm published:** `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` on the registry. forgetrail.dev is live. Try/README treat `pnpm dlx` / `npx` as the optional shortcut. |
 | 2026-08-19 | **npm-ready:** `forgetrail` and `forgetrail-mcp` are public packages (names free). `pnpm run pack:check` / `docs/NPM.md`. GitHub slug `Catalyst-Forge-LLC/forgetrail`. Marketing site in `site/` (FilePress + Wrangler). |
 | 2026-08-15 | **Rename: ForgeKit → ForgeTrail.** Product name, identifiers, and copy now use ForgeTrail / forgetrail (domain: forgetrail.dev). Workspace `.forgetrail/`, Lite `FORGETRAIL_LITE.md` v2.0.0, CLI `forgetrail`, MCP tools `getForgeTrail*`. Copy guide: `docs/FORGETRAIL_RENAME.md`. Tagline: Forge the path. Keep the trail. GitHub slug `Catalyst-Forge-LLC/forge-kit` unchanged. |

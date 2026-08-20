@@ -30,7 +30,7 @@ Distilled from building real production apps. Every pattern earned its place by 
 ## Start here
 
 1. **[Try ForgeTrail](/try):** Genesis spec plus ForgeTrail Lite. No MCP required.
-2. **[How it works](/how-it-works):** the seven phases, from plan to harden.
-3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail):** source, issues, and the optional `npx forgetrail` / `npx -y forgetrail-mcp` shortcuts.
+2. **[Docs](/docs):** install, CLI, MCP, and the seven phases.
+3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail):** source and issues.
 
 Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/LICENSE). Built by [Catalyst Forge](https://catalystforge.com).

@@ -22,7 +22,7 @@ npm: [`forgetrail@0.3.0`](https://www.npmjs.com/package/forgetrail) and [`forget
 
 ## Remaining
 
-- Optional: ship the latest Try/`npx` copy to forgetrail.dev (`pnpm ship`) if the live site is stale.
+- Optional: `pnpm ship` so forgetrail.dev picks up `/docs` and the tightened Try copy.
 - Optional M4: MCP finds content without `FORGETRAIL_ROOT` when both packages are present ([specs/completed/npm-distribution.md](specs/completed/npm-distribution.md)).
 
 ## Do not

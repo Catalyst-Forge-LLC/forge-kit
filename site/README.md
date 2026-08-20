@@ -19,7 +19,7 @@ Optional: edit `theme.css` next to `filepress.config.ts`.
 
 ## Deploy (Cloudflare Pages)
 
-Live at [forgetrail.dev](https://forgetrail.dev).
+Live at [forgetrail.dev](https://forgetrail.dev). Docs mount: [forgetrail.dev/docs](https://forgetrail.dev/docs) (`site/docs/*.md` → `docs/dist`, requires getfilepress **≥ 0.1.8**).
 
 **Use one pipeline only.** Dual deploys overwrite each other when asset hashes disagree.
 
@@ -47,9 +47,9 @@ First time on this machine:
 Dependency is the public npm package:
 
 ```json
-"getfilepress": "^0.1.4"
+"getfilepress": "^0.1.8"
 ```
 
 ## Content sync
 
-**Site** = product narrative (home, Try, How it works, About). **Root README** = methodology / CLI / MCP reference. Keep the tagline, category line, and try-path steps aligned. When behavior changes, update root README + `TRY_FORGETRAIL.md` + `site/pages/*`. Add a post under `posts/` only when there is something to publish; then put Writing back in the header.
+**Site** = product narrative (home, Try, How it works, About). **`/docs`** = install, CLI, MCP, phases. **Root README** = short npm page (install + link to docs). When behavior changes, update `site/docs/*` + `TRY_FORGETRAIL.md` + `site/pages/*`. Add a post under `posts/` only when there is something to publish; then put Writing back in the header.

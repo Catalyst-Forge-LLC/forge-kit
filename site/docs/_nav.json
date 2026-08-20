@@ -1,0 +1,27 @@
+{
+	"sections": [
+		{
+			"title": "Getting started",
+			"items": [
+				{ "id": "introduction", "title": "Introduction" },
+				{ "id": "install", "title": "Install" },
+				{ "id": "try", "title": "Try" }
+			]
+		},
+		{
+			"title": "Using ForgeTrail",
+			"items": [
+				{ "id": "phases", "title": "Phases" },
+				{ "id": "mcp", "title": "MCP" },
+				{ "id": "cli", "title": "CLI" }
+			]
+		},
+		{
+			"title": "Reference",
+			"items": [
+				{ "id": "compare", "title": "Compared to others" },
+				{ "id": "layout", "title": "Repo layout" }
+			]
+		}
+	]
+}

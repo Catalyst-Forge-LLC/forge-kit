@@ -15,15 +15,18 @@ export default defineFilepressConfig({
 	ogImage: '/logo.png',
 	nav: [
 		{ label: 'Home', href: '/' },
+		{ label: 'Docs', href: '/docs' },
 		{ label: 'Try', href: '/try' },
 		{ label: 'How it works', href: '/how-it-works' },
 		{ label: 'About', href: '/about' },
 		{ label: 'GitHub', href: github, icon: 'github' }
 	],
 	footerLinks: [
+		{ label: 'Docs', href: '/docs' },
 		{ label: 'Try', href: '/try' },
 		{ label: 'GitHub', href: github, icon: 'github' },
 		{ label: 'Catalyst Forge', href: 'https://catalystforge.com' }
 	],
-	topics: []
+	topics: [],
+	paths: [{ url: '/docs', dir: 'docs/dist' }]
 });

@@ -3,6 +3,7 @@ dist/
 *.tsbuildinfo
 debug.log
 site/build/
+site/docs/dist/
 site/node_modules/
 site/.filepress/
 site/.filepress-genie/
