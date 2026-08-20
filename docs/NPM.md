@@ -38,12 +38,16 @@ pnpm run pack:check
 pnpm publish --dry-run --access public
 pnpm publish --access public
 
-# 3. MCP server (prepublishOnly runs tsc)
-pnpm --dir mcp-server publish --dry-run --access public
-pnpm --dir mcp-server publish --access public
+# 3. MCP server — cd in. Do not use `pnpm --dir mcp-server publish`.
+# npm 12 treats leftover `--dir` tokens as extra package-specs and exits EUSAGE.
+cd mcp-server
+pnpm publish --access public
+cd ..
 ```
 
 `prepublishOnly` on the root re-runs the pack check. It refuses `private: true` and a tarball that includes `site/` or `specs/`.
+
+The `Debugger listening` line on MCP `prepack` is Cursor attaching to a one-line `node -e`. It is harmless. Do not let it rewrite the publish command.
 
 ---
 
