@@ -49,12 +49,20 @@ html body {
 	max-width: 42rem;
 }
 
-.site-logo {
-	height: 2.25rem;
+header.site-header .site-logo {
+	height: 5.5rem;
+	max-height: none;
 	width: auto;
+	object-fit: contain;
 	border-radius: 0;
 	box-shadow: none;
 	filter: none;
+}
+
+@media (width <= 40rem) {
+	header.site-header .site-logo {
+		height: 4rem;
+	}
 }
 
 header.site-header .site-nav a.nav-github {

@@ -11,8 +11,8 @@ export default defineFilepressConfig({
 	tagline: 'Forge the path. Keep the trail.',
 	lede: 'A persistent development system for building software with AI agents.',
 	homePage: 'home',
-	logo: '/logo.svg',
-	ogImage: '/logo.svg',
+	logo: '/logo.png',
+	ogImage: '/logo.png',
 	nav: [
 		{ label: 'Home', href: '/' },
 		{ label: 'Try', href: '/try' },
