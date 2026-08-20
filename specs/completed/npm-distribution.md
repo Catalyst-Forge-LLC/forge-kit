@@ -1,7 +1,7 @@
 # npm distribution — should ForgeTrail be a package?
 
 **Spec kind:** Delivery  
-**Status:** Partial; M2 copy done. M1 is a maintainer `pnpm publish` (teed up in [docs/NPM.md](../../docs/NPM.md)).  
+**Status:** Implemented  
 **Date:** 2026-08-20  
 **Related:** [TODO.md](../../TODO.md), [docs/NPM.md](../../docs/NPM.md), [TRY_FORGETRAIL.md](../../TRY_FORGETRAIL.md), [specs/completed/forgetrail-new-user-experience.md](../completed/forgetrail-new-user-experience.md), [specs/canonical/forgetrail-as-product.md](../canonical/forgetrail-as-product.md)  
 **Surfaces:** root `package.json`, `mcp-server/package.json`, `scripts/forgetrail-cli.mjs`, `scripts/publish-gate.mjs`, README / Try / site install copy
@@ -208,7 +208,7 @@ M1 is maintainer-action. This spec is **accepted** when the decision and plan ar
 
 | # | Question | Blocking? | Owner |
 | - | -------- | --------- | ----- |
-| 1 | npm account that can publish unscoped `forgetrail` / `forgetrail-mcp` (Catalyst Forge vs personal)? | Yes for M1 | Maintainer |
+| 1 | npm account that can publish unscoped `forgetrail` / `forgetrail-mcp` (Catalyst Forge vs personal)? | No (published 2026-08-20) | Maintainer |
 | 2 | First publish now, or after forgetrail.dev is live? | No (live 2026-08-20) | Maintainer |
 | 3 | Should MCP’s default `npx` config install `forgetrail` automatically so `FORGETRAIL_ROOT` is optional? | No (M4) | — |
 
@@ -230,7 +230,7 @@ M1 is maintainer-action. This spec is **accepted** when the decision and plan ar
 
 ## Progress (while Partial)
 
-- `2026-08-20:` M2 copy: README, TRY, site Try/Home, MCP README. `docs/NPM.md` is a paste-ready first-publish checklist. `pnpm run pack:check` passed; root `pnpm publish --dry-run --access public` packed `forgetrail@0.3.0` (98 files). M1 remains: you run the two `pnpm publish` commands on a **clean** tree. M3 walkthrough after that.
+- `2026-08-20:` M2 copy landed. M1 published: `forgetrail@0.3.0`, `forgetrail-mcp@0.2.2`. MCP publish must run from `mcp-server/` (npm 12 + `pnpm --dir` EUSAGE). M3: `pnpm dlx forgetrail@0.3.0 --help` and `install --lite --dry-run` succeeded. Windows `npx forgetrail --help` (npm 12) failed to spawn the bin; use `pnpm dlx`.
 
 ---
 
@@ -238,6 +238,10 @@ M1 is maintainer-action. This spec is **accepted** when the decision and plan ar
 
 _Required when moving this delivery spec to `specs/completed/`._
 
-**Implemented:**
+**Implemented:** 2026-08-20
 
-**Verification:**
+1. Two public packages: `forgetrail` (CLI + Lite + templates) and `forgetrail-mcp` (MCP bin).
+2. Try/README/site treat npm as an optional shortcut, not the front door.
+3. Maintainer runbook: [docs/NPM.md](../../docs/NPM.md) (publish from `mcp-server/` cwd).
+
+**Verification:** `npm view forgetrail@0.3.0` and `npm view forgetrail-mcp@0.2.2`. `pnpm dlx forgetrail@0.3.0 --help`. `pnpm dlx forgetrail@0.3.0 install --lite --dry-run` listed Lite files and wrote nothing.

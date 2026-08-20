@@ -54,12 +54,12 @@ The `Debugger listening` line on MCP `prepack` is Cursor attaching to a one-line
 ## After publish (verify)
 
 ```bash
-# fresh npx, not your clone
-npx --yes forgetrail@0.3.0 --help
-npx --yes forgetrail@0.3.0 install --lite --dry-run
+# Prefer pnpm dlx. npm 12 `npx forgetrail --help` on Windows failed to spawn the bin.
+pnpm dlx forgetrail@0.3.0 --help
+pnpm dlx forgetrail@0.3.0 install --lite --dry-run
 
 # MCP starts; needs content via FORGETRAIL_ROOT or a sibling forgetrail install
-npx --yes forgetrail-mcp@0.2.2
+pnpm dlx forgetrail-mcp@0.2.2
 ```
 
 Optional Cursor MCP (content from a `forgetrail` install, or set the path):

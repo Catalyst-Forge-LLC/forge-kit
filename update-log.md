@@ -23,7 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
-| 2026-08-20 | **Site live + npm teed up:** forgetrail.dev is live. Publish checklist in `docs/NPM.md` (`forgetrail@0.3.0`, `forgetrail-mcp@0.2.2`). Try/README/MCP copy uses `npx` as the optional shortcut. |
+| 2026-08-20 | **npm published:** `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` on the registry. forgetrail.dev is live. Try/README treat `pnpm dlx` / `npx` as the optional shortcut. |
 | 2026-08-19 | **npm-ready:** `forgetrail` and `forgetrail-mcp` are public packages (names free). `pnpm run pack:check` / `docs/NPM.md`. GitHub slug `Catalyst-Forge-LLC/forgetrail`. Marketing site in `site/` (FilePress + Wrangler). |
 | 2026-08-15 | **Rename: ForgeKit → ForgeTrail.** Product name, identifiers, and copy now use ForgeTrail / forgetrail (domain: forgetrail.dev). Workspace `.forgetrail/`, Lite `FORGETRAIL_LITE.md` v2.0.0, CLI `forgetrail`, MCP tools `getForgeTrail*`. Copy guide: `docs/FORGETRAIL_RENAME.md`. Tagline: Forge the path. Keep the trail. GitHub slug `Catalyst-Forge-LLC/forge-kit` unchanged. |
 | 2026-07-30 | **Fix-efficacy pass for security re-audits, plus SSRF depth rows (Exec Foundry sweep):** **black-hat-audit** gains **AREA 0** — treat every previously "remediated" defense as unverified, enumerate bypass inputs, and name the known failure modes (exact match where a range is meant, missing host normalization, dead guard branches, escape scheme mismatched to the downstream parser, chained `.replace()` sanitizers, guarded helper with unguarded call sites, check-then-use gaps). RULES now require a regression test that fails against pre-fix code. **CODE_QUALITY** — four checklist rows (numeric address ranges, tested guards, SDK-matched escaping, single-pass sanitizers) + lesson. |
@@ -51,9 +51,9 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 ## Detail
 
-### 2026-08-20 — forgetrail.dev live; npm publish teed up
+### 2026-08-20 — forgetrail.dev live; npm published
 
-https://forgetrail.dev is live. Maintainer publish steps are in `docs/NPM.md`. You run `pnpm publish` for `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` from a clean tree. Try and README lead with copy-paste Lite; `npx forgetrail install --lite` and `npx -y forgetrail-mcp` are optional shortcuts. Spec: `specs/partial/npm-distribution.md`.
+https://forgetrail.dev is live. `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` are on npm. Try and README lead with copy-paste Lite; `pnpm dlx forgetrail install --lite` and `forgetrail-mcp` are optional shortcuts. Spec: `specs/completed/npm-distribution.md`. Publish later releases from `mcp-server/` cwd (npm 12 + `pnpm --dir` EUSAGE).
 
 ### 2026-08-19 — Marketing site in `site/` and GitHub slug
 

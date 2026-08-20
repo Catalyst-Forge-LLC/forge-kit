@@ -17,14 +17,13 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 ## In progress
 
-| Document | Summary |
-|----------|---------|
-| `partial/npm-distribution.md` | Publish `forgetrail` + `forgetrail-mcp` (M2 copy done; you run M1 publish) |
+_None._
 
 ## Completed
 
 | Document | Summary |
 |----------|---------|
+| `completed/npm-distribution.md` | Two npm packages (`forgetrail`, `forgetrail-mcp`); Try stays no-Node |
 | `completed/forgetrail-rename.md` | Naming pass, GitHub slug, live forgetrail.dev |
 | `completed/forgetrail-new-user-experience.md` | NUX / README front door — Genesis + Lite prove-it path (M1–M4 done; M5 optional deferred) |
 

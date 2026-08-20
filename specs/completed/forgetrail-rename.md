@@ -67,7 +67,7 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 
 - ~~GitHub repository rename and URL redirects.~~ Done (`Catalyst-Forge-LLC/forgetrail`).
 - ~~forgetrail.dev first Wrangler ship and custom-domain DNS.~~ Live 2026-08-20.
-- npm publish under `forgetrail` / `forgetrail-mcp`: [specs/partial/npm-distribution.md](../partial/npm-distribution.md) (you run `pnpm publish`). See [docs/NPM.md](../../docs/NPM.md).
+- ~~npm publish under `forgetrail` / `forgetrail-mcp`.~~ Done 2026-08-20: [npm-distribution](npm-distribution.md). See [docs/NPM.md](../../docs/NPM.md).
 - ~~anticonfab `.forgekit/` directory rename.~~ Done 2026-08-19 (`.forgetrail/`).
 
 ---
@@ -78,6 +78,6 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 
 1. Rename guide, identifiers, Lite v2.0.0, MCP tools, sibling consumers, GitHub slug, anticonfab workspace folder.
 2. Marketing site in `site/` (FilePress + Wrangler). forgetrail.dev is live.
-3. npm left to [npm-distribution](../partial/npm-distribution.md) (installer/MCP packages; you publish).
+3. npm: [npm-distribution](npm-distribution.md) (`forgetrail@0.3.0`, `forgetrail-mcp@0.2.2`).
 
 **Verification:** Repo grep for the former product name is limited to provenance. Site at https://forgetrail.dev. Pack check for npm is a separate spec.

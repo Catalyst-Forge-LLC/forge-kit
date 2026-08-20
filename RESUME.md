@@ -4,7 +4,7 @@ Use this file after a folder rename or a new chat. Do **not** use `INITIAL_PROMP
 
 **Paste this into a new chat:**
 
-> Read `RESUME.md`, `docs/FORGETRAIL_RENAME.md`, `specs/partial/npm-distribution.md`, and `TODO.md`. Help finish npm publish if needed. Do not restart the rename.
+> Read `RESUME.md`, `docs/FORGETRAIL_RENAME.md`, and `TODO.md`. Do not restart the rename.
 
 ---
 
@@ -18,12 +18,12 @@ GitHub slug is **`Catalyst-Forge-LLC/forgetrail`**. The old `forge-kit` URL redi
 
 The marketing site lives in **`site/`**. Preview: `pnpm site:dev`. Redeploy: `pnpm ship`.
 
-npm packages are **teed up**, not yet on the registry. You publish. See [docs/NPM.md](docs/NPM.md).
+npm: [`forgetrail@0.3.0`](https://www.npmjs.com/package/forgetrail) and [`forgetrail-mcp@0.2.2`](https://www.npmjs.com/package/forgetrail-mcp). Later releases: [docs/NPM.md](docs/NPM.md). On Windows, prefer `pnpm dlx forgetrail` over npm 12 `npx`.
 
 ## Remaining
 
-- Publish `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` ([docs/NPM.md](docs/NPM.md)). Then walk `npx forgetrail --help` (M3).
-- Naming pass and first site ship are done ([specs/completed/forgetrail-rename.md](specs/completed/forgetrail-rename.md)).
+- Optional: ship the latest Try/`npx` copy to forgetrail.dev (`pnpm ship`) if the live site is stale.
+- Optional M4: MCP finds content without `FORGETRAIL_ROOT` when both packages are present ([specs/completed/npm-distribution.md](specs/completed/npm-distribution.md)).
 
 ## Do not
 
