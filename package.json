@@ -33,7 +33,7 @@
     "mcp:cursor-config": "node scripts/mcp-status.mjs cursor-config",
     "mcp:inspector": "node scripts/mcp-status.mjs inspector",
     "ship": "pnpm --dir site run ship",
-    "site:dev": "pnpm --dir site dev",
+    "site:dev": "pnpm --dir site dev -- --host",
     "site:build": "pnpm --dir site run build",
     "site:deploy": "pnpm --dir site run ship",
     "pack:check": "node scripts/publish-gate.mjs",
