@@ -21,6 +21,12 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 |----------|---------|
 | `partial/forgetrail-rename.md` | Product rename ForgeTrail → ForgeTrail (identifiers, copy, sibling consumers) |
 
+## Drafts (not started)
+
+| Document | Summary |
+|----------|---------|
+| `npm-distribution.md` | Whether to publish on npm: yes, two installer/MCP packages; Try stays no-Node |
+
 ## Completed
 
 | Document | Summary |
