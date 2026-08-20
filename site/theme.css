@@ -1,36 +1,40 @@
 /*
  * forgetrail.dev — FilePress Essay overrides.
- * Dark surface + orange accent from the original landing HTML.
+ * Black masthead matches the logo plate. Straw page with dark gray type.
  * Tokens and classes: FilePress docs/THEME.md
  */
 :root:root {
-	--bg: #0f1117;
-	--surface: #181b24;
-	--ink: #e4e5e9;
-	--ink-soft: #8b8fa3;
-	--ink-faint: #555a6e;
-	--rule: #2a2d3a;
-	--rule-strong: #3a3e4e;
-	--accent: #f97316;
-	--accent-strong: #fb923c;
-	--accent-wash: rgba(249, 115, 22, 0.15);
+	--bg: #f3e6c4;
+	--surface: #fff8e8;
+	--ink: #2c2a26;
+	--ink-soft: #5c574e;
+	--ink-faint: #8a8478;
+	--rule: #e0d2b0;
+	--rule-strong: #cfc09a;
+	--accent: #c2410c;
+	--accent-strong: #9a3412;
+	--accent-wash: rgba(194, 65, 12, 0.1);
 	--measure: 42rem;
 	--measure-wide: 69rem;
 	--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 	--font-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+	--header-bg: #070707;
+	--header-ink: #e8e4dc;
+	--header-ink-soft: #b8b3aa;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
 	:root:root {
-		--bg: #0f1117;
-		--surface: #181b24;
-		--ink: #e4e5e9;
-		--ink-soft: #8b8fa3;
-		--ink-faint: #555a6e;
-		--rule: #2a2d3a;
-		--rule-strong: #3a3e4e;
-		--accent: #f97316;
-		--accent-strong: #fb923c;
+		--bg: #f3e6c4;
+		--surface: #fff8e8;
+		--ink: #2c2a26;
+		--ink-soft: #5c574e;
+		--ink-faint: #8a8478;
+		--rule: #e0d2b0;
+		--rule-strong: #cfc09a;
+		--accent: #c2410c;
+		--accent-strong: #9a3412;
+		--accent-wash: rgba(194, 65, 12, 0.1);
 	}
 }
 
@@ -49,17 +53,29 @@ html body {
 	max-width: 42rem;
 }
 
+header.site-header {
+	background: var(--header-bg);
+	border-bottom: none;
+	margin-bottom: clamp(1.75rem, 4.5vw, 2.75rem);
+}
+
+header.site-header .wrap {
+	padding-top: 0.85rem;
+	padding-bottom: 0.85rem;
+}
+
 header.site-header .site-title {
 	position: relative;
+	color: var(--header-ink);
 }
 
 header.site-header .site-logo {
-	height: 5.5rem;
-	width: 5.5rem;
+	height: 7.75rem;
+	width: 7.75rem;
 	max-height: none;
 	object-fit: cover;
 	object-position: center;
-	border-radius: 1.15rem;
+	border-radius: 0;
 	box-shadow: none;
 	filter: none;
 }
@@ -76,21 +92,29 @@ header.site-header .site-wordmark {
 	border: 0;
 }
 
+header.site-header .site-tagline,
+header.site-header .site-nav a {
+	color: var(--header-ink-soft);
+}
+
+header.site-header .site-nav a:hover {
+	color: #fb923c;
+}
+
 @media (width <= 40rem) {
 	header.site-header .site-logo {
-		height: 4.25rem;
-		width: 4.25rem;
-		border-radius: 0.9rem;
+		height: 5.75rem;
+		width: 5.75rem;
 	}
 }
 
 header.site-header .site-nav a.nav-github {
 	gap: 0.45rem;
 	padding: 0.35rem 0.7rem 0.35rem 0.55rem;
-	border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--rule));
+	border: 1px solid color-mix(in srgb, #f97316 40%, #3a3a3a);
 	border-radius: 999px;
-	background: color-mix(in srgb, var(--accent-wash) 80%, var(--surface));
-	color: var(--ink);
+	background: color-mix(in srgb, #f97316 12%, #141414);
+	color: var(--header-ink);
 	font-size: 0.7rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
@@ -98,7 +122,7 @@ header.site-header .site-nav a.nav-github {
 }
 
 header.site-header .site-nav a.nav-github:hover {
-	border-color: var(--accent-strong);
-	background: color-mix(in srgb, var(--accent) 14%, var(--surface));
-	color: var(--ink);
+	border-color: #fb923c;
+	background: color-mix(in srgb, #f97316 22%, #141414);
+	color: var(--header-ink);
 }
