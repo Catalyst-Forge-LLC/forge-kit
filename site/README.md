@@ -19,7 +19,7 @@ Optional: edit `theme.css` next to `filepress.config.ts`.
 
 ## Deploy (Cloudflare Pages)
 
-The domain is registered. The Pages project and custom-domain DNS are not live yet.
+Live at [forgetrail.dev](https://forgetrail.dev).
 
 **Use one pipeline only.** Dual deploys overwrite each other when asset hashes disagree.
 

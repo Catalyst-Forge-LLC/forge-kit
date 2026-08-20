@@ -1,49 +1,64 @@
 # Publishing ForgeTrail to npm
 
-Maintainer steps. You run the actual `pnpm publish`. The gate does not log in or publish.
+You run `pnpm publish`. The gate does not log in or publish.
 
-Two packages:
+Two public unscoped packages:
 
-| Package | From | What it is |
-| --- | --- | --- |
-| `forgetrail` | repo root | CLI, Lite, templates. `npx forgetrail install --lite` |
-| `forgetrail-mcp` | `mcp-server/` | MCP server bin. Set `FORGETRAIL_ROOT` or install `forgetrail` beside it |
+| Package | Version | From | What it is |
+| --- | --- | --- | --- |
+| [`forgetrail`](https://www.npmjs.com/package/forgetrail) | 0.3.0 | repo root | CLI + Lite + templates. `npx forgetrail install --lite` |
+| [`forgetrail-mcp`](https://www.npmjs.com/package/forgetrail-mcp) | 0.2.2 | `mcp-server/` | MCP bin. `npx -y forgetrail-mcp` |
 
-Neither name is reserved as of 2026-08-19 (registry 404).
+These are **installer and MCP channels**, not a library. App repos should not add `forgetrail` to `dependencies`.
 
-## Once
+`pnpm run pack:check` already passed on this tree (2026-08-20). Root dry-run packed `forgetrail@0.3.0` (98 files, no `site/` or `specs/`).
 
-1. `pnpm login` (npm account that can publish unscoped public packages).
-2. Confirm `pnpm whoami`.
+---
 
-## Every release
-
-1. Bump versions in `package.json` and `mcp-server/package.json` if this is not the first publish of that number.
-2. From the repo root:
+## Once (this machine)
 
 ```bash
-pnpm run pack:check
-pnpm publish --dry-run --access public
-pnpm publish --access public
+pnpm login
+pnpm whoami
 ```
 
-3. MCP package (builds `dist/` in `prepublishOnly`):
+Use an npm account that can publish **unscoped** public packages.
+
+---
+
+## First publish (paste in order)
+
+From the repo root, on `main`, **clean working tree** (pnpm refuses `publish` if git is dirty). Push first if you want the published tarball to match GitHub.
 
 ```bash
+# 1. Gate (rebuilds mcp-server/dist)
+pnpm run pack:check
+
+# 2. CLI + methodology
+pnpm publish --dry-run --access public
+pnpm publish --access public
+
+# 3. MCP server (prepublishOnly runs tsc)
 pnpm --dir mcp-server publish --dry-run --access public
 pnpm --dir mcp-server publish --access public
 ```
 
-`prepublishOnly` on the root runs the same pack check (builds the MCP server, refuses `private: true`, refuses a tarball that includes `site/` or `specs/`).
+`prepublishOnly` on the root re-runs the pack check. It refuses `private: true` and a tarball that includes `site/` or `specs/`.
 
-## After publish
+---
+
+## After publish (verify)
 
 ```bash
-npx forgetrail --help
-npx forgetrail install --lite --dry-run
+# fresh npx, not your clone
+npx --yes forgetrail@0.3.0 --help
+npx --yes forgetrail@0.3.0 install --lite --dry-run
+
+# MCP starts; needs content via FORGETRAIL_ROOT or a sibling forgetrail install
+npx --yes forgetrail-mcp@0.2.2
 ```
 
-Optional Cursor MCP after a global install:
+Optional Cursor MCP (content from a `forgetrail` install, or set the path):
 
 ```json
 {
@@ -60,6 +75,21 @@ Optional Cursor MCP after a global install:
 ```
 
 If `forgetrail` is installed in the same tree, `forgetrail-mcp` finds `WORKFLOW.md` without `FORGETRAIL_ROOT`.
+
+Registry pages to confirm:
+
+- https://www.npmjs.com/package/forgetrail
+- https://www.npmjs.com/package/forgetrail-mcp
+
+---
+
+## Later releases
+
+1. Bump `version` in `package.json` and/or `mcp-server/package.json` (independent versions are OK).
+2. Repeat the three publish blocks above.
+3. GitHub `main` stays canonical. npm versions are snapshots.
+
+---
 
 ## Do not publish
 

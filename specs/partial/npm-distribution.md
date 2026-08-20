@@ -1,9 +1,9 @@
 # npm distribution — should ForgeTrail be a package?
 
 **Spec kind:** Delivery  
-**Status:** Draft  
+**Status:** Partial; M2 copy done. M1 is a maintainer `pnpm publish` (teed up in [docs/NPM.md](../../docs/NPM.md)).  
 **Date:** 2026-08-20  
-**Related:** [TODO.md](../TODO.md), [docs/NPM.md](../docs/NPM.md), [TRY_FORGETRAIL.md](../TRY_FORGETRAIL.md), [specs/completed/forgetrail-new-user-experience.md](completed/forgetrail-new-user-experience.md), [specs/canonical/forgetrail-as-product.md](canonical/forgetrail-as-product.md)  
+**Related:** [TODO.md](../../TODO.md), [docs/NPM.md](../../docs/NPM.md), [TRY_FORGETRAIL.md](../../TRY_FORGETRAIL.md), [specs/completed/forgetrail-new-user-experience.md](../completed/forgetrail-new-user-experience.md), [specs/canonical/forgetrail-as-product.md](../canonical/forgetrail-as-product.md)  
 **Surfaces:** root `package.json`, `mcp-server/package.json`, `scripts/forgetrail-cli.mjs`, `scripts/publish-gate.mjs`, README / Try / site install copy
 
 ---
@@ -14,7 +14,7 @@
 
 ForgeTrail is a **methodology plus tools**, not a library you import. New users reach it by cloning GitHub, copying raw files, or globally linking a local clone. That works for the house and for a 15-minute Try, but it is a weak default for anyone who already has Node and expects `npx <name>`.
 
-README already documents `npm install -g forgetrail` “after publish.” The packages are prepared (`forgetrail` 0.3.0, `forgetrail-mcp` 0.2.2) and the names were free as of 2026-08-19. Nothing is on the registry yet. Until someone publishes, every `npx` / global-install path in the docs is a promise.
+README and Try now document `npx forgetrail install --lite` as an optional shortcut. The packages are prepared (`forgetrail` 0.3.0, `forgetrail-mcp` 0.2.2`). Nothing is on the registry until you publish. Until then, those `npx` paths 404.
 
 **Friction / current workaround:**
 
@@ -50,8 +50,8 @@ Those remain valid. The open question is whether npm should be a first-class cha
 | Root package `forgetrail` | `private: false`, bin `forgetrail`, `files` lists CLI + `content/` + methodology docs. Gate: `pnpm run pack:check`. |
 | Nested package `forgetrail-mcp` | Bin `forgetrail-mcp`, publishes `dist/` only. Resolves methodology via `FORGETRAIL_ROOT`, parent of `mcp-server/`, or an installed `forgetrail` package. |
 | Try path | No Node required. Copy Lite + Genesis. |
-| Docs | [docs/NPM.md](../docs/NPM.md) is maintainer publish steps. User has not published. |
-| OSS model | [forgetrail-as-product.md](canonical/forgetrail-as-product.md): Apache-2.0 from GitHub is the shipping model. npm would be a **mirror of installable bits**, not a product pivot. |
+| Docs | [docs/NPM.md](../../docs/NPM.md) is maintainer publish steps. User has not published. |
+| OSS model | [forgetrail-as-product.md](../canonical/forgetrail-as-product.md): Apache-2.0 from GitHub is the shipping model. npm would be a **mirror of installable bits**, not a product pivot. |
 
 Sibling house tools (FilePress, LocalBerth, FineTuna) already ship on npm. That is the discovery pattern agents and humans already use.
 
@@ -124,7 +124,7 @@ Do **not** tell app repos to `pnpm add forgetrail` unless they are vendoring the
 | Pros | Cons |
 | ---- | ---- |
 | One blessed command | Breaks the 15-minute no-Node prove-it path |
-|  | Conflicts with [forgetrail-new-user-experience.md](completed/forgetrail-new-user-experience.md) |
+|  | Conflicts with [forgetrail-new-user-experience.md](../completed/forgetrail-new-user-experience.md) |
 
 **Verdict:** Reject. npm is optional.
 
@@ -148,16 +148,16 @@ When a builder does **not** have Node: unchanged Try path.
 - **GitHub `main`** is current methodology.
 - npm versions are **snapshots**. Bump `forgetrail` when Lite, CLI, or shipped templates change in a way installers would copy.
 - Bump `forgetrail-mcp` when the server API or its published `dist/` changes. Independent versions are OK (already 0.3.0 vs 0.2.2).
-- Do not auto-publish every commit. Human runs `pnpm publish` per [docs/NPM.md](../docs/NPM.md).
+- Do not auto-publish every commit. Human runs `pnpm publish` per [docs/NPM.md](../../docs/NPM.md).
 - First public numbers stay **0.x** until the Try + npm paths have been walked by someone who is not the author.
 
 ### 5.5 Files (this delivery)
 
 | New | Modified (when M1–M2 land) |
 | --- | -------------------------- |
-| This spec | [docs/NPM.md](../docs/NPM.md) (keep as maintainer runbook) |
+| This spec | [docs/NPM.md](../../docs/NPM.md) (keep as maintainer runbook) |
 | | README / TRY / `site/pages/try.md` (npm as optional shortcut, not the lead) |
-| | [TODO.md](../TODO.md) |
+| | [TODO.md](../../TODO.md) |
 
 No new runtime code is required for M1. The packages are already publishable.
 
@@ -184,7 +184,7 @@ No new runtime code is required for M1. The packages are already publishable.
 
 | Milestone | Outcome |
 | --------- | ------- |
-| **M1 — Publish** | Maintainer: `pnpm run pack:check`, dry-run, then publish `forgetrail` and `forgetrail-mcp` per [docs/NPM.md](../docs/NPM.md). Verify `npx forgetrail --help` and `npx forgetrail install --lite --dry-run`. |
+| **M1 — Publish** | Maintainer: `pnpm run pack:check`, dry-run, then publish `forgetrail` and `forgetrail-mcp` per [docs/NPM.md](../../docs/NPM.md). Verify `npx forgetrail --help` and `npx forgetrail install --lite --dry-run`. |
 | **M2 — Copy** | README, TRY, site Try page: npm is the optional CLI/MCP shortcut. Lead remains copy-paste Lite. One MCP snippet that uses `npx -y forgetrail-mcp`. |
 | **M3 — Walkthrough** | Install Lite into a throwaway folder via `npx` (not a clone). Register MCP with `npx` once. File any CLI/root-resolution bugs. |
 | **M4 — Optional later** | Cursor/Grok one-liners, skill wrapper, tighter default so MCP finds content without env when both packages are present. Not required to call npm “done.” |
@@ -209,7 +209,7 @@ M1 is maintainer-action. This spec is **accepted** when the decision and plan ar
 | # | Question | Blocking? | Owner |
 | - | -------- | --------- | ----- |
 | 1 | npm account that can publish unscoped `forgetrail` / `forgetrail-mcp` (Catalyst Forge vs personal)? | Yes for M1 | Maintainer |
-| 2 | First publish now, or after forgetrail.dev is live? | No | Maintainer |
+| 2 | First publish now, or after forgetrail.dev is live? | No (live 2026-08-20) | Maintainer |
 | 3 | Should MCP’s default `npx` config install `forgetrail` automatically so `FORGETRAIL_ROOT` is optional? | No (M4) | — |
 
 ---
@@ -230,7 +230,7 @@ M1 is maintainer-action. This spec is **accepted** when the decision and plan ar
 
 ## Progress (while Partial)
 
-_Empty until implementation starts. Move this file to `specs/partial/` when M1 begins._
+- `2026-08-20:` M2 copy: README, TRY, site Try/Home, MCP README. `docs/NPM.md` is a paste-ready first-publish checklist. `pnpm run pack:check` passed; root `pnpm publish --dry-run --access public` packed `forgetrail@0.3.0` (98 files). M1 remains: you run the two `pnpm publish` commands on a **clean** tree. M3 walkthrough after that.
 
 ---
 

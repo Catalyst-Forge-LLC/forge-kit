@@ -23,10 +23,10 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 
 4. **Add ForgeTrail Lite**  
    - **Copy:** save [`content/FORGETRAIL_LITE.md`](content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` in your project, **or**  
-   - **CLI** (if you already linked ForgeTrail):  
-     `forgetrail install --lite`  
+   - **CLI** (Node 20+):  
+     `npx forgetrail install --lite`  
      Stub for Genesis too:  
-     `forgetrail install --lite --with-genesis-stub`
+     `npx forgetrail install --lite --with-genesis-stub`
 
 5. **Save your spec as `docs/GENESIS.md`**  
    Create `docs/` if needed. That path is the canonical handoff for ForgeTrail (not the repo root).
@@ -62,8 +62,8 @@ Already have a long PRD? Save it as `docs/GENESIS.md` and use the kickoff line a
 ## After the try: graduation ladder
 
 1. **Stay on Lite** for small tools and weekend builds. Enough for many projects.  
-2. **Add MCP** when you clone ForgeTrail and live in Cursor/Claude: always-current tools, `ingestPlanArtifact`, kickoff bundles. See [mcp-server/README.md](mcp-server/README.md) and `pnpm run mcp:build`.  
-3. **Full `_forgetrail/` install** when you need the whole template tree on disk (offline / no MCP). `forgetrail install` (without `--lite`).
+2. **Add MCP** when you live in Cursor/Claude: `npx -y forgetrail-mcp` (set `FORGETRAIL_ROOT` to a `forgetrail` install or clone). See [mcp-server/README.md](mcp-server/README.md).  
+3. **Full `_forgetrail/` install** when you need the whole template tree on disk (offline / no MCP). `npx forgetrail install` (without `--lite`).
 
 ---
 

@@ -19,18 +19,13 @@ Canonical docs use `**Spec kind:** Canonical reference` in the header and track 
 
 | Document | Summary |
 |----------|---------|
-| `partial/forgetrail-rename.md` | Product rename ForgeTrail → ForgeTrail (identifiers, copy, sibling consumers) |
-
-## Drafts (not started)
-
-| Document | Summary |
-|----------|---------|
-| `npm-distribution.md` | Whether to publish on npm: yes, two installer/MCP packages; Try stays no-Node |
+| `partial/npm-distribution.md` | Publish `forgetrail` + `forgetrail-mcp` (M2 copy done; you run M1 publish) |
 
 ## Completed
 
 | Document | Summary |
 |----------|---------|
+| `completed/forgetrail-rename.md` | Naming pass, GitHub slug, live forgetrail.dev |
 | `completed/forgetrail-new-user-experience.md` | NUX / README front door — Genesis + Lite prove-it path (M1–M4 done; M5 optional deferred) |
 
 ## Canonical references (current)

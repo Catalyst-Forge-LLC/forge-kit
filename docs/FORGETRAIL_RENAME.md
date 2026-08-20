@@ -1,6 +1,6 @@
 # ForgeTrail rename and copy guide
 
-**Status:** Name selected. Domain: [forgetrail.dev](https://forgetrail.dev)  
+**Status:** Name selected. Domain: [forgetrail.dev](https://forgetrail.dev) (live)  
 **Former name:** ForgeKit  
 **Canonical spelling:** `ForgeTrail` (one word, camel case). Folder and CLI form: `forgetrail`.  
 **Related:** [BRAND_AND_PRODUCT.md](BRAND_AND_PRODUCT.md), [README.md](../README.md)

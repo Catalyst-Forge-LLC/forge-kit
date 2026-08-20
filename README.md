@@ -1,6 +1,8 @@
 # ForgeTrail
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/forgetrail.svg)](https://www.npmjs.com/package/forgetrail)
+[![npm mcp](https://img.shields.io/npm/v/forgetrail-mcp.svg?label=forgetrail-mcp)](https://www.npmjs.com/package/forgetrail-mcp)
 
 **Forge the path. Keep the trail.**
 
@@ -26,7 +28,7 @@ Follow **[TRY_FORGETRAIL.md](TRY_FORGETRAIL.md)** (~15 minutes of setup, plus ti
 
 1. Paste the [Genesis prompt](content/GENESIS_SPEC_PROMPT.md) into ChatGPT, Claude, Grok, or a local Ollama UI.
 2. Save the result as `docs/GENESIS.md` in a **new empty project folder**.
-3. Add [ForgeTrail Lite](content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` (or `forgetrail install --lite --with-genesis-stub` if you already have the CLI).
+3. Add [ForgeTrail Lite](content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md`. If you have Node 20+: `npx forgetrail install --lite --with-genesis-stub`.
 4. Paste the kickoff line from TRY_FORGETRAIL.md into your coding agent. Approve the Phase 1 brief before any scaffold.
 
 Optional shape reference (fiction): [Mars habitat duty roster](content/examples/GENESIS_SAMPLE_mars-habitat-roster.md).
@@ -35,41 +37,38 @@ Stuck? Use the [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/
 
 ### 2. MCP (Cursor / Claude power users)
 
-When you have cloned this repo and want always-current tools in the IDE:
+Installer and MCP bins are on npm. This is a channel, not a library: do not add `forgetrail` to an app’s `dependencies`.
 
-```bash
-pnpm run mcp:build              # or: forgetrail mcp build (prints Cursor MCP config)
-pnpm run mcp:status -- --ping   # static checks + live ping
+```json
+{
+  "mcpServers": {
+    "forgetrail": {
+      "command": "npx",
+      "args": ["-y", "forgetrail-mcp"],
+      "env": {
+        "FORGETRAIL_ROOT": "/absolute/path/to/forgetrail-or-node_modules/forgetrail"
+      }
+    }
+  }
+}
 ```
 
-See [mcp-server/README.md](mcp-server/README.md). First chat: *"Call `getNewProjectKickoff` and set up the project."* Resume later with *"Call `getResumeSessionInstructions`."*
+If `forgetrail` is installed in the same tree as the MCP package, you can omit `FORGETRAIL_ROOT`. From a clone instead: `pnpm run mcp:build`. Details: [mcp-server/README.md](mcp-server/README.md).
+
+First chat: *"Call `getNewProjectKickoff` and set up the project."* Resume later with *"Call `getResumeSessionInstructions`."*
 
 ### 3. Full / vendored methodology
 
 Need the whole template tree on disk (offline, no MCP):
 
-From npm (after publish):
-
 ```bash
-npm install -g forgetrail
-# or: pnpm add -g forgetrail
-forgetrail install --lite --with-genesis-stub
+npx forgetrail install --lite --with-genesis-stub
+npx forgetrail install
 ```
 
-From a clone:
+From a clone: `pnpm run link:global`, then the same `forgetrail install` commands. Or copy this repo into the app as `_forgetrail/` and use [INITIAL_PROMPT.md](INITIAL_PROMPT.md).
 
-```bash
-# One-time from this clone:
-pnpm run link:global            # registers `forgetrail` on PATH
-
-cd /path/to/your-app
-forgetrail install --lite --with-genesis-stub   # Lite + docs/GENESIS.md stub
-forgetrail install                              # full _forgetrail/ + tracking
-```
-
-Or copy this repo into your project as `_forgetrail/` and use [INITIAL_PROMPT.md](INITIAL_PROMPT.md). Without global install: `node /path/to/forgetrail/scripts/forgetrail-cli.mjs install --lite`.
-
-**Graduation:** Try → stay on Lite for small tools → add MCP when you live in Cursor with this clone → full `_forgetrail/` only when you need vendored templates. Details in [TRY_FORGETRAIL.md](TRY_FORGETRAIL.md).
+**Graduation:** Try (copy Lite) → `npx forgetrail install --lite` → `npx -y forgetrail-mcp` → full `_forgetrail/` only when you need vendored templates. Details in [TRY_FORGETRAIL.md](TRY_FORGETRAIL.md).
 
 ---
 

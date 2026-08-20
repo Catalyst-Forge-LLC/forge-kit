@@ -21,7 +21,7 @@ AI writes code quickly. It does not build a product on its own.
 
 ## What ForgeTrail is
 
-ForgeTrail gives an agent a **path** through the lifecycle, a **record** of decisions, and a **trail** of lessons the next project can follow.
+ForgeTrail gives an agent a **path** through the lifecycle, a **record** of decisions, and a **trail** of lessons the next project follows.
 
 It is not a library, a SaaS, or a plugin. It is a development methodology encoded into files that your agent reads, follows, and updates as you build.
 
@@ -31,6 +31,6 @@ Distilled from building real production apps. Every pattern earned its place by 
 
 1. **[Try ForgeTrail](/try):** Genesis spec plus ForgeTrail Lite. No MCP required.
 2. **[How it works](/how-it-works):** the seven phases, from plan to harden.
-3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail):** clone, MCP server, and issue checklist.
+3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail):** source, issues, and the optional `npx forgetrail` / `npx -y forgetrail-mcp` shortcuts.
 
 Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/LICENSE). Built by [Catalyst Forge](https://catalystforge.com).

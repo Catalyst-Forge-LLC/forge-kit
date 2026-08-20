@@ -6,9 +6,15 @@ A local MCP server that exposes the ForgeTrail methodology to any MCP-compatible
 
 **No MCP yet?** Prove ForgeTrail with Genesis + Lite first: see repo-root **[TRY_FORGETRAIL.md](../TRY_FORGETRAIL.md)**.
 
-After npm publish: `npx -y forgetrail-mcp` (set `FORGETRAIL_ROOT` to a `forgetrail` install, or install `forgetrail` beside it).
+From npm (no clone required for the bin):
 
-From the **ForgeTrail repo root** (MCP path):
+```bash
+npx -y forgetrail-mcp
+```
+
+Set `FORGETRAIL_ROOT` to a `forgetrail` install (`npx` / `pnpm add -g forgetrail`, or `node_modules/forgetrail`), or install `forgetrail` beside this package so it can find `WORKFLOW.md`.
+
+From the **ForgeTrail repo root** (local clone):
 
 ```bash
 pnpm run mcp:build              # install deps + compile dist/ + print Cursor MCP config
@@ -68,7 +74,27 @@ On startup, the server prints a short **stderr** banner with agent prompt hints 
 
 ## Configure in Cursor
 
-Add to your Cursor MCP settings (`.cursor/mcp.json` in the project root, or globally):
+Add to your Cursor MCP settings (`.cursor/mcp.json` in the project root, or globally).
+
+From npm:
+
+```json
+{
+  "mcpServers": {
+    "forgetrail": {
+      "command": "npx",
+      "args": ["-y", "forgetrail-mcp"],
+      "env": {
+        "FORGETRAIL_ROOT": "/absolute/path/to/forgetrail"
+      }
+    }
+  }
+}
+```
+
+`FORGETRAIL_ROOT` must point at a tree that contains `WORKFLOW.md` and `content/` (a clone, or the installed `forgetrail` package). Omit it only when `forgetrail` is resolvable next to the MCP package.
+
+From a local clone:
 
 ```json
 {

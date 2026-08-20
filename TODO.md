@@ -1,7 +1,7 @@
 # ForgeTrail backlog
 
-Methodology-repo work. App projects keep their own `TODO.md`. After a folder rename or new chat, start from **[RESUME.md](RESUME.md)** (not `INITIAL_PROMPT.md`).
+Methodology-repo work. App projects keep their own `TODO.md`. After a folder rename or a new chat, start from **[RESUME.md](RESUME.md)** (not `INITIAL_PROMPT.md`).
 
-- [ ] [ForgeTrail naming pass](specs/partial/forgetrail-rename.md): GitHub slug is `Catalyst-Forge-LLC/forgetrail`. Remaining: first Wrangler ship + forgetrail.dev DNS
-- [ ] [forgetrail.dev FilePress site](site/README.md): `site/` scaffolded (IngotVault `/site` pattern). Domain registered. Pages project and custom domain not live yet. Preview with `pnpm site:dev`; publish with `pnpm ship`.
-- [ ] [npm distribution](specs/npm-distribution.md): publish `forgetrail` + `forgetrail-mcp` as installer/MCP channels (not a library). Try stays no-Node. Maintainer runbook: [docs/NPM.md](docs/NPM.md). M1: `pnpm run pack:check`, then publish both packages.
+- [x] [ForgeTrail naming pass](specs/completed/forgetrail-rename.md): GitHub slug `Catalyst-Forge-LLC/forgetrail`. forgetrail.dev is live.
+- [x] [forgetrail.dev FilePress site](site/README.md): live at https://forgetrail.dev. Preview: `pnpm site:dev`. Redeploy: `pnpm ship`.
+- [ ] [npm distribution](specs/partial/npm-distribution.md): M2 copy is in. You publish M1 from [docs/NPM.md](docs/NPM.md): `pnpm run pack:check`, then `pnpm publish --access public` and `pnpm --dir mcp-server publish --access public` (clean tree).

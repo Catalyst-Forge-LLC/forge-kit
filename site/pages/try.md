@@ -25,7 +25,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec in any AI chat, 
 
 4. **Add ForgeTrail Lite**  
    Save [FORGETRAIL_LITE.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/content/FORGETRAIL_LITE.md) as `.forgetrail/FORGETRAIL_LITE.md` in your project.  
-   If you already linked the CLI: `forgetrail install --lite` (add `--with-genesis-stub` if you want a `docs/GENESIS.md` stub).
+   If you have Node 20+: `npx forgetrail install --lite` (add `--with-genesis-stub` if you want a `docs/GENESIS.md` stub).
 
 5. **Save your spec as `docs/GENESIS.md`**  
    Create `docs/` if needed. That path is the canonical handoff (not the repo root).
@@ -48,4 +48,4 @@ Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/f
 
 ## MCP (optional, later)
 
-When you have cloned the [ForgeTrail repo](https://github.com/Catalyst-Forge-LLC/forgetrail) and want always-current tools in the IDE, see [MCP setup](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/mcp-server/README.md). First chat: *Call `getNewProjectKickoff` and set up the project.*
+When you want always-current tools in the IDE, register `npx -y forgetrail-mcp` (see [MCP setup](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/mcp-server/README.md)). First chat: *Call `getNewProjectKickoff` and set up the project.*

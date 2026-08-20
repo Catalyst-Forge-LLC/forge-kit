@@ -1,9 +1,9 @@
 # ForgeTrail naming pass — delivery spec
 
 **Spec kind:** Delivery  
-**Status:** Partial; naming pass landed. GitHub slug is `forgetrail`. Remaining: anticonfab folder lock if any, first Wrangler ship + DNS  
+**Status:** Implemented  
 **Date:** 2026-08-15  
-**Related:** [TODO.md](../TODO.md), [docs/FORGETRAIL_RENAME.md](../docs/FORGETRAIL_RENAME.md)  
+**Related:** [TODO.md](../../TODO.md), [docs/FORGETRAIL_RENAME.md](../../docs/FORGETRAIL_RENAME.md)  
 **Surfaces:** docs, README, Lite, MCP, CLI, Cursor rules, sibling consumer repos
 
 ---
@@ -59,9 +59,25 @@ Follow the identifier map and copy principles in `docs/FORGETRAIL_RENAME.md`.
 - GitHub slug renamed to **`Catalyst-Forge-LLC/forgetrail`**. Public links updated.
 - anticonfab workspace folder renamed `.forgekit/` → `.forgetrail/`.
 
+### Progress (2026-08-20)
+
+- forgetrail.dev is live (FilePress site in `site/`). Logo and straw/black theme landed in-repo.
+
 ## 9. Out of scope / follow-ups
 
 - ~~GitHub repository rename and URL redirects.~~ Done (`Catalyst-Forge-LLC/forgetrail`).
-- forgetrail.dev first Wrangler ship and custom-domain DNS (FilePress site lives in `site/`).
-- npm publish under `forgetrail` / `forgetrail-mcp` (packages are public-ready; you run `pnpm publish`). See [docs/NPM.md](../../docs/NPM.md).
+- ~~forgetrail.dev first Wrangler ship and custom-domain DNS.~~ Live 2026-08-20.
+- npm publish under `forgetrail` / `forgetrail-mcp`: [specs/partial/npm-distribution.md](../partial/npm-distribution.md) (you run `pnpm publish`). See [docs/NPM.md](../../docs/NPM.md).
 - ~~anticonfab `.forgekit/` directory rename.~~ Done 2026-08-19 (`.forgetrail/`).
+
+---
+
+## Implementation summary
+
+**Implemented:** 2026-08-20
+
+1. Rename guide, identifiers, Lite v2.0.0, MCP tools, sibling consumers, GitHub slug, anticonfab workspace folder.
+2. Marketing site in `site/` (FilePress + Wrangler). forgetrail.dev is live.
+3. npm left to [npm-distribution](../partial/npm-distribution.md) (installer/MCP packages; you publish).
+
+**Verification:** Repo grep for the former product name is limited to provenance. Site at https://forgetrail.dev. Pack check for npm is a separate spec.
