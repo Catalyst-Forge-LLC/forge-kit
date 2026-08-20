@@ -49,6 +49,10 @@ html body {
 	max-width: 42rem;
 }
 
+header.site-header .site-title {
+	position: relative;
+}
+
 header.site-header .site-logo {
 	height: 5.5rem;
 	width: 5.5rem;
