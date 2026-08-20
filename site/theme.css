@@ -51,17 +51,32 @@ html body {
 
 header.site-header .site-logo {
 	height: 5.5rem;
+	width: 5.5rem;
 	max-height: none;
-	width: auto;
-	object-fit: contain;
-	border-radius: 0;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 1.15rem;
 	box-shadow: none;
 	filter: none;
 }
 
+header.site-header .site-wordmark {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
 @media (width <= 40rem) {
 	header.site-header .site-logo {
-		height: 4rem;
+		height: 4.25rem;
+		width: 4.25rem;
+		border-radius: 0.9rem;
 	}
 }
 
