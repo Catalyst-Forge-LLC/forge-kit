@@ -17,13 +17,12 @@ export default defineFilepressConfig({
 		{ label: 'Home', href: '/' },
 		{ label: 'Docs', href: '/docs' },
 		{ label: 'Try', href: '/try' },
-		{ label: 'How it works', href: '/how-it-works' },
-		{ label: 'About', href: '/about' },
 		{ label: 'GitHub', href: github, icon: 'github' }
 	],
 	footerLinks: [
 		{ label: 'Docs', href: '/docs' },
 		{ label: 'Try', href: '/try' },
+		{ label: 'About', href: '/about' },
 		{ label: 'GitHub', href: github, icon: 'github' },
 		{ label: 'Catalyst Forge', href: 'https://catalystforge.com' },
 		{ label: 'AppFacts', href: 'https://appfacts.dev/v#af1.eNp1Uk1r3DAQ_StiTg1o10mOPrUYcihJCCS3UsqsNNaqK2uENHbiLvvfi2x320tvg3hf8zRnmKC90xBxIGjhgbOjt4w-gAaZU30riYxqlDAHHx1oKIIyFmgBjfiJQEPwhmKp4C8JzZF29_vbFWhO0J4hYHQjugr4ihO-muyTaPU2J1pn0JDHKH4J8cyW9j9LTbB5tvDEloLqOAp9iHrJLGw4qE9P3csNaDhykRXYBR5tHzATXDRYSgXab2eI0MLnoYqYVSNtEk2xJ9CQ_u9RKE-UlR9SoIGioHiOcNGr6C-2G_3VHGlANWHwdsEojFbVEpWPPWWKhq6094zRBcob929qZSkFnqvRUvmV4Uh6HyhlKmVjPfhAuwMWsmrZKooaMKJbYsLlu4Yymev6_zSjIUP7pzSVMk_eUlY9Z_VOh-KFFvZh9MHW_0toTujox6peuSmmoRacKXHxwnmugiKptE3jvBzHw97w0HQoGOYiu-Wydo-PXdPXSZYbu_wGeaPbgQ' },

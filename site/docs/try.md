@@ -31,7 +31,7 @@ Prove ForgeTrail in one sitting: write a **what, not how** spec, drop it next to
 
 Stuck? Open a [Try ForgeTrail checklist](https://github.com/Catalyst-Forge-LLC/forgetrail/issues/new?template=try-forgetrail-checklist.md) issue.
 
-The same recipe lives on the [Try page](/try) and in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md) on GitHub.
+The same recipe lives in [TRY_FORGETRAIL.md](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/TRY_FORGETRAIL.md) on GitHub. Short kickoff: [Try](/try).
 
 ## Graduation
 

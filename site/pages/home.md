@@ -6,31 +6,25 @@ order: 0
 
 **Forge the path. Keep the trail.**
 
-ForgeTrail gives solo developers and small teams a 7-phase playbook so agents plan before they build, keep the trail of decisions across sessions, and leave structured knowledge that improves the next project.
+ForgeTrail gives an agent a **path** through the lifecycle, a **record** of decisions, and a **trail** of lessons the next project follows. It is not a library, a SaaS, or a plugin. It is a methodology encoded into files your agent reads, follows, and updates as you build.
 
-Most AI coding sessions forget everything the moment you close the tab. ForgeTrail keeps the phase you are in, the decisions you made, and the gotchas you hit inside the repo, so the next session picks up the trail.
+<div class="cta-row">
+  <a class="cta cta-primary" href="/docs">Read the docs →</a>
+  <a class="cta cta-secondary" href="/try">Try ForgeTrail</a>
+  <a class="cta cta-secondary" href="https://github.com/Catalyst-Forge-LLC/forgetrail">View on GitHub</a>
+</div>
 
-## The problem
+<p class="kicker">npm · pnpm dlx · Node 20+ · no runtime dependency</p>
 
-AI writes code quickly. It does not build a product on its own.
+## What you get
 
-- **Context evaporates between sessions.** Every new chat starts from zero. You spend the first twenty minutes re-explaining architecture, decisions, and what you already tried.
-- **No structure, no momentum.** Features land in random order. Hardening gets skipped. Fragile code ships.
-- **You manage the AI instead of building.** Prompt engineering, context stuffing, and copy-pasting file contents eat the productivity gains.
-- **Decisions get lost and mistakes repeat.** You solved a hard bug in session 3. In session 6 the agent reintroduces it because it does not know the history.
+A 7-phase playbook, a live `.forgetrail/workflow_tracking.json`, and templates pre-loaded with production lessons. Each project leaves breadcrumbs that future work follows.
 
-## What ForgeTrail is
-
-ForgeTrail gives an agent a **path** through the lifecycle, a **record** of decisions, and a **trail** of lessons the next project follows.
-
-It is not a library, a SaaS, or a plugin. It is a development methodology encoded into files that your agent reads, follows, and updates as you build.
-
-Distilled from building real production apps. Every pattern earned its place by working. Every anti-pattern earned its place by failing.
+Flags, MCP, and the phase table live in the [docs](/docs).
 
 ## Start here
 
-1. **[Try ForgeTrail](/try):** Genesis spec plus ForgeTrail Lite. No MCP required.
+1. **[Try](/try):** Genesis spec plus ForgeTrail Lite. No MCP required.
 2. **[Docs](/docs):** install, CLI, MCP, and the seven phases.
-3. **[GitHub](https://github.com/Catalyst-Forge-LLC/forgetrail):** source and issues.
 
 Open source under [Apache License 2.0](https://github.com/Catalyst-Forge-LLC/forgetrail/blob/main/LICENSE). Built by [Catalyst Forge](https://catalystforge.com).

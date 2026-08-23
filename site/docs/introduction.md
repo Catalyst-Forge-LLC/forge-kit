@@ -10,6 +10,15 @@ Most AI coding sessions forget everything the moment you close the tab. ForgeTra
 
 It is not a library, a SaaS, or a plugin. It is a methodology encoded into files your agent reads, follows, and updates as you build. Distilled from real production apps.
 
+## The problem
+
+AI writes code quickly. It does not build a product on its own.
+
+- **Context evaporates between sessions.** Every new chat starts from zero. You spend the first twenty minutes re-explaining architecture, decisions, and what you already tried.
+- **No structure, no momentum.** Features land in random order. Hardening gets skipped. Fragile code ships.
+- **You manage the AI instead of building.** Prompt engineering, context stuffing, and copy-pasting file contents eat the productivity gains.
+- **Decisions get lost and mistakes repeat.** You solved a hard bug in session 3. In session 6 the agent reintroduces it because it does not know the history.
+
 ## Two packages
 
 | Package | Job |
@@ -23,7 +32,7 @@ Do not add `forgetrail` to an app's `dependencies`. The trail lives in the app's
 
 | Surface | What it is |
 | --- | --- |
-| [forgetrail.dev](https://forgetrail.dev) | Product story: Try, how it works, About |
+| [forgetrail.dev](https://forgetrail.dev) | Product story: home, Try, About |
 | [forgetrail.dev/docs](https://forgetrail.dev/docs) | This guide: install, CLI, MCP, phases |
 
 GitHub remains the source of truth for methodology files.

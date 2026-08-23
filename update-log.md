@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-08-23 | **Site slim:** FilePress pages match ollanet (home + Try + About). Detail lives in `/docs`. How it works stays as a stub. Live `/docs` still needs `pnpm ship`. |
 | 2026-08-20 | **`/docs` mount:** FilePress path mount (LocalBerth/ollanet shell). Root README trimmed to install + docs link. |
 | 2026-08-20 | **npm published:** `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` on the registry. forgetrail.dev is live. Try/README treat `pnpm dlx` / `npx` as the optional shortcut. |
 | 2026-08-19 | **npm-ready:** `forgetrail` and `forgetrail-mcp` are public packages (names free). `pnpm run pack:check` / `docs/NPM.md`. GitHub slug `Catalyst-Forge-LLC/forgetrail`. Marketing site in `site/` (FilePress + Wrangler). |

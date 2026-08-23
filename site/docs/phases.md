@@ -20,4 +20,4 @@ Phases 4 and 5 often alternate. Full playbooks: [WORKFLOW.md](https://github.com
 
 Phase state, decisions, and gotchas live in `.forgetrail/workflow_tracking.json`, not in a chat transcript. The next session reads the trail and continues.
 
-Product narrative of the same sequence: [How it works](/how-it-works).
+Product story: [forgetrail.dev](/).

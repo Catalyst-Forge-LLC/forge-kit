@@ -178,3 +178,58 @@ header.site-header .site-nav a.nav-github:hover {
 	background: color-mix(in srgb, #f97316 22%, #141414);
 	color: var(--header-ink);
 }
+
+.cta-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin: 1.5rem 0 0.25rem;
+}
+
+.cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--font-sans);
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	text-decoration: none !important;
+	border-radius: 999px;
+	padding: 0.8rem 1.35rem;
+	transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.cta:hover {
+	transform: translateY(-1px);
+}
+
+.cta-primary {
+	background: var(--accent-strong);
+	color: #fff8e8 !important;
+	border: 1px solid var(--accent-strong);
+}
+
+.cta-primary:hover {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #fff8e8 !important;
+}
+
+.cta-secondary {
+	background: transparent;
+	color: var(--ink) !important;
+	border: 1px solid var(--rule-strong);
+}
+
+.cta-secondary:hover {
+	border-color: var(--accent);
+	color: var(--accent-strong) !important;
+	background: var(--accent-wash);
+}
+
+.kicker {
+	font-size: 0.8rem;
+	color: var(--ink-faint);
+	margin: 0.35rem 0 0;
+}

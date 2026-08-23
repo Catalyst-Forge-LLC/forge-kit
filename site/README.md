@@ -52,4 +52,4 @@ Dependency is the public npm package:
 
 ## Content sync
 
-**Site** = product narrative (home, Try, How it works, About). **`/docs`** = install, CLI, MCP, phases. **Root README** = short npm page (install + link to docs). When behavior changes, update `site/docs/*` + `TRY_FORGETRAIL.md` + `site/pages/*`. Add a post under `posts/` only when there is something to publish; then put Writing back in the header.
+**Site** = short product story (home, Try, About). **`/docs`** = install, CLI, MCP, phases, compare. **Root README** = short npm page (install + link to docs). When behavior changes, update `site/docs/*` + `TRY_FORGETRAIL.md`. Keep FilePress pages thin. Add a post under `posts/` only when there is something to publish; then put Writing back in the header.
