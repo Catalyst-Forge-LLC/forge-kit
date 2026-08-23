@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-08-23 | **Positioning spine / theme-lock methodology (Exec Foundry origin-story passes):** BRAND_AND_PRODUCT gains *Positioning spine (theme lock)* (person-transformation ban for expert audiences, assure-not-guarantee, signature fast-read check, reality-check-as-terrain, staccato/vague-noun register rules) and *Long-form origin narrative (constraints file)*. CONTEXT_PROMPT pattern + anti-pattern. New `content/cursor-rules/writing-voice.mdc` template. Propagate-prompt trigger row (both copies). |
 | 2026-08-23 | **Site slim:** FilePress pages match ollanet (home + Try + About). Detail lives in `/docs`. How it works stays as a stub. Live `/docs` still needs `pnpm ship`. |
 | 2026-08-20 | **`/docs` mount:** FilePress path mount (LocalBerth/ollanet shell). Root README trimmed to install + docs link. |
 | 2026-08-20 | **npm published:** `forgetrail@0.3.0` and `forgetrail-mcp@0.2.2` on the registry. forgetrail.dev is live. Try/README treat `pnpm dlx` / `npx` as the optional shortcut. |
@@ -52,6 +53,15 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-08-23 — Positioning spine / theme-lock methodology (Exec Foundry)
+
+Source: Exec Foundry's six-pass origin-story refinement plus a site-wide copy audit, which converged on a positioning spine ("what's missing is never the person; it is the tooling available to them") and codified it as an always-apply Cursor rule. Generalized here:
+
+- `docs/BRAND_AND_PRODUCT.md` > Copy & Messaging Lessons — new **Positioning spine (theme lock)** subsection: converge drifting copy on one spine sentence and codify as an agent rule; lessons on the person-transformation tagline ban for expert audiences (craft metaphors temper what exists, never create the person; assure the standard, never guarantee the outcome), the signature fast-read misparse check, reality-check-as-terrain framing, and the staccato-cadence / vague-noun / squish-intensifier register rules. New **Long-form origin narrative (constraints file)** subsection: LOCKED FRAMING / ARC / VOICE notes file next to the narrative, dated pass addenda in the source spec, and hard constraints for named people (employer safety, verb restrictions).
+- `docs/CONTEXT_PROMPT.md` > Patterns to Follow — positioning-spine-as-rule-file pattern; > Anti-Patterns — person-transformation taglines for expert audiences.
+- `content/cursor-rules/writing-voice.mdc` — new always-apply rule template with bracketed spine, banned framings, register rules, and named-person constraint slots.
+- `prompts/propagate-to-forgetrail.md` — trigger row for brand theme / positioning-spine crystallization (mirrored in the source app's copy).
 
 ### 2026-08-20 — forgetrail.dev live; npm published
 

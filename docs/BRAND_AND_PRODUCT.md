@@ -205,6 +205,26 @@ When the product produces **cover letters**, **outreach**, or other **persuasive
 >
 > 💡 **Lesson learned:** **Anti-self-importance and position-of-strength rules prevent grandiose and striving registers.** When generating outbound copy representing the user, explicitly instruct the LLM to write in a plain, confident, and professional tone. Ban grandiose framing of routine work, visionary self-positioning, analytical flattery, name-dropping by negation, performative specificity, and modifier stacking. Enforce a "position of strength" posture: ban mirroring the job description as proof of fit, delivering maxims/theses as quotable wisdom, branding ordinary habits as named methods, using striving/grind vocabulary, and using rhetorical scaffolding, self-narration, or clever self-authored aphorisms. Let the facts of what the user built carry the weight directly.
 
+### Positioning spine (theme lock)
+
+When brand copy has been through several tone passes and still drifts, stop editing lines and converge on a **single positioning spine**: one sentence stating what the product supplies and what it never claims about the user. Then codify it as an **always-apply agent rule** (e.g. `.cursor/rules/writing-voice.mdc`) so future sessions audit against it instead of re-litigating tone. Every marketing surface either serves the spine or gets rewritten.
+
+> 📝 **Example:** An expert-audience product locked: "What's missing is never the person; it is the tooling available to them." Competence is assumed and demonstrated; the product supplies infrastructure that carries operational weight across months.
+
+> 💡 **Lesson learned:** **Ban person-transformation framing for expert audiences.** Taglines shaped like "from [lesser status] to [greater status]" imply the user lacked the status before buying — the opposite of an infrastructure positioning, and quietly condescending to the exact buyer you want. If the brand uses a craft metaphor, aim it at the **materials** or pick a verb that strengthens what already exists (temper/steel metal that is already steel), never one that creates the person. Corollary: **assure the standard, never guarantee the outcome** — no offer/interview/result promises (a legal-safety rule as much as a tone rule).
+
+> 💡 **Lesson learned:** **Signature lines must survive a fast read.** A punchy short-sentence signature can misparse at skim speed (e.g. "The raw material was never the problem. The foundry was." reads on a fast pass as blaming the foundry itself). Read every locked signature the way a skimmer would; if the wrong noun can attach to the blame or the claim, rewrite so the **absence** or the **gap** carries it ("What was missing was a foundry equal to it").
+
+> 💡 **Lesson learned:** **Reality-check beats are allowed; grievance is not.** Hard domain facts (long timelines, life not pausing, fixed runways) build trust when framed as terrain that the product prices in, and read as fear-marketing when framed as complaint or dwelled on. Land every hard beat on agency, standard, or momentum — never on the user's anxiety.
+
+> 💡 **Lesson learned:** **Staccato fragment cadence reads as LinkedIn-post voice.** ("Not the market. Not my record. The process.") For senior audiences, fold the punches into subordinate clauses and reserve short-sentence pairs for one or two locked signatures. In the same register pass, ban vague nouns ("something," "stuff") and squish intensifiers ("strongly," "deeply," "incredibly") from marketing prose — if a sentence needs the intensifier, the sentence is not done.
+
+### Long-form origin narrative (constraints file)
+
+A founder/origin narrative that goes through multiple refinement passes needs a **constraints file next to the narrative** (e.g. `ORIGIN_STORY_NOTES.md`) holding **LOCKED FRAMING** (hard constraints), the **ARC** (beat list), and **VOICE** rules. Without it, each pass re-litigates settled decisions and retired beats creep back. Record each pass as a dated addendum in the source spec so the "why" behind every lock survives the sessions that made it.
+
+> 💡 **Lesson learned:** **People named in a narrative may carry constraints the copy must obey** — a current employer, a public role, a legal sensitivity. Write those down as **hard rules**, not tone preferences ("no founder/builder verbs for X," "the search is presented as past fact with no cause given"), and audit the full piece against them after every pass. A narrative that is compelling but gets a named person in trouble is a failed narrative.
+
 ### Assertive product voice (no hedging *can*)
 
 Marketing, help, onboarding, and feature descriptions should state **what the product does** in the present tense with direct verbs — not tentative capability language.

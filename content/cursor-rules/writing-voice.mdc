@@ -1,0 +1,33 @@
+---
+description: Brand voice and positioning-spine rules for all user-facing copy, marketing, and long-form narrative
+alwaysApply: true
+---
+
+# Writing Voice and Theme
+
+Fill the bracketed placeholders once brand voice crystallizes (usually after several tone passes), then keep this rule always-applied so sessions audit copy against it instead of re-litigating tone. Methodology: ForgeTrail `docs/BRAND_AND_PRODUCT.md` → *Positioning spine (theme lock)*.
+
+## The positioning spine
+
+**[ONE SENTENCE: what the product supplies, and what it never claims about the user.]**
+
+- The product supplies **[infrastructure / tooling / leverage — name it]**. It does **not** improve, transform, or elevate the person.
+- **Banned:** person-transformation framing ("from [lesser] to [greater]", "makes you sound [status]"). For expert audiences, competence is assumed and demonstrated, never defended.
+- Craft metaphors aim at the **materials**, or strengthen what already exists (temper, steel) — never create the person.
+- **Assure the standard, never guarantee the outcome.** No result promises ([offers, interviews, rankings — name the domain's outcome]).
+- Signature line(s): **[LOCKED SIGNATURE + where it may appear]**. Read every signature at skim speed; if the wrong noun can catch the blame or the claim, rewrite so the absence/gap carries it.
+
+## Hard beats
+
+- No anxiety-dwelling, panic, survival framing, or "you're falling behind" pressure in user-facing copy.
+- **Reality-check beats are allowed** ([domain facts: long timelines, fixed budgets — name them]) when framed as **fact and terrain, never grievance**. Land every hard beat on agency, standard, or momentum.
+
+## Register
+
+- **[NAME THE REGISTER — e.g. polished Gen-X, plainspoken trade, clinical].** Fluid sentences over staccato fragment reveals; understated confidence over declarative punches; short-sentence pairs reserved for locked signatures.
+- **Ban vague nouns** in marketing and narrative copy: "something," "stuff," "things" (fine in error strings). Name the thing.
+- **Ban squish intensifiers:** "strongly," "deeply," "easily," "incredibly," "very." If the sentence needs the intensifier, rewrite the sentence.
+
+## Named-person constraints (narratives)
+
+If real people appear in origin/brand narratives, record their hard constraints here (employer safety, public roles, verb restrictions like "no founder verbs for X") and audit after every pass. Keep narrative locks in a constraints file next to the long-form (LOCKED FRAMING / ARC / VOICE pattern).
