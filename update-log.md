@@ -23,6 +23,7 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 
 | Date (ISO) | Summary |
 |------------|---------|
+| 2026-08-24 | **npm name hold:** first unscoped publish is `0.0.0` from a throwaway stub folder, not the app repo. Cursor rule `npm-name-hold.mdc`; CONTEXT_PROMPT pattern + anti-pattern; `docs/NPM.md` pointer. Source: LaunchCampaign. |
 | 2026-08-23 | **Positioning spine / theme-lock methodology (Exec Foundry origin-story passes):** BRAND_AND_PRODUCT gains *Positioning spine (theme lock)* (person-transformation ban for expert audiences, assure-not-guarantee, signature fast-read check, reality-check-as-terrain, staccato/vague-noun register rules) and *Long-form origin narrative (constraints file)*. CONTEXT_PROMPT pattern + anti-pattern. New `content/cursor-rules/writing-voice.mdc` template. Propagate-prompt trigger row (both copies). |
 | 2026-08-23 | **Site slim:** FilePress pages match ollanet (home + Try + About). Detail lives in `/docs`. How it works stays as a stub. Live `/docs` still needs `pnpm ship`. |
 | 2026-08-20 | **`/docs` mount:** FilePress path mount (LocalBerth/ollanet shell). Root README trimmed to install + docs link. |
@@ -53,6 +54,14 @@ After each run of **`prompts/propagate-to-forgetrail.md`**, append a row to the 
 ---
 
 ## Detail
+
+### 2026-08-24 — npm name hold (LaunchCampaign)
+
+Source: reserving `launch-campaign` without shipping the campaign CLI or dogfood plans.
+
+- `content/cursor-rules/npm-name-hold.mdc` (+ app `.cursor/rules/` and user-level `~/.cursor/rules/` copies) — throwaway `0.0.0` stub: `package.json` + one-line README, no homepage/bin/deps; first real release bumps.
+- `docs/CONTEXT_PROMPT.md` — pattern + anti-pattern (do not publish the app repo to stake a name).
+- `docs/NPM.md` — pointer at the top so ForgeTrail's own publish doc does not get used as the name-hold recipe.
 
 ### 2026-08-23 — Positioning spine / theme-lock methodology (Exec Foundry)
 
