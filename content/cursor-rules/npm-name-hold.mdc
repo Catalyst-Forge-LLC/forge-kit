@@ -1,19 +1,21 @@
 ---
-description: Reserve an npm name with a throwaway 0.0.0 stub, never the app repo
+description: Reserve an npm name with a throwaway 0.0.0 stub; the user always publishes
 alwaysApply: true
 ---
 
 # Initial npm name hold
 
-When the user wants to **grab an unscoped npm name** before the package is real:
+The **user always publishes**. Never run `npm publish`, `pnpm publish`, or `yarn npm publish`.
+
+When they want to grab an unscoped name before the package is real:
 
 1. Do **not** publish from the app repo. That ships `dist/`, source maps, fixtures, or a `prepublishOnly` build.
 2. Create a **throwaway directory outside git** (`mktemp -d`).
 3. Write only:
    - `package.json`: `name`, `version` `0.0.0`, `description` `"Name hold."`, `license`, `private: false`, `publishConfig.access: public`. No homepage, bin, files, deps, or repository.
    - optional one-line `README.md`: `Name hold.`
-4. `npm pack --dry-run` (expect 2–3 files). Then `npm publish --access public` from that directory.
-5. Delete the directory.
+4. Run `npm pack --dry-run` (expect 2–3 files). Show the listing and the exact `npm publish --access public` command for **them** to run in that directory.
+5. Leave the stub in place until they publish, then they can delete it.
 6. Leave the repo at `0.0.0`. The **first real release bumps** (0.0.1 or 0.1.0). `0.0.0` is spent.
 
 This is a name stake, not a product release.

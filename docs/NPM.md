@@ -2,7 +2,7 @@
 
 You run `pnpm publish`. The gate does not log in or publish.
 
-**Name hold (any new unscoped package):** do not publish the app repo. Stake `0.0.0` from a throwaway folder (`package.json` + one-line README, description `Name hold.`, no homepage). Rule: `content/cursor-rules/npm-name-hold.mdc`. First real release bumps.
+**Name hold (any new unscoped package):** do not publish the app repo. Prepare `0.0.0` in a throwaway folder (`package.json` + one-line README, description `Name hold.`, no homepage). **You** run `npm publish`. Agents never publish. Rule: `content/cursor-rules/npm-name-hold.mdc`. First real release bumps.
 
 ---
 
